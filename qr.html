@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ko" data-lang="ko" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QR코드 만들기 | 세계희망연대</title>
+<meta name="description" content="세계희망연대 홈페이지와 각 메뉴의 QR코드를 만들어 PNG·SVG로 저장하고 인쇄할 수 있습니다.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="세계희망연대">
+<meta property="og:title" content="QR코드 만들기 | 세계희망연대">
+<meta property="og:description" content="홈페이지 QR코드를 만들어 저장·인쇄하세요.">
+<meta property="og:image" content="assets/img/og-image.png">
+<meta name="theme-color" content="#0b1f44">
+<link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700&display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>(function(){try{var l=new URLSearchParams(location.search).get("lang")||localStorage.getItem("wh-lang");if(l==="en"){var h=document.documentElement;h.setAttribute("data-lang","en");h.lang="en";}}catch(e){}})();</script>
+<style>
+  .color-dots { display: flex; gap: 10px; }
+  .color-dots label { position: relative; cursor: pointer; }
+  .color-dots input { position: absolute; opacity: 0; }
+  .color-dots span { display: block; width: 38px; height: 38px; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 0 0 1.5px var(--line); }
+  .color-dots input:checked + span { box-shadow: 0 0 0 2.5px var(--blue-600); }
+  .color-dots input:focus-visible + span { outline: 3px solid var(--blue-500); outline-offset: 3px; }
+  .use-tips { list-style: none; display: grid; gap: 8px; color: var(--ink-2); font-size: 15px; }
+  .use-tips li { padding-left: 18px; position: relative; }
+  .use-tips li::before { content: ""; position: absolute; left: 2px; top: .7em; width: 6px; height: 6px; border-radius: 50%; background: var(--gold-500); }
+  @media print {
+    body.print-qr * { visibility: hidden !important; }
+    body.print-qr .qr-card, body.print-qr .qr-card * { visibility: visible !important; }
+    body.print-qr .qr-card { position: fixed; left: 50%; top: 18mm; transform: translateX(-50%); border: 0; }
+    body.print-qr .qr-card canvas { width: 110mm !important; height: 110mm !important; }
+    body.print-qr .qr-card .qr-caption { font-size: 20pt; }
+    body.print-qr .qr-card .qr-caption small { max-width: none; font-size: 11pt; }
+  }
+</style>
+</head>
+<body data-page="qr" data-title-en="QR Code | World Hope Alliance">
+<div id="site-header"></div>
+
+<main id="main">
+  <section class="page-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="breadcrumb"><a href="index.html"><span class="ko">홈</span><span class="en">Home</span></a><span aria-hidden="true">/</span><span><span class="ko">QR코드</span><span class="en">QR Code</span></span></nav>
+      <h1><span class="ko">QR코드 만들기</span><span class="en">QR Code Maker</span></h1>
+      <p><span class="ko">홈페이지와 각 메뉴의 QR코드를 만들어 저장하고 인쇄하세요. 주보·명함·현수막·전단에 바로 쓸 수 있습니다.</span><span class="en">Create QR codes for the website and each menu — save or print them for bulletins, cards, banners and flyers.</span></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="qr-layout">
+        <div class="form-card">
+          <h3><span class="ko">QR코드 설정</span><span class="en">Settings</span></h3>
+          <p><span class="ko">연결할 페이지를 고르면 오른쪽 미리보기에 바로 반영됩니다.</span><span class="en">Choose a page and the preview updates instantly.</span></p>
+          <div class="form-grid">
+            <div class="field full">
+              <label for="qr-target"><span class="ko">연결할 페이지</span><span class="en">Link to</span></label>
+              <select id="qr-target">
+                <option value="" data-en="Home">홈페이지 (메인)</option>
+                <option value="about.html" data-en="About / Greeting">소개·인사말</option>
+                <option value="ministry.html" data-en="Ministries">사역 안내</option>
+                <option value="news.html" data-en="News">공지·소식</option>
+                <option value="gallery.html" data-en="Gallery">갤러리</option>
+                <option value="donate.html" data-en="Give">후원·헌금</option>
+                <option value="contact.html" data-en="Contact">문의하기</option>
+                <option value="contact.html?type=join" data-en="Apply to join">참여·동역 신청</option>
+                <option value="index.html#cheer" data-en="Messages of hope">희망 응원 메시지</option>
+                <option value="faq.html" data-en="FAQ">자주 묻는 질문</option>
+                <option value="custom" data-en="Custom URL">직접 입력</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label for="qr-base"><span class="ko">홈페이지 주소(도메인)</span><span class="en">Website address (domain)</span></label>
+              <input type="url" id="qr-base" spellcheck="false" placeholder="https://www.example.org/">
+              <p class="hint" id="qr-base-warn" hidden><span class="ko">※ 지금은 미리보기 주소입니다. 실제 도메인을 입력하면 그 주소로 QR코드가 만들어집니다.</span><span class="en">※ This is a preview address. Enter the real domain to generate the final QR code.</span></p>
+            </div>
+            <div class="field full" id="qr-custom-wrap" hidden>
+              <label for="qr-custom"><span class="ko">직접 입력할 주소</span><span class="en">Custom URL</span></label>
+              <input type="url" id="qr-custom" spellcheck="false" placeholder="https://">
+            </div>
+            <div class="field">
+              <span class="label"><span class="ko">색상</span><span class="en">Color</span></span>
+              <div class="color-dots" role="radiogroup">
+                <label title="Navy"><input type="radio" name="qr-color" value="#0b1f44" checked><span style="background:#0b1f44"></span></label>
+                <label title="Blue"><input type="radio" name="qr-color" value="#1a4ba8"><span style="background:#1a4ba8"></span></label>
+                <label title="Black"><input type="radio" name="qr-color" value="#000000"><span style="background:#000"></span></label>
+              </div>
+            </div>
+            <div class="field">
+              <label for="qr-size"><span class="ko">저장 크기</span><span class="en">Export size</span></label>
+              <select id="qr-size">
+                <option value="512" data-en="512px (web)">512px (웹·SNS)</option>
+                <option value="1024" selected data-en="1024px (print)">1024px (인쇄 일반)</option>
+                <option value="2048" data-en="2048px (large print)">2048px (현수막·대형)</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label class="check"><input type="checkbox" id="qr-logo" checked> <span><span class="ko">가운데 로고 넣기</span><span class="en">Add logo in the center</span></span></label>
+            </div>
+            <div class="field full">
+              <label class="check"><input type="checkbox" id="qr-caption-on" checked> <span><span class="ko">아래 문구 넣기</span><span class="en">Add caption below</span></span></label>
+              <input type="text" id="qr-caption-text" maxlength="30" class="mt-1" data-ko-value="세계희망연대 홈페이지" data-en-value="World Hope Alliance" style="width:100%;border:1px solid #cfd8e6;border-radius:12px;padding:12px 14px">
+            </div>
+          </div>
+          <hr class="divider" style="margin:28px 0">
+          <h3 style="font-size:18px"><span class="ko">이렇게 활용하세요</span><span class="en">Ideas</span></h3>
+          <ul class="use-tips mt-2">
+            <li><span class="ko">주보·전단·포스터 하단에 ‘홈페이지’ QR 넣기</span><span class="en">Website QR at the bottom of bulletins, flyers, posters</span></li>
+            <li><span class="ko">후원 안내지에 ‘후원·헌금’ QR 넣기</span><span class="en">“Give” QR on donation leaflets</span></li>
+            <li><span class="ko">행사장 배너에 ‘참여·동역 신청’ QR 넣기</span><span class="en">“Apply to join” QR on event banners</span></li>
+            <li><span class="ko">현수막처럼 큰 인쇄물은 2048px 또는 SVG로 저장</span><span class="en">Use 2048px or SVG for large prints</span></li>
+          </ul>
+        </div>
+
+        <div class="qr-preview">
+          <div class="qr-card">
+            <canvas id="qr-canvas" width="560" height="560" aria-label="QR코드 미리보기" role="img"></canvas>
+            <div class="qr-caption" id="qr-caption"></div>
+          </div>
+          <p class="qr-url" id="qr-url"></p>
+          <div class="qr-actions">
+            <button type="button" class="btn btn-primary" id="qr-png"><span data-icon="download"></span>PNG</button>
+            <button type="button" class="btn btn-outline" id="qr-svg"><span data-icon="download"></span>SVG</button>
+            <button type="button" class="btn btn-outline" id="qr-print"><span data-icon="printer"></span><span class="ko">인쇄</span><span class="en">Print</span></button>
+            <button type="button" class="btn btn-outline" id="qr-copy"><span data-icon="link"></span><span class="ko">주소 복사</span><span class="en">Copy URL</span></button>
+          </div>
+          <p class="hint mt-2 muted" style="font-size:13px"><span class="ko">저장 전 휴대폰 카메라로 한 번 스캔해 확인해 보세요.</span><span class="en">Scan once with your phone before printing.</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/qr.js"></script>
+</body>
+</html>

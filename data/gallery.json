@@ -1,0 +1,98 @@
+[
+  {
+    "id": "photo-01",
+    "album": "events",
+    "sample": true,
+    "image_url": "assets/img/gallery/photo-01.svg",
+    "title_ko": "행사·모임 사진 01 (준비 중)",
+    "title_en": "Events photo 01 (coming soon)"
+  },
+  {
+    "id": "photo-02",
+    "album": "events",
+    "sample": true,
+    "image_url": "assets/img/gallery/photo-02.svg",
+    "title_ko": "행사·모임 사진 02 (준비 중)",
+    "title_en": "Events photo 02 (coming soon)"
+  },
+  {
+    "id": "photo-03",
+    "album": "ministry",
+    "sample": true,
+    "image_url": "assets/img/gallery/photo-03.svg",
+    "title_ko": "사역 현장 사진 03 (준비 중)",
+    "title_en": "In the field photo 03 (coming soon)"
+  },
+  {
+    "id": "photo-04",
+    "album": "declaration",
+    "sample": true,
+    "image_url": "assets/img/gallery/photo-04.svg",
+    "title_ko": "희망선언 사진 04 (준비 중)",
+    "title_en": "Declaration photo 04 (coming soon)"
+  },
+  {
+    "id": "photo-05",
+    "album": "ministry",
+    "sample": true,
+    "image_url": "assets/img/gallery/photo-05.svg",
+    "title_ko": "사역 현장 사진 05 (준비 중)",
+    "title_en": "In the field photo 05 (coming soon)"
+  },
+  {
+    "id": "photo-06",
+    "album": "events",
+    "sample": true,
+    "image_url": "assets/img/gallery/photo-06.svg",
+    "title_ko": "행사·모임 사진 06 (준비 중)",
+    "title_en": "Events photo 06 (coming soon)"
+  },
+  {
+    "id": "photo-07",
+    "album": "declaration",
+    "sample": true,
+    "image_url": "assets/img/gallery/photo-07.svg",
+    "title_ko": "희망선언 사진 07 (준비 중)",
+    "title_en": "Declaration photo 07 (coming soon)"
+  },
+  {
+    "id": "photo-08",
+    "album": "ministry",
+    "sample": true,
+    "image_url": "assets/img/gallery/photo-08.svg",
+    "title_ko": "사역 현장 사진 08 (준비 중)",
+    "title_en": "In the field photo 08 (coming soon)"
+  },
+  {
+    "id": "photo-09",
+    "album": "events",
+    "sample": true,
+    "image_url": "assets/img/gallery/photo-09.svg",
+    "title_ko": "행사·모임 사진 09 (준비 중)",
+    "title_en": "Events photo 09 (coming soon)"
+  },
+  {
+    "id": "photo-10",
+    "album": "ministry",
+    "sample": true,
+    "image_url": "assets/img/gallery/photo-10.svg",
+    "title_ko": "사역 현장 사진 10 (준비 중)",
+    "title_en": "In the field photo 10 (coming soon)"
+  },
+  {
+    "id": "photo-11",
+    "album": "declaration",
+    "sample": true,
+    "image_url": "assets/img/gallery/photo-11.svg",
+    "title_ko": "희망선언 사진 11 (준비 중)",
+    "title_en": "Declaration photo 11 (coming soon)"
+  },
+  {
+    "id": "photo-12",
+    "album": "events",
+    "sample": true,
+    "image_url": "assets/img/gallery/photo-12.svg",
+    "title_ko": "행사·모임 사진 12 (준비 중)",
+    "title_en": "Events photo 12 (coming soon)"
+  }
+]

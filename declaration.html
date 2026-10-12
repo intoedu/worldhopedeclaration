@@ -42,9 +42,13 @@
   .decl-subnav li.is-group::before { content: ""; position: absolute; left: -9px; top: 50%; width: 1px; height: 16px; margin-top: -8px; background: var(--line-2); }
   .decl-subnav li.is-group ~ li.is-group { margin-left: 0; }
   .decl-subnav li.is-group ~ li.is-group::before { display: none; }
+  /* 좁은 화면: 메뉴가 더 있을 때 가장자리를 흐리게 (스크롤 안내) */
+  .decl-subnav ul.has-more-right { -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 44px), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 44px), transparent); }
+  .decl-subnav ul.has-more-left { -webkit-mask-image: linear-gradient(90deg, transparent, #000 44px); mask-image: linear-gradient(90deg, transparent, #000 44px); }
+  .decl-subnav ul.has-more-left.has-more-right { -webkit-mask-image: linear-gradient(90deg, transparent, #000 44px, #000 calc(100% - 44px), transparent); mask-image: linear-gradient(90deg, transparent, #000 44px, #000 calc(100% - 44px), transparent); }
 
   /* 선언문 무대 (안개 낀 산 배경) */
-  .decl-stage { position: relative; overflow: hidden; isolation: isolate; padding: 84px 0 var(--space-section); background: linear-gradient(180deg, #e9f0f7 0%, #f2f6fa 24%, #f8fafc 62%, #fff 100%); }
+  .decl-stage { position: relative; overflow: hidden; isolation: isolate; padding: 84px 0 56px; background: linear-gradient(180deg, #e9f0f7 0%, #f2f6fa 24%, #f8fafc 62%, #fff 100%); }
   .decl-stage .mountains { height: 360px; }
 
   /* 두루마리 느낌의 문서 카드 (위·아래 네이비 축 + 금색 마개) */
@@ -75,6 +79,8 @@
   .decl-doc .decl-list { border-top-color: rgba(19, 41, 75, .85); }
   .decl-doc .decl-item { border-bottom-color: rgba(184, 145, 63, .26); scroll-margin-top: 140px; }
   .decl-doc .decl-item:last-child { border-bottom: 0; padding-bottom: 8px; }
+  /* 원칙 항목은 바로가기(#p1~#p5) 대상이므로 위치 이동 없이 흐릿하게만 나타남 (이동 효과가 있으면 도착 위치가 어긋남) */
+  .decl-doc .decl-item.reveal { transform: none; }
   .decl-doc .decl-icon { background: radial-gradient(circle at 50% 32%, #fff 0%, #f1f5fb 100%); }
   html[data-lang="en"] .decl-doc .decl-title { font-family: var(--f-serif-en); letter-spacing: -0.01em; }
   .decl-orig { margin: 0 0 4px; font-family: var(--f-serif); font-size: 15px; font-weight: 700; letter-spacing: .02em; color: var(--gold-600); }
@@ -92,6 +98,8 @@
   .decl-values .value-en.is-ko { font-family: var(--f-serif); letter-spacing: .06em; font-weight: 700; }
   .decl-values .value-text { min-height: 3.2em; }
   html[data-lang="en"] .decl-values .value-text { min-height: 0; }
+  .decl-values .value-text, .decl-values .value-text-en { text-wrap: balance; }
+  .decl-values .value-text-en { max-width: 220px; margin-left: auto; margin-right: auto; }
 
   /* 맺음: 공동의 선언, 하나의 인류 (네이비 띠) */
   .decl-closing { padding: 88px 0 80px; text-align: center; }
@@ -111,7 +119,7 @@
   @media (max-width: 760px) {
     .decl-hero { padding: 40px 0 40px; }
     .decl-hero .decl-hero-mark { width: 48px; height: 48px; margin-bottom: 10px; }
-    .decl-stage { padding-top: 48px; }
+    .decl-stage { padding: 48px 0 36px; }
     .decl-stage .mountains { height: 220px; }
     .decl-scroll::before, .decl-scroll::after { left: -8px; right: -8px; height: 12px; border-radius: 6px;
       background:
@@ -161,6 +169,7 @@
     .decl-values .value-ko { font-size: 19px; }
     .decl-values .value-text { min-height: 0; margin-top: 6px; font-size: 14.5px; }
     .decl-values .value-text br { display: none; }
+    .decl-values .value-text-en { max-width: none; margin: 4px 0 0; }
   }
 
   /* 인쇄: 1쪽 = 선언문 전체, 2쪽 = 5대 가치 · 맺음 (A4) */
@@ -443,8 +452,10 @@
       current = cur;
       links.forEach(function (a, i) { a.classList.toggle("is-active", i === cur); });
       if (cur >= 0 && list && list.scrollWidth > list.clientWidth) {
-        var a = links[cur], left = a.offsetLeft - list.offsetLeft;
-        if (left < list.scrollLeft || left + a.offsetWidth > list.scrollLeft + list.clientWidth) {
+        // offsetLeft 는 position:relative 인 li 기준이 되므로 화면 좌표로 계산
+        var a = links[cur], ar = a.getBoundingClientRect(), lr = list.getBoundingClientRect();
+        var left = ar.left - lr.left + list.scrollLeft;
+        if (left < list.scrollLeft || left + ar.width > list.scrollLeft + list.clientWidth) {
           list.scrollLeft = Math.max(0, left - 24);
         }
       }
@@ -452,10 +463,24 @@
     function onScroll() {
       if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
     }
+
+    // 가로로 넘치는 메뉴: 남은 쪽 가장자리를 흐리게 표시
+    function updateEdges() {
+      if (!list) return;
+      var max = list.scrollWidth - list.clientWidth;
+      list.classList.toggle("has-more-left", max > 1 && list.scrollLeft > 1);
+      list.classList.toggle("has-more-right", max > 1 && list.scrollLeft < max - 1);
+    }
+
     if (links.length) {
       window.addEventListener("scroll", onScroll, { passive: true });
-      window.addEventListener("resize", onScroll);
+      window.addEventListener("resize", function () { onScroll(); updateEdges(); });
+      list.addEventListener("scroll", updateEdges, { passive: true });
+      // 글꼴이 늦게 적용되거나 언어가 바뀌면 메뉴 폭이 달라지므로 다시 계산
+      document.addEventListener("wh:lang", function () { window.requestAnimationFrame(updateEdges); });
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(updateEdges);
       update();
+      updateEdges();
     }
 
     // 인쇄하기: 스크롤 등장 효과가 남아 있지 않도록 모두 표시한 뒤 인쇄

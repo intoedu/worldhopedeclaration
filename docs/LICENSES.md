@@ -17,6 +17,7 @@
 |---|---|---|
 | `assets/img/brand/*` (로고) | 의뢰인이 AI로 제작한 시안 이미지에서 잘라냄 | 의뢰인 측 사용 승인(2026-10-12, 전도사님 확인: “AI로 만든 홈페이지 구도, 로고도 따와서 사용”) — 고해상도 원본 확보 시 교체 |
 | `assets/img/home/hero-earth.*`, `tile-*.*`, `principle-card.*` | 의뢰인이 AI로 제작한 시안 이미지에서 잘라냄 | 의뢰인 측 사용 승인(2026-10-12). 참고: 시안을 만든 AI 서비스의 이용약관상 상업적 이용이 허용되는지는 의뢰인 확인 사항 |
+| `assets/img/award/plaque.*`, `pin.*` (선정패·배지) | 의뢰인이 AI로 제작한 자료 이미지에서 잘라냄 | 의뢰인 측 사용 승인(2026-10-12). 얼굴 사진이 든 ID 카드, 유엔 엠블럼과 비슷한 문양의 목걸이 줄 이미지는 쓰지 않음 |
 | `assets/img/og-image.png`, `apple-touch-icon.png` | 위 이미지와 OFL 글꼴로 제작 | 위 항목에 따름 |
 | `assets/img/gallery/photo-*.svg`, `portrait-placeholder.svg`, `logo.svg` | 직접 제작한 자리표시 이미지 | 문제 없음 |
 

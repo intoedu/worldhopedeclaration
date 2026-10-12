@@ -11,7 +11,13 @@ window.WH_CONFIG = {
   representative: { ko: "원치현", en: "Chi-hyun Won" },
   address: { ko: "세종특별자치시 보람동 732", en: "732 Boram-dong, Sejong-si, Republic of Korea" },
   phone: "1588-2716", // 전국대표전화
-  publicEmail: "", // 홈페이지에 공개할 이메일 (확정 후 입력)
+  publicEmail: "bmig777won@gmail.com", // 홈페이지에 공개하는 이메일 (메일 앱 대체 접수 주소로도 사용)
+  // 하단(카피라이트 줄)에 표시하는 대표 연락처 — 의뢰인 요청(2026-10-12)
+  footerContact: {
+    name: { ko: "원치현", en: "Chi-hyun Won" },
+    phone: "010-3352-4382",
+    email: "bmig777won@gmail.com"
+  },
   registrationNo: "", // 고유번호/비영리단체 등록번호 (확정 후 입력)
   businessHours: { ko: "", en: "" }, // 운영시간 (확정 후 입력)
 

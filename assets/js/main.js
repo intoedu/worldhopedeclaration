@@ -499,6 +499,19 @@
       return s.always ? '<span aria-hidden="true">' + WH.icon(s.icon) + "</span>" : "";
     }).join("");
 
+    // 카피라이트 줄: 대표 연락처 + ©
+    var fc = C.footerContact || {};
+    var tel = String(fc.phone || "").replace(/[^0-9+]/g, "");
+    var mail = /^[^\s@<>"]+@[^\s@<>"]+\.[^\s@<>"]+$/.test(fc.email || "") ? fc.email : "";
+    var contactBits = [];
+    if (fc.name) contactBits.push("<span>" + bi("대표 ", "Representative ") + bi(esc(fc.name.ko || ""), esc(fc.name.en || fc.name.ko || "")) + "</span>");
+    if (tel) contactBits.push('<a href="tel:' + esc(tel) + '">' + esc(fc.phone) + "</a>");
+    if (mail) contactBits.push('<a href="mailto:' + esc(mail) + '">' + esc(mail) + "</a>");
+    var copyHtml = '<div class="footer-copy"><div class="footer-copy-inner">' +
+      (contactBits.length ? '<p class="footer-contact">' + contactBits.join('<i aria-hidden="true">·</i>') + "</p>" : "") +
+      '<p class="footer-rights">© ' + new Date().getFullYear() + " " + bi(esc(name.ko || ""), esc(name.en || "")) + ". All rights reserved.</p>" +
+      "</div></div>";
+
     mount.outerHTML =
       '<footer class="site-footer"><div class="footer-inner">' +
       '<div class="footer-brands">' +
@@ -514,7 +527,7 @@
       '<a href="' + ROOT + 'contact.html">' + bi("문의하기", "Contact") + "</a>" +
       "</nav>" +
       '<div class="footer-social">' + socialHtml + "</div>" +
-      "</div></div></footer>";
+      "</div></div>" + copyHtml + "</footer>";
   }
 
   /* ---------------- 사이트 검색 ---------------- */

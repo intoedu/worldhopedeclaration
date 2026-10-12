@@ -208,8 +208,10 @@
       '<img src="' + ROOT + 'assets/img/logo.svg" alt="" width="44" height="44">' +
       '<span class="brand-text"><strong>' + bi(WH.esc(name.ko), WH.esc(name.en)) + "</strong><small>" + bi(WH.esc((name.en || "").toUpperCase()), WH.esc(name.ko)) + "</small></span></a>";
 
+    // <base> 가 있는 페이지(404)에서는 "#main" 이 사이트 최상위 기준이 되므로 현재 주소를 붙임
+    var skipHref = document.querySelector("base[href]") ? location.pathname + location.search + "#main" : "#main";
     mount.innerHTML =
-      '<a class="skip-link" href="#main">' + bi("본문 바로가기", "Skip to content") + "</a>" +
+      '<a class="skip-link" href="' + WH.esc(skipHref) + '">' + bi("본문 바로가기", "Skip to content") + "</a>" +
       (C.draft ? '<div class="draft-bar">' + bi("<b>시안 미리보기</b> · 사진과 일부 문구는 단체 자료를 받은 뒤 교체됩니다.", "<b>Draft preview</b> · Photos and some text will be replaced with final materials.") + "</div>" : "") +
       '<div class="topbar"><div class="container">' +
       '<a class="topbar-phone" href="' + telHref() + '"><span class="label">' + bi("전국대표전화", "Call") + " </span><strong>" + WH.esc(C.phone || "") + "</strong></a>" +
@@ -433,7 +435,8 @@
   }
   /* 하단 '누적 방문자' 표시: GoatCounter 공개 카운터 (설정에서 'Allow adding visitor counts' 필요, 수 시간 단위로 갱신) */
   function setupVisits() {
-    if (!A.goatcounter || !C.showVisitCounter) return;
+    // 표시할 자리(하단 .visit-counter)가 없는 페이지(관리자 등)에서는 요청하지 않음
+    if (!A.goatcounter || !C.showVisitCounter || !document.querySelector(".visit-counter")) return;
     fetch("https://" + encodeURIComponent(A.goatcounter) + ".goatcounter.com/counter/TOTAL.json")
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(function (d) {

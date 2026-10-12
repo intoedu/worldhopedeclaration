@@ -87,20 +87,30 @@
   /* ---------------- 이메일 전송 ----------------
      WH.mail.send({ subject, rows: [[항목명, 값], ...], replyTo })
      → Promise<{ok:true, via:"formsubmit"} | {ok:true, via:"mailto"}>
-     FormSubmit 실패(네트워크 차단·미활성화 등) 시 reject → 호출 측에서 mailto 로 대체 가능 */
+     FormSubmit 실패(네트워크 차단·미활성화·응답 지연 등) 시 reject → 호출 측에서 mailto 로 대체 가능 */
   var mailCfg = C.email || {};
+  var SEND_TIMEOUT = 12000; // FormSubmit 응답을 기다리는 최대 시간(ms) — 넘으면 실패로 보고 대체 경로 안내
+  /* 메일 앱(mailto) 받는 주소: email.to 가 이메일 주소면 그대로, 별칭이면 publicEmail, 둘 다 없으면 "" */
+  function mailtoRecipient() {
+    if (/@/.test(mailCfg.to || "")) return mailCfg.to;
+    if (/@/.test(C.publicEmail || "")) return C.publicEmail;
+    return "";
+  }
   WH.mail = {
     enabled: !!mailCfg.to,
     service: mailCfg.service || "formsubmit",
+    /* 받는 주소가 없으면 "mailto:?subject=…" 형태 (호출 측에서 /^mailto:\?/ 로 확인) */
     mailtoHref: function (subject, rows) {
       var body = rows.filter(function (r) { return r[1] != null && r[1] !== ""; })
         .map(function (r) { return "■ " + r[0] + "\n" + r[1]; }).join("\n\n");
-      return "mailto:" + (/@/.test(mailCfg.to || "") ? mailCfg.to : "") +
+      return "mailto:" + mailtoRecipient() +
         "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
     },
     send: function (msg) {
       if (!mailCfg.to) return Promise.reject(new Error("email-not-configured"));
       if (WH.mail.service === "mailto") {
+        // 받는 주소 없이 메일 앱을 열면 접수가 사라지므로 실패로 처리 (호출 측에서 전화 안내)
+        if (!mailtoRecipient()) return Promise.reject(new Error("mailto-no-recipient"));
         location.href = WH.mail.mailtoHref(msg.subject, msg.rows);
         return Promise.resolve({ ok: true, via: "mailto" });
       }
@@ -118,15 +128,32 @@
         payload[key] = String(r[1]);
       });
       payload["보낸 페이지"] = location.href.split("#")[0];
-      return fetch("https://formsubmit.co/ajax/" + encodeURIComponent(mailCfg.to), {
+      // 응답이 오래 걸리면(서비스 지연·중간 차단 등) SEND_TIMEOUT 뒤 실패로 처리
+      var ctrl = typeof AbortController === "function" ? new AbortController() : null;
+      var timer;
+      var timeout = new Promise(function (resolve, reject) {
+        timer = setTimeout(function () {
+          if (ctrl) ctrl.abort();
+          reject(new Error("formsubmit-timeout"));
+        }, SEND_TIMEOUT);
+      });
+      var request = fetch("https://formsubmit.co/ajax/" + encodeURIComponent(mailCfg.to), {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
+        signal: ctrl ? ctrl.signal : undefined
       }).then(function (r) {
         return r.json().catch(function () { return {}; }).then(function (d) {
           if (!r.ok || String(d.success) !== "true") throw new Error(d.message || ("formsubmit-" + r.status));
           return { ok: true, via: "formsubmit" };
         });
+      });
+      return Promise.race([request, timeout]).then(function (res) {
+        clearTimeout(timer);
+        return res;
+      }, function (err) {
+        clearTimeout(timer);
+        throw err;
       });
     }
   };

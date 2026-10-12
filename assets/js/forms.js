@@ -144,22 +144,41 @@
     return true;
   }
 
-  /* 메일 앱(mailto)으로 대체 접수. 받는 주소가 없으면(별칭만 설정 등) 공개 이메일 사용, 그것도 없으면 false */
-  function openMailApp(msg) {
+  /* 메일 앱(mailto)으로 대체 접수. 받는 주소(email.to 또는 publicEmail)는 WH.mail.mailtoHref 가 고르며,
+     받는 주소가 없으면(별칭만 있고 publicEmail 도 없음) false */
+  function mailAppHref(msg) {
     var href = WH.mail.mailtoHref(msg.subject, msg.rows);
-    if (/^mailto:\?/.test(href)) {
-      if (!/@/.test(C.publicEmail || "")) return false;
-      href = "mailto:" + C.publicEmail + href.slice(7);
-    }
+    return /^mailto:\?/.test(href) ? "" : href;
+  }
+  function openMailApp(msg) {
+    var href = mailAppHref(msg);
+    if (!href) return false;
     location.href = href;
     return true;
   }
-  function mailAppStatus(form, failed) {
-    setStatus(form, "info", failed
-      ? WH.t("온라인 전송이 원활하지 않아 메일 앱을 열었습니다. 작성된 내용을 확인하신 뒤 ‘보내기’를 눌러 접수를 완료해 주세요. 메일 앱이 열리지 않으면 " + phoneKo() + "로 연락해 주세요.",
-        "Online delivery did not go through, so your email app has been opened. Please review the prefilled message and press Send to complete. If no email app opened, please call " + phoneEn() + ".")
-      : WH.t("메일 앱이 열렸습니다. 작성된 내용을 확인하신 뒤 ‘보내기’를 눌러 접수를 완료해 주세요. 메일 앱이 열리지 않으면 " + phoneKo() + "로 연락해 주세요.",
-        "Your email app has been opened. Please review the prefilled message and press Send to complete. If no email app opened, please call " + phoneEn() + "."));
+  /* opened: 메일 앱을 자동으로 열었는지. 늦게 실패하면 브라우저가 자동 열기를 막을 수 있어
+     항상 ‘메일 앱으로 보내기’ 버튼을 함께 보여 줌 (버튼 클릭으로 열면 막히지 않음) */
+  function mailAppStatus(form, failed, msg, opened) {
+    var tail = WH.t(" 메일 앱이 열리지 않으면 아래 버튼을 누르시거나 " + phoneKo() + "로 연락해 주세요.",
+      " If no email app opened, use the button below or call " + phoneEn() + ".");
+    var text;
+    if (!opened) {
+      text = WH.t("온라인 전송이 원활하지 않습니다. 아래 ‘메일 앱으로 보내기’를 눌러 작성된 메일을 보내 주시거나 " + phoneKo() + "로 연락해 주세요.",
+        "Online delivery did not go through. Please press “Send with email app” below to send the prefilled message, or call " + phoneEn() + ".");
+    } else if (failed) {
+      text = WH.t("온라인 전송이 원활하지 않아 메일 앱을 열었습니다. 작성된 내용을 확인하신 뒤 ‘보내기’를 눌러 접수를 완료해 주세요.",
+        "Online delivery did not go through, so your email app has been opened. Please review the prefilled message and press Send to complete.") + tail;
+    } else {
+      text = WH.t("메일 앱이 열렸습니다. 작성된 내용을 확인하신 뒤 ‘보내기’를 눌러 접수를 완료해 주세요.",
+        "Your email app has been opened. Please review the prefilled message and press Send to complete.") + tail;
+    }
+    setStatus(form, "info", text);
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "btn btn-outline btn-sm btn-block mt-1";
+    b.textContent = WH.t("메일 앱으로 보내기", "Send with email app");
+    b.addEventListener("click", function () { openMailApp(msg); });
+    form.querySelector(".form-status").appendChild(b);
   }
   function failStatus(form) {
     setStatus(form, "err", WH.t("온라인 접수를 처리하지 못했습니다. 잠시 후 다시 시도하시거나 " + phoneKo() + "로 연락해 주세요.",
@@ -189,10 +208,13 @@
       if (!validate(form)) return;
       var msg = build(form);
       var btn = form.querySelector('[type="submit"]');
+      var started = Date.now();
 
       var fallback = function () {
-        if (noMailApp || !openMailApp(msg)) { failStatus(form); return; }
-        mailAppStatus(form, true); // 입력 내용은 지우지 않음 (메일 앱이 안 열렸을 때 다시 시도 가능)
+        if (noMailApp || !mailAppHref(msg)) { failStatus(form); return; }
+        // 클릭 직후(4초 이내)에만 메일 앱을 자동으로 엶 — 그보다 늦으면 버튼으로만 안내
+        var opened = Date.now() - started < 4000 && openMailApp(msg);
+        mailAppStatus(form, true, msg, opened); // 입력 내용은 지우지 않음 (메일 앱이 안 열렸을 때 다시 시도 가능)
       };
       if (!WH.mail || !WH.mail.enabled) { fallback(); return; }
 
@@ -204,7 +226,7 @@
         if (btn) btn.disabled = false;
       };
       WH.mail.send({ subject: msg.subject, rows: msg.rows, replyTo: msg.replyTo }).then(function (res) {
-        if (res && res.via === "mailto") { mailAppStatus(form, false); return; } // 설정이 service:"mailto" 인 경우
+        if (res && res.via === "mailto") { mailAppStatus(form, false, msg, true); return; } // 설정이 service:"mailto" 인 경우
         form.reset();
         setStatus(form, "ok", okMessage(form));
         form.dispatchEvent(new CustomEvent("wh:submitted"));

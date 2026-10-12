@@ -21,13 +21,14 @@
   var BRANCH = String(GH.branch || "").trim() || "main";
   var API = "https://api.github.com";
   var TOKEN_KEY = "wh-admin-gh-token";
-  var SAVED = "저장했습니다. 1~2분 뒤 홈페이지에 반영됩니다.";
+  var SAVED = "저장했습니다. 보통 1~2분 뒤 홈페이지에 반영됩니다(사진을 여러 장 올린 직후에는 최대 10분).";
   var UPLOADS = "assets/img/uploads/";
   var MAX_EDGE = 2000;                // 사진 긴 변 최대 px
   var JPEG_Q = 0.86;                  // JPEG 품질
   var MAX_BYTES = 10 * 1024 * 1024;   // 줄인 뒤에도 10MB 를 넘으면 올리지 않음
   var MAX_SOURCE = 80 * 1024 * 1024;  // 원본이 이보다 크면 브라우저가 멈출 수 있어 거절
   var MAX_BATCH = 20;                 // 한 번에 올릴 사진 수 (사진 1장 = 커밋 1개)
+  var ACCEPT = "image/jpeg,image/png,image/gif,image/webp"; // 올릴 수 있는 사진 형식 (SVG 제외)
 
   var CAT = { notice: "공지", news: "소식", press: "언론보도" };
   var ALBUM = { events: "행사·모임", ministry: "사역 현장", declaration: "희망선언" };
@@ -329,7 +330,7 @@
     }).catch(function () { return false; });
   }
 
-  /* ---------------- 사진 준비: 긴 변 2000px JPEG 0.86 (GIF·SVG 는 그대로) ---------------- */
+  /* ---------------- 사진 준비: 긴 변 2000px JPEG 0.86 (GIF 는 그대로, SVG 는 보안상 받지 않음) ---------------- */
   function loadImage(file) {
     return new Promise(function (resolve, reject) {
       var url = URL.createObjectURL(file), img = new Image();
@@ -344,10 +345,13 @@
   function prepareImage(file) {
     var type = String(file.type || "").toLowerCase(), name = String(file.name || "");
     var isGif = type === "image/gif" || (!type && /\.gif$/i.test(name));
-    var isSvg = type === "image/svg+xml" || (!type && /\.svg$/i.test(name));
-    if (isGif || isSvg) {
+    // SVG 는 스크립트를 담을 수 있어(주소를 직접 열면 이 사이트 권한으로 실행) 올리지 않음
+    if (type === "image/svg+xml" || /\.svgz?$/i.test(name)) {
+      return Promise.reject(userError("SVG 파일은 보안상 올릴 수 없습니다. PNG 나 JPG 로 바꿔서 올려 주세요."));
+    }
+    if (isGif) {
       if (file.size > MAX_BYTES) return Promise.reject(userError("파일이 10MB 를 넘어 올릴 수 없습니다."));
-      return Promise.resolve({ blob: file, ext: isGif ? "gif" : "svg" });
+      return Promise.resolve({ blob: file, ext: "gif" });
     }
     if (type && type.indexOf("image/") !== 0) return Promise.reject(userError("이미지 파일이 아닙니다."));
     if (file.size > MAX_SOURCE) return Promise.reject(userError("원본 파일이 너무 큽니다(80MB 초과)."));
@@ -533,7 +537,7 @@
 
       p.innerHTML =
         "<h2>안내 · 현황</h2>" +
-        '<p class="muted">이 관리자 화면은 홈페이지 파일이 있는 GitHub 저장소를 직접 고칩니다. 저장하면 1~2분 뒤 홈페이지에 반영됩니다.</p>' +
+        '<p class="muted">이 관리자 화면은 홈페이지 파일이 있는 GitHub 저장소를 직접 고칩니다. 저장하면 보통 1~2분 뒤 홈페이지에 반영됩니다(사진을 여러 장 올린 직후에는 최대 10분).</p>' +
         '<div class="stat-row">' +
         stat("공지·소식 (게시)", posts) +
         stat("갤러리 사진 (게시)", gal) +
@@ -578,7 +582,7 @@
     return loadList("posts").then(function (list) {
       var rows = list.filter(Boolean).sort(sortPosts);
       p.innerHTML =
-        '<div class="adm-head"><div><h2>공지·소식</h2><p class="muted mb-0">글은 한국어만 써도 됩니다. 영어 칸이 비어 있으면 영어 화면에도 한국어가 보입니다. ‘보기’는 홈페이지 반영(1~2분) 뒤에 확인할 수 있습니다.</p></div>' +
+        '<div class="adm-head"><div><h2>공지·소식</h2><p class="muted mb-0">글은 한국어만 써도 됩니다. 영어 칸이 비어 있으면 영어 화면에도 한국어가 보입니다. ‘보기’는 홈페이지 반영(보통 1~2분) 뒤에 확인할 수 있습니다. 숨김 글도 공개 저장소 파일(data/posts.json)에는 남아 누구나 볼 수 있으니 공개되면 안 되는 내용은 쓰지 마세요.</p></div>' +
         '<button type="button" class="btn btn-primary btn-sm" data-act="new">새 글 쓰기</button></div>' +
         "<div data-editor></div>" +
         '<div class="tbl-wrap"><table class="adm"><thead><tr><th>분류</th><th>제목</th><th>상태</th><th>고정</th><th>작성일</th><th>관리</th></tr></thead><tbody>' +
@@ -610,7 +614,7 @@
       '<p class="hint">빈 줄로 문단을 나눕니다. 링크(https://…)는 자동으로 연결됩니다.</p></div>' +
       '<div class="field full"><label for="pf-ten">제목 (영어, 선택)</label><input type="text" id="pf-ten" maxlength="300" value="' + esc(x.title_en || "") + '"></div>' +
       '<div class="field full"><label for="pf-ben">내용 (영어, 선택)</label><textarea id="pf-ben">' + esc(x.body_en || "") + "</textarea></div>" +
-      '<div class="field full"><label for="pf-cover">대표 이미지 (선택)</label><input type="file" id="pf-cover" accept="image/*">' +
+      '<div class="field full"><label for="pf-cover">대표 이미지 (선택)</label><input type="file" id="pf-cover" accept="' + ACCEPT + '">' +
       '<p class="hint">큰 사진은 긴 변 2000px JPG 로 줄여서 올립니다. 새 이미지를 고르면 기존 이미지를 바꿉니다.</p>' +
       (x.cover_url ? '<div class="cover-now"><img src="' + esc(imgSrc(x.cover_url)) + '" data-raw="' + esc(rawUrl(x.cover_url)) + '" alt="현재 대표 이미지">' +
         '<label class="check"><input type="checkbox" id="pf-cover-rm"> 이미지 빼기</label></div>' : "") +
@@ -726,11 +730,11 @@
       var samples = rows.filter(function (g) { return g.sample; }).length;
       p.innerHTML =
         "<h2>갤러리</h2>" +
-        '<p class="muted">여러 장을 한 번에 올릴 수 있습니다(최대 ' + MAX_BATCH + "장). 사진은 긴 변 2000px JPG 로 줄여서 올립니다. ‘순서’ 숫자가 작을수록 앞에 보이고, 같으면 최근에 올린 사진이 앞에 옵니다.</p>" +
+        '<p class="muted">여러 장을 한 번에 올릴 수 있습니다(최대 ' + MAX_BATCH + "장). 사진은 긴 변 2000px JPG 로 줄여서 올립니다. ‘순서’ 숫자가 작을수록 앞에 보이고, 같으면 최근에 올린 사진이 앞에 옵니다. ‘숨기기’는 홈페이지 화면에서만 감출 뿐 사진 파일과 정보는 공개 저장소에 남으므로, 사진 속 인물의 삭제 요청 등은 ‘삭제’로 처리해 주세요.</p>" +
         '<form class="editor form-grid" data-upload novalidate>' +
         "<h3>사진 올리기</h3>" +
         '<div class="field"><label for="gf-album">앨범</label><select id="gf-album">' + options(ALBUM, "events") + "</select></div>" +
-        '<div class="field"><label for="gf-files">사진 선택 <span class="req">*</span></label><input type="file" id="gf-files" accept="image/*" multiple></div>' +
+        '<div class="field"><label for="gf-files">사진 선택 <span class="req">*</span></label><input type="file" id="gf-files" accept="' + ACCEPT + '" multiple></div>' +
         '<div class="field"><label for="gf-tko">사진 제목 (한국어, 선택)</label><input type="text" id="gf-tko" maxlength="200" placeholder="예) 2026 희망선언 준비 모임"></div>' +
         '<div class="field"><label for="gf-ten">사진 제목 (영어, 선택)</label><input type="text" id="gf-ten" maxlength="300"></div>' +
         '<div class="full form-actions"><button type="submit" class="btn btn-primary btn-sm">올리기</button><span class="form-status" data-status></span></div>' +
@@ -860,7 +864,7 @@
         }, Promise.resolve()).then(function () { throw err; });
       }).then(function () {
         var out = [done.length + "장을 올렸습니다."];
-        if (skipped.length) out.push("제외한 사진: " + skipped.join(" / ") + ".");
+        if (skipped.length) out.push("제외한 사진: " + skipped.join(" / "));
         if (stopped) out.push((n - done.length - skipped.length) + "장은 올리지 못했습니다 — " + errText(stopped) + " 남은 사진을 다시 올려 주세요.");
         return out.join(" ");
       });
@@ -916,7 +920,8 @@
       var today = inputDate(new Date());
       p.innerHTML =
         "<h2>응원 메시지</h2>" +
-        '<p class="muted">홈페이지에서 남긴 ‘희망 응원 메시지’는 담당자 이메일로 도착합니다. 게시할 메시지만 아래에 붙여 넣어 등록하세요. ‘게시’ 상태인 메시지 중 최근 6개가 홈 화면에 보입니다.</p>' +
+        '<p class="muted">홈페이지에서 남긴 ‘희망 응원 메시지’는 담당자 이메일로 도착합니다. 게시할 메시지만 아래에 붙여 넣어 등록하세요(등록하면 바로 게시됩니다). ‘게시’ 상태인 메시지 중 최근 6개가 홈 화면에 보입니다.</p>' +
+        '<p class="notice-box" style="margin:0 0 22px">등록한 메시지는 공개 저장소의 <code>data/cheers.json</code> 파일에 저장되어 누구나 볼 수 있습니다. ‘숨기기’는 홈페이지 화면에서만 감출 뿐 파일에는 그대로 남습니다. <b>게시 철회·삭제 요청을 받으면 반드시 ‘삭제’를 누르고</b>, 변경 이력에 남은 이전 기록도 정리해 주세요(README ‘게시 철회·삭제 요청 처리’).</p>' +
         '<form class="editor form-grid" data-add novalidate>' +
         "<h3>메시지 등록</h3>" +
         '<div class="field"><label for="cf-name">이름(닉네임) <span class="req">*</span></label><input type="text" id="cf-name" maxlength="20"></div>' +
@@ -924,7 +929,6 @@
         '<div class="field full"><label for="cf-msg">메시지 <span class="req">*</span></label><textarea id="cf-msg" maxlength="300" style="min-height:110px"></textarea>' +
         '<p class="hint"><span class="counter" data-counter>0</span>/300자</p></div>' +
         '<div class="field"><label for="cf-date">날짜</label><input type="date" id="cf-date" value="' + today + '"></div>' +
-        '<div class="field" style="align-self:end"><label class="check"><input type="checkbox" id="cf-pub" checked> 바로 홈페이지에 게시</label></div>' +
         '<div class="full form-actions"><button type="submit" class="btn btn-primary btn-sm">등록</button><span class="form-status" data-status></span></div>' +
         "</form>" +
         '<div class="tbl-wrap"><table class="adm"><thead><tr><th>상태</th><th>이름</th><th>지역</th><th>메시지</th><th>날짜</th><th>관리</th></tr></thead><tbody>' +
@@ -945,14 +949,14 @@
           region: $("#cf-region", form).value.trim(),
           message: message,
           created_at: isoLocal(!dv || dv === today ? new Date() : (parseInput(dv) || new Date())),
-          published: $("#cf-pub", form).checked
+          published: true
         };
         save(p, function () {
           return saveList("cheers", function (l) {
             while (idxOf(l, entry.id) >= 0) entry.id = newId("c");
             l.unshift(entry);
             return l;
-          }, "[관리자] 응원 메시지 등록: " + short(name, 20));
+          }, "[관리자] 응원 메시지 등록 (" + entry.id + ")"); // 커밋 메시지는 공개되므로 이름 등 개인정보를 넣지 않음
         }, st);
       });
 
@@ -963,13 +967,14 @@
         if (!c) return;
         if (act === "pub") {
           var target = !isPub(c);
+          if (!target && !confirm("‘숨기기’는 홈페이지 화면에서만 감춥니다. 내용은 공개 저장소 파일(data/cheers.json)에 남아 누구나 볼 수 있습니다.\n게시 철회·삭제 요청이라면 ‘취소’를 누르고 ‘삭제’를 사용하세요.\n\n그래도 숨길까요?")) return;
           save(p, function () {
             return saveList("cheers", function (l) {
               var i = idxOf(l, c.id);
               if (i < 0) throw notFound("이 메시지를");
               l[i].published = target;
               return l;
-            }, "[관리자] 응원 메시지 " + (target ? "게시" : "숨김") + ": " + short(c.name, 20));
+            }, "[관리자] 응원 메시지 " + (target ? "게시" : "숨김") + " (" + c.id + ")");
           });
         } else if (act === "del") {
           if (!confirm("‘" + short(c.message, 30) + "’ 메시지를 삭제할까요?")) return;
@@ -979,7 +984,9 @@
               if (i < 0) throw notFound("이 메시지를");
               l.splice(i, 1);
               return l;
-            }, "[관리자] 응원 메시지 삭제: " + short(c.name, 20));
+            }, "[관리자] 응원 메시지 삭제 (" + c.id + ")").then(function () {
+              return "삭제했습니다. 게시 철회·삭제 요청에 따른 것이라면 공개 저장소의 변경 이력에 남은 이전 기록도 정리해 주세요(README ‘게시 철회·삭제 요청 처리’).";
+            });
           });
         }
       });
@@ -989,8 +996,14 @@
   /* ---------------- 시작 ---------------- */
   function boot() {
     // 관리자 화면은 한국어 전용 (공개 화면의 언어 선택은 건드리지 않음)
-    document.documentElement.setAttribute("data-lang", "ko");
-    document.documentElement.lang = "ko";
+    // main.js 초기화(DOMContentLoaded)가 저장된 언어(en)를 적용하면 wh:lang 이벤트에서 다시 한국어로 고정
+    // (WH.setLang 을 부르면 저장된 언어가 바뀌고 이벤트가 반복되므로 속성만 직접 설정)
+    var forceKo = function () {
+      document.documentElement.setAttribute("data-lang", "ko");
+      document.documentElement.lang = "ko";
+    };
+    forceKo();
+    document.addEventListener("wh:lang", forceKo);
     $$("[data-gh]").forEach(function (el) {
       var k = el.getAttribute("data-gh");
       el.textContent = k === "owner" ? OWNER : k === "repo" ? REPO : OWNER + "/" + REPO;

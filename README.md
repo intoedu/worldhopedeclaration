@@ -64,7 +64,7 @@ npx serve .            # 또는: python3 -m http.server 8080  → http://localho
 1. GitHub 저장소 **Settings → Pages → Build and deployment**
    - Source: **Deploy from a branch**
    - Branch: **main** / 폴더: **/ (root)** → Save
-2. 1~2분 뒤 https://intoedu.github.io/worldhopedeclaration/ 에서 열립니다. 이후 main 브랜치에 커밋할 때마다 자동으로 다시 게시됩니다(보통 몇 분 이내).
+2. 1~2분 뒤 https://intoedu.github.io/worldhopedeclaration/ 에서 열립니다. 이후 main 브랜치에 커밋할 때마다 자동으로 다시 게시됩니다(보통 1~2분, 커밋이 몰리면 최대 10분).
 3. 저장소 최상위의 빈 파일 **`.nojekyll`** 은 GitHub Pages 가 파일을 가공(Jekyll)하지 않고 그대로 게시하게 합니다. 지우지 마세요.
 4. 공식 주소를 config 와 검색엔진 정보에 반영하려면 한 번 실행 후 커밋합니다 (Node.js 18 이상):
    ```bash
@@ -73,7 +73,7 @@ npx serve .            # 또는: python3 -m http.server 8080  → http://localho
    → `config.js`의 `siteUrl`, 각 페이지의 canonical·og:url·og:image 절대주소, `sitemap.xml`, `robots.txt` 가 갱신됩니다. 여러 번 실행해도 안전합니다.
 
 참고
-- GitHub 무료 요금제에서는 **공개(public) 저장소**에서만 Pages 를 쓸 수 있습니다. 공개 저장소라면 `data/*.json`(게시된 글·사진·응원 메시지)과 그 변경 이력을 누구나 볼 수 있으니, 게시하지 않을 개인정보는 저장소에 넣지 마세요. 온라인 접수 내용(문의·신청)은 저장소에 저장되지 않고 이메일로만 전달됩니다.
+- GitHub 무료 요금제에서는 **공개(public) 저장소**에서만 Pages 를 쓸 수 있습니다. 공개 저장소라면 `data/*.json`(게시된 글·사진·응원 메시지 — ‘숨기기’한 항목 포함)과 그 변경 이력을 누구나 볼 수 있으니, 게시하지 않을 개인정보는 저장소에 넣지 마세요. 삭제 요청은 아래 ‘게시 철회·삭제 요청 처리’를 따릅니다. 온라인 접수 내용(문의·신청)은 저장소에 저장되지 않고 이메일로만 전달됩니다.
 - 이 사이트는 하위 경로(`/worldhopedeclaration/`)에서 동작하도록 모든 경로를 **상대 경로**로 씁니다. 새 파일을 추가할 때도 `/assets/...` 처럼 `/` 로 시작하는 경로는 쓰지 마세요. (`404.html` 은 어떤 깊이의 주소에서 열려도 사이트 최상위를 기준으로 계산합니다)
 - GitHub Pages 는 응답 헤더(보안 헤더)를 직접 설정할 수 없습니다. 관리자 페이지는 페이지 안의 Content-Security-Policy 로 보호합니다.
 
@@ -108,8 +108,8 @@ npx serve .            # 또는: python3 -m http.server 8080  → http://localho
 1. **처음 한 번 활성화** — 사이트를 게시한 뒤 문의 폼에서 시험 접수를 한 번 보내면, `email.to` 수신함으로 FormSubmit 의 **활성화(Activate Form) 확인 메일**이 옵니다. 수신함 주인이 메일 속 **Activate** 버튼을 눌러야 그다음 접수부터 메일이 도착합니다. (스팸함도 확인)
    - 활성화 전에는 자동 전송이 실패하므로, 방문자에게는 메일 앱으로 보내는 대체 화면이 뜹니다. **정식 오픈 전에 꼭 활성화**하세요.
    - 활성화는 **접속 주소(도메인)별로 다시 필요할 수 있습니다.** 연결 도메인을 붙인 뒤, 또는 로컬 미리보기에서 시험한 경우에도 시험 접수를 다시 보내 확인하세요.
-2. **주소 숨기기(권장)** — 활성화 메일에 있는 무작위 문자열(별칭)을 `email.to` 에 이메일 주소 대신 넣으면 홈페이지 소스에서 실제 주소가 보이지 않습니다. 이때 메일 앱 대체 경로는 `publicEmail` 주소를 쓰므로 `publicEmail` 도 입력해 두세요.
-3. **대체 경로(mailto)** — 네트워크 차단·미활성화·서비스 장애 등으로 자동 전송이 실패하면, 내용이 채워진 메일을 방문자의 메일 앱에서 보내도록 안내합니다. `email.service: "mailto"` 로 바꾸면 항상 이 방식을 씁니다.
+2. **주소 숨기기(권장)** — 활성화 메일에 있는 무작위 문자열(별칭)을 `email.to` 에 이메일 주소 대신 넣으면 홈페이지 소스에서 실제 주소가 보이지 않습니다. 이때 메일 앱 경로(대체 경로와 `email.service: "mailto"`)는 `publicEmail` 주소를 받는 주소로 쓰므로 `publicEmail` 도 입력해 두세요. 둘 다 이메일 주소가 아니면 메일 앱 경로를 쓸 수 없어 방문자에게 전화 안내만 표시됩니다.
+3. **대체 경로(mailto)** — 네트워크 차단·미활성화·서비스 장애 등으로 자동 전송이 실패하면, 내용이 채워진 메일을 방문자의 메일 앱에서 보내도록 안내합니다(FormSubmit 응답이 12초 안에 오지 않을 때도 같음. 메일 앱이 자동으로 열리지 않으면 ‘메일 앱으로 보내기’ 버튼이 표시됩니다). `email.service: "mailto"` 로 바꾸면 항상 이 방식을 씁니다.
 4. 메일은 표 형식으로 오며, 신청자가 이메일을 적었다면 **답장하기**로 바로 회신할 수 있습니다.
 
 운영 원칙
@@ -122,7 +122,7 @@ npx serve .            # 또는: python3 -m http.server 8080  → http://localho
 
 주소: https://intoedu.github.io/worldhopedeclaration/admin/ (연결 도메인 사용 시 `https://도메인/admin/`)
 
-관리자 화면은 GitHub API 로 저장소 파일(`data/posts.json`, `data/gallery.json`, `data/cheers.json`, `assets/img/uploads/`)을 직접 수정(커밋)합니다. 저장하면 GitHub Pages 가 자동으로 다시 게시하며, 홈페이지에 보이기까지 보통 1~10분 걸립니다.
+관리자 화면은 GitHub API 로 저장소 파일(`data/posts.json`, `data/gallery.json`, `data/cheers.json`, `assets/img/uploads/`)을 직접 수정(커밋)합니다. 저장하면 GitHub Pages 가 자동으로 다시 게시하며, 홈페이지에 보이기까지 보통 1~2분, 사진을 여러 장 올린 직후에는 최대 10분 걸립니다.
 
 **GitHub 토큰 만들기 (관리자마다 각자, 처음 한 번)**
 1. 저장소에 쓰기 권한이 있는 계정으로 GitHub 로그인
@@ -140,6 +140,29 @@ npx serve .            # 또는: python3 -m http.server 8080  → http://localho
 응원 메시지 게시 흐름: 방문자가 홈에서 접수 → 담당자 이메일로 도착 → 담당자가 내용을 확인해 관리자 ‘응원 메시지’ 탭에서 게시 → `data/cheers.json` 에 저장되어 홈에 표시.
 
 관리자 페이지 없이 GitHub 웹 화면에서 `data/*.json` 을 직접 고쳐도 됩니다(형식은 기존 항목을 그대로 따라 주세요. 이미지 경로는 `assets/img/...` 처럼 `/` 없이).
+
+### 게시 철회·삭제 요청 처리 (응원 메시지·사진 등)
+
+저장소가 공개되어 있으므로 ‘숨기기’한 항목도 `data/*.json` 파일에 그대로 남아 누구나 볼 수 있고, ‘삭제’한 항목도 GitHub 변경 이력(이전 커밋)에 남습니다. 본인이 게시 철회·삭제를 요청하면 개인정보처리방침(제3조·제6조)에 따라 다음 순서로 처리합니다.
+
+1. 관리자 페이지에서 해당 항목을 **‘삭제’** 합니다(‘숨기기’ 아님). 사진은 ‘삭제’하면 올린 파일도 함께 지워집니다.
+2. **변경 이력 정리** — Git 을 다룰 수 있는 담당자가 [git filter-repo](https://github.com/newren/git-filter-repo) 로 진행합니다. 저장소에 브랜치 보호 규칙이 있으면 잠시 강제 푸시(force push)를 허용합니다.
+   ```bash
+   git clone --mirror https://github.com/intoedu/worldhopedeclaration.git wh-clean
+   cd wh-clean
+   # 응원 메시지 등 글자: 지울 문구를 한 줄에 하나씩 적은 파일(예: 메시지 문장 전체 ==>[삭제됨])
+   #   다른 글에도 쓰이는 흔한 단어 대신, 그 항목에만 있는 문구(메시지 문장 전체 등)를 적습니다.
+   git filter-repo --replace-text ../remove.txt --replace-message ../remove.txt
+   # 사진 파일: 경로를 지정해 이력에서 통째로 제거
+   # git filter-repo --invert-paths --path assets/img/uploads/gallery/파일이름.jpg
+   git push --force --mirror https://github.com/intoedu/worldhopedeclaration.git
+   ```
+   (`refs/pull/…` 를 고칠 수 없다는 거절 메시지는 무시해도 됩니다)
+3. **GitHub 에 남은 사본 삭제 요청** — 이력을 고친 뒤에도 이전 커밋 화면이 GitHub 에 한동안 남을 수 있으므로, GitHub 공식 문서 ‘Removing sensitive data from a repository’ 안내에 따라 GitHub Support 에 삭제를 요청합니다. 다른 사람이 만든 포크(fork)에 사본이 있으면 이것도 함께 문의합니다.
+4. 다른 컴퓨터에 받아 둔 저장소 사본(clone)은 지우고 새로 받습니다. 관리자 페이지는 저장소를 매번 새로 읽으므로 따로 할 일이 없습니다.
+5. 접수 메일도 메일함과 휴지통에서 삭제하고, 요청자에게 처리 결과를 알립니다.
+
+관리자 페이지가 남기는 커밋 메시지에는 이름 같은 개인정보를 넣지 않고 항목 ID만 적습니다.
 
 ## 방문자 통계 (선택)
 

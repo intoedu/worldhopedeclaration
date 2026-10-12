@@ -118,15 +118,21 @@
     if (readyNote) readyNote.hidden = false;
   }
 
-  /* 모바일 결제: 결제창에서 리다이렉트로 돌아온 경우 (?paymentId=...&code=...) */
+  /* 모바일 결제: 결제창에서 리다이렉트로 돌아온 경우 (?paymentId=...&code=...)
+     주소의 값은 누구나 조작할 수 있으므로 화면에 그대로 옮기지 않습니다.
+     감사 문구는 이 탭에서 시작한 결제(저장된 후원자 정보와 결제번호 일치)일 때만 표시합니다. */
   var retId = WH.param("paymentId");
   if (retId) {
     var pending = takePending(retId);
-    if (WH.param("code")) {
-      say("err", WH.t("결제가 취소되었거나 실패했습니다: ", "Payment was cancelled or failed: ") + (WH.param("message") || WH.param("code")));
+    var code = WH.param("code");
+    if (code) {
+      say("err", WH.t("결제가 취소되었거나 완료되지 않았습니다.", "Payment was cancelled or not completed.") +
+        (/^[A-Za-z0-9_]{1,40}$/.test(code) ? " (" + code + ")" : ""));
+    } else if (pending) {
+      succeeded(pending, pending.paymentId);
     } else {
-      // 이 탭에서 시작한 결제(저장된 후원자 정보와 결제번호 일치)일 때만 알림 메일 발송
-      succeeded(pending, retId);
+      say("info", WH.t("이 화면에서 결제 결과를 확인하지 못했습니다. 결제 완료 여부는 카드사·결제 앱 내역에서 확인해 주시고, 궁금하신 점은 전국대표전화(" + (C.phone || "") + ")로 문의해 주세요.",
+        "We could not confirm the payment result on this page. Please check your card or payment app history, or call " + (C.phone || "") + " if you have questions."));
     }
     try { history.replaceState(null, "", location.pathname + (location.hash || "")); } catch (e) {}
     form.scrollIntoView({ block: "center" });

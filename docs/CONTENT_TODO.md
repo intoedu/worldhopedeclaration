@@ -54,6 +54,7 @@
 - [ ] (선택) GoatCounter 계정·사이트 코드 → `analytics.goatcounter` (하단 누적 방문자: GoatCounter 설정의 ‘Allow adding visitor counts’ 켜기)
 - [ ] (선택) Google Analytics 4 측정 ID → `analytics.ga4`
 - [ ] 개인정보처리방침의 위탁·국외 이전(제5조), 자동 수집(제9조)을 실제 사용하는 서비스에 맞춰 확정
+- [ ] 게시 철회·삭제 요청 시 변경 이력까지 정리할 담당자(Git 사용 가능) 지정 — 절차는 `README.md` ‘게시 철회·삭제 요청 처리’
 - [ ] 공식 주소 반영 `node scripts/set-domain.mjs https://intoedu.github.io/worldhopedeclaration` (도메인을 쓰면 아래 항목으로)
 - [ ] (도메인 사용 시) `node scripts/set-domain.mjs https://www.도메인` → 커밋 → DNS 등록(A 레코드 185.199.108.153 / 109.153 / 110.153 / 111.153, `www` CNAME → `intoedu.github.io`) → Settings → Pages 에서 **Enforce HTTPS** 켜기 → 새 주소에서 이메일 접수 다시 시험(FormSubmit 재활성화 필요할 수 있음) → QR 인쇄물 새로 만들기
 - [ ] `config.js` 의 `draft: false` 로 변경 → 시안 안내 바 제거

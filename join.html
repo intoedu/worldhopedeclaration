@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="ko" data-lang="ko" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>참여하기 | 세계희망연대</title>
+<meta name="description" content="세계희망선언에 함께해 주세요. 세계희망선언 참여 신청, 글로벌 대표 추천, 희망 응원 메시지, 후원·문의 안내. 전국대표전화 1588-2716">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="세계희망연대">
+<meta property="og:title" content="참여하기 | 세계희망연대">
+<meta property="og:description" content="인류와 지구의 더 나은 미래를 위해, 지금, 세계가 함께 희망을 선언합니다. 선언 참여 신청 · 글로벌 대표 추천 · 희망 응원 메시지">
+<meta property="og:image" content="assets/img/og-image.png">
+<meta name="theme-color" content="#13294b">
+<link rel="icon" href="assets/img/brand/favicon-64.png" type="image/png" sizes="64x64">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Serif:ital,wght@0,500;0,700;1,500&display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>(function(){try{var l=new URLSearchParams(location.search).get("lang")||localStorage.getItem("wh-lang");if(l==="en"){var h=document.documentElement;h.setAttribute("data-lang","en");h.lang="en";}}catch(e){}})();</script>
+<style>
+  /* ===== 참여하기 페이지 전용 (공통 style.css 의 토큰만 사용) ===== */
+
+  /* 메뉴로 이동하는 구역: 고정 헤더 + 하위 메뉴 아래에 오도록 */
+  .join-anchor { scroll-margin-top: calc(var(--header-h) + 58px); }
+
+  /* ---------- 상단 히어로: 왼쪽 글 + 오른쪽 새싹 사진과 참여 현황 ---------- */
+  .join-hero { padding: 40px 0 72px; }
+  .join-hero .breadcrumb { margin-bottom: 8px; }
+  .join-hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 470px); gap: 40px 72px; align-items: center; }
+  .join-hero-text { min-width: 0; }
+  .page-hero.join-hero p.join-hero-kicker { margin: 0 0 12px; max-width: none; line-height: 1.6; font-family: var(--f-serif); font-size: clamp(16px, 1.55vw, 19px); font-weight: 500; letter-spacing: -0.01em; color: var(--navy-900); }
+  html[data-lang="en"] .page-hero.join-hero p.join-hero-kicker { font-family: var(--f-serif-en); letter-spacing: 0; }
+  .join-hero h1 { font-size: clamp(36px, 4.6vw, 58px); font-weight: 900; letter-spacing: -0.035em; }
+  html[data-lang="en"] .join-hero h1 { font-weight: 700; letter-spacing: -0.02em; }
+  .join-hero .page-hero-en { margin-top: 12px; font-size: clamp(13px, 1.4vw, 17px); font-weight: 600; letter-spacing: .24em; }
+  .page-hero.join-hero p.join-hero-lead { margin-top: 22px; max-width: 580px; }
+  .page-hero.join-hero p.join-hero-quote { margin-top: 12px; font-family: var(--f-serif-en); font-size: 16px; font-style: italic; font-weight: 500; line-height: 1.6; color: var(--ink-2); }
+  .join-hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  .join-hero-actions .btn { min-width: 210px; }
+
+  .join-figure { position: relative; margin: 0 0 0 auto; width: 100%; max-width: 470px; }
+  .join-figure::before { content: ""; position: absolute; z-index: -1; inset: -14% -10% 6%; border-radius: 50%; background: radial-gradient(circle at 50% 50%, rgba(255, 236, 200, .55) 0%, rgba(255, 236, 200, 0) 60%); }
+  .join-photo { position: relative; margin: 0; aspect-ratio: 4 / 3; border-radius: var(--radius-lg); overflow: hidden; background: #1c2a1f; box-shadow: 0 34px 64px -38px rgba(12, 28, 54, .6); }
+  .join-photo picture { height: 100%; }
+  .join-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 64% 50%; }
+  .join-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(8, 20, 38, .72) 0%, rgba(8, 20, 38, .34) 48%, rgba(8, 20, 38, 0) 74%), linear-gradient(0deg, rgba(8, 20, 38, .55) 0%, rgba(8, 20, 38, 0) 46%); }
+  .join-photo figcaption { position: absolute; z-index: 1; left: 28px; right: 40%; bottom: 74px; color: #fff; }
+  .join-photo-cap { display: block; margin-bottom: 8px; font-family: var(--f-display); font-size: 12px; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: var(--gold-300); }
+  .join-photo-title { display: block; font-family: var(--f-serif); font-size: clamp(20px, 2vw, 25px); font-weight: 700; line-height: 1.4; letter-spacing: -0.02em; }
+  html[data-lang="en"] .join-photo-title { font-family: var(--f-serif-en); font-weight: 500; letter-spacing: 0; }
+  .join-photo-en { display: block; margin-top: 6px; font-family: var(--f-serif-en); font-size: 13.5px; font-style: italic; line-height: 1.5; color: rgba(255, 255, 255, .82); }
+
+  .join-now { position: relative; display: grid; grid-template-columns: 1fr 1fr; margin: -46px 22px 0; padding: 18px 0 16px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+  .join-now-item { min-width: 0; padding: 0 20px; }
+  .join-now-item + .join-now-item { border-left: 1px solid var(--line-2); }
+  .join-now-num { margin: 0; display: flex; align-items: baseline; gap: 6px; color: var(--navy-900); line-height: 1.1; }
+  .join-now-num b { font-family: var(--f-serif-en); font-size: clamp(28px, 2.6vw, 34px); font-weight: 700; font-variant-numeric: lining-nums; }
+  .join-now-num small { font-family: var(--f-serif); font-size: 15px; font-weight: 700; }
+  html[data-lang="en"] .join-now-num small { font-family: var(--f-serif-en); font-weight: 500; }
+  .join-now-label { margin: 6px 0 0; font-family: var(--f-serif-en); font-size: 11.5px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-2); line-height: 1.35; }
+  .join-now-desc { margin: 3px 0 0; font-size: 13.5px; color: var(--muted); line-height: 1.5; }
+
+  /* ---------- 페이지 안 메뉴 ---------- */
+  .join-subnav ul { width: max-content; max-width: 100%; margin: 0 auto; }
+  .join-subnav a b { margin-right: 6px; font-family: var(--f-serif-en); font-weight: 700; color: var(--gold-600); }
+  .join-subnav li.is-group { position: relative; margin-left: 14px; }
+  .join-subnav li.is-group::before { content: ""; position: absolute; left: -9px; top: 50%; width: 1px; height: 16px; margin-top: -8px; background: var(--line-2); }
+  .join-subnav ul.has-more-right { -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 44px), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 44px), transparent); }
+  .join-subnav ul.has-more-left { -webkit-mask-image: linear-gradient(90deg, transparent, #000 44px); mask-image: linear-gradient(90deg, transparent, #000 44px); }
+  .join-subnav ul.has-more-left.has-more-right { -webkit-mask-image: linear-gradient(90deg, transparent, #000 44px, #000 calc(100% - 44px), transparent); mask-image: linear-gradient(90deg, transparent, #000 44px, #000 calc(100% - 44px), transparent); }
+
+  /* ---------- 신청 구역: 왼쪽 안내 + 오른쪽 신청서 ---------- */
+  .join-layout { display: grid; grid-template-columns: minmax(0, 380px) minmax(0, 1fr); gap: 40px 64px; align-items: start; }
+  .join-intro { min-width: 0; }
+  .join-kicker { display: flex; align-items: center; gap: 12px; margin: 0 0 14px; line-height: 1.4; }
+  .join-kicker b { font-family: var(--f-serif-en); font-size: 17px; font-weight: 700; color: var(--gold-600); }
+  .join-kicker span { display: inline-flex; align-items: center; gap: 12px; font-family: var(--f-display); font-size: 13px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--blue-700); }
+  .join-kicker span::before { content: ""; width: 28px; height: 1px; background: currentColor; opacity: .55; }
+  .join-intro .section-title { font-size: clamp(26px, 2.7vw, 34px); }
+  .join-intro .section-lead { margin-top: 14px; font-size: 16.5px; }
+
+  .join-steps { list-style: none; margin: 30px 0 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--line); }
+  .join-steps li { display: grid; grid-template-columns: 34px 1fr; gap: 14px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .join-step-no { width: 30px; height: 30px; margin-top: 1px; border: 1px solid var(--navy-900); border-radius: 50%; display: grid; place-items: center; font-family: var(--f-serif-en); font-size: 14px; font-weight: 700; color: var(--navy-900); }
+  .join-steps b { display: block; font-family: var(--f-head); font-size: 16.5px; font-weight: 700; color: var(--navy-900); line-height: 1.45; }
+  .join-steps p { margin: 2px 0 0; font-size: 14.5px; color: var(--ink-2); line-height: 1.6; }
+
+  .join-aside-links { display: grid; gap: 12px; margin-top: 26px; }
+  .join-phone { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; transition: border-color .2s, box-shadow .2s; }
+  .join-phone:hover { border-color: var(--blue-200); box-shadow: var(--shadow-sm); }
+  .join-phone > span:first-child { flex-shrink: 0; width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; background: var(--navy-900); color: #fff; }
+  .join-phone > span:first-child svg { width: 20px; height: 20px; }
+  .join-phone small { display: block; font-size: 13px; color: var(--muted); line-height: 1.4; }
+  .join-phone b { display: block; font-family: var(--f-serif-en); font-size: 22px; font-weight: 700; color: var(--navy-900); line-height: 1.25; letter-spacing: .01em; }
+
+  /* 각국 33인 = 11개 분야 × 3인 (작은 공식) */
+  .join-formula { margin-top: 26px; padding: 18px 20px; border: 1px solid var(--line-2); border-radius: var(--radius); background: rgba(255, 255, 255, .8); }
+  .join-formula-row { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; color: var(--navy-900); }
+  .join-formula-row b { font-family: var(--f-serif-en); font-size: 28px; font-weight: 700; line-height: 1.1; font-variant-numeric: lining-nums; }
+  .join-formula-row small { font-family: var(--f-serif); font-size: 14px; font-weight: 700; }
+  html[data-lang="en"] .join-formula-row small { font-family: var(--f-serif-en); font-weight: 500; }
+  .join-formula-row i { font-style: normal; font-family: var(--f-serif-en); font-size: 20px; color: var(--muted); }
+  .join-formula-row .is-result b { color: var(--blue-700); }
+  .join-formula-sub { margin: 10px 0 0; padding-top: 10px; border-top: 1px solid var(--line); font-size: 14px; color: var(--ink-2); line-height: 1.6; }
+  .join-formula-sub b { color: var(--navy-900); }
+  .join-intro .notice-box { margin-top: 18px; }
+  .join-note { margin: 12px 0 0; font-size: 13.5px; color: var(--muted); line-height: 1.65; }
+  .join-intro .link-arrow { margin-top: 18px; }
+
+  /* 신청서 */
+  .join-form h3 { font-size: 23px; }
+  .join-form .form-card-en { display: block; margin: 0 0 6px; font-family: var(--f-display); font-size: 12px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--blue-700); }
+  .join-fs { min-width: 0; margin: 0; padding: 0; border: 0; }
+  .join-fs + .join-fs { margin-top: 8px; padding-top: 22px; border-top: 1px solid var(--line); }
+  .join-fs legend { display: flex; align-items: center; gap: 10px; float: left; width: 100%; margin: 0 0 16px; padding: 0; font-family: var(--f-head); font-size: 17px; font-weight: 700; color: var(--navy-900); }
+  .join-fs legend + * { clear: both; }
+  .join-fs + .form-grid { margin-top: 22px; padding-top: 22px; border-top: 1px solid var(--line); }
+  .join-fs legend small { font-family: var(--f-display); font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+  .join-form .consent-box { max-height: 168px; }
+  .join-form .hint { margin-bottom: 0; }
+  .join-form .check + .check { margin-top: 10px; }
+
+  /* 응원 메시지 구역 머리 */
+  .join-cheer-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 40px; max-width: none; }
+  .join-cheer-head > div { max-width: 640px; }
+
+  /* 응원 메시지: 표어 패널 + 게시된 메시지 */
+  .join-cheer-wall { display: grid; gap: 16px; align-content: start; min-width: 0; }
+  .join-cheer-banner { position: relative; isolation: isolate; overflow: hidden; margin: 0; padding: 40px 32px 92px; text-align: center; border: 1px solid var(--line); border-radius: var(--radius); background: linear-gradient(180deg, #e7eef7 0%, #f1f5fa 52%, #f7f9fc 100%); }
+  .join-cheer-banner::before { content: ""; position: absolute; z-index: -1; left: 50%; top: -120px; width: 420px; height: 300px; margin-left: -210px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 233, 196, .7) 0%, rgba(255, 233, 196, 0) 64%); }
+  .join-cheer-banner .mountains { top: auto; bottom: 0; height: 62%; }
+  .join-cheer-banner img { width: 52px; height: 52px; margin: 0 auto 16px; }
+  .join-cheer-banner blockquote { margin: 0; }
+  .join-cheer-banner blockquote p { margin: 0; font-family: var(--f-serif); font-size: clamp(21px, 2.2vw, 27px); font-weight: 700; line-height: 1.55; letter-spacing: -0.02em; color: var(--navy-900); }
+  html[data-lang="en"] .join-cheer-banner blockquote p { font-family: var(--f-serif-en); font-weight: 500; letter-spacing: 0; }
+  .join-cheer-banner blockquote p.join-cheer-banner-en { margin-top: 10px; font-family: var(--f-serif-en); font-size: 15px; font-style: italic; font-weight: 500; line-height: 1.6; letter-spacing: 0; color: var(--ink-2); }
+  .join-cheer-banner figcaption { margin-top: 18px; font-family: var(--f-display); font-size: 11.5px; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: var(--blue-700); }
+
+  /* 더 많은 참여 방법 카드 */
+  .join-more .card { padding: 30px 28px 26px; }
+  .join-more .card-en { margin-top: -6px; }
+  .join-more .card .join-more-tel { display: inline-block; margin-top: 10px; font-family: var(--f-serif-en); font-size: 19px; font-weight: 700; color: var(--navy-900); }
+
+  @media (min-width: 961px) and (min-height: 820px) {
+    .join-intro { position: sticky; top: calc(var(--header-h) + 84px); }
+  }
+  @media (max-width: 1080px) {
+    .join-hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 400px); gap: 32px 40px; }
+  }
+  @media (max-width: 960px) {
+    .join-layout { grid-template-columns: 1fr; }
+    .join-intro { max-width: 680px; }
+  }
+  @media (max-width: 860px) {
+    .join-hero-grid { grid-template-columns: 1fr; }
+    .join-figure { margin: 8px auto 0; max-width: 560px; }
+  }
+  @media (max-width: 760px) {
+    .join-hero { padding: 28px 0 52px; }
+    .join-hero-actions .btn { flex: 1 1 220px; min-width: 0; }
+    .join-photo { aspect-ratio: 16 / 10; }
+    .join-photo figcaption { left: 20px; right: 30%; bottom: 66px; }
+    .join-now { margin: -40px 12px 0; padding: 14px 0 12px; }
+    .join-now-item { padding: 0 14px; }
+    .join-now-desc { font-size: 12.5px; }
+    .join-steps { margin-top: 24px; }
+    .join-cheer-banner { padding: 30px 18px 72px; }
+    .join-cheer-banner figcaption { font-size: 10.5px; letter-spacing: .16em; }
+  }
+  @media (max-width: 560px) {
+    .join-hero .page-hero-en { font-size: 12px; letter-spacing: .14em; }
+    .join-subnav a { padding: 14px 10px 13px; font-size: 14.5px; }
+    .join-subnav a b { display: none; }
+    .join-subnav li.is-group { margin-left: 8px; }
+    .join-subnav li.is-group::before { left: -5px; }
+    .join-photo figcaption { right: 16px; }
+    .join-photo-en { display: none; }
+    .join-now-label { font-size: 10px; letter-spacing: .04em; }
+  }
+
+  @media print {
+    .join-subnav, .breadcrumb, .join-hero-actions, .join-figure, .join-form, #cheer form { display: none !important; }
+  }
+</style>
+</head>
+<body data-page="join" data-title-en="Join | World Hope Declaration Network">
+<div id="site-header"></div>
+
+<main id="main">
+  <!-- ===== 상단: 라이트 히어로 ===== -->
+  <section class="page-hero join-hero" aria-labelledby="page-title">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="breadcrumb"><a href="index.html"><span class="ko">홈</span><span class="en">Home</span></a><span aria-hidden="true">/</span><span><span class="ko">참여하기</span><span class="en">Join</span></span></nav>
+      <div class="join-hero-grid">
+        <div class="join-hero-text">
+          <p class="join-hero-kicker"><span class="ko">공동의 선언, 하나의 인류</span><span class="en">One Declaration, One Humanity</span></p>
+          <h1 id="page-title"><span class="ko">참여하기</span><span class="en">Join Us</span></h1>
+          <p class="page-hero-en">Join the World Hope Declaration</p>
+          <p class="join-hero-lead"><span class="ko">인류와 지구의 더 나은 미래를 위해, 지금, 세계가 함께 희망을 선언합니다. 선언 참여 신청과 글로벌 대표 추천, 희망 응원 메시지로 이 걸음에 함께해 주세요.</span><span class="en">Now, the world declares hope for a better future for all. Join the Declaration, nominate a Global Representative, or send a message of hope — and walk with us.</span></p>
+          <p class="join-hero-quote ko" lang="en">Now, the World Declares Hope for a Better Future for All.</p>
+          <div class="join-hero-actions">
+            <a class="btn btn-primary btn-lg" href="#declare"><span class="ko">선언 참여 신청</span><span class="en">Join the Declaration</span><span data-icon="arrow-right"></span></a>
+            <a class="btn btn-outline btn-lg" href="#nominate"><span class="ko">글로벌 대표 추천</span><span class="en">Nominate a Representative</span><span data-icon="arrow-right"></span></a>
+          </div>
+        </div>
+
+        <!-- 새싹 사진 + 참여 현황 (숫자는 data/stats.json) -->
+        <div class="join-figure">
+          <figure class="join-photo">
+            <picture><source srcset="assets/img/home/tile-join.webp" type="image/webp"><img src="assets/img/home/tile-join.jpg" alt="" width="786" height="372" fetchpriority="high"></picture>
+            <figcaption>
+              <span class="join-photo-cap">Action</span>
+              <span class="join-photo-title"><span class="ko">오늘의 선언을<br>내일의 현실로</span><span class="en">From Today’s Declaration to Tomorrow’s Reality</span></span>
+              <span class="join-photo-en ko" lang="en">From Today’s Declaration to Tomorrow’s Reality</span>
+            </figcaption>
+          </figure>
+          <div class="join-now" role="group" aria-label="참여 현황" data-en-aria-label="Participation at a glance">
+            <div class="join-now-item">
+              <div class="join-now-num"><b data-stat="participants">21</b><small><span class="ko">명</span><span class="en">people</span></small></div>
+              <div class="join-now-label">Current participants</div>
+              <div class="join-now-desc"><span class="ko">현재 참여자 수</span><span class="en">Participants so far</span></div>
+            </div>
+            <div class="join-now-item">
+              <div class="join-now-num"><b data-stat="target">6,435</b><small><span class="ko">명</span><span class="en">people</span></small></div>
+              <div class="join-now-label">Global target</div>
+              <div class="join-now-desc"><span class="ko"><span data-stat="countries">195</span>개국 × <span data-stat="per_country">33</span>인 (목표치)</span><span class="en"><span data-stat="countries">195</span> nations × <span data-stat="per_country">33</span> (target)</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 페이지 안 메뉴 ===== -->
+  <nav class="subnav join-subnav" aria-label="참여하기 메뉴" data-en-aria-label="Ways to join">
+    <div class="container">
+      <ul>
+        <li><a href="#declare"><b>01</b><span class="ko">선언 참여<span class="hide-mobile"> 신청</span></span><span class="en">Declare</span></a></li>
+        <li><a href="#nominate"><b>02</b><span class="ko"><span class="hide-mobile">글로벌 </span>대표 추천</span><span class="en">Nominate</span></a></li>
+        <li><a href="#cheer"><b>03</b><span class="ko"><span class="hide-mobile">희망 </span>응원 메시지</span><span class="en">Messages<span class="hide-mobile"> of Hope</span></span></a></li>
+        <li class="is-group"><a href="#more"><span class="ko">후원·문의</span><span class="en"><span class="hide-mobile">Give &amp; Contact</span><span class="show-mobile">More</span></span></a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ===== 01. 세계희망선언 참여 신청 (이메일 접수: forms.js · declaration_join) ===== -->
+  <section class="section join-anchor" id="declare" aria-labelledby="declare-title">
+    <div class="container">
+      <div class="join-layout">
+        <div class="join-intro">
+          <p class="join-kicker"><b>01</b><span>Declare</span></p>
+          <h2 class="section-title" id="declare-title"><span class="ko">세계희망선언 참여 신청</span><span class="en">Join the Declaration</span></h2>
+          <p class="section-lead"><span class="ko">국가·인종·종교·이념을 넘어 인류가 함께 살아갈 새로운 세계의 기준 — 세계희망선언에 함께하실 분은 신청서를 남겨 주세요.</span><span class="en">Beyond nation, race, religion and ideology — a new standard for the world we share. If you would like to join the World Hope Declaration, please send us this application.</span></p>
+          <ol class="join-steps">
+            <li><span class="join-step-no">1</span><div><b><span class="ko">신청서 작성</span><span class="en">Fill in the form</span></b><p><span class="ko">이름·국가·분야·연락처와 참여 동기를 적어 주세요.</span><span class="en">Tell us your name, country, field, contact details and why you would like to join.</span></p></div></li>
+            <li><span class="join-step-no">2</span><div><b><span class="ko">담당자에게 전달</span><span class="en">Sent to our staff</span></b><p><span class="ko">입력하신 내용은 이메일로 담당자에게 전달됩니다.</span><span class="en">Your application is delivered to our staff by email.</span></p></div></li>
+            <li><span class="join-step-no">3</span><div><b><span class="ko">확인 후 연락</span><span class="en">We will be in touch</span></b><p><span class="ko">담당자가 확인한 뒤 연락드립니다.</span><span class="en">Our staff will review it and contact you.</span></p></div></li>
+          </ol>
+          <div class="join-aside-links">
+            <a class="join-phone" href="tel:15882716"><span data-icon="phone"></span><span><small><span class="ko">전화로도 신청·문의하실 수 있습니다</span><span class="en">You can also apply or ask by phone (Korea)</span></small><b>1588-2716</b></span></a>
+            <a class="link-arrow" href="declaration.html"><span class="ko">세계희망선언문 먼저 읽기</span><span class="en">Read the Declaration first</span></a>
+          </div>
+        </div>
+
+        <form class="form-card join-form" id="declare-form" data-wh-form="declaration_join" data-subject-ko="[세계희망연대 홈페이지] 세계희망선언 참여 신청" data-ok-ko="참여 신청이 담당자에게 전달되었습니다. 확인 후 연락드리겠습니다. 함께해 주셔서 감사합니다." data-ok-en="Your application has been sent to our staff. We will contact you after review. Thank you for joining us.">
+          <span class="form-card-en">Application</span>
+          <h3><span class="ko">참여 신청서</span><span class="en">Application Form</span></h3>
+          <p><span class="ko"><span style="color:var(--danger)">*</span> 표시는 필수 입력 항목입니다. 보내 주신 내용은 이메일로 담당자에게 전달됩니다.</span><span class="en">Fields marked <span style="color:var(--danger)">*</span> are required. Your application is delivered to our staff by email.</span></p>
+          <div class="form-grid">
+            <div class="field">
+              <label for="j-name"><span class="ko">이름</span><span class="en">Name</span><span class="req">*</span></label>
+              <input type="text" id="j-name" name="name" maxlength="40" required autocomplete="name">
+            </div>
+            <div class="field">
+              <label for="j-country"><span class="ko">국가</span><span class="en">Country</span><span class="req">*</span></label>
+              <select id="j-country" name="country" required data-other="j-country-other">
+                <option value="KOR" selected data-en="Republic of Korea">대한민국</option>
+                <option value="other" data-en="Other (please specify)">기타 (직접 입력)</option>
+              </select>
+            </div>
+            <div class="field full" hidden>
+              <label for="j-country-other"><span class="ko">국가명</span><span class="en">Country name</span><span class="req">*</span></label>
+              <input type="text" id="j-country-other" name="country_other" maxlength="60" disabled autocomplete="country-name" data-label="국가명(직접 입력)" placeholder="예) 일본, 미국" data-en-placeholder="e.g. Japan, United States">
+            </div>
+            <div class="field">
+              <label for="j-org"><span class="ko">소속</span><span class="en">Organization</span></label>
+              <input type="text" id="j-org" name="org" maxlength="60" autocomplete="organization" placeholder="교회·단체·기관 (선택)" data-en-placeholder="Church, organization… (optional)">
+            </div>
+            <div class="field">
+              <label for="j-title"><span class="ko">직함</span><span class="en">Title / Position</span></label>
+              <input type="text" id="j-title" name="position" maxlength="40" autocomplete="organization-title" placeholder="(선택)" data-en-placeholder="(optional)">
+            </div>
+            <div class="field full">
+              <label for="j-field"><span class="ko">참여 분야</span><span class="en">Field</span><span class="req">*</span></label>
+              <select id="j-field" name="field" required>
+                <option value="" data-en="Select the closest field">가장 가까운 분야를 골라 주세요</option>
+                <option value="01" data-en="1. Social Influence">1. 사회영향력</option>
+                <option value="02" data-en="2. National Prestige">2. 국위선양</option>
+                <option value="03" data-en="3. Academia &amp; Education">3. 교육계</option>
+                <option value="04" data-en="4. Culture &amp; Arts">4. 문화예술계</option>
+                <option value="05" data-en="5. Religious Leaders">5. 종교계</option>
+                <option value="06" data-en="6. Industry &amp; Business">6. 산업계</option>
+                <option value="07" data-en="7. Defense, Safety &amp; Public Security">7. 국방사회안전</option>
+                <option value="08" data-en="8. Medical &amp; Health">8. 의료계</option>
+                <option value="09" data-en="9. Workers &amp; Livelihood">9. 생업종사자</option>
+                <option value="10" data-en="10. Citizens">10. 시민</option>
+                <option value="11" data-en="11. Political Leaders (Current &amp; Former)">11. 정치계(전·현직)</option>
+              </select>
+              <p class="hint"><span class="ko">글로벌 33의 11개 분야 가운데 가장 가까운 분야를 골라 주세요. 일반 시민은 ‘10. 시민’을 고르시면 됩니다.</span><span class="en">Choose the closest of the 11 Global 33 fields. If none fits, choose “10. Citizens”.</span></p>
+            </div>
+            <div class="field">
+              <label for="j-phone"><span class="ko">연락처</span><span class="en">Phone</span><span class="req">*</span></label>
+              <input type="tel" id="j-phone" name="phone" maxlength="20" required autocomplete="tel" placeholder="010-0000-0000" data-en-placeholder="+82 10-0000-0000">
+            </div>
+            <div class="field">
+              <label for="j-email"><span class="ko">이메일</span><span class="en">Email</span><span class="req">*</span></label>
+              <input type="email" id="j-email" name="email" maxlength="80" required autocomplete="email" placeholder="name@example.com">
+            </div>
+            <div class="field full">
+              <label for="j-message"><span class="ko">참여 동기</span><span class="en">Why would you like to join?</span><span class="req">*</span></label>
+              <textarea id="j-message" name="message" maxlength="2000" required placeholder="세계희망선언에 함께하고 싶은 마음을 자유롭게 적어 주세요." data-en-placeholder="Tell us in your own words why you would like to join."></textarea>
+              <p class="hint"><span class="ko">주민등록번호·계좌번호 등 민감한 정보는 적지 말아 주세요.</span><span class="en">Please do not include sensitive information such as ID or bank account numbers.</span></p>
+            </div>
+            <div class="hp-field" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
+            <div class="field full">
+              <span class="label"><span class="ko">개인정보 수집·이용 동의</span><span class="en">Consent to collection and use of personal information</span><span class="req">*</span></span>
+              <div class="consent-box" tabindex="0" role="region" aria-label="개인정보 수집·이용 안내" data-en-aria-label="Privacy notice">
+                <div class="ko">
+                  · 수집 항목: 이름, 국가, 소속·직함(선택), 참여 분야, 연락처, 이메일, 참여 동기<br>
+                  · 수집 목적: 세계희망선언 참여 신청의 확인과 참여 안내·연락<br>
+                  · 전달 방법: 입력하신 내용은 홈페이지에 저장되지 않고, 외부 이메일 전송 서비스 FormSubmit(formsubmit.co, 서버가 국외에 있을 수 있음)을 거쳐 담당자 이메일로 전달됩니다. 전송이 원활하지 않으면 이용자의 메일 앱으로 직접 보내실 수 있습니다.<br>
+                  · 보유 기간: 담당자 메일함에 보관하며 처리(회신) 완료 후 1년 이내에 삭제 (동의 철회 요청 시 지체 없이 파기)<br>
+                  · 동의를 거부하실 수 있으며, 이 경우 온라인 신청이 제한됩니다. 전화(1588-2716)로는 신청·문의하실 수 있습니다.
+                </div>
+                <div class="en">
+                  · Items: name, country, organization and title (optional), field, phone, email, reason for joining<br>
+                  · Purpose: to review your application and contact you about taking part<br>
+                  · Delivery: your submission is not stored on this website. It is sent to our staff by email through a third-party email relay service, FormSubmit (formsubmit.co), whose servers may be located outside Korea. If online delivery fails, you can send it from your own email app instead.<br>
+                  · Retention: kept in the staff mailbox and deleted within 1 year after we have handled it (deleted promptly upon withdrawal of consent)<br>
+                  · You may decline; online application will then be unavailable, but you can still apply or ask by calling 1588-2716.
+                </div>
+              </div>
+              <label class="check"><input type="checkbox" name="consent" required> <span><span class="ko">위 내용을 확인했으며 개인정보 수집·이용에 동의합니다. (<a href="privacy.html">개인정보처리방침</a>)</span><span class="en">I have read the above and agree. (<a href="privacy.html">Privacy Policy</a>)</span></span></label>
+            </div>
+            <div class="full"><button type="submit" class="btn btn-primary btn-lg btn-block"><span class="ko">참여 신청 보내기</span><span class="en">Send Application</span></button></div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 02. 글로벌 대표 추천 (이메일 접수: forms.js · nominations) ===== -->
+  <section class="section section-sky join-anchor" id="nominate" aria-labelledby="nominate-title">
+    <div class="container">
+      <div class="join-layout">
+        <div class="join-intro">
+          <p class="join-kicker"><b>02</b><span>Nominate</span></p>
+          <h2 class="section-title" id="nominate-title"><span class="ko">글로벌 대표 추천</span><span class="en">Nominate a Global Representative</span></h2>
+          <p class="section-lead"><span class="ko">세계희망선언의 정신에 동의하고 지구와 인류의 더 나은 미래를 위해 헌신하는 분을 11개 분야 가운데 해당 분야로 추천해 주세요.</span><span class="en">Do you know someone who shares the spirit of the World Hope Declaration and is devoted to a better future for humanity and the Earth? Nominate them in one of the 11 fields.</span></p>
+          <div class="join-formula" role="group" aria-label="각국 33인 = 11개 분야 × 각 3인" data-en-aria-label="33 per nation = 11 fields × 3 persons each">
+            <p class="join-formula-row">
+              <span><b data-stat="fields">11</b><small><span class="ko">개 분야</span><span class="en"> fields</span></small></span>
+              <i aria-hidden="true">×</i>
+              <span><b data-stat="per_field">3</b><small><span class="ko">인</span><span class="en"> persons</span></small></span>
+              <i aria-hidden="true">=</i>
+              <span class="is-result"><b data-stat="per_country">33</b><small><span class="ko">인 / 각국</span><span class="en"> per nation</span></small></span>
+            </p>
+            <p class="join-formula-sub"><span class="ko">세계 각국 <b data-stat="per_country">33</b>인 × <b data-stat="countries">195</b>개국 = <b data-stat="target">6,435</b>인</span><span class="en"><b data-stat="per_country">33</b> per nation × <b data-stat="countries">195</b> nations = <b data-stat="target">6,435</b></span></p>
+          </div>
+          <div class="notice-box"><span class="ko">추천하시기 전에 꼭 <b>피추천인 본인</b>에게 추천 사실을 알리고, 이름·연락처 등 정보를 보내는 것에 대한 동의를 받아 주세요.</span><span class="en">Before you nominate someone, please tell <b>the nominee</b> and obtain their permission to share their name, contact details and other information with us.</span></div>
+          <p class="join-note"><span class="ko">보내 주신 추천은 담당자가 확인합니다. 추천이 곧 선정을 뜻하지는 않습니다.</span><span class="en">Our staff will review every nomination. A nomination does not guarantee selection.</span></p>
+          <a class="link-arrow" href="global33.html#fields"><span class="ko">11개 분야 자세히 보기</span><span class="en">About the 11 fields</span></a>
+        </div>
+
+        <form class="form-card join-form" id="nominate-form" data-wh-form="nominations" data-subject-ko="[세계희망연대 홈페이지] 글로벌 대표 추천" data-ok-ko="추천이 담당자에게 전달되었습니다. 확인 후 연락드리겠습니다. 감사합니다." data-ok-en="Your nomination has been sent to our staff. We will contact you after review. Thank you.">
+          <span class="form-card-en">Nomination</span>
+          <h3><span class="ko">글로벌 대표 추천서</span><span class="en">Nomination Form</span></h3>
+          <p><span class="ko"><span style="color:var(--danger)">*</span> 표시는 필수 입력 항목입니다. 보내 주신 내용은 이메일로 담당자에게 전달됩니다.</span><span class="en">Fields marked <span style="color:var(--danger)">*</span> are required. Your nomination is delivered to our staff by email.</span></p>
+
+          <fieldset class="join-fs">
+            <legend><span class="ko">추천인 정보</span><span class="en">About you</span> <small class="ko" lang="en">Your details</small></legend>
+            <div class="form-grid">
+              <div class="field full">
+                <label for="n-name"><span class="ko">이름</span><span class="en">Your name</span><span class="req">*</span></label>
+                <input type="text" id="n-name" name="name" maxlength="40" required autocomplete="name" data-label="추천인 이름">
+              </div>
+              <div class="field">
+                <label for="n-phone"><span class="ko">연락처</span><span class="en">Phone</span><span class="req">*</span></label>
+                <input type="tel" id="n-phone" name="phone" maxlength="20" required autocomplete="tel" placeholder="010-0000-0000" data-en-placeholder="+82 10-0000-0000" data-label="추천인 연락처">
+              </div>
+              <div class="field">
+                <label for="n-email"><span class="ko">이메일</span><span class="en">Email</span><span class="req">*</span></label>
+                <input type="email" id="n-email" name="email" maxlength="80" required autocomplete="email" placeholder="name@example.com" data-label="추천인 이메일">
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="join-fs">
+            <legend><span class="ko">피추천인 정보</span><span class="en">About the nominee</span> <small class="ko" lang="en">Nominee</small></legend>
+            <div class="form-grid">
+              <div class="field">
+                <label for="n-nominee"><span class="ko">이름</span><span class="en">Nominee’s name</span><span class="req">*</span></label>
+                <input type="text" id="n-nominee" name="nominee_name" maxlength="40" required autocomplete="off" data-label="피추천인 이름">
+              </div>
+              <div class="field">
+                <label for="n-country"><span class="ko">국가</span><span class="en">Country</span><span class="req">*</span></label>
+                <select id="n-country" name="nominee_country" required data-other="n-country-other" data-label="피추천인 국가">
+                  <option value="KOR" selected data-en="Republic of Korea">대한민국</option>
+                  <option value="other" data-en="Other (please specify)">기타 (직접 입력)</option>
+                </select>
+              </div>
+              <div class="field full" hidden>
+                <label for="n-country-other"><span class="ko">국가명</span><span class="en">Country name</span><span class="req">*</span></label>
+                <input type="text" id="n-country-other" name="nominee_country_other" maxlength="60" disabled autocomplete="off" data-label="피추천인 국가명(직접 입력)" placeholder="예) 일본, 미국" data-en-placeholder="e.g. Japan, United States">
+              </div>
+              <div class="field full">
+                <label for="n-field"><span class="ko">추천 분야</span><span class="en">Field</span><span class="req">*</span></label>
+                <select id="n-field" name="nominee_field" required data-label="추천 분야">
+                  <option value="" data-en="Select a field">분야를 골라 주세요</option>
+                  <option value="01" data-en="1. Social Influence">1. 사회영향력</option>
+                  <option value="02" data-en="2. National Prestige">2. 국위선양</option>
+                  <option value="03" data-en="3. Academia &amp; Education">3. 교육계</option>
+                  <option value="04" data-en="4. Culture &amp; Arts">4. 문화예술계</option>
+                  <option value="05" data-en="5. Religious Leaders">5. 종교계</option>
+                  <option value="06" data-en="6. Industry &amp; Business">6. 산업계</option>
+                  <option value="07" data-en="7. Defense, Safety &amp; Public Security">7. 국방사회안전</option>
+                  <option value="08" data-en="8. Medical &amp; Health">8. 의료계</option>
+                  <option value="09" data-en="9. Workers &amp; Livelihood">9. 생업종사자</option>
+                  <option value="10" data-en="10. Citizens">10. 시민</option>
+                  <option value="11" data-en="11. Political Leaders (Current &amp; Former)">11. 정치계(전·현직)</option>
+                </select>
+              </div>
+              <div class="field full">
+                <label for="n-intro"><span class="ko">소개 및 추천 사유</span><span class="en">Introduction and reason for nomination</span><span class="req">*</span></label>
+                <textarea id="n-intro" name="nominee_intro" maxlength="2000" required data-label="피추천인 소개·추천 사유" placeholder="피추천인의 활동과 추천하시는 이유를 적어 주세요." data-en-placeholder="Tell us about the nominee’s work and why you are nominating them."></textarea>
+                <p class="hint"><span class="ko">공개된 활동 위주로 적어 주시고, 건강·신앙 등 민감한 정보나 주민등록번호는 적지 말아 주세요.</span><span class="en">Please focus on public activities and leave out sensitive details (health, beliefs) and ID numbers.</span></p>
+              </div>
+              <div class="field full">
+                <label for="n-contact"><span class="ko">피추천인 연락처 (선택)</span><span class="en">Nominee’s phone or email (optional)</span></label>
+                <input type="text" id="n-contact" name="nominee_contact" maxlength="80" autocomplete="off" data-label="피추천인 연락처" placeholder="전화번호 또는 이메일" data-en-placeholder="Phone number or email">
+                <p class="hint"><span class="ko">피추천인 본인이 동의한 경우에만 적어 주세요.</span><span class="en">Only if the nominee has agreed to share it.</span></p>
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="form-grid">
+            <div class="hp-field" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
+            <div class="field full">
+              <span class="label"><span class="ko">개인정보 수집·이용 동의</span><span class="en">Consent to collection and use of personal information</span><span class="req">*</span></span>
+              <div class="consent-box" tabindex="0" role="region" aria-label="개인정보 수집·이용 안내" data-en-aria-label="Privacy notice">
+                <div class="ko">
+                  · 수집 항목: (추천인) 이름, 연락처, 이메일 / (피추천인) 이름, 국가, 추천 분야, 소개 및 추천 사유, 연락처(선택)<br>
+                  · 수집 목적: 글로벌 대표 추천의 접수·검토와 추천인·피추천인 연락<br>
+                  · 피추천인 정보: 다른 사람의 개인정보를 적으실 때에는 미리 피추천인 본인에게 추천 사실을 알리고 정보 제공에 대한 동의를 받아야 합니다. 피추천인이 요청하면 정보를 받은 경로(추천인)와 이용 목적을 알려 드리며, 피추천인이 원하지 않으면 지체 없이 삭제합니다.<br>
+                  · 전달 방법: 입력하신 내용은 홈페이지에 저장되지 않고, 외부 이메일 전송 서비스 FormSubmit(formsubmit.co, 서버가 국외에 있을 수 있음)을 거쳐 담당자 이메일로 전달됩니다. 전송이 원활하지 않으면 이용자의 메일 앱으로 직접 보내실 수 있습니다.<br>
+                  · 보유 기간: 담당자 메일함에 보관하며 검토(회신) 완료 후 1년 이내에 삭제 (동의 철회 또는 피추천인의 삭제 요청 시 지체 없이 파기)<br>
+                  · 동의를 거부하실 수 있으며, 이 경우 온라인 추천이 제한됩니다. 전화(1588-2716)로는 문의하실 수 있습니다.
+                </div>
+                <div class="en">
+                  · Items: (you) name, phone, email / (nominee) name, country, field, introduction and reason for nomination, phone or email (optional)<br>
+                  · Purpose: to receive and review nominations and to contact you and the nominee<br>
+                  · About the nominee: before you share another person’s information, you must tell them about the nomination and obtain their permission. If the nominee asks, we will tell them where we received their information (you) and why we use it, and we will delete it promptly if they do not wish us to keep it.<br>
+                  · Delivery: your submission is not stored on this website. It is sent to our staff by email through a third-party email relay service, FormSubmit (formsubmit.co), whose servers may be located outside Korea. If online delivery fails, you can send it from your own email app instead.<br>
+                  · Retention: kept in the staff mailbox and deleted within 1 year after the review is completed (deleted promptly upon withdrawal of consent or at the nominee’s request)<br>
+                  · You may decline; online nomination will then be unavailable, but you can still contact us at 1588-2716.
+                </div>
+              </div>
+              <label class="check"><input type="checkbox" name="consent" required data-label="개인정보 수집·이용 동의 (추천인·피추천인 정보)"> <span><span class="ko">위 내용을 확인했으며 개인정보 수집·이용에 동의합니다. (<a href="privacy.html">개인정보처리방침</a>)</span><span class="en">I have read the above and agree. (<a href="privacy.html">Privacy Policy</a>)</span></span></label>
+              <label class="check"><input type="checkbox" name="nominee_consent" value="yes" required data-label="피추천인 본인 동의 확인" data-msg-ko="피추천인 본인의 동의를 받으셨는지 확인해 주세요." data-msg-en="Please confirm that the nominee has agreed to share their information."> <span><span class="ko">피추천인 본인에게 추천 사실을 알리고, 위 정보를 보내는 것에 대한 동의를 받았습니다.</span><span class="en">I have told the nominee about this nomination and they have agreed to share the information above.</span></span></label>
+            </div>
+            <div class="full"><button type="submit" class="btn btn-primary btn-lg btn-block"><span class="ko">추천서 보내기</span><span class="en">Send Nomination</span></button></div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 03. 희망 응원 메시지 (예전 홈 화면에서 옮김 · 게시된 메시지는 data/cheers.json) ===== -->
+  <section class="section join-anchor" id="cheer" aria-labelledby="cheer-title">
+    <div class="container">
+      <div class="section-head join-cheer-head">
+        <div>
+          <p class="join-kicker"><b>03</b><span>Messages of Hope</span></p>
+          <h2 class="section-title" id="cheer-title"><span class="ko">함께 보내는 희망의 한마디</span><span class="en">Words of hope, sent together</span></h2>
+          <p class="section-lead"><span class="ko">한마디의 응원이 큰 힘이 됩니다. 남겨 주신 메시지는 확인 후 이곳에 게시됩니다.</span><span class="en">A single word of encouragement goes a long way. Messages are posted here after review.</span></p>
+        </div>
+      </div>
+      <div class="cheer-layout">
+        <div class="join-cheer-wall">
+          <!-- 응원 메시지 머리: 세계희망선언 표어 (안개 낀 산 배경은 style.css .mountains) -->
+          <figure class="join-cheer-banner">
+            <div class="mountains" aria-hidden="true"></div>
+            <img src="assets/img/brand/logo-mark-160.png" alt="" width="56" height="56" loading="lazy" decoding="async">
+            <blockquote>
+              <p><span class="ko">분열을 넘어 화해로,<br>절망을 넘어 희망으로</span><span class="en">From Division to Reconciliation,<br>From Despair to Hope</span></p>
+              <p class="join-cheer-banner-en ko" lang="en">From Division to Reconciliation, From Despair to Hope</p>
+            </blockquote>
+            <figcaption>One Humanity · One Planet · One Hope</figcaption>
+          </figure>
+          <div class="cheer-list" id="cheer-list" aria-live="polite"></div>
+        </div>
+        <form class="form-card" data-wh-form="cheers" data-subject-ko="[세계희망연대 홈페이지] 희망 응원 메시지" data-ok-ko="응원 메시지가 전달되었습니다. 확인 후 홈페이지에 게시됩니다. 감사합니다!" data-ok-en="Your message has been delivered. It will be posted on the website after review. Thank you!">
+          <h3><span class="ko">응원 메시지 남기기</span><span class="en">Leave a message</span></h3>
+          <p><span class="ko">남겨 주신 메시지는 이메일로 담당자에게 전달되며, 확인 후 홈페이지에 게시됩니다.</span><span class="en">Your message is sent to our staff by email and posted on the website after review.</span></p>
+          <div class="form-grid">
+            <div class="field">
+              <label for="cheer-name"><span class="ko">이름(닉네임)</span><span class="en">Name (or nickname)</span><span class="req">*</span></label>
+              <input type="text" id="cheer-name" name="name" maxlength="20" required autocomplete="nickname">
+            </div>
+            <div class="field">
+              <label for="cheer-region"><span class="ko">지역</span><span class="en">Region</span></label>
+              <input type="text" id="cheer-region" name="region" maxlength="20" placeholder="예) 세종" data-en-placeholder="e.g. Sejong">
+            </div>
+            <div class="field full">
+              <label for="cheer-msg"><span class="ko">메시지</span><span class="en">Message</span><span class="req">*</span></label>
+              <textarea id="cheer-msg" name="message" maxlength="300" required style="min-height:120px" placeholder="희망의 한마디를 남겨 주세요 (300자 이내)" data-en-placeholder="Your message of hope (up to 300 characters)"></textarea>
+            </div>
+            <div class="hp-field" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
+            <div class="field full">
+              <div class="consent-box" tabindex="0" role="region" aria-label="개인정보 수집·이용 안내" data-en-aria-label="Privacy notice">
+                <div class="ko">· 수집 항목: 이름(닉네임), 지역, 메시지<br>· 수집 목적: 응원 메시지 확인 및 홈페이지 게시<br>· 전달 방법: 입력하신 내용은 외부 이메일 전송 서비스 FormSubmit(formsubmit.co, 서버가 국외에 있을 수 있음)을 거쳐 담당자 이메일로 전달되며, 담당자가 확인한 메시지만 홈페이지에 게시됩니다.<br>· 게시 방법: 게시된 메시지(이름(닉네임)·지역·메시지)는 홈페이지 파일을 보관하는 공개 저장소(GitHub, Inc., 미국)에 저장되며, 이 저장소의 파일과 변경 이력은 누구나 볼 수 있습니다.<br>· 보유 기간: 접수 메일은 게시 여부 결정 후 1년 이내에 삭제, 게시된 메시지는 게시 철회 요청 시까지 (요청 시 홈페이지와 게시 파일에서 지체 없이 삭제하고, 변경 이력에 남은 이전 기록도 삭제 조치)<br>· 동의를 거부하실 수 있으며, 이 경우 응원 메시지를 남기실 수 없습니다.</div>
+                <div class="en">· Items: name (nickname), region, message<br>· Purpose: to review your message and post it on this website<br>· Delivery: your message is sent to our staff by email through a third-party email relay service, FormSubmit (formsubmit.co), whose servers may be located outside Korea. Only messages approved by our staff are posted.<br>· Publication: posted messages (name/nickname, region, message) are stored in the public repository that holds this website's files (GitHub, Inc., USA); those files and their change history can be viewed by anyone.<br>· Retention: the email we receive is deleted within 1 year after we decide whether to post it; a posted message is kept until you ask us to remove it (we then remove it promptly from the website and the data file, and also purge earlier copies from the change history)<br>· You may decline; you will then be unable to leave a message.</div>
+              </div>
+              <label class="check"><input type="checkbox" name="consent" required data-label="개인정보 수집·이용 및 홈페이지 게시 동의"> <span><span class="ko">위 내용을 확인했으며, 개인정보 수집·이용과 입력한 이름(닉네임)·지역·메시지가 홈페이지에 게시되는 것에 동의합니다. (<a href="privacy.html">개인정보처리방침</a>)</span><span class="en">I have read the above and agree to the collection and use of this information and to my name (nickname), region and message being published on this website. (<a href="privacy.html">Privacy Policy</a>)</span></span></label>
+            </div>
+            <div class="full"><button type="submit" class="btn btn-primary btn-block"><span class="ko">응원 보내기</span><span class="en">Send</span></button></div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 후원·문의·자주 묻는 질문 ===== -->
+  <section class="section section-alt join-anchor join-more" id="more" aria-labelledby="more-title">
+    <div class="container">
+      <div class="section-head center">
+        <h2 class="section-title" id="more-title"><span class="ko">함께하는 또 다른 방법</span><span class="en">More Ways to Take Part</span></h2>
+        <p class="section-sub">Give · Contact · FAQ</p>
+      </div>
+      <div class="grid grid-3">
+        <a class="card card-link" href="donate.html">
+          <div class="card-icon" data-icon="heart"></div>
+          <h3><span class="ko">후원·헌금</span><span class="en">Give</span></h3>
+          <span class="card-en ko" lang="en">Give</span>
+          <p><span class="ko">보내 주시는 귀한 정성은 희망의 선교행진을 위해 소중히 쓰입니다.</span><span class="en">Your gift will be used faithfully for the mission march of hope.</span></p>
+          <span class="link-arrow"><span class="ko">후원 안내 보기</span><span class="en">How to give</span></span>
+        </a>
+        <a class="card card-link" href="contact.html">
+          <div class="card-icon" data-icon="mail"></div>
+          <h3><span class="ko">문의하기</span><span class="en">Contact Us</span></h3>
+          <span class="card-en ko" lang="en">Contact Us</span>
+          <p><span class="ko">궁금한 점, 참여·동역 신청, 협력 제안을 남겨 주세요. 확인 후 연락드리겠습니다.</span><span class="en">Send us your questions, applications to join, or partnership proposals. We’ll get back to you.</span></p>
+          <span class="link-arrow"><span class="ko">문의 남기기</span><span class="en">Send a message</span></span>
+        </a>
+        <a class="card card-link" href="faq.html">
+          <div class="card-icon" data-icon="book"></div>
+          <h3><span class="ko">자주 묻는 질문</span><span class="en">FAQ</span></h3>
+          <span class="card-en ko" lang="en">Frequently Asked Questions</span>
+          <p><span class="ko">궁금하신 점을 먼저 확인해 보세요. 찾으시는 답이 없다면 언제든 문의해 주세요.</span><span class="en">Find quick answers here. If you can’t find what you’re looking for, please contact us.</span></p>
+          <span class="link-arrow"><span class="ko">질문과 답변 보기</span><span class="en">Read the FAQ</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/forms.js"></script>
+<script>
+  // 참여하기 페이지: 하위 메뉴 현재 위치 강조 · 바로가기 위치 보정 · ?field= 로 분야 미리 선택
+  (function () {
+    "use strict";
+    var nav = document.querySelector(".join-subnav");
+    var list = nav ? nav.querySelector("ul") : null;
+    var links = nav ? Array.prototype.slice.call(nav.querySelectorAll("a")) : [];
+    var targets = links.map(function (a) { return document.getElementById(a.getAttribute("href").slice(1)); });
+    var current = -2, ticking = false;
+
+    // 현재 보이는 구역의 메뉴를 강조하고, 좁은 화면에서는 그 메뉴가 보이도록 가로 스크롤
+    function update() {
+      ticking = false;
+      var line = (nav ? nav.getBoundingClientRect().bottom : 0) + 40, cur = -1;
+      targets.forEach(function (el, i) { if (el && el.getBoundingClientRect().top <= line) cur = i; });
+      // 페이지 맨 끝에 닿으면 마지막 구역을 강조 (마지막 구역이 짧아 기준선에 닿지 못할 때)
+      if (window.innerHeight + window.pageYOffset >= document.documentElement.scrollHeight - 4 && cur >= 0) cur = targets.length - 1;
+      if (cur === current) return;
+      current = cur;
+      links.forEach(function (a, i) {
+        a.classList.toggle("is-active", i === cur);
+        if (i === cur) a.setAttribute("aria-current", "location"); else a.removeAttribute("aria-current");
+      });
+      if (cur >= 0 && list && list.scrollWidth > list.clientWidth) {
+        var a = links[cur], ar = a.getBoundingClientRect(), lr = list.getBoundingClientRect();
+        var left = ar.left - lr.left + list.scrollLeft;
+        if (left < list.scrollLeft || left + ar.width > list.scrollLeft + list.clientWidth) {
+          list.scrollLeft = Math.max(0, left - 24);
+        }
+      }
+    }
+    function onScroll() {
+      if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+    }
+    // 가로로 넘치는 메뉴: 남은 쪽 가장자리를 흐리게 표시
+    function updateEdges() {
+      if (!list) return;
+      var max = list.scrollWidth - list.clientWidth;
+      list.classList.toggle("has-more-left", max > 1 && list.scrollLeft > 1);
+      list.classList.toggle("has-more-right", max > 1 && list.scrollLeft < max - 1);
+    }
+    if (links.length) {
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", function () { onScroll(); updateEdges(); });
+      list.addEventListener("scroll", updateEdges, { passive: true });
+      document.addEventListener("wh:lang", function () { window.requestAnimationFrame(updateEdges); });
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(updateEdges);
+      update();
+      updateEdges();
+    }
+
+    // 다른 페이지에서 join.html#nominate 처럼 들어오면, 글꼴·사진까지 적용된 뒤 위치를 한 번 더 맞춤
+    var hashTarget = null;
+    try { hashTarget = location.hash ? document.getElementById(decodeURIComponent(location.hash.slice(1))) : null; } catch (err) { hashTarget = null; }
+    if (hashTarget && targets.indexOf(hashTarget) !== -1 && hashTarget.scrollIntoView) {
+      var userMoved = false;
+      var markMoved = function () { userMoved = true; };
+      ["wheel", "touchstart", "keydown", "pointerdown"].forEach(function (type) {
+        window.addEventListener(type, markMoved, { once: true, passive: true });
+      });
+      var fontsReady = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+      var pageLoaded = document.readyState === "complete" ? Promise.resolve() : new Promise(function (resolve) { window.addEventListener("load", resolve); });
+      Promise.all([fontsReady, pageLoaded]).then(function () {
+        window.setTimeout(function () { if (!userMoved) hashTarget.scrollIntoView({ block: "start" }); }, 80);
+      });
+    }
+
+    // ?field=5 (1~11) 로 들어오면 두 신청서의 분야를 미리 선택 (예: 글로벌 33 분야 카드에서 추천하기)
+    var f = parseInt(WH.param("field"), 10);
+    if (f >= 1 && f <= 11) {
+      var code = (f < 10 ? "0" : "") + f;
+      ["j-field", "n-field"].forEach(function (id) {
+        var sel = document.getElementById(id);
+        if (sel && sel.querySelector('option[value="' + code + '"]')) sel.value = code;
+      });
+    }
+  })();
+</script>
+</body>
+</html>

@@ -1,11 +1,16 @@
 /* ==========================================================================
-   공개 폼 처리 (문의·참여 신청 / 정기 후원 신청 / 희망 응원 메시지)
-   <form data-wh-form="inquiries|donation_applications|cheers"
+   공개 폼 처리 (문의·참여 신청 / 정기 후원 신청 / 희망 응원 메시지 /
+               세계희망선언 참여 신청 / 글로벌 대표 추천)
+   <form data-wh-form="inquiries|donation_applications|cheers|declaration_join|nominations"
          data-subject-ko="메일 제목" data-ok-ko="완료 문구" data-ok-en="Done message">
    - 서버·데이터베이스 없음: 입력 내용은 WH.mail.send(FormSubmit)로 담당자 이메일에 전달됩니다.
    - 메일 본문 항목명은 화면 언어와 관계없이 항상 한국어(라벨의 .ko 텍스트)로 보냅니다.
+     같은 이름의 항목이 여러 개면(예: 추천인 이름 / 피추천인 이름) 입력칸에 data-label="…" 로 구분합니다.
    - FormSubmit 전송 실패(네트워크 차단·미활성화 등) 시 방문자의 메일 앱(mailto)으로 대체합니다.
      (예전 속성 data-fallback="none" 이 있으면 메일 앱 대신 전화 안내만 표시)
+   - ‘기타(직접 입력)’: <select data-other="입력칸 id"> 에서 value="other" 를 고르면 그 입력칸(.field)을
+     보이고 필수로 바꿉니다. 다른 값이면 숨기고 전송하지 않습니다(disabled).
+   - 항목별 오류 문구: 입력칸에 data-msg-ko="…" data-msg-en="…" (없으면 기본 문구)
    ========================================================================== */
 (function () {
   "use strict";
@@ -28,6 +33,16 @@
       subject: "[세계희망연대 홈페이지] 희망 응원 메시지",
       ok: ["응원 메시지가 전달되었습니다. 확인 후 홈페이지에 게시됩니다. 감사합니다!",
         "Your message has been delivered. It will be posted on the website after review. Thank you!"]
+    },
+    declaration_join: {
+      subject: "[세계희망연대 홈페이지] 세계희망선언 참여 신청",
+      ok: ["참여 신청이 담당자에게 전달되었습니다. 확인 후 연락드리겠습니다. 함께해 주셔서 감사합니다.",
+        "Your application has been sent to our staff. We will contact you after review. Thank you for joining us."]
+    },
+    nominations: {
+      subject: "[세계희망연대 홈페이지] 글로벌 대표 추천",
+      ok: ["추천이 담당자에게 전달되었습니다. 확인 후 연락드리겠습니다. 감사합니다.",
+        "Your nomination has been sent to our staff. We will contact you after review. Thank you."]
     }
   };
   var CONSENT_LABEL = "개인정보 수집·이용 동의";
@@ -133,11 +148,14 @@
     });
     if (firstBad) {
       firstBad.focus();
-      var msg;
-      if (firstBad.type === "checkbox" && firstBad.name === "consent") msg = WH.t("개인정보 수집·이용에 동의해 주세요.", "Please agree to the collection and use of personal information.");
-      else if (firstBad.type === "email" && firstBad.value) msg = WH.t("이메일 주소 형식을 확인해 주세요.", "Please check the email address.");
-      else if (firstBad.type === "tel" && firstBad.value) msg = WH.t("연락처를 정확히 입력해 주세요. (숫자 9자리 이상)", "Please enter a valid phone number (at least 9 digits).");
-      else msg = WH.t("필수 항목을 확인해 주세요.", "Please check the required fields.");
+      // 항목별 오류 문구(data-msg-ko / data-msg-en)가 있으면 그것을, 없으면 기본 문구
+      var msg = firstBad.getAttribute("data-msg-" + WH.lang());
+      if (!msg) {
+        if (firstBad.type === "checkbox" && firstBad.name === "consent") msg = WH.t("개인정보 수집·이용에 동의해 주세요.", "Please agree to the collection and use of personal information.");
+        else if (firstBad.type === "email" && firstBad.value) msg = WH.t("이메일 주소 형식을 확인해 주세요.", "Please check the email address.");
+        else if (firstBad.type === "tel" && firstBad.value) msg = WH.t("연락처를 정확히 입력해 주세요. (숫자 9자리 이상)", "Please enter a valid phone number (at least 9 digits).");
+        else msg = WH.t("필수 항목을 확인해 주세요.", "Please check the required fields.");
+      }
       setStatus(form, "err", msg);
       return false;
     }
@@ -185,10 +203,40 @@
       "We could not send your submission. Please try again later or call " + phoneEn() + "."));
   }
 
+  /* ‘기타(직접 입력)’ 선택 상자: value="other" 일 때만 직접 입력칸을 보이고 필수로 (숨기면 전송·검사에서 제외) */
+  function setupOther(form) {
+    var selects = form.querySelectorAll("select[data-other]");
+    if (!selects.length) return;
+    var sync = function () {
+      selects.forEach(function (sel) {
+        var input = document.getElementById(sel.getAttribute("data-other"));
+        if (!input) return;
+        var on = sel.value === "other";
+        var wrap = input.closest(".field") || input;
+        wrap.hidden = !on;
+        input.disabled = !on;
+        input.required = on;
+        if (!on) wrap.classList.remove("has-error");
+      });
+    };
+    selects.forEach(function (sel) {
+      sel.addEventListener("change", function () {
+        sync();
+        // 직접 입력을 고르면 바로 입력할 수 있게 이동
+        var input = document.getElementById(sel.getAttribute("data-other"));
+        if (sel.value === "other" && input) input.focus();
+      });
+    });
+    // form.reset() 뒤에는 change 가 일어나지 않으므로 초기화가 끝난 다음 다시 맞춤
+    form.addEventListener("reset", function () { window.setTimeout(sync, 0); });
+    sync();
+  }
+
   document.querySelectorAll("form[data-wh-form]").forEach(function (form) {
     var noMailApp = form.getAttribute("data-fallback") === "none"; // 예전 마크업 호환
     var sending = false;
     form.setAttribute("novalidate", "");
+    setupOther(form);
 
     // 입력을 고치면 오류 표시 해제
     form.addEventListener("input", function (e) {

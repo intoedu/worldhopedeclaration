@@ -3,52 +3,84 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>공지·소식 | 세계희망연대</title>
-<meta name="description" content="세계희망연대의 공지사항과 소식, 언론보도를 전해 드립니다.">
+<title>소식 | 세계희망연대</title>
+<meta name="description" content="세계희망선언과 세계희망연대의 공지사항·소식·언론보도를 전해 드립니다.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="세계희망연대">
-<meta property="og:title" content="공지·소식 | 세계희망연대">
-<meta property="og:description" content="세계희망연대의 공지사항과 소식을 전해 드립니다.">
+<meta property="og:title" content="소식 | 세계희망연대">
+<meta property="og:description" content="세계희망선언과 세계희망연대의 공지사항·소식·언론보도">
 <meta property="og:image" content="assets/img/og-image.png">
-<meta name="theme-color" content="#0b1f44">
-<link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+<meta name="theme-color" content="#13294b">
+<link rel="icon" href="assets/img/brand/favicon-64.png" type="image/png" sizes="64x64">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Serif:ital,wght@0,500;0,700;1,500&display=swap">
 <link rel="stylesheet" href="assets/css/style.css">
+<style>
+  /* 소식 페이지 전용: 게시글 수 줄 */
+  .board-count { margin: 0 0 10px; font-size: 14.5px; }
+  .board-count b { color: var(--navy-900); }
+</style>
 <script>(function(){try{var l=new URLSearchParams(location.search).get("lang")||localStorage.getItem("wh-lang");if(l==="en"){var h=document.documentElement;h.setAttribute("data-lang","en");h.lang="en";}}catch(e){}})();</script>
 </head>
-<body data-page="news" data-title-en="News | World Hope Alliance">
+<body data-page="news" data-title-en="News | World Hope Declaration Network">
 <div id="site-header"></div>
 
 <main id="main">
-  <section class="page-hero">
+  <!-- 상단: 라이트 히어로 -->
+  <section class="page-hero" aria-labelledby="page-title">
     <div class="container">
-      <nav class="breadcrumb" aria-label="breadcrumb"><a href="index.html"><span class="ko">홈</span><span class="en">Home</span></a><span aria-hidden="true">/</span><span><span class="ko">공지·소식</span><span class="en">News</span></span></nav>
-      <h1><span class="ko">공지·소식</span><span class="en">News &amp; Notices</span></h1>
-      <p><span class="ko">세계희망선언과 세계희망연대의 소식을 전해 드립니다.</span><span class="en">Updates from the World Hope Declaration and the World Hope Alliance.</span></p>
+      <nav class="breadcrumb" aria-label="현재 위치" data-en-aria-label="Breadcrumb"><a href="index.html"><span class="ko">홈</span><span class="en">Home</span></a><span aria-hidden="true">/</span><span aria-current="page"><span class="ko">소식</span><span class="en">News</span></span></nav>
+      <h1 id="page-title"><span class="ko">소식</span><span class="en">News</span></h1>
+      <p class="page-hero-en">News &amp; Notices</p>
+      <p><span class="ko">세계희망선언과 세계희망연대의 공지사항·소식·언론보도를 전해 드립니다.</span><span class="en">Notices, news and press coverage from the World Hope Declaration and the World Hope Declaration Network.</span></p>
     </div>
   </section>
 
-  <section class="section">
+  <!-- 소식 묶음 메뉴: 공지·소식 / 갤러리 -->
+  <nav class="subnav" aria-label="소식 메뉴" data-en-aria-label="News sections">
+    <div class="container"><ul>
+      <li><a href="news.html" aria-current="page"><span class="ko">공지·소식</span><span class="en">News &amp; Notices</span></a></li>
+      <li><a href="gallery.html"><span class="ko">갤러리</span><span class="en">Gallery</span></a></li>
+    </ul></div>
+  </nav>
+
+  <!-- 게시판 (board.js 가 목록을 채움) -->
+  <section class="section" aria-labelledby="board-title">
     <div class="container">
+      <h2 class="sr-only" id="board-title"><span class="ko">게시글 목록</span><span class="en">Posts</span></h2>
       <div class="board-toolbar">
-        <div class="chips" role="group" aria-label="분류">
+        <div class="chips" role="group" aria-label="분류" data-en-aria-label="Category">
           <button type="button" class="chip" data-cat="" aria-pressed="true"><span class="ko">전체</span><span class="en">All</span></button>
           <button type="button" class="chip" data-cat="notice" aria-pressed="false"><span class="ko">공지</span><span class="en">Notices</span></button>
           <button type="button" class="chip" data-cat="news" aria-pressed="false"><span class="ko">소식</span><span class="en">News</span></button>
           <button type="button" class="chip" data-cat="press" aria-pressed="false"><span class="ko">언론보도</span><span class="en">Press</span></button>
         </div>
-        <form class="search-box" id="board-search" role="search">
-          <label class="sr-only" for="board-q">검색</label>
+        <form class="search-box" id="board-search" role="search" aria-label="게시글 검색" data-en-aria-label="Search posts">
+          <label class="sr-only" for="board-q"><span class="ko">게시글 검색</span><span class="en">Search posts</span></label>
           <input type="search" id="board-q" placeholder="제목·내용 검색" data-en-placeholder="Search posts">
           <button type="submit" aria-label="검색" data-en-aria-label="Search"><span data-icon="search"></span></button>
         </form>
       </div>
-      <p class="muted" id="board-count" style="font-size:14.5px;margin-bottom:10px"></p>
+      <p class="muted board-count" id="board-count"></p>
       <ul class="board" id="board-list" aria-live="polite"></ul>
       <div class="pagination" id="board-pager"></div>
+    </div>
+  </section>
+
+  <!-- 함께하기 (연하늘 띠) -->
+  <section class="cta-band light" aria-labelledby="news-cta-title">
+    <div class="container cta-inner">
+      <div>
+        <span class="eyebrow">Join Us</span>
+        <h2 class="cta-title" id="news-cta-title"><span class="ko">세계희망선언에 함께해 주세요</span><span class="en">Join the World Hope Declaration</span></h2>
+        <p class="cta-text"><span class="ko">인류와 지구의 더 나은 미래를 위해, 지금, 세계가 함께 희망을 선언합니다.</span><span class="en">Now, the World Declares Hope for a Better Future for All.</span></p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-primary btn-lg" href="join.html"><span class="ko">선언에 참여하기</span><span class="en">Join the Declaration</span><span data-icon="arrow-right"></span></a>
+        <a class="btn btn-outline btn-lg" href="gallery.html"><span class="ko">갤러리 보기</span><span class="en">View the Gallery</span></a>
+      </div>
     </div>
   </section>
 </main>

@@ -10,34 +10,68 @@
 <meta property="og:title" content="갤러리 | 세계희망연대">
 <meta property="og:description" content="희망의 현장을 사진으로 만나 보세요.">
 <meta property="og:image" content="assets/img/og-image.png">
-<meta name="theme-color" content="#0b1f44">
-<link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+<meta name="theme-color" content="#13294b">
+<link rel="icon" href="assets/img/brand/favicon-64.png" type="image/png" sizes="64x64">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Serif:ital,wght@0,500;0,700;1,500&display=swap">
 <link rel="stylesheet" href="assets/css/style.css">
+<style>
+  /* 갤러리 페이지 전용 */
+  .gallery-tip { font-size: 14.5px; }
+  .gallery-sample-note { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin: -6px 0 22px; }
+</style>
 <script>(function(){try{var l=new URLSearchParams(location.search).get("lang")||localStorage.getItem("wh-lang");if(l==="en"){var h=document.documentElement;h.setAttribute("data-lang","en");h.lang="en";}}catch(e){}})();</script>
 </head>
-<body data-page="gallery" data-title-en="Gallery | World Hope Alliance">
+<body data-page="gallery" data-title-en="Gallery | World Hope Declaration Network">
 <div id="site-header"></div>
 
 <main id="main">
-  <section class="page-hero">
+  <!-- 상단: 라이트 히어로 -->
+  <section class="page-hero" aria-labelledby="page-title">
     <div class="container">
-      <nav class="breadcrumb" aria-label="breadcrumb"><a href="index.html"><span class="ko">홈</span><span class="en">Home</span></a><span aria-hidden="true">/</span><span><span class="ko">갤러리</span><span class="en">Gallery</span></span></nav>
-      <h1><span class="ko">갤러리</span><span class="en">Gallery</span></h1>
+      <nav class="breadcrumb" aria-label="현재 위치" data-en-aria-label="Breadcrumb"><a href="index.html"><span class="ko">홈</span><span class="en">Home</span></a><span aria-hidden="true">/</span><a href="news.html"><span class="ko">소식</span><span class="en">News</span></a><span aria-hidden="true">/</span><span aria-current="page"><span class="ko">갤러리</span><span class="en">Gallery</span></span></nav>
+      <h1 id="page-title"><span class="ko">갤러리</span><span class="en">Gallery</span></h1>
+      <p class="page-hero-en">Photo Gallery</p>
       <p><span class="ko">희망의 선교행진이 지나간 자리를 사진으로 기록합니다.</span><span class="en">A photo record of the places the mission march of hope has passed through.</span></p>
     </div>
   </section>
 
-  <section class="section">
+  <!-- 소식 묶음 메뉴: 공지·소식 / 갤러리 -->
+  <nav class="subnav" aria-label="소식 메뉴" data-en-aria-label="News sections">
+    <div class="container"><ul>
+      <li><a href="news.html"><span class="ko">공지·소식</span><span class="en">News &amp; Notices</span></a></li>
+      <li><a href="gallery.html" aria-current="page"><span class="ko">갤러리</span><span class="en">Gallery</span></a></li>
+    </ul></div>
+  </nav>
+
+  <!-- 사진 목록 (gallery.js 가 채움) -->
+  <section class="section" aria-labelledby="gallery-title">
     <div class="container">
+      <h2 class="sr-only" id="gallery-title"><span class="ko">사진 목록</span><span class="en">Photos</span></h2>
       <div class="board-toolbar">
-        <div class="chips" id="gallery-filters" role="group" aria-label="앨범"></div>
-        <p class="muted mb-0" style="font-size:14.5px"><span class="ko">사진을 누르면 크게 볼 수 있습니다.</span><span class="en">Tap a photo to enlarge.</span></p>
+        <div class="chips" id="gallery-filters" role="group" aria-label="앨범" data-en-aria-label="Albums"></div>
+        <p class="muted mb-0 gallery-tip"><span class="ko">사진을 누르면 크게 볼 수 있습니다.</span><span class="en">Tap a photo to enlarge.</span></p>
       </div>
+      <!-- 자리표시 사진(sample)이 있을 때만 보이는 안내 -->
+      <p class="notice-box blue gallery-sample-note" id="gallery-sample-note" hidden><span class="sample-tag"><span class="ko">예시</span><span class="en">Sample</span></span> <span class="ko">지금 보이는 이미지는 자리표시입니다. 행사와 사역 현장 사진은 준비되는 대로 올려 드립니다.</span><span class="en">The images shown are placeholders. Photos of events and ministry will be posted as they become available.</span></p>
       <div class="gallery-grid" id="gallery-grid" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- 함께하기 (연하늘 띠) -->
+  <section class="cta-band light" aria-labelledby="gallery-cta-title">
+    <div class="container cta-inner">
+      <div>
+        <span class="eyebrow">Join Us</span>
+        <h2 class="cta-title" id="gallery-cta-title"><span class="ko">세계희망선언에 함께해 주세요</span><span class="en">Join the World Hope Declaration</span></h2>
+        <p class="cta-text"><span class="ko">인류와 지구의 더 나은 미래를 위해, 지금, 세계가 함께 희망을 선언합니다.</span><span class="en">Now, the World Declares Hope for a Better Future for All.</span></p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-primary btn-lg" href="join.html"><span class="ko">선언에 참여하기</span><span class="en">Join the Declaration</span><span data-icon="arrow-right"></span></a>
+        <a class="btn btn-outline btn-lg" href="news.html"><span class="ko">공지·소식 보기</span><span class="en">Read the News</span></a>
+      </div>
     </div>
   </section>
 </main>
@@ -47,5 +81,16 @@
 <script src="assets/js/data.js"></script>
 <script src="assets/js/main.js"></script>
 <script src="assets/js/gallery.js"></script>
+<script>
+  // 자리표시(sample) 사진이 하나라도 있으면 '예시' 안내를 보여 줌
+  (function () {
+    "use strict";
+    var note = document.getElementById("gallery-sample-note");
+    if (!note || !window.WH || !WH.db) return;
+    WH.db.listGallery({}).then(function (rows) {
+      note.hidden = !rows.some(function (g) { return g.sample; });
+    }).catch(function () {});
+  })();
+</script>
 </body>
 </html>

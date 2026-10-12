@@ -10,43 +10,63 @@
 <meta property="og:title" content="후원·헌금 | 세계희망연대">
 <meta property="og:description" content="희망의 선교행진에 후원으로 함께해 주세요.">
 <meta property="og:image" content="assets/img/og-image.png">
-<meta name="theme-color" content="#0b1f44">
-<link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+<meta name="theme-color" content="#13294b">
+<link rel="icon" href="assets/img/brand/favicon-64.png" type="image/png" sizes="64x64">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Serif:ital,wght@0,500;0,700;1,500&display=swap">
 <link rel="stylesheet" href="assets/css/style.css">
+<style>
+  /* 후원 페이지 전용 */
+  .verse .verse-copy { display: block; margin-top: 6px; font-size: 12.5px; color: var(--muted); }
+  a.use-item { display: block; transition: border-color .25s, box-shadow .25s; }
+  a.use-item:hover { border-color: var(--blue-200); box-shadow: var(--shadow); }
+  a.use-item:hover b { color: var(--blue-700); }
+  .use-item > span { display: block; line-height: 1.6; }
+  .use-item b span { color: inherit; font-size: inherit; }
+  @media (max-width: 560px) {
+    .verse br { display: none; }
+    .use-list { grid-template-columns: 1fr; gap: 12px; }
+    a.use-item { display: grid; grid-template-columns: 54px 1fr; gap: 2px 16px; align-items: center; padding: 18px 20px; text-align: left; }
+    a.use-item .card-icon { grid-row: span 2; margin: 0; }
+    a.use-item b { margin: 0; }
+  }
+</style>
 <script>(function(){try{var l=new URLSearchParams(location.search).get("lang")||localStorage.getItem("wh-lang");if(l==="en"){var h=document.documentElement;h.setAttribute("data-lang","en");h.lang="en";}}catch(e){}})();</script>
 </head>
-<body data-page="donate" data-title-en="Give | World Hope Alliance">
+<body data-page="donate" data-title-en="Give | World Hope Declaration Network">
 <div id="site-header"></div>
 
 <main id="main">
-  <section class="page-hero">
+  <!-- 상단: 라이트 히어로 -->
+  <section class="page-hero" aria-labelledby="page-title">
     <div class="container">
-      <nav class="breadcrumb" aria-label="breadcrumb"><a href="index.html"><span class="ko">홈</span><span class="en">Home</span></a><span aria-hidden="true">/</span><span><span class="ko">후원·헌금</span><span class="en">Give</span></span></nav>
-      <h1><span class="ko">후원·헌금</span><span class="en">Give</span></h1>
+      <nav class="breadcrumb" aria-label="현재 위치" data-en-aria-label="Breadcrumb"><a href="index.html"><span class="ko">홈</span><span class="en">Home</span></a><span aria-hidden="true">/</span><a href="join.html"><span class="ko">참여하기</span><span class="en">Join</span></a><span aria-hidden="true">/</span><span aria-current="page"><span class="ko">후원·헌금</span><span class="en">Give</span></span></nav>
+      <h1 id="page-title"><span class="ko">후원·헌금</span><span class="en">Give</span></h1>
+      <p class="page-hero-en">Giving &amp; Offerings</p>
       <p><span class="ko">보내 주시는 귀한 정성은 희망의 선교행진을 위해 소중히 쓰입니다.</span><span class="en">Your gift will be used faithfully for the mission march of hope.</span></p>
     </div>
   </section>
 
-  <section class="section-sm" style="padding-bottom:24px">
+  <!-- 말씀 (고린도후서 9:7 — 개역개정 / KJV) -->
+  <section class="section-sm" aria-label="말씀" data-en-aria-label="Scripture">
     <div class="container">
-      <blockquote class="verse reveal" style="margin:0 auto">
+      <blockquote class="verse reveal">
         <p class="ko">각각 그 마음에 정한 대로 할 것이요 인색함으로나 억지로 하지 말지니<br>하나님은 즐겨 내는 자를 사랑하시느니라</p>
         <p class="en">Every man according as he purposeth in his heart, so let him give;<br>not grudgingly, or of necessity: for God loveth a cheerful giver.</p>
         <cite><span class="ko">고린도후서 9장 7절</span><span class="en">2 Corinthians 9:7 (KJV)</span></cite>
+        <small class="verse-copy ko">성경전서 개역개정판 © 대한성서공회 1998</small>
       </blockquote>
     </div>
   </section>
 
   <!-- 후원 방법 -->
-  <section class="section" style="padding-top:56px">
+  <section class="section section-line" aria-labelledby="ways-title">
     <div class="container">
       <div class="section-head center reveal">
-        <span class="eyebrow"><span class="ko">후원 방법</span><span class="en">Ways to give</span></span>
-        <h2 class="section-title"><span class="ko">세 가지 방법으로 함께하실 수 있습니다</span><span class="en">Three ways to take part</span></h2>
+        <h2 class="section-title" id="ways-title"><span class="ko">세 가지 방법으로 함께하실 수 있습니다</span><span class="en">Three Ways to Take Part</span></h2>
+        <p class="section-sub">Ways to Give</p>
       </div>
       <div class="give-ways">
         <div class="give-way reveal">
@@ -71,25 +91,29 @@
     </div>
   </section>
 
-  <!-- 후원이 함께하는 사역 -->
-  <section class="section section-alt">
+  <!-- 후원이 함께하는 사역 (비전과 미션의 사역으로 연결) -->
+  <section class="section section-sky" aria-labelledby="use-title">
     <div class="container">
       <div class="section-head center reveal">
-        <span class="eyebrow"><span class="ko">후원이 함께하는 사역</span><span class="en">What your gift supports</span></span>
-        <h2 class="section-title"><span class="ko">희망을 선언하고 실천하는 일에 쓰입니다</span><span class="en">Declaring hope and putting it into practice</span></h2>
+        <h2 class="section-title" id="use-title"><span class="ko">희망을 선언하고 실천하는 일에 쓰입니다</span><span class="en">Declaring Hope and Putting It into Practice</span></h2>
+        <p class="section-sub">What Your Gift Supports</p>
       </div>
       <div class="use-list">
-        <div class="use-item reveal"><div class="card-icon" data-icon="book"></div><b><span class="ko">희망선언문 연구</span><span class="en">Research</span></b><span><span class="ko">인류가 공감할 희망선언문 연구·채택</span><span class="en">Researching &amp; adopting the Declaration</span></span></div>
-        <div class="use-item reveal"><div class="card-icon" data-icon="megaphone"></div><b><span class="ko">33인 희망선언</span><span class="en">Declaration by 33</span></b><span><span class="ko">각국 대표 33인의 선언 준비</span><span class="en">Preparing the proclamation</span></span></div>
-        <div class="use-item reveal"><div class="card-icon" data-icon="hands"></div><b><span class="ko">실천 운동</span><span class="en">Practice</span></b><span><span class="ko">실천 사항의 입체적 전개</span><span class="en">Living out the commitments</span></span></div>
-        <div class="use-item reveal"><div class="card-icon" data-icon="flag"></div><b><span class="ko">선교행진</span><span class="en">Mission march</span></b><span><span class="ko">대중과 함께하는 희망의 행진</span><span class="en">Marching with the public</span></span></div>
+        <a class="use-item reveal" href="vision.html#research"><div class="card-icon" data-icon="book"></div><b><span class="ko">희망선언문 연구·채택</span><span class="en">Research &amp; Adoption</span></b><span><span class="ko">인류 모두가 공감할 희망선언문 연구·채택</span><span class="en">Researching and adopting a declaration all humanity can embrace</span></span></a>
+        <a class="use-item reveal" href="vision.html#declaration-33"><div class="card-icon" data-icon="megaphone"></div><b><span class="ko">33인 희망선언</span><span class="en">Declaration by 33</span></b><span><span class="ko">각국의 대표 33인이 함께하는 선언</span><span class="en">Proclaimed by 33 representatives of each nation</span></span></a>
+        <a class="use-item reveal" href="vision.html#practice"><div class="card-icon" data-icon="hands"></div><b><span class="ko">실천 운동</span><span class="en">Living It Out</span></b><span><span class="ko">희망선언 실천 사항의 입체적 전개</span><span class="en">Carrying out the Declaration’s commitments</span></span></a>
+        <a class="use-item reveal" href="vision.html#march"><div class="card-icon" data-icon="flag"></div><b><span class="ko">선교행진</span><span class="en">Mission March</span></b><span><span class="ko">대중과 함께하는 희망의 선교행진</span><span class="en">The march of hope, together with the public</span></span></a>
       </div>
     </div>
   </section>
 
   <!-- 정기 후원 신청 + 온라인 후원 -->
-  <section class="section">
+  <section class="section" aria-labelledby="forms-title">
     <div class="container">
+      <div class="section-head center reveal">
+        <h2 class="section-title" id="forms-title"><span class="ko">후원 신청하기</span><span class="en">Apply or Give Online</span></h2>
+        <p class="section-sub">Application &amp; Online Giving</p>
+      </div>
       <div class="grid grid-2" style="align-items:start;gap:32px">
 
         <form class="form-card" id="apply" style="scroll-margin-top:100px" data-wh-form="donation_applications" data-subject-ko="[세계희망연대 홈페이지] 정기 후원 신청" data-ok-ko="후원 신청이 담당자에게 전달되었습니다. 곧 연락드리겠습니다. 감사합니다." data-ok-en="Your application has been sent to our staff. We will contact you soon. Thank you.">

@@ -6,19 +6,45 @@
 <title>개인정보처리방침 | 세계희망연대</title>
 <meta name="description" content="세계희망연대 개인정보처리방침">
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#0b1f44">
-<link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+<meta property="og:site_name" content="세계희망연대">
+<meta name="theme-color" content="#13294b">
+<link rel="icon" href="assets/img/brand/favicon-64.png" type="image/png" sizes="64x64">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Serif:ital,wght@0,500;0,700;1,500&display=swap">
 <link rel="stylesheet" href="assets/css/style.css">
 <script>(function(){try{var l=new URLSearchParams(location.search).get("lang")||localStorage.getItem("wh-lang");if(l==="en"){var h=document.documentElement;h.setAttribute("data-lang","en");h.lang="en";}}catch(e){}})();</script>
 <style>
-  .policy h2 { font-size: 20px; margin: 44px 0 14px; padding-top: 8px; }
+  /* ===== 약관·방침 공통 (privacy.html · terms.html 에 같은 블록 — 나중에 style.css 로 옮길 수 있음) ===== */
+  .page-hero p.policy-meta { display: flex; flex-wrap: wrap; gap: 4px 24px; margin: 16px 0 0; font-size: 14.5px; line-height: 1.7; color: var(--ink-2); }
+  .policy-meta b { margin-right: 6px; font-weight: 600; color: var(--navy-900); }
+  .policy-meta a { color: var(--blue-700); text-decoration: underline; text-underline-offset: 2px; }
+  .tbd { color: #7d5512; background: var(--gold-100); padding: 0 4px; border-radius: 3px; }
+  .policy > .notice-box { margin-bottom: 24px; }
+  .policy-note { margin: 0 0 24px; font-size: 15px; line-height: 1.8; color: var(--ink-2); }
+  .policy-toc { margin: 0 0 12px; padding: 24px 28px 20px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--sky-50); }
+  .policy-toc-title { margin: 0 0 12px; font-family: var(--f-display); font-size: 12.5px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--blue-700); }
+  .policy-toc ol { list-style: none; columns: 2; column-gap: 36px; margin: 0; padding: 0; }
+  .policy-toc li { break-inside: avoid; padding: 3px 0; font-size: 15px; line-height: 1.6; }
+  .policy .policy-toc li a { color: var(--ink-2); text-decoration: none; }
+  .policy .policy-toc li a:hover { color: var(--navy-900); text-decoration: underline; text-underline-offset: 3px; }
+  .policy h2 { scroll-margin-top: calc(var(--header-h) + 24px); margin: 40px 0 14px; padding-top: 32px; border-top: 1px solid var(--line); font-size: 20px; line-height: 1.5; }
   .policy p, .policy li { color: var(--ink-2); font-size: 16px; line-height: 1.85; }
-  .policy ul { padding-left: 20px; margin-bottom: 1em; }
+  .policy ul, .policy ol { padding-left: 22px; margin: 0 0 1em; }
+  .policy .policy-toc ol { padding: 0; margin: 0; }
+  .policy li + li { margin-top: 4px; }
+  .policy a:not(.btn) { color: var(--blue-700); text-decoration: underline; text-underline-offset: 2px; }
   .policy table { width: 100%; border-collapse: collapse; font-size: 15px; margin: 10px 0 18px; }
   .policy th, .policy td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
   .policy th { background: var(--bg-alt); color: var(--navy-900); white-space: nowrap; }
-  .policy .tbd { color: #8a5d0d; background: var(--gold-100); padding: 0 4px; border-radius: 4px; }
+  .policy-end { margin-top: 48px; padding: 24px 0 0; border-top: 2px solid var(--navy-900); }
+  .policy-end h2 { margin-top: 0; padding-top: 0; border-top: 0; }
   @media (max-width: 640px) {
+    .policy-toc { padding: 20px 20px 16px; }
+    .policy-toc ol { columns: 1; }
+    .policy h2 { margin-top: 32px; padding-top: 26px; font-size: 18.5px; }
+    .policy p, .policy li { font-size: 15.5px; }
     .policy table, .policy tbody, .policy tr, .policy th, .policy td { display: block; } .policy th { border-bottom: 0; }
     /* 여러 열 표: 휴대폰에서는 머리글 줄 대신 칸마다 항목명 표시 */
     .policy .tbl-labeled tr:first-child { display: none; }
@@ -29,28 +55,48 @@
   }
 </style>
 </head>
-<body data-page="privacy" data-title-en="Privacy Policy | World Hope Alliance">
+<body data-page="privacy" data-title-en="Privacy Policy | World Hope Declaration Network">
 <div id="site-header"></div>
 
 <main id="main">
-  <section class="page-hero" style="padding:56px 0 50px">
-    <div class="container">
+  <section class="page-hero compact">
+    <div class="container container-narrow">
       <nav class="breadcrumb" aria-label="breadcrumb"><a href="index.html"><span class="ko">홈</span><span class="en">Home</span></a><span aria-hidden="true">/</span><span><span class="ko">개인정보처리방침</span><span class="en">Privacy Policy</span></span></nav>
-      <h1 style="font-size:clamp(26px,3vw,36px)"><span class="ko">개인정보처리방침</span><span class="en">Privacy Policy</span></h1>
+      <h1><span class="ko">개인정보처리방침</span><span class="en">Privacy Policy</span></h1>
+      <p class="page-hero-en">Privacy Policy</p>
+      <p class="policy-meta"><span><b><span class="ko">시행일</span><span class="en">Effective date</span></b><span class="tbd"><span class="ko">[정식 오픈일]</span><span class="en">[official launch date]</span></span></span><span><b><span class="ko">문의</span><span class="en">Contact</span></b><a href="tel:15882716">1588-2716</a></span></p>
     </div>
   </section>
 
-  <section class="section" style="padding-top:56px">
+  <section class="section" style="padding-top:48px">
     <div class="container container-narrow policy">
       <div class="notice-box" data-draft-only>
-        <b>시안 안내</b> — 이 방침은 홈페이지 기능을 기준으로 작성한 초안입니다. 정식 오픈 전, 실제 운영 방식(위탁 업체, 보호책임자, 시행일 등)에 맞추어 확정해야 합니다. <span class="tbd">노란색 표시</span>는 확정이 필요한 항목입니다.
+        <span class="ko"><b>시안 안내</b> — 이 방침은 홈페이지 기능을 기준으로 작성한 초안입니다. 정식 오픈 전, 실제 운영 방식(위탁 업체, 보호책임자, 시행일 등)에 맞추어 확정해야 합니다. <span class="tbd">노란색 표시</span>는 확정이 필요한 항목입니다.</span>
+        <span class="en"><b>Draft</b> — This policy is a draft based on the website’s current features. Before the official launch it must be finalized to match actual operations (processors, privacy officer, effective date, etc.). Items <span class="tbd">highlighted in yellow</span> still need to be confirmed.</span>
       </div>
-      <p class="en mt-3">This page is provided in Korean, which is the governing version. In summary: we collect only what is needed to respond to inquiries, manage giving and post messages of hope; online submissions are delivered to our staff by email through an email relay service (FormSubmit) and are not stored on this website; messages of hope that we post are stored in a public GitHub repository (USA) whose change history is also public, and on request we remove them and purge earlier copies from that history; we do not sell or share your data; payment card details are processed by our payment provider and not stored by us; and you may request access, correction or deletion at any time by calling 1588-2716.</p>
+      <p class="policy-note en">This page is provided in Korean, which is the governing version. In summary: we collect only what is needed to respond to inquiries, manage giving and post messages of hope; online submissions are delivered to our staff by email through an email relay service (FormSubmit) and are not stored on this website; messages of hope that we post are stored in a public GitHub repository (USA) whose change history is also public, and on request we remove them and purge earlier copies from that history; we do not sell or share your data; payment card details are processed by our payment provider and not stored by us; and you may request access, correction or deletion at any time by calling 1588-2716.</p>
 
       <div class="ko">
+        <nav class="policy-toc" aria-label="개인정보처리방침 목차">
+          <p class="policy-toc-title">Contents</p>
+          <ol>
+            <li><a href="#p1">제1조 개인정보의 처리 목적</a></li>
+            <li><a href="#p2">제2조 처리하는 개인정보 항목</a></li>
+            <li><a href="#p3">제3조 개인정보의 처리 및 보유 기간</a></li>
+            <li><a href="#p4">제4조 개인정보의 제3자 제공</a></li>
+            <li><a href="#p5">제5조 개인정보 처리의 위탁 및 국외 이전</a></li>
+            <li><a href="#p6">제6조 개인정보의 파기 절차 및 방법</a></li>
+            <li><a href="#p7">제7조 정보주체의 권리·의무 및 행사 방법</a></li>
+            <li><a href="#p8">제8조 개인정보의 안전성 확보 조치</a></li>
+            <li><a href="#p9">제9조 자동 수집 장치의 설치·운영 및 거부</a></li>
+            <li><a href="#p10">제10조 개인정보 보호책임자</a></li>
+            <li><a href="#p11">제11조 권익침해 구제 방법</a></li>
+            <li><a href="#p12">제12조 개인정보처리방침의 변경</a></li>
+          </ol>
+        </nav>
       <p class="mt-3">세계희망연대(이하 ‘단체’)는 「개인정보 보호법」에 따라 정보주체의 개인정보를 보호하고 이와 관련한 고충을 신속하고 원활하게 처리하기 위하여 다음과 같이 개인정보처리방침을 수립·공개합니다.</p>
 
-      <h2>제1조 (개인정보의 처리 목적)</h2>
+      <h2 id="p1">제1조 (개인정보의 처리 목적)</h2>
       <ul>
         <li>온라인 문의 및 참여·동역 신청에 대한 확인과 회신</li>
         <li>정기 후원 신청 확인, 후원 안내 및 후원자 관리</li>
@@ -59,7 +105,7 @@
         <li>홈페이지 방문 통계 산출(방문 통계 도구를 사용하는 경우, 개인을 식별하지 않는 범위)</li>
       </ul>
 
-      <h2>제2조 (처리하는 개인정보 항목)</h2>
+      <h2 id="p2">제2조 (처리하는 개인정보 항목)</h2>
       <table>
         <tr><th>구분</th><th>항목</th></tr>
         <tr><td>문의·참여 신청</td><td>(필수) 이름, 연락처, 문의 내용 / (선택) 이메일, 소속</td></tr>
@@ -71,7 +117,7 @@
       </table>
       <p>단체는 홈페이지에 별도의 서버나 데이터베이스를 두지 않습니다. 온라인으로 접수된 내용은 이메일 전송 대행 서비스를 거쳐 담당자 이메일로만 전달됩니다.</p>
 
-      <h2>제3조 (개인정보의 처리 및 보유 기간)</h2>
+      <h2 id="p3">제3조 (개인정보의 처리 및 보유 기간)</h2>
       <ul>
         <li>문의·참여 신청: 접수 메일은 처리(회신) 완료 후 1년 이내에 수신 메일함에서 삭제</li>
         <li>정기 후원 신청: 후원 종료 후 관련 법령에서 정한 기간(법령상 보존 의무가 없는 경우 종료 후 1년)</li>
@@ -81,10 +127,10 @@
         <li>정보주체가 동의를 철회하거나 삭제를 요청하는 경우 법령상 보존 의무가 없는 한 지체 없이 파기합니다.</li>
       </ul>
 
-      <h2>제4조 (개인정보의 제3자 제공)</h2>
+      <h2 id="p4">제4조 (개인정보의 제3자 제공)</h2>
       <p>단체는 정보주체의 동의, 법률의 특별한 규정 등 「개인정보 보호법」에서 허용하는 경우를 제외하고는 개인정보를 제3자에게 제공하지 않습니다.</p>
 
-      <h2>제5조 (개인정보 처리의 위탁 및 국외 이전)</h2>
+      <h2 id="p5">제5조 (개인정보 처리의 위탁 및 국외 이전)</h2>
       <p>단체는 원활한 홈페이지 운영을 위하여 다음과 같이 개인정보 처리 업무를 위탁하며, 그중 일부는 국외로 이전됩니다.</p>
       <table class="tbl-labeled">
         <tr><th>수탁자(이전받는 자)</th><th>위탁 업무</th><th>국가</th><th>처리(이전) 항목</th></tr>
@@ -98,13 +144,13 @@
       <p>국외 이전은 홈페이지 이용 또는 온라인 접수 시점에 정보통신망을 통해 전송되는 방법으로 이루어지며, 이전받는 자의 보유 기간은 각 사의 정책 및 이용 약관에 따릅니다. 이전받는 자의 연락처(개인정보 보호 담당 부서): <span class="tbd">[확정 후 기재]</span></p>
       <p>국외 이전을 원하지 않으시면 온라인 접수 대신 전국대표전화(1588-2716)로 문의·신청하실 수 있습니다. 이 경우 온라인 접수 기능만 이용이 제한되며, 다른 홈페이지 이용에는 제한이 없습니다.</p>
 
-      <h2>제6조 (개인정보의 파기 절차 및 방법)</h2>
+      <h2 id="p6">제6조 (개인정보의 파기 절차 및 방법)</h2>
       <p>보유 기간이 지나거나 처리 목적이 달성된 개인정보는 지체 없이 파기합니다. 전자적 파일(접수 메일 포함)은 복구할 수 없는 방법으로 삭제하고(메일함 휴지통 비우기 포함), 종이 문서는 분쇄하거나 소각합니다. 공개 저장소(GitHub)에 게시했던 정보는 현재 파일에서 삭제하는 것과 함께 변경 이력에 남은 이전 기록도 삭제합니다(변경 이력 재작성 및 GitHub에 남은 사본 삭제 요청).</p>
 
-      <h2>제7조 (정보주체의 권리·의무 및 행사 방법)</h2>
+      <h2 id="p7">제7조 (정보주체의 권리·의무 및 행사 방법)</h2>
       <p>정보주체는 언제든지 자신의 개인정보에 대한 열람, 정정·삭제, 처리정지, 동의 철회를 요구할 수 있으며, 단체는 지체 없이 조치합니다. 요청은 전국대표전화(1588-2716) 또는 홈페이지 문의하기를 통해 하실 수 있습니다.</p>
 
-      <h2>제8조 (개인정보의 안전성 확보 조치)</h2>
+      <h2 id="p8">제8조 (개인정보의 안전성 확보 조치)</h2>
       <ul>
         <li>암호화 통신(HTTPS)을 통한 전송 구간 보호</li>
         <li>홈페이지 관리용 GitHub 토큰은 관리자별로 발급하여 해당 저장소의 콘텐츠 수정 권한만 부여하고, 사용 기한(만료일)을 설정하며, 담당자 변경이나 유출이 의심될 때 즉시 폐기</li>
@@ -113,7 +159,7 @@
         <li>계좌번호·주민등록번호 등 민감한 정보는 온라인으로 수집하지 않으며, 카드번호 등 결제수단 정보는 결제대행사가 처리</li>
       </ul>
 
-      <h2>제9조 (자동 수집 장치의 설치·운영 및 거부)</h2>
+      <h2 id="p9">제9조 (자동 수집 장치의 설치·운영 및 거부)</h2>
       <ul>
         <li>단체는 이용자가 고른 언어(한국어/영어)를 기억하기 위해 브라우저 저장소(localStorage)에 <b>언어 설정 값만</b> 저장합니다. 관리자 페이지의 관리자 로그인 정보(GitHub 토큰)는 그 관리자 본인의 기기 브라우저에만 보관되며, ‘이 기기에서 기억하기’를 선택한 경우에만 계속 저장되고 선택하지 않으면 브라우저 탭을 닫을 때 삭제됩니다.</li>
         <li>온라인 후원 시 결제창을 오가는 동안 결제 확인에 필요한 정보(이름·연락처·이메일·금액·결제번호)를 브라우저의 세션 저장소(sessionStorage)에 잠시 보관하며, 결제 결과를 확인하는 즉시 삭제합니다.</li>
@@ -122,13 +168,13 @@
         <li>지도(Google 지도), 글꼴(Google Fonts), 결제창(PortOne) 등 외부 서비스가 화면에 표시될 때에는 해당 서비스 제공자가 접속 정보(IP 주소 등)를 처리할 수 있습니다.</li>
       </ul>
 
-      <h2>제10조 (개인정보 보호책임자)</h2>
+      <h2 id="p10">제10조 (개인정보 보호책임자)</h2>
       <table>
         <tr><th>성명·직책</th><td><span class="tbd">[확정 후 기재]</span></td></tr>
         <tr><th>연락처</th><td>1588-2716</td></tr>
       </table>
 
-      <h2>제11조 (권익침해 구제 방법)</h2>
+      <h2 id="p11">제11조 (권익침해 구제 방법)</h2>
       <p>개인정보 침해에 대한 신고나 상담이 필요하신 경우 아래 기관에 문의하실 수 있습니다.</p>
       <ul>
         <li>개인정보침해신고센터: (국번없이) 118 · privacy.kisa.or.kr</li>
@@ -137,7 +183,7 @@
         <li>경찰청: (국번없이) 182</li>
       </ul>
 
-      <h2>제12조 (개인정보처리방침의 변경)</h2>
+      <h2 id="p12">제12조 (개인정보처리방침의 변경)</h2>
       <p>이 개인정보처리방침은 <span class="tbd">[정식 오픈일]</span>부터 적용됩니다. 내용이 변경되는 경우 홈페이지를 통해 공지합니다.</p>
       </div>
     </div>

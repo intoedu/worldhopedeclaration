@@ -19,28 +19,53 @@
 </script>
 <title>페이지를 찾을 수 없습니다 | 세계희망연대</title>
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#0b1f44">
-<link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+<meta property="og:site_name" content="세계희망연대">
+<meta name="theme-color" content="#13294b">
+<link rel="icon" href="assets/img/brand/favicon-64.png" type="image/png" sizes="64x64">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Serif:ital,wght@0,500;0,700;1,500&display=swap">
 <link rel="stylesheet" href="assets/css/style.css">
+<style>
+  /* 404 전용: 영문 부제 · 자주 찾는 페이지 */
+  .error-en { margin: 8px 0 0; font-family: var(--f-display); font-size: 14px; font-weight: 400; letter-spacing: .26em; text-transform: uppercase; color: var(--blue-700); }
+  .error-links { max-width: 640px; margin: 44px auto 0; padding-top: 26px; border-top: 1px solid var(--line); }
+  .error-links-title { margin: 0 0 14px; font-size: 13.5px; color: var(--muted); }
+  .error-links ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+  .error-links a { display: inline-flex; align-items: center; padding: 7px 15px; border: 1px solid var(--line-2); border-radius: var(--radius-xs); background: rgba(255, 255, 255, .85); font-size: 14.5px; font-weight: 600; color: var(--navy-900); transition: border-color .2s, background .2s; }
+  .error-links a:hover { border-color: var(--navy-900); background: #fff; }
+  @media (max-width: 560px) {
+    .error-actions { max-width: 340px; margin-left: auto; margin-right: auto; }
+    .error-actions .btn { flex: 1 1 100%; }
+  }
+</style>
 <script>(function(){try{var l=new URLSearchParams(location.search).get("lang")||localStorage.getItem("wh-lang");if(l==="en"){var h=document.documentElement;h.setAttribute("data-lang","en");h.lang="en";}}catch(e){}})();</script>
 </head>
-<body data-page="404" data-no-track data-title-en="Page not found | World Hope Alliance">
+<body data-page="404" data-no-track data-title-en="Page not found | World Hope Declaration Network">
 <div id="site-header"></div>
 <main id="main">
-  <section class="hero" style="min-height:70vh;padding:100px 0 180px">
-    <div class="hero-stars" aria-hidden="true"></div>
-    <div class="hero-glow" aria-hidden="true"></div>
-    <div class="hero-horizon" aria-hidden="true"></div>
+  <section class="error-hero" aria-labelledby="error-title">
     <div class="container">
-      <div class="hero-inner">
-        <span class="hero-kicker"><i></i>404</span>
-        <h1 class="hero-title" style="font-size:clamp(28px,4vw,44px)"><span class="ko">요청하신 페이지를 찾을 수 없습니다.</span><span class="en">We couldn’t find that page.</span></h1>
-        <p class="hero-sub"><span class="ko">주소가 바뀌었거나 삭제된 페이지일 수 있습니다.</span><span class="en">The address may have changed or the page may have been removed.</span></p>
-        <div class="hero-actions">
-          <a class="btn btn-gold btn-lg" href="index.html"><span class="ko">홈으로</span><span class="en">Go home</span></a>
-          <a class="btn btn-ghost-light btn-lg" href="contact.html"><span class="ko">문의하기</span><span class="en">Contact us</span></a>
-        </div>
+      <p class="error-code" aria-hidden="true">404</p>
+      <p class="error-en" aria-hidden="true">Page Not Found</p>
+      <h1 class="error-title" id="error-title"><span class="ko">요청하신 페이지를 찾을 수 없습니다.</span><span class="en">We couldn’t find that page.</span></h1>
+      <p class="error-text"><span class="ko">주소가 바뀌었거나 삭제된 페이지일 수 있습니다. 사이트 검색이나 아래 바로가기를 이용해 주세요.</span><span class="en">The address may have changed or the page may have been removed. Please use the site search or the links below.</span></p>
+      <div class="error-actions">
+        <a class="btn btn-primary btn-lg" href="index.html"><span class="ko">홈으로</span><span class="en">Go home</span><span data-icon="arrow-right"></span></a>
+        <button type="button" class="btn btn-outline btn-lg" data-search-open><span data-icon="search"></span><span class="ko">사이트 검색</span><span class="en">Search the site</span></button>
       </div>
+      <nav class="error-links" aria-labelledby="error-links-title">
+        <p class="error-links-title" id="error-links-title"><span class="ko">자주 찾는 페이지</span><span class="en">Popular pages</span></p>
+        <ul>
+          <li><a href="declaration.html"><span class="ko">세계희망선언문</span><span class="en">The Declaration</span></a></li>
+          <li><a href="global33.html"><span class="ko">글로벌 33</span><span class="en">Global 33</span></a></li>
+          <li><a href="worldmap.html"><span class="ko">세계지도</span><span class="en">World Map</span></a></li>
+          <li><a href="news.html"><span class="ko">소식</span><span class="en">News</span></a></li>
+          <li><a href="join.html"><span class="ko">참여하기</span><span class="en">Join</span></a></li>
+          <li><a href="contact.html"><span class="ko">문의하기</span><span class="en">Contact</span></a></li>
+        </ul>
+      </nav>
     </div>
   </section>
 </main>

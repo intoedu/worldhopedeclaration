@@ -10,54 +10,72 @@
 <meta property="og:title" content="문의하기 | 세계희망연대">
 <meta property="og:description" content="문의 및 참여·동역 신청 · 전국대표전화 1588-2716">
 <meta property="og:image" content="assets/img/og-image.png">
-<meta name="theme-color" content="#0b1f44">
-<link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+<meta name="theme-color" content="#13294b">
+<link rel="icon" href="assets/img/brand/favicon-64.png" type="image/png" sizes="64x64">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Serif:ital,wght@0,500;0,700;1,500&display=swap">
 <link rel="stylesheet" href="assets/css/style.css">
+<style>
+  /* 문의 페이지 전용: 안내 상자 제목(h2)을 기존 h3 크기로, 바로가기 목록 */
+  .contact-tile .contact-tile-title { font-size: 18px; margin-bottom: 10px; }
+  .contact-tile.navy .contact-tile-title { color: #fff; }
+  .form-card .form-title { font-size: 22px; margin-bottom: 6px; }
+  .contact-tile-text { margin: 0 0 14px; color: var(--ink-2); font-size: 15.5px; }
+  .contact-tile ul.contact-links { gap: 10px; }
+  .contact-tile ul.contact-links li { padding-left: 0; }
+  .contact-tile ul.contact-links li::before { display: none; }
+  .contact-links .link-arrow { font-size: 15.5px; }
+  /* 배치: 데스크톱은 왼쪽 안내 2묶음 + 오른쪽 폼, 모바일은 전화·참여 → 폼 → 나머지 안내 */
+  .contact-layout { grid-template-rows: auto 1fr; row-gap: 18px; }
+  .contact-layout > #contact-form { grid-column: 2; grid-row: 1 / span 2; }
+  .contact-layout > .contact-side-a { grid-column: 1; grid-row: 1; }
+  .contact-layout > .contact-side-b { grid-column: 1; grid-row: 2; align-self: start; }
+  @media (max-width: 960px) {
+    .contact-layout { grid-template-rows: none; row-gap: 24px; }
+    .contact-layout > #contact-form, .contact-layout > .contact-side-a, .contact-layout > .contact-side-b { grid-column: auto; grid-row: auto; }
+  }
+</style>
 <script>(function(){try{var l=new URLSearchParams(location.search).get("lang")||localStorage.getItem("wh-lang");if(l==="en"){var h=document.documentElement;h.setAttribute("data-lang","en");h.lang="en";}}catch(e){}})();</script>
 </head>
-<body data-page="contact" data-title-en="Contact | World Hope Alliance">
+<body data-page="contact" data-nav="join" data-title-en="Contact | World Hope Declaration Network">
 <div id="site-header"></div>
 
 <main id="main">
-  <section class="page-hero">
+  <!-- 상단: 라이트 히어로 -->
+  <section class="page-hero" aria-labelledby="page-title">
     <div class="container">
-      <nav class="breadcrumb" aria-label="breadcrumb"><a href="index.html"><span class="ko">홈</span><span class="en">Home</span></a><span aria-hidden="true">/</span><span><span class="ko">문의하기</span><span class="en">Contact</span></span></nav>
-      <h1><span class="ko">문의하기</span><span class="en">Contact Us</span></h1>
+      <nav class="breadcrumb" aria-label="현재 위치" data-en-aria-label="Breadcrumb"><a href="index.html"><span class="ko">홈</span><span class="en">Home</span></a><span aria-hidden="true">/</span><a href="join.html"><span class="ko">참여하기</span><span class="en">Join</span></a><span aria-hidden="true">/</span><span aria-current="page"><span class="ko">문의하기</span><span class="en">Contact</span></span></nav>
+      <h1 id="page-title"><span class="ko">문의하기</span><span class="en">Contact Us</span></h1>
+      <p class="page-hero-en">Get in Touch</p>
       <p><span class="ko">궁금한 점, 참여·동역 신청, 협력 제안을 남겨 주세요. 확인 후 연락드리겠습니다.</span><span class="en">Send us your questions, applications to join, or partnership proposals. We’ll get back to you.</span></p>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" aria-label="문의 안내와 신청서" data-en-aria-label="Contact details and form">
     <div class="container">
       <div class="contact-layout">
-        <aside class="contact-side">
+        <aside class="contact-side contact-side-a" aria-label="전화·참여 안내" data-en-aria-label="Phone and joining">
           <div class="contact-tile navy">
-            <h3><span class="ko">전국대표전화</span><span class="en">Main line (Korea)</span></h3>
+            <h2 class="contact-tile-title"><span class="ko">전국대표전화</span><span class="en">Main line (Korea)</span></h2>
             <a class="phone" href="tel:15882716">1588-2716</a>
             <span class="ko">전화로도 편하게 문의하실 수 있습니다.</span><span class="en">Feel free to call us as well.</span>
           </div>
           <div class="contact-tile">
-            <h3><span class="ko">주소</span><span class="en">Address</span></h3>
-            <p class="mb-0"><span class="ko">세종특별자치시 보람동 732</span><span class="en">732 Boram-dong, Sejong-si, Republic of Korea</span></p>
-            <a class="link-arrow mt-2" href="about.html#location"><span class="ko">오시는 길</span><span class="en">Directions</span></a>
-          </div>
-          <div class="contact-tile">
-            <h3><span class="ko">이런 내용을 남겨 주세요</span><span class="en">What you can send us</span></h3>
-            <ul>
-              <li><span class="ko">세계희망연대·희망선언에 관한 일반 문의</span><span class="en">General questions about the Alliance and the Declaration</span></li>
-              <li><span class="ko">선교행진 참여·동역 신청</span><span class="en">Applications to join or partner</span></li>
-              <li><span class="ko">후원 관련 문의</span><span class="en">Questions about giving</span></li>
-              <li><span class="ko">단체·교회 협력 제안, 언론·취재 요청</span><span class="en">Partnership proposals, media requests</span></li>
+            <h2 class="contact-tile-title"><span class="ko">세계희망선언 참여·추천</span><span class="en">Join or nominate</span></h2>
+            <p class="contact-tile-text"><span class="ko">선언 참여와 글로벌 대표 추천은 참여하기 페이지의 전용 신청서를 이용해 주세요.</span><span class="en">Please use the dedicated forms on the Join page to join the Declaration or nominate a Global Representative.</span></p>
+            <ul class="contact-links">
+              <li><a class="link-arrow" href="join.html#declare"><span class="ko">선언 참여 신청</span><span class="en">Join the Declaration</span></a></li>
+              <li><a class="link-arrow" href="join.html#nominate"><span class="ko">글로벌 대표 추천</span><span class="en">Nominate a Representative</span></a></li>
+              <li><a class="link-arrow" href="faq.html"><span class="ko">자주 묻는 질문</span><span class="en">FAQ</span></a></li>
             </ul>
           </div>
         </aside>
 
+
         <form class="form-card" id="contact-form" data-wh-form="inquiries" data-subject-ko="[세계희망연대 홈페이지] 문의" data-ok-ko="문의가 담당자에게 전달되었습니다. 확인 후 연락드리겠습니다. 감사합니다." data-ok-en="Your message has been sent to our staff. We will get back to you soon. Thank you.">
-          <h3><span class="ko">온라인 문의·참여 신청</span><span class="en">Online inquiry &amp; application</span></h3>
+          <h2 class="form-title"><span class="ko">온라인 문의·참여 신청</span><span class="en">Online inquiry &amp; application</span></h2>
           <p><span class="ko"><span class="req" style="color:var(--danger)">*</span> 표시는 필수 입력 항목입니다. 보내 주신 내용은 이메일로 담당자에게 전달됩니다.</span><span class="en">Fields marked <span style="color:var(--danger)">*</span> are required. Your message is delivered to our staff by email.</span></p>
           <div class="form-grid">
             <div class="field full">
@@ -114,6 +132,23 @@
             <div class="full"><button type="submit" class="btn btn-primary btn-lg btn-block"><span class="ko">문의 보내기</span><span class="en">Send</span></button></div>
           </div>
         </form>
+
+        <aside class="contact-side contact-side-b" aria-label="문의 안내·주소" data-en-aria-label="What to send and address">
+          <div class="contact-tile">
+            <h2 class="contact-tile-title"><span class="ko">이런 내용을 남겨 주세요</span><span class="en">What you can send us</span></h2>
+            <ul>
+              <li><span class="ko">세계희망연대·세계희망선언에 관한 일반 문의</span><span class="en">General questions about the Network and the World Hope Declaration</span></li>
+              <li><span class="ko">선교행진 참여·동역 신청</span><span class="en">Applications to join or partner</span></li>
+              <li><span class="ko">후원 관련 문의</span><span class="en">Questions about giving</span></li>
+              <li><span class="ko">단체·교회 협력 제안, 언론·취재 요청</span><span class="en">Partnership proposals, media requests</span></li>
+            </ul>
+          </div>
+          <div class="contact-tile">
+            <h2 class="contact-tile-title"><span class="ko">주소</span><span class="en">Address</span></h2>
+            <p class="mb-0"><span class="ko">세종특별자치시 보람동 732</span><span class="en">732 Boram-dong, Sejong-si, Republic of Korea</span></p>
+            <a class="link-arrow mt-2" href="about.html#location"><span class="ko">오시는 길</span><span class="en">Directions</span></a>
+          </div>
+        </aside>
       </div>
     </div>
   </section>

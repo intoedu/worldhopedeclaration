@@ -1,6 +1,7 @@
 /* ==========================================================================
    세계희망연대 — 공통 스크립트
-   헤더/푸터, 한·영 전환, 아이콘, QR 모달, 토스트, 스크롤 효과, 방문 통계
+   헤더(데스크톱·모바일)·전체 메뉴·하단 탭바·푸터, 사이트 검색, 한·영 전환,
+   아이콘, QR 모달, 토스트, 스크롤 효과, 통계 숫자(data/stats.json), 방문 통계
    ========================================================================== */
 (function () {
   "use strict";
@@ -35,18 +36,23 @@
     return WH.lang() === "en" && obj.en ? obj.en : (obj.ko || obj.en || "");
   };
 
+  /* 속성 번역: data-en-placeholder / data-en-aria-label / data-en-title / data-en-alt */
+  function applyAttrs(root, lang) {
+    ["placeholder", "aria-label", "title", "alt"].forEach(function (attr) {
+      root.querySelectorAll("[data-en-" + attr + "]").forEach(function (el) {
+        if (!el.hasAttribute("data-ko-" + attr)) el.setAttribute("data-ko-" + attr, el.getAttribute(attr) || "");
+        el.setAttribute(attr, lang === "en" ? el.getAttribute("data-en-" + attr) : el.getAttribute("data-ko-" + attr));
+      });
+    });
+  }
+  WH.applyAttrs = function (root) { applyAttrs(root || document, WH.lang()); };
+
   function applyLang(lang) {
     var html = document.documentElement;
     html.setAttribute("data-lang", lang);
     html.lang = lang;
     try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
-    // 속성 번역: data-ko-placeholder / data-en-placeholder 등
-    ["placeholder", "aria-label", "title", "alt"].forEach(function (attr) {
-      document.querySelectorAll("[data-en-" + attr + "]").forEach(function (el) {
-        if (!el.hasAttribute("data-ko-" + attr)) el.setAttribute("data-ko-" + attr, el.getAttribute(attr) || "");
-        el.setAttribute(attr, lang === "en" ? el.getAttribute("data-en-" + attr) : el.getAttribute("data-ko-" + attr));
-      });
-    });
+    applyAttrs(document, lang);
     // <option data-en="..."> 번역
     document.querySelectorAll("option[data-en]").forEach(function (o) {
       if (!o.hasAttribute("data-ko")) o.setAttribute("data-ko", o.textContent);
@@ -58,7 +64,7 @@
       var en = body.getAttribute("data-title-en");
       document.title = lang === "en" && en ? en : body.getAttribute("data-title-ko");
     }
-    document.querySelectorAll(".lang-switch button").forEach(function (b) {
+    document.querySelectorAll("[data-set-lang]").forEach(function (b) {
       b.setAttribute("aria-pressed", String(b.getAttribute("data-set-lang") === lang));
     });
     document.dispatchEvent(new CustomEvent("wh:lang", { detail: { lang: lang } }));
@@ -77,6 +83,11 @@
     if (isNaN(dt)) return "";
     var y = dt.getFullYear(), m = String(dt.getMonth() + 1).padStart(2, "0"), day = String(dt.getDate()).padStart(2, "0");
     return y + "." + m + "." + day;
+  };
+  /* 숫자 → 1,234 형식 (숫자가 아니면 그대로) */
+  WH.fmtNum = function (n) {
+    var x = Number(n);
+    return n !== "" && n != null && isFinite(x) ? x.toLocaleString("en-US") : String(n == null ? "" : n);
   };
   /* 일반 텍스트 → 안전한 HTML (빈 줄 = 문단, 줄바꿈 = <br>, URL 자동 링크) */
   WH.textToHtml = function (text) {
@@ -138,7 +149,29 @@
     toastTimer = setTimeout(function () { el.classList.remove("is-show"); }, 2800);
   };
 
-  /* ---------------- 아이콘 ---------------- */
+  /* 여러 겹의 창(메뉴·검색·QR)이 열려 있는 동안 배경 스크롤 잠금 */
+  var scrollLocks = 0;
+  function lockScroll(on) {
+    scrollLocks = Math.max(0, scrollLocks + (on ? 1 : -1));
+    document.documentElement.style.overflow = scrollLocks ? "hidden" : "";
+  }
+  /* 대화상자 안에서 Tab 키 순환 */
+  function focusables(root) {
+    return Array.prototype.filter.call(
+      root.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'),
+      function (el) { return el.offsetWidth || el.offsetHeight || el.getClientRects().length; }
+    );
+  }
+  function trapTab(root, e) {
+    if (e.key !== "Tab") return;
+    var f = focusables(root);
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+
+  /* ---------------- 아이콘 (선 아이콘, 24×24) ---------------- */
   var P = {
     phone: '<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/>',
     mail: '<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/>',
@@ -146,14 +179,20 @@
     clock: '<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
     qr: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 17h4v4h-4"/>',
     globe: '<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
+    world: '<circle cx="12" cy="12" r="10"/><path d="M2 12h20M3.5 7h17M3.5 17h17M12 2c2.8 2.8 4.2 6.1 4.2 10s-1.4 7.2-4.2 10c-2.8-2.8-4.2-6.1-4.2-10S9.2 4.8 12 2z"/>',
     search: '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
     thumbtack: '<path d="M12 17v5M9 10.8V4h6v6.8l3 3.2v1H6v-1z"/>',
     heart: '<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/>',
     hands: '<path d="M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16"/><path d="m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.8-2.9l-4.2 3.9"/><path d="m2 15 6 6"/>',
     message: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/>',
     users: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/>',
+    group: '<circle cx="12" cy="8.1" r="3.3"/><path d="M5.6 21v-3a6.4 6.4 0 0 1 12.8 0v3z"/><path d="M6.1 7.9a2.3 2.3 0 1 0 0 3.6M17.9 7.9a2.3 2.3 0 1 1 0 3.6"/><path d="M5.6 21H1.3v-2.4c0-2.8 2-5 4.8-5.4M18.4 21h4.3v-2.4c0-2.8-2-5-4.8-5.4"/>',
+    people: '<circle cx="12" cy="7.5" r="3"/><circle cx="5" cy="9.5" r="2.2"/><circle cx="19" cy="9.5" r="2.2"/><path d="M6.5 20v-1.5a5.5 5.5 0 0 1 11 0V20"/><path d="M1.5 19.5v-.8A3.3 3.3 0 0 1 6 15.6M22.5 19.5v-.8a3.3 3.3 0 0 0-4.5-3.1"/>',
+    user: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
     compass: '<circle cx="12" cy="12" r="10"/><path d="m16.2 7.8-2.1 6.3-6.3 2.1 2.1-6.3z"/>',
     book: '<path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2zM22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/>',
+    doc: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8M8 9h3"/>',
+    scroll: '<path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"/>',
     filecheck: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15l2 2 4-4"/>',
     megaphone: '<path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>',
     sun: '<circle cx="12" cy="14" r="4"/><path d="M12 4v2M4.9 7.9l1.4 1.4M2 14h2M20 14h2M17.7 9.3l1.4-1.4M3 20h18"/>',
@@ -166,16 +205,52 @@
     printer: '<path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/>',
     share: '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/>',
     link: '<path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.8 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/>',
+    link2: '<path d="M9 17H7A5 5 0 0 1 7 7h2M15 7h2a5 5 0 1 1 0 10h-2M8 12h8"/>',
+    external: '<path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>',
     card: '<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/>',
+    idcard: '<rect x="2" y="4" width="20" height="16" rx="2"/><circle cx="8" cy="11" r="2.5"/><path d="M4.5 17a3.5 3.5 0 0 1 7 0M14 9.5h5M14 13h5M14 16.5h3"/>',
     bank: '<path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/>',
+    landmark: '<path d="M3 21h18M5 18h14M6 18v-7M10 18v-7M14 18v-7M18 18v-7M3 11h18L12 4z"/>',
     repeat: '<path d="m17 1 4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/>',
     cross: '<path d="M12 3v18M7 8h10"/>',
-    link2: '<path d="M9 17H7A5 5 0 0 1 7 7h2M15 7h2a5 5 0 1 1 0 10h-2M8 12h8"/>',
-    seed: '<path d="M7 20h10M12 20v-8"/><path d="M12 12c0-3 2-6 6-6 0 3-2 6-6 6zM12 14c0-2.5-1.7-5-5-5 0 2.5 1.7 5 5 5z"/>'
+    seed: '<path d="M7 20h10M12 20v-8"/><path d="M12 12c0-3 2-6 6-6 0 3-2 6-6 6zM12 14c0-2.5-1.7-5-5-5 0 2.5 1.7 5 5 5z"/>',
+    sprout: '<path d="M12 21v-9M8 21h8"/><path d="M12 12C12 8 9.5 5 5 5c0 4 2.5 7 7 7z"/><path d="M12 14c0-4 2.6-7.5 7-7.5 0 4.2-2.6 7.5-7 7.5z"/>',
+    leaf: '<path d="M11 20A7 7 0 0 1 4 13C4 7 9 3 20 3c0 10-4 17-9 17z"/><path d="M4 21c2.5-5 6-8.5 11-11"/>',
+    target: '<path d="M20.2 8.6A9.4 9.4 0 1 1 16.3 4.4"/><circle cx="11.6" cy="12.6" r="5.4"/><circle cx="11.6" cy="12.6" r="1.6"/><path d="m12.8 11.4 6.4-6.4"/><path d="m19.2 5-.5-2.2 1.6-1.3.6 1.6 1.6.6-1.3 1.6z"/>',
+    award: '<circle cx="12" cy="9" r="6"/><path d="M8.2 13.6 7 22l5-3 5 3-1.2-8.4"/>',
+    trophy: '<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/>',
+    palette: '<path d="M12 22a10 10 0 1 1 10-10c0 2.8-2.2 4-4 4h-2a2 2 0 0 0-1.5 3.3A2 2 0 0 1 12 22z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7" r="1"/><circle cx="15" cy="7" r="1"/>',
+    chart: '<path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 6-6"/><path d="M16 8h4v4"/>',
+    medical: '<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"/><path d="M12 9.5v6M9 12.5h6"/>',
+    tool: '<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/>',
+    /* 5대 원칙용 중립 아이콘 (태극 문양 사용 금지) */
+    circles: '<circle cx="9" cy="12" r="6.5"/><circle cx="15" cy="12" r="6.5"/>',
+    layers: '<path d="m12 3 9 4.5-9 4.5-9-4.5z"/><path d="m3 12 9 4.5 9-4.5"/><path d="m3 16.5 9 4.5 9-4.5"/>',
+    horizontal: '<circle cx="5" cy="9" r="2"/><circle cx="12" cy="9" r="2"/><circle cx="19" cy="9" r="2"/><path d="M2 20v-2a3 3 0 0 1 6 0v2M9 20v-2a3 3 0 0 1 6 0v2M16 20v-2a3 3 0 0 1 6 0v2M2 4h20"/>',
+    balance: '<path d="M12 4v16M8 20h8M4 7h16"/><path d="M4 7l-3 6.5a3 3 0 0 0 6 0zM20 7l-3 6.5a3 3 0 0 0 6 0z"/>',
+    center: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.5"/><path d="M12 3v6.5M12 14.5V21M3 12h6.5M14.5 12H21"/>',
+    unity: '<circle cx="12" cy="7.5" r="4.5"/><circle cx="7.5" cy="15" r="4.5"/><circle cx="16.5" cy="15" r="4.5"/>',
+    /* 화면 조작 */
+    menu: '<path d="M3 5h18M3 12h18M3 19h18"/>',
+    close: '<path d="M18 6 6 18M6 6l12 12"/>',
+    check: '<path d="m5 12.5 4.5 4.5L19 7.5"/>',
+    "chevron-down": '<path d="m6 9 6 6 6-6"/>',
+    "chevron-right": '<path d="m9 6 6 6-6 6"/>',
+    "chevron-left": '<path d="m15 6-6 6 6 6"/>',
+    "arrow-right": '<path d="M4 12h16M14 6l6 6-6 6"/>',
+    /* SNS */
+    youtube: '<path d="M22.5 6.4a2.8 2.8 0 0 0-2-2C18.8 4 12 4 12 4s-6.8 0-8.5.4a2.8 2.8 0 0 0-2 2A29 29 0 0 0 1 12a29 29 0 0 0 .5 5.6 2.8 2.8 0 0 0 2 2c1.7.4 8.5.4 8.5.4s6.8 0 8.5-.4a2.8 2.8 0 0 0 2-2A29 29 0 0 0 23 12a29 29 0 0 0-.5-5.6z"/><path d="m9.8 15.5 5.7-3.5-5.7-3.5z"/>',
+    instagram: '<rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.4A4 4 0 1 1 12.6 8 4 4 0 0 1 16 11.4zM17.5 6.5h.01"/>',
+    facebook: '<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>',
+    blog: '<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',
+    "youtube-fill": '<path fill="currentColor" stroke="none" fill-rule="evenodd" d="M22.6 7.2a2.9 2.9 0 0 0-2-2C18.8 4.7 12 4.7 12 4.7s-6.8 0-8.6.5a2.9 2.9 0 0 0-2 2A30 30 0 0 0 1 12a30 30 0 0 0 .4 4.8 2.9 2.9 0 0 0 2 2c1.8.5 8.6.5 8.6.5s6.8 0 8.6-.5a2.9 2.9 0 0 0 2-2A30 30 0 0 0 23 12a30 30 0 0 0-.4-4.8zM9.8 15.1V8.9l5.4 3.1z"/>',
+    "facebook-fill": '<path fill="currentColor" stroke="none" d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12z"/>',
+    kakao: '<path d="M12 4C6.5 4 2 7.4 2 11.6c0 2.7 1.8 5 4.6 6.4L5.7 21l3.6-2.4c.9.2 1.8.3 2.7.3 5.5 0 10-3.4 10-7.6S17.5 4 12 4z"/>'
   };
   WH.icon = function (name) {
-    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (P[name] || "") + "</svg>";
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' + (P[name] || "") + "</svg>";
   };
+  WH.iconNames = Object.keys(P);
   function fillIcons(root) {
     (root || document).querySelectorAll("[data-icon]").forEach(function (el) {
       if (!el.firstElementChild) el.innerHTML = WH.icon(el.getAttribute("data-icon"));
@@ -183,127 +258,483 @@
   }
   WH.fillIcons = fillIcons;
 
-  /* ---------------- 헤더 / 푸터 ---------------- */
+  /* ---------------- 메뉴 정의 ---------------- */
+  // 주 메뉴 (데스크톱 가로 메뉴 · 모바일 전체 메뉴)
   var NAV = [
-    { id: "about", href: "about.html", ko: "소개·인사말", en: "About" },
-    { id: "ministry", href: "ministry.html", ko: "사역 안내", en: "Ministries" },
-    { id: "news", href: "news.html", ko: "공지·소식", en: "News" },
-    { id: "gallery", href: "gallery.html", ko: "갤러리", en: "Gallery" },
-    { id: "faq", href: "faq.html", ko: "자주 묻는 질문", en: "FAQ" },
-    { id: "contact", href: "contact.html", ko: "문의하기", en: "Contact" }
+    { id: "home", href: "index.html", ko: "홈", en: "Home", cap: "Home" },
+    { id: "declaration", href: "declaration.html", ko: "세계희망선언", en: "Declaration", cap: "Declaration" },
+    { id: "vision", href: "vision.html", ko: "비전과 미션", en: "Vision & Mission", cap: "Vision" },
+    { id: "global33", href: "global33.html", ko: "글로벌 33", en: "Global 33", cap: "Global 33" },
+    { id: "worldmap", href: "worldmap.html", ko: "세계지도", en: "World Map", cap: "World Map" },
+    { id: "news", href: "news.html", ko: "소식", en: "News", cap: "News" },
+    { id: "join", href: "join.html", ko: "참여하기", en: "Join", cap: "Join Us" },
+    { id: "about", href: "about.html", ko: "연대소개", en: "About", cap: "About" }
   ];
-  function bi(ko, en) { return '<span class="ko">' + ko + '</span><span class="en">' + en + "</span>"; }
-  function telHref() { return "tel:" + String(C.phone || "").replace(/[^0-9+]/g, ""); }
+  // 메뉴에 없는 페이지 → 어느 메뉴를 강조할지 (body[data-nav] 가 있으면 그것을 우선)
+  var NAV_ALIAS = {
+    ministry: "vision",
+    post: "news",
+    gallery: "news",
+    donate: "join",
+    contact: "about",
+    faq: "about"
+  };
+  // 모바일 하단 탭바
+  var TABS = [
+    { id: "declaration", href: "declaration.html", icon: "doc", ko: "세계희망선언문", en: "Declaration" },
+    { id: "global33", href: "global33.html", icon: "group", ko: "글로벌 33", en: "Global 33" },
+    { id: "worldmap", href: "worldmap.html", icon: "world", ko: "세계지도", en: "World Map" },
+    { id: "join", href: "join.html", icon: "sprout", ko: "참여하기", en: "Join" }
+  ];
+  // 모바일 전체 메뉴 아래쪽 바로가기
+  var MORE = [
+    { id: "donate", href: "donate.html", icon: "heart", ko: "후원·헌금", en: "Give" },
+    { id: "contact", href: "contact.html", icon: "mail", ko: "문의하기", en: "Contact" },
+    { id: "faq", href: "faq.html", icon: "message", ko: "자주 묻는 질문", en: "FAQ" },
+    { id: "gallery", href: "gallery.html", icon: "image", ko: "갤러리", en: "Gallery" },
+    { id: "qr", href: "qr.html", icon: "qr", ko: "QR코드 만들기", en: "QR Maker" }
+  ];
+  WH.nav = NAV;
 
+  function bi(ko, en) { return '<span class="ko">' + ko + '</span><span class="en">' + en + "</span>"; }
+  WH.bi = bi;
+  function telHref() { return "tel:" + String(C.phone || "").replace(/[^0-9+]/g, ""); }
+  function pageId() { return (document.body && document.body.getAttribute("data-page")) || ""; }
+  function navId() {
+    var b = document.body;
+    var p = pageId();
+    return (b && b.getAttribute("data-nav")) || NAV_ALIAS[p] || p;
+  }
+  /* 지금 페이지면 aria-current="page", 같은 메뉴 묶음이면 aria-current="true" */
+  function current(id) {
+    if (id === pageId()) return ' aria-current="page"';
+    if (id === navId()) return ' aria-current="true"';
+    return "";
+  }
+  function logoImg(size) {
+    return '<picture><source srcset="' + ROOT + 'assets/img/brand/logo-mark-160.webp" type="image/webp">' +
+      '<img src="' + ROOT + 'assets/img/brand/logo-mark-160.png" alt="" width="' + size + '" height="' + size + '"></picture>';
+  }
+  function brandHtml() {
+    var name = C.name || {};
+    return '<a class="brand" href="' + ROOT + 'index.html" aria-label="' + WH.esc((name.ko || "") + " 홈") + '" data-en-aria-label="' + WH.esc((name.en || "") + " — Home") + '">' +
+      logoImg(72) +
+      '<span class="brand-text" aria-hidden="true"><strong>' + WH.esc(name.ko || "") + "</strong><small>" + WH.esc(name.en || "") + "<sup>™</sup></small></span></a>";
+  }
+  function langButtons() {
+    return '<button type="button" data-set-lang="ko" aria-pressed="false" lang="ko" aria-label="한국어">KOR</button>' +
+      '<button type="button" data-set-lang="en" aria-pressed="false" lang="en" aria-label="English">ENG</button>';
+  }
+
+  /* ---------------- 헤더 · 모바일 메뉴 · 탭바 ---------------- */
   function renderHeader() {
     var mount = document.getElementById("site-header");
     if (!mount) return;
-    var page = document.body.getAttribute("data-page") || "";
-    var name = C.name || { ko: "세계희망연대", en: "World Hope Alliance" };
-    var navItems = NAV.map(function (n) {
-      return '<li><a href="' + ROOT + n.href + '"' + (n.id === page || (page === "post" && n.id === "news") ? ' aria-current="page"' : "") + ">" + bi(n.ko, n.en) + "</a></li>";
-    }).join("");
-    var brand =
-      '<a class="brand" href="' + ROOT + 'index.html" aria-label="' + WH.esc(name.ko) + ' 홈">' +
-      '<img src="' + ROOT + 'assets/img/logo.svg" alt="" width="44" height="44">' +
-      '<span class="brand-text"><strong>' + bi(WH.esc(name.ko), WH.esc(name.en)) + "</strong><small>" + bi(WH.esc((name.en || "").toUpperCase()), WH.esc(name.ko)) + "</small></span></a>";
 
     // <base> 가 있는 페이지(404)에서는 "#main" 이 사이트 최상위 기준이 되므로 현재 주소를 붙임
     var skipHref = document.querySelector("base[href]") ? location.pathname + location.search + "#main" : "#main";
     mount.innerHTML =
       '<a class="skip-link" href="' + WH.esc(skipHref) + '">' + bi("본문 바로가기", "Skip to content") + "</a>" +
-      (C.draft ? '<div class="draft-bar">' + bi("<b>시안 미리보기</b> · 사진과 일부 문구는 단체 자료를 받은 뒤 교체됩니다.", "<b>Draft preview</b> · Photos and some text will be replaced with final materials.") + "</div>" : "") +
-      '<div class="topbar"><div class="container">' +
-      '<a class="topbar-phone" href="' + telHref() + '"><span class="label">' + bi("전국대표전화", "Call") + " </span><strong>" + WH.esc(C.phone || "") + "</strong></a>" +
-      '<div class="topbar-right">' +
-      '<button type="button" class="topbar-btn" data-qr-open>' + WH.icon("qr") + bi("QR코드", "QR Code") + "</button>" +
-      '<div class="lang-switch" role="group" aria-label="Language"><button type="button" data-set-lang="ko" aria-pressed="false">KOR</button><button type="button" data-set-lang="en" aria-pressed="false">ENG</button></div>' +
-      "</div></div></div>";
+      (C.draftBar ? '<div class="draft-bar">' + bi("<b>시안 미리보기</b> · 사진과 일부 문구는 단체 자료를 받은 뒤 교체됩니다.", "<b>Draft preview</b> · Photos and some text will be replaced with final materials.") + "</div>" : "");
+
+    var navItems = NAV.map(function (n) {
+      return '<li><a href="' + ROOT + n.href + '"' + current(n.id) + ">" + bi(n.ko, n.en) + "</a></li>";
+    }).join("");
 
     var header = document.createElement("header");
     header.className = "site-header";
     header.innerHTML =
-      '<div class="container header-inner">' + brand +
-      '<nav class="gnb" aria-label="주 메뉴"><ul>' + navItems + "</ul></nav>" +
-      '<a class="btn btn-gold btn-sm header-cta" href="' + ROOT + 'donate.html">' + WH.icon("heart") + bi("후원·헌금", "Give") + "</a>" +
-      '<button type="button" class="menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="메뉴 열기"><span></span></button>' +
+      '<div class="header-inner">' +
+      '<button type="button" class="icon-btn menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="전체 메뉴 열기" data-en-aria-label="Open menu">' + WH.icon("menu") + "</button>" +
+      brandHtml() +
+      '<nav class="gnb" aria-label="주 메뉴" data-en-aria-label="Main menu"><ul>' + navItems + "</ul></nav>" +
+      '<div class="header-utils">' +
+      '<span class="util-sep util-sep-faint" aria-hidden="true"></span>' +
+      '<div class="lang-switch" role="group" aria-label="언어 선택" data-en-aria-label="Language">' + langButtons() + "</div>" +
+      '<span class="util-sep" aria-hidden="true"></span>' +
+      '<button type="button" class="icon-btn" data-search-open aria-label="사이트 검색" data-en-aria-label="Search the site" title="검색" data-en-title="Search">' + WH.icon("search") + "</button>" +
+      "</div>" +
+      '<div class="lang-drop">' +
+      '<button type="button" class="lang-drop-btn" aria-expanded="false" aria-controls="lang-drop-menu" aria-label="언어 선택 (현재 한국어)" data-en-aria-label="Language (current: English)">' + bi("KOR", "ENG") + WH.icon("chevron-down") + "</button>" +
+      '<div class="lang-drop-menu" id="lang-drop-menu" hidden>' +
+      '<button type="button" data-set-lang="ko" aria-pressed="false" lang="ko">한국어 <small>KOR</small></button>' +
+      '<button type="button" data-set-lang="en" aria-pressed="false" lang="en">English <small>ENG</small></button>' +
+      "</div></div>" +
       "</div>";
     mount.after(header);
 
+    // 모바일 전체 메뉴
     var mnav = document.createElement("div");
     mnav.className = "mobile-nav";
     mnav.id = "mobile-nav";
     mnav.setAttribute("aria-hidden", "true");
     mnav.innerHTML =
-      '<div class="mobile-nav-panel" role="dialog" aria-modal="true" aria-label="전체 메뉴">' +
-      '<div class="mobile-nav-head">' + brand + '<button type="button" class="mobile-nav-close" aria-label="메뉴 닫기">×</button></div>' +
-      '<ul><li><a href="' + ROOT + 'index.html"' + (page === "home" ? ' aria-current="page"' : "") + ">" + bi("홈", "Home") + "</a></li>" + navItems + "</ul>" +
-      '<a class="btn btn-gold btn-block" href="' + ROOT + 'donate.html">' + WH.icon("heart") + bi("후원·헌금 하기", "Give / Donate") + "</a>" +
-      '<a class="btn btn-outline btn-block mt-1" href="' + ROOT + 'qr.html">' + WH.icon("qr") + bi("홈페이지 QR코드", "Website QR Code") + "</a>" +
-      '<div class="mobile-nav-contact">' + bi("전국대표전화", "Call us") + '<br><a href="' + telHref() + '">' + WH.esc(C.phone || "") + "</a></div>" +
-      "</div>";
+      '<div class="mobile-nav-panel" role="dialog" aria-modal="true" aria-label="전체 메뉴" data-en-aria-label="Site menu">' +
+      '<div class="mobile-nav-head">' + brandHtml() +
+      '<button type="button" class="icon-btn mobile-nav-close" aria-label="메뉴 닫기" data-en-aria-label="Close menu">' + WH.icon("close") + "</button></div>" +
+      '<button type="button" class="mnav-search" data-search-open>' + WH.icon("search") + bi("검색어를 입력하세요", "Search the site") + "</button>" +
+      '<nav aria-label="주 메뉴" data-en-aria-label="Main menu"><ul class="mnav-list">' +
+      NAV.map(function (n) {
+        return '<li><a href="' + ROOT + n.href + '"' + current(n.id) + ">" + bi(n.ko, n.en) + '<small class="ko">' + n.cap + "</small>" + WH.icon("chevron-right") + "</a></li>";
+      }).join("") +
+      "</ul></nav>" +
+      '<ul class="mnav-more">' +
+      MORE.map(function (m) {
+        return '<li><a href="' + ROOT + m.href + '"' + (m.id === pageId() ? ' aria-current="page"' : "") + ">" + WH.icon(m.icon) + bi(m.ko, m.en) + "</a></li>";
+      }).join("") +
+      '<li><button type="button" data-qr-open>' + WH.icon("qr") + bi("이 페이지 QR", "This page’s QR") + "</button></li>" +
+      "</ul>" +
+      '<div class="mnav-foot">' +
+      (C.phone ? '<div class="mnav-phone">' + bi("전국대표전화", "Main line (Korea)") + '<a href="' + telHref() + '">' + WH.esc(C.phone) + "</a></div>" : "<div></div>") +
+      '<div class="lang-switch" role="group" aria-label="언어 선택" data-en-aria-label="Language">' + langButtons() + "</div>" +
+      "</div></div>";
     document.body.appendChild(mnav);
 
     var toggle = header.querySelector(".menu-toggle");
-    function setMenu(open) {
+    var panel = mnav.querySelector(".mobile-nav-panel");
+    function isOpen() { return mnav.classList.contains("is-open"); }
+    function setMenu(open, keepFocus) {
+      if (open === isOpen()) return;
       mnav.classList.toggle("is-open", open);
       mnav.setAttribute("aria-hidden", String(!open));
       toggle.setAttribute("aria-expanded", String(open));
-      document.body.style.overflow = open ? "hidden" : "";
-      if (open) mnav.querySelector(".mobile-nav-close").focus();
-      else toggle.focus({ preventScroll: true });
+      lockScroll(open);
+      if (open) {
+        // visibility 전환이 끝난 다음 프레임에 포커스 (숨김 상태에서는 포커스가 안 됨)
+        var closeBtn = mnav.querySelector(".mobile-nav-close");
+        void panel.offsetWidth;
+        closeBtn.focus();
+        requestAnimationFrame(function () { if (isOpen() && document.activeElement !== closeBtn) closeBtn.focus(); });
+      } else if (!keepFocus) toggle.focus({ preventScroll: true });
     }
-    toggle.addEventListener("click", function () { setMenu(!mnav.classList.contains("is-open")); });
+    WH.closeMenu = function () { setMenu(false, true); };
+    toggle.addEventListener("click", function () { setMenu(!isOpen()); });
     mnav.querySelector(".mobile-nav-close").addEventListener("click", function () { setMenu(false); });
     mnav.addEventListener("click", function (e) { if (e.target === mnav) setMenu(false); });
-    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && mnav.classList.contains("is-open")) setMenu(false); });
+    panel.addEventListener("keydown", function (e) { trapTab(panel, e); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && isOpen()) setMenu(false); });
+    // 화면이 넓어져 메뉴가 사라지면 잠금 해제
+    if (window.matchMedia) {
+      var mq = window.matchMedia("(min-width: 1081px)");
+      var onMq = function () { if (mq.matches && isOpen()) setMenu(false, true); };
+      if (mq.addEventListener) mq.addEventListener("change", onMq); else if (mq.addListener) mq.addListener(onMq);
+    }
+
+    // 모바일 언어 선택 (KOR ▾)
+    var drop = header.querySelector(".lang-drop");
+    var dropBtn = drop.querySelector(".lang-drop-btn");
+    var dropMenu = drop.querySelector(".lang-drop-menu");
+    function setDrop(open) {
+      dropMenu.hidden = !open;
+      dropBtn.setAttribute("aria-expanded", String(open));
+    }
+    dropBtn.addEventListener("click", function () {
+      setDrop(dropMenu.hidden);
+      if (!dropMenu.hidden) {
+        var cur = dropMenu.querySelector('[aria-pressed="true"]') || dropMenu.querySelector("button");
+        cur.focus();
+      }
+    });
+    dropMenu.addEventListener("click", function (e) {
+      if (e.target.closest("[data-set-lang]")) { setDrop(false); dropBtn.focus(); }
+    });
+    dropMenu.addEventListener("keydown", function (e) {
+      var items = Array.prototype.slice.call(dropMenu.querySelectorAll("button"));
+      var i = items.indexOf(document.activeElement);
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.preventDefault();
+        items[(i + (e.key === "ArrowDown" ? 1 : items.length - 1)) % items.length].focus();
+      } else if (e.key === "Escape") { setDrop(false); dropBtn.focus(); }
+      else if (e.key === "Tab") setDrop(false);
+    });
+    document.addEventListener("click", function (e) { if (!dropMenu.hidden && !drop.contains(e.target)) setDrop(false); });
+
+    // 하단 탭바 (모바일 전용, CSS 로 760px 이하에서만 보임)
+    var bar = document.createElement("nav");
+    bar.className = "tabbar";
+    bar.setAttribute("aria-label", "빠른 메뉴");
+    bar.setAttribute("data-en-aria-label", "Quick menu");
+    bar.innerHTML = TABS.map(function (t) {
+      return '<a href="' + ROOT + t.href + '"' + current(t.id) + ">" + WH.icon(t.icon) + "<span>" + bi(t.ko, t.en) + "</span></a>";
+    }).join("");
+    document.body.appendChild(bar);
+    document.body.classList.add("has-tabbar");
 
     var onScroll = function () { header.classList.toggle("is-scrolled", window.scrollY > 8); };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
   }
 
+  /* ---------------- 푸터 ----------------
+     시안 그대로 한 줄: 세계희망연대 World Hope Declaration Network | 세계희망선언 World Hope Declaration
+     ……… 개인정보처리방침 · 이용약관 · 문의하기 · YouTube · Instagram · Facebook
+     SNS 주소(config.social)가 비어 있으면 세 아이콘은 장식으로만 표시(링크 아님, 화면 낭독기에서 숨김).
+     블로그·카카오 채널은 주소가 있을 때만 표시. 누적 방문자(.visit-counter)는 값이 있을 때만 나타남. */
+  var SOCIAL = [
+    { key: "youtube", icon: "youtube-fill", label: "YouTube", always: true },
+    { key: "instagram", icon: "instagram", label: "Instagram", always: true },
+    { key: "facebook", icon: "facebook-fill", label: "Facebook", always: true },
+    { key: "blog", icon: "blog", label: "Blog" },
+    { key: "kakao", icon: "kakao", label: "KakaoTalk Channel" }
+  ];
+  function safeUrl(u) {
+    u = String(u || "").trim();
+    return /^https?:\/\//i.test(u) ? u : "";
+  }
+
   function renderFooter() {
     var mount = document.getElementById("site-footer");
     if (!mount) return;
-    var name = C.name || {};
-    var year = new Date().getFullYear();
-    var links = [{ href: "index.html", ko: "홈", en: "Home" }].concat(NAV, [
-      { href: "donate.html", ko: "후원·헌금", en: "Give" },
-      { href: "qr.html", ko: "QR코드", en: "QR Code" }
-    ]);
+    var esc = WH.esc;
+    var name = C.name || {}, decl = C.declaration || {};
     var social = C.social || {};
-    var socialLinks = Object.keys(social).filter(function (k) { return social[k]; }).map(function (k) {
-      return '<a href="' + WH.esc(social[k]) + '" target="_blank" rel="noopener">' + k.charAt(0).toUpperCase() + k.slice(1) + "</a>";
-    }).join(" · ");
-    var hours = WH.pick(C.businessHours || {});
+
+    var socialHtml = SOCIAL.map(function (s) {
+      var url = safeUrl(social[s.key]);
+      if (url) {
+        return '<a href="' + esc(url) + '" target="_blank" rel="noopener" aria-label="' + s.label + ' (새 창)" data-en-aria-label="' + s.label + ' (opens in a new tab)" title="' + s.label + '">' + WH.icon(s.icon) + "</a>";
+      }
+      return s.always ? '<span aria-hidden="true">' + WH.icon(s.icon) + "</span>" : "";
+    }).join("");
+
     mount.outerHTML =
-      '<footer class="site-footer"><div class="container">' +
-      '<div class="footer-top">' +
-      '<div class="footer-brand"><a class="brand" href="' + ROOT + 'index.html"><img src="' + ROOT + 'assets/img/logo.svg" alt="" width="44" height="44"><span class="brand-text"><strong>' + bi(WH.esc(name.ko || ""), WH.esc(name.en || "")) + "</strong><small>" + bi(WH.esc((name.en || "").toUpperCase()), WH.esc(name.ko || "")) + "</small></span></a>" +
-      "<p>" + bi("분열과 전쟁의 세상을 종식시키는 희망의 서막이 열린다.", "The prelude of hope begins — to bring an end to a world of division and war.") + "</p>" +
-      (socialLinks ? '<p class="footer-meta">' + socialLinks + "</p>" : "") +
+      '<footer class="site-footer"><div class="footer-inner">' +
+      '<div class="footer-brands">' +
+      '<a class="footer-brand" href="' + ROOT + 'index.html"><b>' + esc(name.ko || "") + '</b><span lang="en">' + esc(name.en || "") + "</span></a>" +
+      '<span class="footer-sep" aria-hidden="true"></span>' +
+      '<a class="footer-brand" href="' + ROOT + 'declaration.html"><b>' + esc(decl.ko || "") + '</b><span lang="en">' + esc(decl.en || "") + "</span></a>" +
       "</div>" +
-      "<div><h4>" + bi("바로가기", "Quick links") + '</h4><ul class="footer-links">' +
-      links.map(function (l) { return '<li><a href="' + ROOT + l.href + '">' + bi(l.ko, l.en) + "</a></li>"; }).join("") +
-      "</ul></div>" +
-      "<div><h4>" + bi("연락처", "Contact") + '</h4><ul class="footer-contact">' +
-      '<li><a class="big" href="' + telHref() + '">' + WH.esc(C.phone || "") + '</a><br><small class="muted">' + bi("전국대표전화", "Main line (Korea)") + "</small></li>" +
-      "<li><b>" + bi("주소", "Address") + "</b>" + bi(WH.esc((C.address || {}).ko || ""), WH.esc((C.address || {}).en || "")) + "</li>" +
-      (C.publicEmail ? "<li><b>" + bi("이메일", "Email") + '</b><a href="mailto:' + WH.esc(C.publicEmail) + '">' + WH.esc(C.publicEmail) + "</a></li>" : "") +
-      (hours ? "<li><b>" + bi("운영시간", "Hours") + "</b>" + WH.esc(hours) + "</li>" : "") +
-      "</ul></div>" +
-      "</div>" +
-      '<div class="footer-bottom">' +
-      '<div class="footer-meta">' +
-      "<span><strong>" + bi(WH.esc(name.ko || ""), WH.esc(name.en || "")) + "</strong></span>" +
-      "<span>" + bi("대표", "Representative") + " " + bi(WH.esc((C.representative || {}).ko || ""), WH.esc((C.representative || {}).en || "")) + "</span>" +
-      (C.registrationNo ? "<span>" + bi("고유번호", "Reg. No.") + " " + WH.esc(C.registrationNo) + "</span>" : "") +
-      '<a href="' + ROOT + 'privacy.html"><strong>' + bi("개인정보처리방침", "Privacy Policy") + "</strong></a>" +
-      '<a href="' + ROOT + 'admin/">' + bi("관리자", "Admin") + "</a>" +
-      "</div>" +
-      '<div class="footer-meta"><span class="visit-counter" hidden></span><span>© ' + year + " " + WH.esc(name.en || "") + ". All rights reserved.</span></div>" +
+      '<div class="footer-right">' +
+      '<span class="visit-counter" hidden></span>' +
+      '<nav class="footer-links" aria-label="정책 및 문의" data-en-aria-label="Policies and contact">' +
+      '<a href="' + ROOT + 'privacy.html">' + bi("개인정보처리방침", "Privacy Policy") + "</a>" +
+      '<a href="' + ROOT + 'terms.html">' + bi("이용약관", "Terms of Use") + "</a>" +
+      '<a href="' + ROOT + 'contact.html">' + bi("문의하기", "Contact") + "</a>" +
+      "</nav>" +
+      '<div class="footer-social">' + socialHtml + "</div>" +
       "</div></div></footer>";
+  }
+
+  /* ---------------- 사이트 검색 ---------------- */
+  // 페이지 색인 (제목·설명·검색어). 새 페이지를 만들면 여기에 한 줄 추가합니다.
+  var PAGES = [
+    { href: "index.html", ko: "홈", en: "Home", dko: "세계희망선언™ — 분열을 넘어, 함께 만드는 더 나은 세상", den: "World Hope Declaration™ — From division to hope, together for a better world", k: "home main 메인 첫 화면 세계희망선언 world hope declaration" },
+    { href: "declaration.html", ko: "세계희망선언문", en: "The Declaration", dko: "세계희망선언 5대 원칙과 5대 가치 — 이중개념·종속구조·수평논리·중심기축·공평화합", den: "Five principles and five values — Dualism, Dependent Structure, Horizontal Logic, Centrium, R.P.U.", k: "선언문 5대 원칙 five principles 이중개념 dualism 종속구조 dependent structure 수평논리 horizontal logic 중심기축 centrium 공평화합 rpu righteousness peace united 5대 가치 values 평화 지구환경 planet 사람 people 연대 partnership 실천 action" },
+    { href: "vision.html", ko: "비전과 미션", en: "Vision & Mission", dko: "세계희망선언이 향하는 비전과 사명", den: "The vision and mission of the World Hope Declaration", k: "비전 미션 vision mission 사명 목표 goal 사역 ministry 선교행진 mission march" },
+    { href: "global33.html", ko: "글로벌 33", en: "Global 33", dko: "각국 글로벌 대표 33인 선정 — 11개 분야 × 분야별 3인", den: "33 Global Representatives per country — 11 fields × 3 persons each", k: "33인 대표 representatives 11개 분야 fields 사회영향력 국위선양 교육계 문화예술계 종교계 산업계 국방사회안전 의료계 생업종사자 시민 정치계 id card 카드 패 plaque" },
+    { href: "worldmap.html", ko: "세계지도", en: "World Map", dko: "세계희망선언 대상 국가와 국가별 대표 선정 현황", den: "Countries of the World Hope Declaration and selection status", k: "세계지도 world map 지도 국가 countries nations 현황 status 대한민국 korea" },
+    { href: "news.html", ko: "소식", en: "News", dko: "공지사항 · 소식 · 언론보도", den: "Notices, news and press", k: "공지 notice 소식 news 언론보도 press 게시판 board" },
+    { href: "join.html", ko: "참여하기", en: "Join", dko: "세계희망선언에 참여하고 함께 희망을 선언합니다", den: "Join the World Hope Declaration", k: "참여 join 신청 apply 참가 동역 partner 응원 cheer" },
+    { href: "about.html", ko: "연대소개", en: "About", dko: "취지문 · 위원장 인사말 · 조직 구성 · 오시는 길", den: "Purpose, chairman's greeting, organization and location", k: "소개 about 취지 purpose 인사말 greeting 위원장 chairman 원치현 조직 organization 위원회 council 오시는 길 location 주소 address 세종" },
+    { href: "ministry.html", ko: "사역 안내", en: "Ministries", dko: "연구·채택 → 33인 선언 → 실천 → 보호·인도 → 선교행진", den: "Research & adoption, declaration by 33, practice, protection & guidance, mission march", k: "사역 ministry ministries 선교행진 mission march 연구 채택 실천 보호 인도" },
+    { href: "gallery.html", ko: "갤러리", en: "Gallery", dko: "행사와 사역 현장 사진", den: "Photos of events and ministry", k: "갤러리 gallery 사진 photo 앨범 album" },
+    { href: "donate.html", ko: "후원·헌금", en: "Give", dko: "계좌 후원 · 정기 후원 신청 · 온라인 후원", den: "Bank transfer, monthly giving and online giving", k: "후원 헌금 give donate donation 계좌 정기 기부금 영수증 receipt" },
+    { href: "contact.html", ko: "문의하기", en: "Contact", dko: "문의 및 참여·동역 신청 · 전국대표전화 " + (C.phone || ""), den: "Inquiries and applications · " + (C.phone || ""), k: "문의 contact 전화 phone call 연락처 " + (C.phone || "") },
+    { href: "faq.html", ko: "자주 묻는 질문", en: "FAQ", dko: "세계희망연대와 참여·후원에 관한 질문과 답변", den: "Frequently asked questions", k: "faq 질문 question 답변 answer" },
+    { href: "qr.html", ko: "QR코드 만들기", en: "QR Code Maker", dko: "홈페이지와 각 메뉴의 QR코드 만들기·저장·인쇄", den: "Create, save and print QR codes", k: "qr 큐알 코드 code 인쇄 print" },
+    { href: "privacy.html", ko: "개인정보처리방침", en: "Privacy Policy", dko: "개인정보 수집·이용 및 보호에 관한 방침", den: "How we handle personal information", k: "개인정보 privacy 방침 policy" },
+    { href: "terms.html", ko: "이용약관", en: "Terms of Use", dko: "홈페이지 이용약관", den: "Website terms of use", k: "약관 terms 이용 use" }
+  ];
+  function norm(s) {
+    return String(s || "").toLowerCase().replace(/[·・.,:;!?'"“”‘’()[\]{}\/\\\-–—_|™]+/g, " ").replace(/\s+/g, " ").trim();
+  }
+  function tokens(q) { return norm(q).split(" ").filter(Boolean); }
+  function searchPages(q) {
+    var toks = tokens(q);
+    if (!toks.length) return [];
+    return PAGES.map(function (p) {
+      var title = norm(p.ko + " " + p.en);
+      var hay = norm([p.ko, p.en, p.dko, p.den, p.k].join(" "));
+      for (var i = 0; i < toks.length; i++) if (hay.indexOf(toks[i]) === -1) return null;
+      var score = toks.reduce(function (s, t) { return s + (title.indexOf(t) !== -1 ? 2 : 1); }, 0);
+      return { p: p, score: score };
+    }).filter(Boolean).sort(function (a, b) { return b.score - a.score; }).map(function (x) { return x.p; });
+  }
+  /* 검색어 강조 (안전하게 이스케이프한 뒤 <mark>) */
+  function highlight(text, toks) {
+    text = String(text || "");
+    var lower = text.toLowerCase(), out = "", i = 0;
+    while (i < text.length) {
+      var best = -1, len = 0;
+      toks.forEach(function (t) {
+        var j = lower.indexOf(t, i);
+        if (j !== -1 && (best === -1 || j < best || (j === best && t.length > len))) { best = j; len = t.length; }
+      });
+      if (best === -1 || !len) break;
+      out += WH.esc(text.slice(i, best)) + "<mark>" + WH.esc(text.slice(best, best + len)) + "</mark>";
+      i = best + len;
+    }
+    return out + WH.esc(text.slice(i));
+  }
+
+  function setupSearch() {
+    if (!document.querySelector("[data-search-open]")) return;
+    var overlay, input, box, opener, timer, seq = 0;
+
+    function build() {
+      overlay = document.createElement("div");
+      overlay.className = "search-overlay";
+      overlay.id = "site-search";
+      overlay.setAttribute("role", "dialog");
+      overlay.setAttribute("aria-modal", "true");
+      overlay.setAttribute("aria-labelledby", "site-search-title");
+      overlay.innerHTML =
+        '<div class="search-panel">' +
+        '<h2 class="sr-only" id="site-search-title">' + bi("사이트 검색", "Site search") + "</h2>" +
+        '<form class="search-form" role="search">' + WH.icon("search") +
+        '<label class="sr-only" for="site-search-q">' + bi("검색어", "Search terms") + "</label>" +
+        '<input type="search" id="site-search-q" autocomplete="off" spellcheck="false" enterkeyhint="search" placeholder="무엇을 찾으세요? 예) 5대 원칙, 글로벌 33, 후원" data-en-placeholder="Search — e.g. principles, Global 33, give">' +
+        '<button type="button" class="icon-btn search-close" aria-label="검색 닫기" data-en-aria-label="Close search">' + WH.icon("close") + "</button>" +
+        "</form>" +
+        '<div class="search-results" aria-live="polite"></div>' +
+        "</div>";
+      document.body.appendChild(overlay);
+      applyAttrs(overlay, WH.lang());
+      input = overlay.querySelector("input");
+      box = overlay.querySelector(".search-results");
+
+      input.addEventListener("input", function () {
+        clearTimeout(timer);
+        timer = setTimeout(function () { render(input.value); }, 140);
+      });
+      overlay.querySelector("form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        var first = box.querySelector(".search-group li a");
+        if (first) location.href = first.href;
+      });
+      overlay.querySelector(".search-close").addEventListener("click", close);
+      overlay.addEventListener("click", function (e) { if (e.target === overlay) close(); });
+      overlay.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") { e.preventDefault(); close(); return; }
+        if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+          var links = Array.prototype.slice.call(box.querySelectorAll("a"));
+          if (!links.length) return;
+          var i = links.indexOf(document.activeElement);
+          e.preventDefault();
+          if (e.key === "ArrowDown") (i < 0 ? links[0] : links[Math.min(i + 1, links.length - 1)]).focus();
+          else if (i <= 0) input.focus();
+          else links[i - 1].focus();
+          return;
+        }
+        trapTab(overlay, e);
+      });
+      document.addEventListener("wh:lang", function () {
+        if (overlay.classList.contains("is-open")) render(input.value);
+      });
+    }
+
+    function group(title, items) {
+      return '<div class="search-group"><h3 class="search-group-title">' + title + "</h3><ul>" + items.join("") + "</ul></div>";
+    }
+    function item(href, title, desc, toks) {
+      return '<li><a href="' + WH.esc(href) + '"><b>' + highlight(title, toks) + "</b>" + (desc ? "<span>" + highlight(desc, toks) + "</span>" : "") + "</a></li>";
+    }
+    function emptyHtml(q) {
+      return '<p class="search-empty">' + WH.esc(WH.t("‘" + q + "’에 대한 검색 결과가 없습니다. 다른 낱말로 찾아보세요.", "No results for “" + q + "”. Try another word.")) + "</p>" + quickHtml();
+    }
+    function quickHtml() {
+      return '<div class="search-group"><h3 class="search-group-title">' + bi("바로가기", "Quick links") + '</h3><div class="search-quick">' +
+        NAV.map(function (n) { return '<a href="' + ROOT + n.href + '">' + WH.esc(WH.t(n.ko, n.en)) + "</a>"; }).join("") +
+        '<button type="button" data-qr-open>' + WH.icon("qr") + WH.esc(WH.t("이 페이지 QR코드", "QR code for this page")) + "</button>" +
+        "</div></div>";
+    }
+
+    function render(raw) {
+      var my = ++seq;
+      var q = String(raw || "").trim();
+      if (!q) { box.innerHTML = quickHtml(); return; }
+      var toks = tokens(q);
+      var pages = searchPages(q).slice(0, 8);
+      var pageHtml = pages.length ? group(bi("페이지", "Pages"), pages.map(function (p) {
+        return item(ROOT + p.href, WH.t(p.ko, p.en), WH.t(p.dko, p.den), toks);
+      })) : "";
+      var canPosts = WH.db && typeof WH.db.listPosts === "function";
+      if (!canPosts) { box.innerHTML = pageHtml || emptyHtml(q); return; }
+      box.innerHTML = pageHtml + '<div class="search-posts"><p class="search-empty">' + WH.esc(WH.t("소식을 찾는 중…", "Searching news…")) + "</p></div>";
+      WH.db.listPosts({ q: q, size: 6 }).then(function (res) {
+        if (my !== seq) return;
+        var items = (res && res.items) || [];
+        var holder = box.querySelector(".search-posts");
+        if (items.length) {
+          holder.innerHTML = group(bi("소식", "News") + " · " + WH.esc(res.total), items.map(function (p) {
+            return item(ROOT + "post.html?id=" + encodeURIComponent(p.id), WH.pick(p, "title"), WH.fmtDate(p.created_at), toks);
+          }));
+        } else if (pages.length) holder.innerHTML = "";
+        else box.innerHTML = emptyHtml(q);
+      }, function () {
+        if (my !== seq) return;
+        if (pages.length) box.querySelector(".search-posts").innerHTML = "";
+        else box.innerHTML = emptyHtml(q);
+      });
+    }
+
+    function open(from) {
+      if (!overlay) build();
+      if (overlay.classList.contains("is-open")) { input.focus(); return; }
+      opener = from || document.activeElement;
+      overlay.classList.add("is-open");
+      lockScroll(true);
+      render(input.value);
+      input.focus();
+      input.select();
+    }
+    function close() {
+      if (!overlay || !overlay.classList.contains("is-open")) return;
+      overlay.classList.remove("is-open");
+      lockScroll(false);
+      if (opener && opener.focus && document.contains(opener)) opener.focus({ preventScroll: true });
+    }
+    WH.openSearch = open;
+    WH.closeSearch = close;
+
+    document.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-search-open]");
+      if (!b) return;
+      e.preventDefault();
+      if (b.closest(".mobile-nav") && WH.closeMenu) {
+        // 모바일 메뉴에서 열면 메뉴를 닫고, 검색을 닫을 때 메뉴 버튼으로 돌아감
+        WH.closeMenu();
+        open(document.querySelector(".menu-toggle"));
+      } else open(b);
+    });
+    // "/" 키로 검색 열기 (입력 중이 아닐 때)
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "/" || e.ctrlKey || e.metaKey || e.altKey || e.defaultPrevented) return;
+      var t = e.target;
+      if (t && (/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName) || t.isContentEditable)) return;
+      e.preventDefault();
+      open(document.activeElement);
+    });
+  }
+
+  /* ---------------- 통계 숫자 (data/stats.json) ----------------
+     HTML 에 <b data-stat="countries">195</b> 처럼 기본값을 적어 두면
+     data/stats.json 값으로 바꿔 넣습니다. (불러오기 실패 시 기본값 유지) */
+  WH.stats = function () {
+    if (!WH.db || typeof WH.db.json !== "function") return Promise.resolve(null);
+    return WH.db.json("stats").then(function (s) {
+      if (!s || typeof s !== "object" || Array.isArray(s)) return null;
+      if (s.target == null && s.countries && s.per_country) s.target = s.countries * s.per_country;
+      return s;
+    }, function () { return null; });
+  };
+  WH.fillStats = function (root) {
+    var els = (root || document).querySelectorAll("[data-stat]");
+    if (!els.length) return Promise.resolve(null);
+    return WH.stats().then(function (s) {
+      if (!s) return null;
+      els.forEach(function (el) {
+        var v = s[el.getAttribute("data-stat")];
+        if (v == null || v === "") return;
+        el.textContent = typeof v === "number" ? WH.fmtNum(v) : String(v);
+      });
+      return s;
+    });
+  };
+  function setupStats() {
+    WH.fillStats().then(function (s) {
+      if (s) document.dispatchEvent(new CustomEvent("wh:stats", { detail: s }));
+    });
   }
 
   /* ---------------- QR 모달 ---------------- */
@@ -327,7 +758,7 @@
     var ctx = canvas.getContext("2d");
     ctx.fillStyle = opts.bg || "#ffffff";
     ctx.fillRect(0, 0, size, size);
-    ctx.fillStyle = opts.color || "#0b1f44";
+    ctx.fillStyle = opts.color || "#13294b";
     for (var r = 0; r < n; r++) {
       for (var c = 0; c < n; c++) {
         if (qr.isDark(r, c)) {
@@ -351,7 +782,8 @@
         resolve(result);
       };
       img.onerror = function () { resolve(result); };
-      img.src = ROOT + "assets/img/logo.svg";
+      // 가운데 로고: 단체 마크 (큰 크기 인쇄용은 512px 원본)
+      img.src = ROOT + "assets/img/brand/" + (size > 640 ? "logo-mark-512.png" : "logo-mark-160.png");
     });
   };
   function roundRect(ctx, x, y, w, h, r) {
@@ -367,27 +799,39 @@
   };
 
   function setupQrModal() {
-    var modal;
+    var modal, opener;
+    function close() {
+      if (!modal || !modal.classList.contains("is-open")) return;
+      modal.classList.remove("is-open");
+      lockScroll(false);
+      if (opener && opener.focus && document.contains(opener)) opener.focus({ preventScroll: true });
+    }
     document.addEventListener("click", function (e) {
       var btn = e.target.closest("[data-qr-open]");
       if (!btn) return;
       e.preventDefault();
+      // 모바일 메뉴·검색 창 안의 버튼이면 그 창을 닫고, QR 창을 닫을 때 메뉴 버튼(또는 검색 전 위치)으로 돌아감
+      var back = null;
+      if (btn.closest(".mobile-nav") && WH.closeMenu) { WH.closeMenu(); back = document.querySelector(".menu-toggle"); }
+      else if (btn.closest(".search-overlay") && WH.closeSearch) { WH.closeSearch(); back = document.activeElement; }
       if (!modal) {
         modal = document.createElement("div");
         modal.className = "modal";
         modal.setAttribute("role", "dialog");
         modal.setAttribute("aria-modal", "true");
+        modal.setAttribute("aria-labelledby", "qr-modal-title");
         modal.innerHTML =
-          '<div class="modal-panel"><button type="button" class="modal-close" aria-label="닫기">×</button>' +
-          "<h2>" + bi("이 페이지 QR코드", "QR code for this page") + "</h2>" +
+          '<div class="modal-panel"><button type="button" class="modal-close" aria-label="닫기" data-en-aria-label="Close">' + WH.icon("close") + "</button>" +
+          '<h2 id="qr-modal-title">' + bi("이 페이지 QR코드", "QR code for this page") + "</h2>" +
           "<p>" + bi("휴대폰 카메라로 비추면 바로 접속됩니다.", "Scan with your phone camera to open.") + "</p>" +
-          '<canvas width="440" height="440"></canvas>' +
+          '<canvas width="440" height="440" role="img" aria-label="QR코드" data-en-aria-label="QR code"></canvas>' +
           '<p class="qr-url" style="margin:12px 0 0"></p>' +
           '<div class="modal-actions"><button type="button" class="btn btn-primary btn-sm" data-qr-dl>' + WH.icon("download") + bi("PNG 저장", "Save PNG") + "</button>" +
           '<a class="btn btn-outline btn-sm" href="' + ROOT + 'qr.html">' + bi("QR 만들기", "QR maker") + "</a></div></div>";
         document.body.appendChild(modal);
-        var close = function () { modal.classList.remove("is-open"); };
+        applyAttrs(modal, WH.lang());
         modal.addEventListener("click", function (ev) { if (ev.target === modal || ev.target.closest(".modal-close")) close(); });
+        modal.addEventListener("keydown", function (ev) { trapTab(modal, ev); });
         document.addEventListener("keydown", function (ev) { if (ev.key === "Escape") close(); });
         modal.querySelector("[data-qr-dl]").addEventListener("click", function () {
           WH.downloadCanvas(modal.querySelector("canvas"), "worldhope-qr.png");
@@ -395,6 +839,7 @@
       }
       var url = btn.getAttribute("data-qr-url") || WH.pageUrl();
       modal.querySelector(".qr-url").textContent = url;
+      if (!modal.classList.contains("is-open")) { opener = back || btn; lockScroll(true); }
       modal.classList.add("is-open");
       modal.querySelector(".modal-close").focus();
       WH.loadQR().then(function () { WH.drawQR(modal.querySelector("canvas"), url, { size: 440, logo: true, margin: 2 }); });
@@ -462,7 +907,9 @@
       if (c) WH.copy(c.getAttribute("data-copy"));
     });
     setupQrModal();
+    setupSearch();
     setupReveal();
+    setupStats();
     setupAnalytics();
     setupVisits();
   }

@@ -1,0 +1,339 @@
+{
+  "title_ko": "각국 33인 세계희망선언문 채택 서명자 선정 기준",
+  "title_en": "33 Representatives per Country — Selection Criteria for Signatories of the World Hope Declaration",
+  "note_ko": "선정 기준은 예시이며 확정 시 변경될 수 있습니다.",
+  "note_en": "These criteria are examples and may change when finalized.",
+  "source": "의뢰인 자료(선정 기준표 이미지) 전사. 오기 정정: '국위양 (Cotribiion)'→'국위선양 (National Prestige)', '초·중·교'→'초·중·고'. 영문 분야명은 인포그래픽 자료 기준, 세부 분야·기준 영문은 번역 초안.",
+  "rows": [
+    {
+      "no": 1,
+      "field_no": 1,
+      "field_ko": "사회영향력",
+      "field_en": "Social Influence",
+      "sub_ko": "시민단체",
+      "sub_en": "Civic Groups",
+      "criteria_ko": "사회문제 해결과 공익활동에 영향력이 있는 인물",
+      "criteria_en": "A person with influence in solving social problems and public-interest work"
+    },
+    {
+      "no": 2,
+      "field_no": 1,
+      "field_ko": "사회영향력",
+      "field_en": "Social Influence",
+      "sub_ko": "화합중재",
+      "sub_en": "Reconciliation & Mediation",
+      "criteria_ko": "갈등해결, 지역사회 화합과 중재에 기여한 인물",
+      "criteria_en": "A person who contributed to conflict resolution, community harmony and mediation"
+    },
+    {
+      "no": 3,
+      "field_no": 1,
+      "field_ko": "사회영향력",
+      "field_en": "Social Influence",
+      "sub_ko": "언론총괄",
+      "sub_en": "Media",
+      "criteria_ko": "언론·미디어를 통해 사회에 선한 영향을 준 인물",
+      "criteria_en": "A person who has had a good influence on society through the press and media"
+    },
+    {
+      "no": 4,
+      "field_no": 2,
+      "field_ko": "국위선양",
+      "field_en": "National Prestige",
+      "sub_ko": "올림픽",
+      "sub_en": "Olympic & Sports",
+      "criteria_ko": "국가 위상을 높인 국제 스포츠 분야 인물",
+      "criteria_en": "A person in international sports who raised the nation's standing"
+    },
+    {
+      "no": 5,
+      "field_no": 2,
+      "field_ko": "국위선양",
+      "field_en": "National Prestige",
+      "sub_ko": "민간외교",
+      "sub_en": "Public Diplomacy",
+      "criteria_ko": "국제교류·민간외교로 국가 이미지를 높인 인물",
+      "criteria_en": "A person who enhanced the nation's image through international exchange and public diplomacy"
+    },
+    {
+      "no": 6,
+      "field_no": 2,
+      "field_ko": "국위선양",
+      "field_en": "National Prestige",
+      "sub_ko": "유엔관계",
+      "sub_en": "UN & International Organizations",
+      "criteria_ko": "유엔 및 국제기구 활동에 기여한 인물",
+      "criteria_en": "A person who contributed to the work of the UN and international organizations"
+    },
+    {
+      "no": 7,
+      "field_no": 3,
+      "field_ko": "교육계",
+      "field_en": "Academia & Education",
+      "sub_ko": "초·중·고",
+      "sub_en": "Primary & Secondary",
+      "criteria_ko": "초·중·고 교육 현장에서 모범이 된 교육자",
+      "criteria_en": "An educator who has been a model in primary and secondary schools"
+    },
+    {
+      "no": 8,
+      "field_no": 3,
+      "field_ko": "교육계",
+      "field_en": "Academia & Education",
+      "sub_ko": "대학교수",
+      "sub_en": "University",
+      "criteria_ko": "대학 교육과 연구로 사회에 기여한 인물",
+      "criteria_en": "A person who contributed to society through university teaching and research"
+    },
+    {
+      "no": 9,
+      "field_no": 3,
+      "field_ko": "교육계",
+      "field_en": "Academia & Education",
+      "sub_ko": "전인교육",
+      "sub_en": "Holistic Education",
+      "criteria_ko": "인성·창의·전인교육에 헌신한 인물",
+      "criteria_en": "A person dedicated to character, creativity and holistic education"
+    },
+    {
+      "no": 10,
+      "field_no": 4,
+      "field_ko": "문화예술계",
+      "field_en": "Culture & Arts",
+      "sub_ko": "연예계",
+      "sub_en": "Entertainment",
+      "criteria_ko": "대중문화로 선한 영향력을 준 인물",
+      "criteria_en": "A person who has had a good influence through popular culture"
+    },
+    {
+      "no": 11,
+      "field_no": 4,
+      "field_ko": "문화예술계",
+      "field_en": "Culture & Arts",
+      "sub_ko": "가수",
+      "sub_en": "Music",
+      "criteria_ko": "음악을 통해 희망과 감동을 전한 인물",
+      "criteria_en": "A person who has brought hope and inspiration through music"
+    },
+    {
+      "no": 12,
+      "field_no": 4,
+      "field_ko": "문화예술계",
+      "field_en": "Culture & Arts",
+      "sub_ko": "문학계",
+      "sub_en": "Literature",
+      "criteria_ko": "문학·출판을 통해 인류정신에 기여한 인물",
+      "criteria_en": "A person who contributed to the human spirit through literature and publishing"
+    },
+    {
+      "no": 13,
+      "field_no": 5,
+      "field_ko": "종교계",
+      "field_en": "Religious Leaders",
+      "sub_ko": "기독교",
+      "sub_en": "Protestant Christianity",
+      "criteria_ko": "기독교 분야에서 사랑과 봉사로 모범이 된 인물",
+      "criteria_en": "A person who has been a model of love and service in Christianity"
+    },
+    {
+      "no": 14,
+      "field_no": 5,
+      "field_ko": "종교계",
+      "field_en": "Religious Leaders",
+      "sub_ko": "천주교",
+      "sub_en": "Catholicism",
+      "criteria_ko": "천주교 분야에서 평화와 인류화합에 기여한 인물",
+      "criteria_en": "A person who contributed to peace and human harmony in Catholicism"
+    },
+    {
+      "no": 15,
+      "field_no": 5,
+      "field_ko": "종교계",
+      "field_en": "Religious Leaders",
+      "sub_ko": "불교",
+      "sub_en": "Buddhism",
+      "criteria_ko": "불교 분야에서 자비와 생명존중을 실천한 인물",
+      "criteria_en": "A person who practiced compassion and respect for life in Buddhism"
+    },
+    {
+      "no": 16,
+      "field_no": 6,
+      "field_ko": "산업계",
+      "field_en": "Industry & Business",
+      "sub_ko": "기업가",
+      "sub_en": "Entrepreneurs",
+      "criteria_ko": "혁신경영으로 사회와 국가발전에 기여한 기업인",
+      "criteria_en": "A business leader who contributed to society and national development through innovative management"
+    },
+    {
+      "no": 17,
+      "field_no": 6,
+      "field_ko": "산업계",
+      "field_en": "Industry & Business",
+      "sub_ko": "근로자",
+      "sub_en": "Workers",
+      "criteria_ko": "산업현장에서 성실과 모범으로 인정받는 근로자",
+      "criteria_en": "A worker recognized for diligence and example in the workplace"
+    },
+    {
+      "no": 18,
+      "field_no": 6,
+      "field_ko": "산업계",
+      "field_en": "Industry & Business",
+      "sub_ko": "영업직",
+      "sub_en": "Sales & Services",
+      "criteria_ko": "유통·서비스 분야에서 사회에 기여한 인물",
+      "criteria_en": "A person who contributed to society in distribution and services"
+    },
+    {
+      "no": 19,
+      "field_no": 7,
+      "field_ko": "국방사회안전",
+      "field_en": "Defense, Safety & Public Security",
+      "sub_ko": "경찰",
+      "sub_en": "Police",
+      "criteria_ko": "치안유지와 시민안전에 헌신한 경찰관",
+      "criteria_en": "A police officer dedicated to public order and citizens' safety"
+    },
+    {
+      "no": 20,
+      "field_no": 7,
+      "field_ko": "국방사회안전",
+      "field_en": "Defense, Safety & Public Security",
+      "sub_ko": "군인",
+      "sub_en": "Military",
+      "criteria_ko": "국가안보와 평화수호에 헌신한 군인",
+      "criteria_en": "A soldier dedicated to national security and keeping peace"
+    },
+    {
+      "no": 21,
+      "field_no": 7,
+      "field_ko": "국방사회안전",
+      "field_en": "Defense, Safety & Public Security",
+      "sub_ko": "소방",
+      "sub_en": "Firefighting",
+      "criteria_ko": "재난구조와 국민생명을 지키는 소방관",
+      "criteria_en": "A firefighter who protects lives through disaster rescue"
+    },
+    {
+      "no": 22,
+      "field_no": 8,
+      "field_ko": "의료계",
+      "field_en": "Medical & Health",
+      "sub_ko": "의사",
+      "sub_en": "Doctors",
+      "criteria_ko": "의료봉사와 인류건강 증진에 기여한 의사",
+      "criteria_en": "A doctor who contributed to medical service and human health"
+    },
+    {
+      "no": 23,
+      "field_no": 8,
+      "field_ko": "의료계",
+      "field_en": "Medical & Health",
+      "sub_ko": "간호사",
+      "sub_en": "Nurses",
+      "criteria_ko": "간호와 돌봄으로 생명존중을 실천한 간호사",
+      "criteria_en": "A nurse who practiced respect for life through nursing and care"
+    },
+    {
+      "no": 24,
+      "field_no": 8,
+      "field_ko": "의료계",
+      "field_en": "Medical & Health",
+      "sub_ko": "한의사",
+      "sub_en": "Korean Medicine",
+      "criteria_ko": "전통의학으로 국민건강에 기여한 한의사",
+      "criteria_en": "A Korean-medicine doctor who contributed to public health through traditional medicine"
+    },
+    {
+      "no": 25,
+      "field_no": 9,
+      "field_ko": "생업종사자",
+      "field_en": "Workers & Livelihood",
+      "sub_ko": "농업",
+      "sub_en": "Agriculture",
+      "criteria_ko": "농업·수산업 등 1차 산업에 종사하는 인물",
+      "criteria_en": "A person working in primary industries such as agriculture"
+    },
+    {
+      "no": 26,
+      "field_no": 9,
+      "field_ko": "생업종사자",
+      "field_en": "Workers & Livelihood",
+      "sub_ko": "어업",
+      "sub_en": "Fisheries",
+      "criteria_ko": "어업·수산업에 종사하는 인물",
+      "criteria_en": "A person working in fishing and fisheries"
+    },
+    {
+      "no": 27,
+      "field_no": 9,
+      "field_ko": "생업종사자",
+      "field_en": "Workers & Livelihood",
+      "sub_ko": "광산업",
+      "sub_en": "Mining & Manufacturing",
+      "criteria_ko": "광업·제조업 등 산업현장에 종사하는 인물",
+      "criteria_en": "A person working in mining, manufacturing and other industrial sites"
+    },
+    {
+      "no": 28,
+      "field_no": 10,
+      "field_ko": "시민",
+      "field_en": "Citizens",
+      "sub_ko": "모범시민",
+      "sub_en": "Model Citizens",
+      "criteria_ko": "지역사회에서 모범이 되는 일반 시민",
+      "criteria_en": "An ordinary citizen who is a model in the community"
+    },
+    {
+      "no": 29,
+      "field_no": 10,
+      "field_ko": "시민",
+      "field_en": "Citizens",
+      "sub_ko": "포용시민",
+      "sub_en": "Inclusive Citizens",
+      "criteria_ko": "다양한 문화와 계층을 포용하는 시민",
+      "criteria_en": "A citizen who embraces diverse cultures and social groups"
+    },
+    {
+      "no": 30,
+      "field_no": 10,
+      "field_ko": "시민",
+      "field_en": "Citizens",
+      "sub_ko": "장한학생",
+      "sub_en": "Exemplary Students",
+      "criteria_ko": "나눔과 봉사로 귀감이 되는 학생",
+      "criteria_en": "A student who is an example through sharing and service"
+    },
+    {
+      "no": 31,
+      "field_no": 11,
+      "field_ko": "정치계(전·현직)",
+      "field_en": "Political Leaders (Current & Former)",
+      "sub_ko": "국무원",
+      "sub_en": "Cabinet",
+      "criteria_ko": "국가정책과 공공서비스에 기여한 정부 각료",
+      "criteria_en": "A cabinet member who contributed to national policy and public service"
+    },
+    {
+      "no": 32,
+      "field_no": 11,
+      "field_ko": "정치계(전·현직)",
+      "field_en": "Political Leaders (Current & Former)",
+      "sub_ko": "공무원",
+      "sub_en": "Public Officials",
+      "criteria_ko": "행정·지방자치·공공분야에 헌신한 공무원",
+      "criteria_en": "A public official dedicated to administration, local government and the public sector"
+    },
+    {
+      "no": 33,
+      "field_no": 11,
+      "field_ko": "정치계(전·현직)",
+      "field_en": "Political Leaders (Current & Former)",
+      "sub_ko": "대통령(현직)",
+      "sub_en": "Head of State (Incumbent)",
+      "criteria_ko": "국가와 인류평화에 기여한 현직 대통령",
+      "criteria_en": "An incumbent head of state who contributed to the nation and to peace for humanity"
+    }
+  ]
+}

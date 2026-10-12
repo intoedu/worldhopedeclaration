@@ -143,10 +143,12 @@
 
     function update() {
       ticking = false;
-      var line = nav.getBoundingClientRect().bottom + 40, cur = -1;
-      targets.forEach(function (el, i) { if (el && el.getBoundingClientRect().top <= line) cur = i; });
+      var nr = nav.getBoundingClientRect(), line = nr.bottom + 40, cur = -1;
+      // 하위 메뉴가 헤더 아래에 붙기 전(페이지 맨 위)에는 강조하지 않음
+      var stuck = nr.top <= (parseFloat(getComputedStyle(nav).top) || 0) + 1;
+      if (stuck) targets.forEach(function (el, i) { if (el && el.getBoundingClientRect().top <= line) cur = i; });
       // 맨 아래까지 내리면 마지막 메뉴
-      if (window.innerHeight + window.pageYOffset >= document.documentElement.scrollHeight - 4) cur = targets.length - 1;
+      if (stuck && window.innerHeight + window.pageYOffset >= document.documentElement.scrollHeight - 4) cur = targets.length - 1;
       if (cur === current) return;
       current = cur;
       links.forEach(function (a, i) {

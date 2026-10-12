@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="ko" data-lang="ko" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>세계지도 | 세계희망연대</title>
+<meta name="description" content="세계희망선언 세계지도 — 세계희망선언에 함께하는 나라와 나라별 글로벌 대표 33인 선정 현황을 점 지도로 한눈에 봅니다.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="세계희망연대">
+<meta property="og:title" content="세계지도 | 세계희망연대">
+<meta property="og:description" content="세계희망선언에 함께하는 나라와 나라별 글로벌 대표 33인 선정 현황">
+<meta property="og:image" content="assets/img/og-image.png">
+<meta name="theme-color" content="#13294b">
+<link rel="icon" href="assets/img/brand/favicon-64.png" type="image/png" sizes="64x64">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Serif:ital,wght@0,500;0,700;1,500&display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>(function(){try{var l=new URLSearchParams(location.search).get("lang")||localStorage.getItem("wh-lang");if(l==="en"){var h=document.documentElement;h.setAttribute("data-lang","en");h.lang="en";}}catch(e){}})();</script>
+<style>
+  /* ===== 세계지도 페이지 전용 (공통 style.css 의 토큰만 사용) ===== */
+
+  /* ---------- 지도 무대: 딥 네이비 + 은은한 빛 (홈 '세계지도' 타일과 같은 분위기) ---------- */
+  .wm-stage {
+    position: relative; padding: 60px 0 34px;
+    background:
+      radial-gradient(ellipse 52% 62% at 56% 48%, rgba(58, 104, 173, .36) 0%, rgba(58, 104, 173, 0) 72%),
+      radial-gradient(ellipse 36% 48% at 92% 108%, rgba(220, 196, 140, .13) 0%, rgba(220, 196, 140, 0) 70%),
+      linear-gradient(180deg, var(--navy-950) 0%, var(--navy-900) 60%, #102545 100%);
+  }
+  .wm-stage::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: linear-gradient(90deg, rgba(220, 196, 140, 0), rgba(220, 196, 140, .45), rgba(220, 196, 140, 0)); }
+  .wm-head { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 16px 32px; margin-bottom: 22px; }
+  .wm-head .eyebrow { margin-bottom: 8px; }
+  .wm-head .section-title { font-size: clamp(24px, 2.6vw, 32px); }
+  .wm-legend { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 24px; margin: 0 0 4px; padding: 0; font-size: 13.5px; color: #b9c8de; }
+  .wm-legend li { display: inline-flex; align-items: center; gap: 9px; }
+  .wm-key { position: relative; flex-shrink: 0; width: 8px; height: 8px; border-radius: 50%; background: #a9c2e3; box-shadow: 10px 0 0 #a9c2e3, 5px -8px 0 rgba(169, 194, 227, .6); margin-right: 10px; }
+  .wm-key.is-gold { width: 9px; height: 9px; margin-right: 2px; background: #f0d595; box-shadow: 0 0 0 3px rgba(240, 213, 149, .22), 0 0 10px 2px rgba(240, 213, 149, .55); }
+
+  /* ---------- 지도 ---------- */
+  .wm-map { position: relative; }
+  .wm-scroller { position: relative; overflow: hidden; }
+  .wm-canvas { position: relative; width: 100%; aspect-ratio: 1016 / 388; }
+  .wm-svg { position: absolute; inset: 0; display: block; width: 100%; height: 100%; animation: wm-fade 1.1s var(--ease) both; }
+  .wm-dots { fill: none; stroke-width: 2.7; stroke-linecap: round; }
+  .wm-dots-lit { fill: none; stroke: #eef4fc; stroke-opacity: .9; stroke-width: 2.9; stroke-linecap: round; }
+  .wm-dots-hi { fill: none; stroke: #f0d595; stroke-width: 3.2; stroke-linecap: round; transition: stroke .2s; }
+  .wm-dots-hi.is-active { stroke: #f9e8bf; }
+  .wm-equator { fill: none; stroke: rgba(220, 196, 140, .26); stroke-width: .8; stroke-dasharray: 1.2 5.5; }
+  .wm-status { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; padding: 16px; color: #b9c8de; font-size: 14.5px; text-align: center; }
+  @keyframes wm-fade { from { opacity: 0; } to { opacity: 1; } }
+
+  /* 참여 국가 표시 (HTML 버튼 — 화면 크기와 관계없이 같은 크기, 키보드로 이동 가능) */
+  .wm-markers { position: absolute; inset: 0; }
+  .wm-marker { position: absolute; width: 34px; height: 34px; margin: -17px 0 0 -17px; padding: 0; border: 0; border-radius: 50%; background: none; color: #f0d595; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .wm-marker-dot { position: absolute; left: 50%; top: 50%; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: #f0d595; box-shadow: 0 0 0 2px rgba(12, 28, 54, .85), 0 0 0 3.5px rgba(240, 213, 149, .85), 0 0 16px 5px rgba(240, 213, 149, .45); transition: background .2s, transform .2s var(--ease); }
+  /* 퍼지는 고리: 기본 상태(움직임 줄이기 설정 시 그대로 보임) = 정지된 고리 */
+  .wm-marker::before, .wm-marker::after { content: ""; position: absolute; left: 50%; top: 50%; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; border: 1.5px solid rgba(240, 213, 149, .9); pointer-events: none; transform: scale(2.1); opacity: .5; }
+  .wm-marker::before { animation: wm-pulse 2.8s cubic-bezier(.2, .6, .3, 1) infinite; }
+  .wm-marker::after { animation: wm-pulse 2.8s cubic-bezier(.2, .6, .3, 1) 1.4s infinite; opacity: 0; }
+  @keyframes wm-pulse { 0% { transform: scale(1); opacity: .95; } 100% { transform: scale(4.4); opacity: 0; } }
+  .wm-marker:hover .wm-marker-dot, .wm-marker.is-active .wm-marker-dot { background: #fff; transform: scale(1.15); }
+  .wm-marker:focus-visible { outline: 2px solid #fff; outline-offset: 0; }
+  .wm-marker-label { position: absolute; top: 50%; left: calc(50% + 15px); transform: translateY(-50%); padding: 3px 9px 3px; border: 1px solid rgba(240, 213, 149, .5); border-radius: var(--radius-xs); background: rgba(12, 28, 54, .82); font-family: var(--f-head); font-size: 13px; font-weight: 700; line-height: 1.45; letter-spacing: -0.01em; color: #fff; white-space: nowrap; pointer-events: none; }
+  .wm-marker.is-left .wm-marker-label { left: auto; right: calc(50% + 15px); }
+  .wm-map.is-dense .wm-marker-label { display: none; }
+
+  /* 국가 정보 말풍선 */
+  .wm-pop { position: absolute; z-index: 6; left: 0; top: 0; width: max-content; max-width: min(300px, calc(100% - 8px)); padding: 15px 18px 14px; border-radius: var(--radius); background: #fff; color: var(--ink); text-align: left; box-shadow: 0 18px 48px rgba(4, 12, 28, .5), 0 2px 6px rgba(4, 12, 28, .25); pointer-events: none; animation: wm-pop-in .18s var(--ease) both; }
+  .wm-pop[hidden] { display: none; }
+  .wm-pop::after { content: ""; position: absolute; left: var(--ax, 50%); bottom: -6px; width: 12px; height: 12px; margin-left: -6px; background: #fff; transform: rotate(45deg); }
+  .wm-pop.is-below { animation-name: wm-pop-in-below; }
+  .wm-pop.is-below::after { top: -6px; bottom: auto; }
+  @keyframes wm-pop-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+  @keyframes wm-pop-in-below { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+  .wm-pop-top { display: flex; align-items: center; gap: 10px; margin: 0 0 6px; }
+  .wm-pop-code { font-family: var(--f-display); font-size: 12px; font-weight: 600; letter-spacing: .16em; color: var(--gold-600); }
+  .wm-pop-name { margin: 0; font-family: var(--f-head); font-size: 19px; font-weight: 700; line-height: 1.35; color: var(--navy-900); }
+  .wm-pop-alt { display: block; margin-top: 1px; font-family: var(--f-serif-en); font-size: 13px; font-weight: 500; color: var(--muted); letter-spacing: 0; }
+  html[data-lang="en"] .wm-pop-alt { font-family: var(--f-serif); }
+  .wm-pop-note { margin: 10px 0 0; padding-top: 10px; border-top: 1px solid var(--line); font-size: 14px; line-height: 1.6; color: var(--ink-2); }
+  .wm-pop-kv { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 8px 0 0; font-size: 13.5px; color: var(--muted); }
+  .wm-pop-name + .wm-pop-kv { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
+  .wm-pop-kv div { display: flex; gap: 6px; }
+  .wm-pop-kv dd { margin: 0; font-weight: 700; color: var(--navy-900); }
+
+  /* 지도 아래 안내 줄 */
+  .wm-foot { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px 20px; margin-top: 18px; font-size: 13.5px; color: #9fb1cb; }
+  .wm-hint { display: inline-flex; align-items: center; gap: 8px; margin: 0; }
+  .wm-hint svg { width: 16px; height: 16px; color: #f0d595; flex-shrink: 0; }
+  .wm-zoom { display: none; }
+
+  /* ---------- 참여 국가 현황 + 참여 안내 ---------- */
+  .wm-board { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 40px; align-items: start; }
+  .wm-board .section-head { margin-bottom: 30px; }
+  .wm-list { list-style: none; display: grid; gap: 12px; margin: 0; padding: 0; }
+  .wm-row { display: grid; grid-template-columns: 68px minmax(0, 1fr) minmax(112px, auto) auto; align-items: center; gap: 6px 22px; padding: 20px 22px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); transition: border-color .2s, box-shadow .2s; }
+  .wm-row:hover { border-color: var(--blue-200); box-shadow: var(--shadow); }
+  .wm-row-code { display: grid; place-items: center; width: 60px; height: 60px; border-radius: 50%; border: 1px solid var(--gold-300); background: radial-gradient(circle at 50% 40%, #fffaf0, #fff 70%); font-family: var(--f-display); font-size: 13px; font-weight: 600; letter-spacing: .1em; color: var(--gold-600); }
+  .wm-row-main { min-width: 0; }
+  .wm-row-name { margin: 0; display: flex; align-items: baseline; flex-wrap: wrap; gap: 2px 10px; font-family: var(--f-head); font-size: 20px; font-weight: 700; line-height: 1.4; color: var(--navy-900); }
+  .wm-row-alt { font-family: var(--f-serif-en); font-size: 14px; font-weight: 500; color: var(--muted); }
+  html[data-lang="en"] .wm-row-alt { font-family: var(--f-serif); }
+  .wm-row-note { margin: 6px 0 0; display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; font-size: 14.5px; color: var(--ink-2); line-height: 1.6; }
+  .wm-row-count { margin: 0; text-align: right; font-size: 13px; color: var(--muted); line-height: 1.35; white-space: nowrap; }
+  .wm-row-count b { display: block; font-family: var(--f-serif-en); font-size: 24px; font-weight: 700; color: var(--navy-900); letter-spacing: -0.01em; }
+  .wm-row-count b small { font-family: var(--f-serif); font-size: 13px; margin-left: 2px; }
+  .wm-row-bar { display: block; width: 100%; min-width: 96px; height: 4px; margin-top: 6px; border-radius: 2px; background: var(--blue-100); overflow: hidden; }
+  .wm-row-bar span { display: block; height: 100%; background: var(--gold-500); }
+  .wm-row-btn { grid-column: 4; }
+  .wm-row-btn svg { width: 16px; height: 16px; }
+  .wm-empty { margin: 0; padding: 28px 22px; border: 1px dashed var(--line-2); border-radius: var(--radius); background: #fff; color: var(--muted); text-align: center; }
+  .wm-updated { margin: 14px 0 0; font-size: 13px; color: var(--muted); }
+
+  /* 나라별 33인 구성 */
+  .wm-fields { margin-top: 44px; padding-top: 34px; border-top: 1px solid var(--line-2); }
+  .wm-fields-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 14px; margin-bottom: 18px; }
+  .wm-fields-title { font-size: 21px; line-height: 1.4; }
+  .wm-fields-sub { margin: 0; font-family: var(--f-serif); font-size: 15px; font-weight: 500; color: var(--gold-600); }
+  html[data-lang="en"] .wm-fields-sub { font-family: var(--f-serif-en); }
+  .wm-field-list { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 0 0 20px; padding: 0; }
+  .wm-field-list li { display: flex; align-items: center; gap: 10px; min-width: 0; min-height: 58px; padding: 10px 12px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius-sm); }
+  .wm-field-icon { display: grid; place-items: center; flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%; background: var(--blue-50); border: 1px solid var(--blue-100); color: var(--navy-800); }
+  .wm-field-icon svg { width: 18px; height: 18px; stroke-width: 1.5; }
+  .wm-field-no { flex-shrink: 0; font-family: var(--f-serif-en); font-size: 12.5px; font-weight: 700; color: var(--gold-600); }
+  .wm-field-name { min-width: 0; font-size: 14.5px; font-weight: 600; line-height: 1.35; color: var(--navy-900); }
+  html[data-lang="en"] .wm-field-name { font-size: 13.5px; }
+  .wm-field-list li.is-total { justify-content: center; background: var(--navy-900); border-color: var(--navy-900); color: #fff; }
+  .wm-field-total { display: inline-flex; align-items: baseline; gap: 6px; }
+  .wm-field-total b { font-family: var(--f-serif-en); font-size: 26px; font-weight: 700; line-height: 1; }
+  .wm-field-total small { font-family: var(--f-serif); font-size: 13.5px; font-weight: 700; color: var(--gold-300); }
+  html[data-lang="en"] .wm-field-total small { font-family: var(--f-serif-en); font-weight: 500; }
+
+  .wm-side { position: sticky; top: calc(var(--header-h) + 24px); padding: 32px 30px 30px; background: #fff; border: 1px solid var(--line); border-top: 3px solid var(--navy-900); border-radius: var(--radius); box-shadow: var(--shadow-sm); }
+  .wm-side .eyebrow { margin-bottom: 10px; }
+  .wm-side-title { font-size: 23px; line-height: 1.4; }
+  .wm-side-text { margin: 12px 0 0; font-size: 15px; line-height: 1.75; color: var(--ink-2); }
+  .wm-progress { margin: 22px 0 0; padding: 16px 0 0; border-top: 1px solid var(--line); }
+  .wm-progress-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; font-size: 14px; color: var(--ink-2); }
+  .wm-progress-top b { font-family: var(--f-serif-en); font-size: 22px; font-weight: 700; color: var(--navy-900); }
+  .wm-progress-top em { font-style: normal; font-family: var(--f-serif-en); font-size: 15px; color: var(--muted); }
+  .wm-bar { height: 6px; margin-top: 8px; border-radius: 3px; background: var(--blue-100); overflow: hidden; }
+  .wm-bar span { display: block; width: 4px; height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--gold-500), var(--gold-300)); transition: width .8s var(--ease); }
+  .wm-formula { margin: 14px 0 0; padding: 12px 14px; border-radius: var(--radius-sm); background: var(--sky-50); border: 1px solid var(--line); font-size: 14px; color: var(--ink-2); text-align: center; line-height: 1.6; }
+  .wm-formula b { font-family: var(--f-serif-en); font-weight: 700; color: var(--navy-900); }
+  .wm-side-actions { display: grid; gap: 10px; margin-top: 22px; }
+
+  .wm-footnote { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 13px; line-height: 1.7; color: var(--muted); }
+  .wm-footnote p { margin: 0; }
+  .wm-footnote a { color: var(--blue-700); text-decoration: underline; text-underline-offset: 2px; }
+
+  @media (max-width: 1080px) {
+    .wm-board { grid-template-columns: minmax(0, 1fr) 320px; gap: 28px; }
+    .wm-row { grid-template-columns: 60px minmax(0, 1fr) minmax(96px, auto); }
+    .wm-row-code { width: 54px; height: 54px; font-size: 12px; }
+    .wm-row-btn { grid-column: 2 / -1; justify-self: start; }
+    .wm-field-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  @media (max-width: 900px) {
+    .wm-board { grid-template-columns: minmax(0, 1fr); }
+    .wm-side { position: static; }
+  }
+  @media (max-width: 760px) {
+    .wm-stage { padding: 40px 0 26px; }
+    .wm-head { margin-bottom: 16px; }
+    .wm-legend { gap: 6px 18px; font-size: 12.5px; }
+    .wm-map:not(.is-zoomed) .wm-dots { stroke-width: 3.3; }
+    .wm-map:not(.is-zoomed) .wm-dots-lit { stroke-width: 3.4; }
+    .wm-map:not(.is-zoomed) .wm-dots-hi { stroke-width: 4; }
+    .wm-marker-label { font-size: 12px; padding: 2px 7px; }
+    .wm-marker-dot { width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; }
+    /* 크게 보기: 지도를 넓혀 좌우로 밀어 보기 */
+    .wm-zoom { display: inline-flex; border-color: rgba(255, 255, 255, .55); }
+    .wm-map.is-zoomed .wm-scroller { overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: rgba(169, 194, 227, .5) transparent; -webkit-mask-image: linear-gradient(90deg, transparent, #000 18px, #000 calc(100% - 18px), transparent); mask-image: linear-gradient(90deg, transparent, #000 18px, #000 calc(100% - 18px), transparent); }
+    .wm-map.is-zoomed .wm-canvas { width: 240%; }
+    .wm-foot { margin-top: 14px; font-size: 13px; }
+    .wm-row { grid-template-columns: 52px minmax(0, 1fr); padding: 18px 16px; gap: 4px 14px; align-items: start; }
+    .wm-row-code { width: 48px; height: 48px; font-size: 11px; letter-spacing: .06em; }
+    .wm-row-name { font-size: 18px; }
+    .wm-row-count { grid-column: 2; text-align: left; display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+    .wm-row-count b { display: inline; font-size: 20px; }
+    .wm-row-bar { flex-basis: 100%; }
+    .wm-row-btn { grid-column: 2; margin-top: 8px; }
+    .wm-side { padding: 26px 20px 22px; }
+    .wm-footnote { margin-top: 40px; }
+    .wm-fields { margin-top: 34px; padding-top: 26px; }
+    .wm-fields-title { font-size: 19px; }
+    .wm-field-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+    .wm-field-list li { gap: 8px; padding: 9px 10px; min-height: 54px; }
+    .wm-field-icon { width: 30px; height: 30px; }
+    .wm-field-icon svg { width: 16px; height: 16px; }
+    .wm-field-no { display: none; }
+    .wm-field-name { font-size: 14px; }
+    html[data-lang="en"] .wm-field-name { font-size: 12.5px; }
+  }
+  @media (max-width: 380px) {
+    .wm-legend { font-size: 12px; gap: 6px 14px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wm-marker::after { display: none; }
+  }
+  @media print {
+    .wm-stage { background: #fff !important; color: #000; }
+    .wm-zoom, .wm-row-btn, .wm-side-actions, .wm-pop { display: none !important; }
+  }
+</style>
+</head>
+<body data-page="worldmap" data-title-en="World Map | World Hope Declaration Network">
+<div id="site-header"></div>
+
+<main id="main">
+  <!-- 상단: 라이트 히어로 -->
+  <section class="page-hero" aria-labelledby="page-title">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="breadcrumb"><a href="index.html"><span class="ko">홈</span><span class="en">Home</span></a><span aria-hidden="true">/</span><span><span class="ko">세계지도</span><span class="en">World Map</span></span></nav>
+      <h1 id="page-title"><span class="ko">세계지도</span><span class="en">World Map</span></h1>
+      <p class="page-hero-en">One Declaration, One Humanity</p>
+      <p><span class="ko">세계희망선언에 함께하는 나라와 나라별 글로벌 대표 33인 선정 현황을 한눈에 봅니다.</span><span class="en">See the nations joining the World Hope Declaration and each nation’s progress in selecting its 33 Global Representatives.</span></p>
+    </div>
+  </section>
+
+  <!-- 점 세계지도 (assets/js/worldmap.js 가 data/worldmap-dots.json · data/countries.json 으로 그림) -->
+  <section class="wm-stage section-navy" aria-labelledby="wm-title">
+    <div class="container">
+      <div class="wm-head">
+        <div>
+          <span class="eyebrow">World Hope Map</span>
+          <h2 class="section-title" id="wm-title"><span class="ko">함께하는 나라들</span><span class="en">Nations Joining Together</span></h2>
+        </div>
+        <ul class="wm-legend" aria-label="지도 범례" data-en-aria-label="Map legend">
+          <li><span class="wm-key" aria-hidden="true"></span><span class="ko">세계 각국</span><span class="en">Nations of the world</span></li>
+          <li><span class="wm-key is-gold" aria-hidden="true"></span><span class="ko">참여 국가</span><span class="en">Participating nations</span></li>
+        </ul>
+      </div>
+
+      <div class="wm-map" id="wm-map">
+        <div class="wm-scroller">
+          <div class="wm-canvas">
+            <p class="wm-status" id="wm-status"><span class="ko">지도를 불러오는 중입니다…</span><span class="en">Loading the map…</span></p>
+            <noscript><p class="wm-status">자바스크립트를 켜면 세계지도를 볼 수 있습니다. / Please enable JavaScript to view the map.</p></noscript>
+          </div>
+        </div>
+        <div class="wm-pop" id="wm-pop" role="tooltip" hidden></div>
+      </div>
+
+      <div class="wm-foot">
+        <p class="wm-hint"><span data-icon="pin"></span><span class="hide-mobile"><span class="ko">금색 표시에 마우스를 올리거나 누르면 나라별 현황을 볼 수 있습니다.</span><span class="en">Hover over or click a gold marker to see each nation’s status.</span></span><span class="show-mobile"><span class="ko">금색 표시를 누르면 나라별 현황이 보입니다.</span><span class="en">Tap a gold marker to see its status.</span></span></p>
+        <button type="button" class="btn btn-ghost-light btn-sm wm-zoom" id="wm-zoom" aria-pressed="false" aria-controls="wm-map"><span data-icon="search"></span><span class="wm-zoom-in"><span class="ko">지도 크게 보기</span><span class="en">Enlarge map</span></span><span class="wm-zoom-out" hidden><span class="ko">전체 지도 보기</span><span class="en">Show whole map</span></span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 통계 띠 (data/stats.json · 참여 국가 수는 data/countries.json 개수) -->
+  <section class="stats-band" aria-label="세계희망선언 참여 현황" data-en-aria-label="Participation at a glance">
+    <div class="container">
+      <ul class="stats">
+        <li class="stat-item"><span class="stat-icon" data-icon="flag"></span><div class="stat-body"><p class="stat-num"><b data-wm="count">1</b><small><span class="ko">개국</span><span class="en">nations</span></small></p><p class="stat-label"><span class="hide-mobile">Participating nations</span><span class="show-mobile">Joined</span></p><p class="stat-desc"><span class="ko">세계지도에 표시된 참여 국가</span><span class="en">Shown on the world map</span></p></div></li>
+        <li class="stat-item"><span class="stat-icon" data-icon="world"></span><div class="stat-body"><p class="stat-num"><b data-stat="countries">195</b><small><span class="ko">개국</span><span class="en">nations</span></small></p><p class="stat-label"><span class="hide-mobile">Target </span>countries</p><p class="stat-desc"><span class="ko">세계희망선언 대상 국가</span><span class="en">Nations of the Declaration</span></p></div></li>
+        <li class="stat-item"><span class="stat-icon" data-icon="target"></span><div class="stat-body"><p class="stat-num"><b data-stat="target">6,435</b><small><span class="ko">명</span><span class="en">people</span></small></p><p class="stat-label">Global target</p><p class="stat-desc"><span class="ko"><span data-stat="countries">195</span>개국 × <span data-stat="per_country">33</span>인 (목표치)</span><span class="en"><span data-stat="countries">195</span> nations × <span data-stat="per_country">33</span> (target)</span></p></div></li>
+        <li class="stat-item"><span class="stat-icon" data-icon="users"></span><div class="stat-body"><p class="stat-num"><b data-stat="participants">21</b><small><span class="ko">명</span><span class="en">people</span></small></p><p class="stat-label"><span class="hide-mobile">Current </span>participants</p><p class="stat-desc"><span class="ko">현재 참여자 수</span><span class="en">Participants so far</span></p></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 참여 국가 현황 + 참여 안내 -->
+  <section class="section section-sky" aria-labelledby="wm-list-title">
+    <div class="container">
+      <div class="wm-board">
+        <div class="wm-board-main">
+          <div class="section-head">
+            <span class="eyebrow">Participating Nations</span>
+            <h2 class="section-title" id="wm-list-title"><span class="ko">참여 국가 현황</span><span class="en">Participating Nations</span></h2>
+            <p class="section-lead"><span class="ko">나라마다 <span data-stat="fields">11</span>개 분야에서 분야별 <span data-stat="per_field">3</span>인, 모두 <span data-stat="per_country">33</span>인의 글로벌 대표를 선정합니다. 지금 세계지도에 표시된 나라들의 현황입니다.</span><span class="en">Each nation selects <span data-stat="per_country">33</span> Global Representatives — <span data-stat="per_field">3</span> in each of <span data-stat="fields">11</span> fields. Here is the current status of the nations shown on the map.</span></p>
+          </div>
+          <ol class="wm-list" id="wm-list" aria-live="polite">
+            <li class="wm-empty"><span class="ko">참여 국가 목록을 불러오는 중입니다…</span><span class="en">Loading participating nations…</span></li>
+          </ol>
+          <p class="wm-updated"><span class="ko">기준일</span><span class="en">As of</span> <span data-stat="updated">2026-10-12</span></p>
+
+          <!-- 나라별 33인 구성 (11개 분야 × 3인) -->
+          <div class="wm-fields">
+            <div class="wm-fields-head">
+              <h3 class="wm-fields-title" id="wm-fields-title"><span class="ko">나라별 글로벌 대표 33인 구성</span><span class="en">33 Global Representatives per Nation</span></h3>
+              <p class="wm-fields-sub"><span class="ko"><span data-stat="fields">11</span>개 분야 × 분야별 <span data-stat="per_field">3</span>인</span><span class="en"><span data-stat="fields">11</span> fields × <span data-stat="per_field">3</span> persons each</span></p>
+            </div>
+            <ol class="wm-field-list">
+              <li><span class="wm-field-icon" data-icon="megaphone"></span><span class="wm-field-no">01</span><span class="wm-field-name"><span class="ko">사회영향력</span><span class="en">Social Influence</span></span></li>
+              <li><span class="wm-field-icon" data-icon="trophy"></span><span class="wm-field-no">02</span><span class="wm-field-name"><span class="ko">국위선양</span><span class="en">National Prestige</span></span></li>
+              <li><span class="wm-field-icon" data-icon="book"></span><span class="wm-field-no">03</span><span class="wm-field-name"><span class="ko">교육계</span><span class="en">Academia &amp; Education</span></span></li>
+              <li><span class="wm-field-icon" data-icon="palette"></span><span class="wm-field-no">04</span><span class="wm-field-name"><span class="ko">문화예술계</span><span class="en">Culture &amp; Arts</span></span></li>
+              <li><span class="wm-field-icon" data-icon="cross"></span><span class="wm-field-no">05</span><span class="wm-field-name"><span class="ko">종교계</span><span class="en">Religious Leaders</span></span></li>
+              <li><span class="wm-field-icon" data-icon="chart"></span><span class="wm-field-no">06</span><span class="wm-field-name"><span class="ko">산업계</span><span class="en">Industry &amp; Business</span></span></li>
+              <li><span class="wm-field-icon" data-icon="shield"></span><span class="wm-field-no">07</span><span class="wm-field-name"><span class="ko">국방사회안전</span><span class="en">Defense, Safety &amp; Public Security</span></span></li>
+              <li><span class="wm-field-icon" data-icon="medical"></span><span class="wm-field-no">08</span><span class="wm-field-name"><span class="ko">의료계</span><span class="en">Medical &amp; Health</span></span></li>
+              <li><span class="wm-field-icon" data-icon="tool"></span><span class="wm-field-no">09</span><span class="wm-field-name"><span class="ko">생업종사자</span><span class="en">Workers &amp; Livelihood</span></span></li>
+              <li><span class="wm-field-icon" data-icon="users"></span><span class="wm-field-no">10</span><span class="wm-field-name"><span class="ko">시민</span><span class="en">Citizens</span></span></li>
+              <li><span class="wm-field-icon" data-icon="landmark"></span><span class="wm-field-no">11</span><span class="wm-field-name"><span class="ko">정치계(전·현직)</span><span class="en">Political Leaders (Current &amp; Former)</span></span></li>
+              <li class="is-total" aria-hidden="true"><span class="wm-field-total"><b data-stat="per_country">33</b><small><span class="ko">인 / 나라별</span><span class="en">per nation</span></small></span></li>
+            </ol>
+            <a class="link-arrow" href="global33.html"><span class="ko">글로벌 33 자세히 보기</span><span class="en">Learn more about Global 33</span></a>
+          </div>
+        </div>
+
+        <aside class="wm-side" aria-labelledby="wm-join-title">
+          <span class="eyebrow">Join Us</span>
+          <h3 class="wm-side-title" id="wm-join-title"><span class="ko">우리나라도 함께하세요</span><span class="en">Bring the Declaration to Your Nation</span></h3>
+          <p class="wm-side-text"><span class="ko">세계희망선언은 나라마다 <span data-stat="per_country">33</span>인의 글로벌 대표와 함께 이어집니다. 우리나라의 참여를 신청해 주세요.</span><span class="en">The World Hope Declaration grows nation by nation, with <span data-stat="per_country">33</span> Global Representatives in each. Apply for your nation to join.</span></p>
+          <div class="wm-progress">
+            <p class="wm-progress-top"><span><span class="ko">참여 국가</span><span class="en">Participating nations</span></span><span><b data-wm="count">1</b> <em>/ <span data-stat="countries">195</span></em></span></p>
+            <div class="wm-bar" role="progressbar" aria-label="참여 국가 비율" data-en-aria-label="Share of participating nations" aria-valuemin="0" aria-valuemax="195" aria-valuenow="1" id="wm-bar"><span></span></div>
+          </div>
+          <p class="wm-formula"><span class="ko">세계 각국 <b data-stat="per_country">33</b>인 × <b data-stat="countries">195</b>개국 = <b data-stat="target">6,435</b>인</span><span class="en"><b data-stat="per_country">33</b> per nation × <b data-stat="countries">195</b> nations = <b data-stat="target">6,435</b></span></p>
+          <div class="wm-side-actions">
+            <a class="btn btn-primary btn-lg btn-block" href="join.html#declare"><span class="ko">우리나라 참여 신청</span><span class="en">Apply for Your Nation</span><span data-icon="arrow-right"></span></a>
+            <a class="btn btn-outline btn-block" href="global33.html"><span class="ko">글로벌 33 알아보기</span><span class="en">About Global 33</span><span data-icon="arrow-right"></span></a>
+          </div>
+        </aside>
+      </div>
+
+      <div class="wm-footnote">
+        <p><span class="ko">지도 데이터: Natural Earth (public domain) via world-atlas</span><span class="en">Map data: Natural Earth (public domain) via world-atlas</span> · <a href="data/worldmap-dots.LICENSE.txt"><span class="ko">라이선스</span><span class="en">License</span></a></p>
+        <p><span class="ko">지도에 표시된 국경과 나라 이름은 참고용이며, 어떠한 정치적 입장도 나타내지 않습니다.</span><span class="en">Borders and names on this map are for reference only and do not imply any political position.</span></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/worldmap.js"></script>
+</body>
+</html>

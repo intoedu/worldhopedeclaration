@@ -25,7 +25,8 @@
   .g33-anchor { scroll-margin-top: calc(var(--header-h) + 58px); }
 
   /* ---------- 상단 히어로: 왼쪽 글 + 오른쪽 "33 = 11 × 3" 문장(紋章) ---------- */
-  .g33-hero { padding: 52px 0 64px; }
+  .g33-hero { padding: 40px 0 64px; }
+  .g33-hero .breadcrumb { margin-bottom: 8px; }
   .g33-hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px); gap: 32px 64px; align-items: center; }
   .g33-hero-text { min-width: 0; }
   .page-hero.g33-hero p.g33-hero-kicker { margin: 0 0 12px; max-width: none; line-height: 1.6; font-family: var(--f-serif); font-size: clamp(16px, 1.55vw, 19px); font-weight: 500; letter-spacing: -0.01em; color: var(--navy-900); }
@@ -98,7 +99,7 @@
 
   /* 12번째 칸: 요약 카드 (네이비) */
   .g33-field-sum { position: relative; overflow: hidden; isolation: isolate; display: flex; flex-direction: column; min-width: 0; padding: 22px 22px 20px; border-radius: var(--radius-sm); background: radial-gradient(130% 100% at 100% 0%, #2a5797 0%, var(--navy-900) 52%, var(--navy-950) 100%); color: #c9d6ea; }
-  .g33-field-sum::after { content: ""; position: absolute; z-index: -1; right: -40%; bottom: -62%; width: 120%; aspect-ratio: 1; border-radius: 50%; border-top: 1px solid rgba(220, 196, 140, .45); }
+  .g33-field-sum::after { content: ""; position: absolute; z-index: -1; right: -30%; bottom: -40%; width: 90%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(220, 196, 140, .2) 0%, rgba(220, 196, 140, 0) 65%); pointer-events: none; }
   .g33-sum-cap { font-family: var(--f-display); font-size: 11.5px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--gold-300); }
   .g33-field-sum h3 { margin: 8px 0 0; color: #fff; font-size: 21px; }
   .g33-sum-eq { margin: 6px 0 0; font-family: var(--f-display); font-size: 25px; font-weight: 600; letter-spacing: .06em; color: #fff; line-height: 1.3; }
@@ -145,6 +146,7 @@
   .g33-live-chip { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border: 1px solid var(--line-2); border-radius: var(--radius-xs); background: #fff; }
   .g33-live-chip svg { width: 18px; height: 18px; color: var(--blue-700); }
   .g33-live-chip b { font-family: var(--f-serif-en); font-size: 17px; color: var(--navy-900); }
+  .g33-live-num { display: inline-flex; align-items: baseline; gap: 1px; color: var(--navy-900); font-weight: 600; }
   .g33-one { margin: 40px 0 0; text-align: center; }
   .g33-one-ko { display: block; font-family: var(--f-serif); font-size: clamp(18px, 1.9vw, 22px); font-weight: 700; color: var(--navy-900); }
   html[data-lang="en"] .g33-one-ko { font-family: var(--f-serif-en); }
@@ -160,8 +162,8 @@
   .g33-award .section-title { color: #fff; }
   .g33-award .section-sub { color: #9fb0ca; }
   .g33-award .section-lead { color: #b6c5dc; }
-  .g33-award-values { list-style: none; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px 10px; margin-top: 36px; padding-top: 30px; border-top: 1px solid rgba(255, 255, 255, .12); }
-  .g33-award-values li { text-align: center; min-width: 0; }
+  .g33-award-values { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 16px 10px; margin-top: 36px; padding-top: 30px; border-top: 1px solid rgba(255, 255, 255, .12); }
+  .g33-award-values li { flex: 1 1 0; text-align: center; min-width: 0; }
   .g33-av-icon { display: grid; place-items: center; width: 56px; height: 56px; margin: 0 auto 10px; border-radius: 50%; border: 1px solid rgba(220, 196, 140, .45); color: var(--gold-300); background: rgba(255, 255, 255, .04); }
   .g33-av-icon svg { width: 25px; height: 25px; stroke-width: 1.4; }
   .g33-award-values b { display: block; font-family: var(--f-head); font-size: 16.5px; font-weight: 700; color: #fff; line-height: 1.3; }
@@ -201,7 +203,9 @@
   .g33-pedestal { position: relative; width: min(100%, 452px); margin-top: -1px; padding: 15px 22px 14px; text-align: center; clip-path: polygon(4% 0, 96% 0, 100% 100%, 0 100%); background: linear-gradient(180deg, #e8d29c 0, #b8913f 3px, #2c4f86 3px, #17325a 40%, #0b1a33 100%); }
   .g33-pedestal .keywords { color: var(--gold-300); font-size: 15px; }
   .g33-pedestal .keywords span + span::before { color: var(--gold-500); }
-  .g33-pedestal .keywords.en { margin-top: 3px; font-size: 10.5px; color: #d9c79b; }
+  /* 영문 키워드 줄 (.keywords.en 은 언어 전환용 .en 과 겹치므로 별도 클래스) */
+  .keywords.g33-kw-en { font-family: var(--f-display); font-weight: 400; letter-spacing: .14em; font-size: 13px; }
+  .g33-pedestal .keywords.g33-kw-en { margin-top: 3px; font-size: 10.5px; color: #d9c79b; }
 
   /* ---------- ID 카드 (예시) ---------- */
   .g33-idcards { display: grid; grid-template-columns: repeat(2, minmax(0, 440px)); justify-content: center; gap: 28px 40px; }
@@ -211,20 +215,20 @@
   .g33-side small { font-family: var(--f-serif-en); font-size: 13px; font-weight: 500; color: var(--muted); }
   .g33-idcards .idcard { isolation: isolate; }
   /* 앞면: 아래쪽에 옅은 지구 곡선 */
-  .g33-idcards .idcard:not(.is-back)::after { content: ""; position: absolute; z-index: -1; left: -30%; right: -30%; top: 84%; height: 140%; border-radius: 50%; background: radial-gradient(60% 40% at 50% 0%, rgba(80, 132, 200, .28), rgba(80, 132, 200, 0)); border-top: 1px solid rgba(43, 87, 151, .25); pointer-events: none; }
+  .g33-idcards .idcard:not(.is-back)::after { content: ""; position: absolute; z-index: -1; left: -30%; right: -30%; top: 93%; height: 140%; border-radius: 50%; background: radial-gradient(60% 40% at 50% 0%, rgba(80, 132, 200, .28), rgba(80, 132, 200, 0)); border-top: 1px solid rgba(43, 87, 151, .25); pointer-events: none; }
   .g33-idcards .idcard-rows dd small { display: block; font-family: var(--f-serif-en); font-size: 10.5px; font-weight: 500; color: var(--ink-2); line-height: 1.3; }
   .g33-idcards .idcard-rows dd.is-code { font-family: var(--f-serif-en); letter-spacing: .02em; white-space: nowrap; }
   /* 뒷면: 점 무늬 + 금색 키워드 */
   .g33-idcards .idcard.is-back::before { content: ""; position: absolute; z-index: -1; inset: 0; background: radial-gradient(rgba(255, 255, 255, .16) 1px, transparent 1.6px) 0 0 / 9px 9px; -webkit-mask-image: radial-gradient(70% 60% at 50% 45%, #000, transparent); mask-image: radial-gradient(70% 60% at 50% 45%, #000, transparent); pointer-events: none; }
-  .g33-idcards .idcard.is-back .keywords.en { margin-top: 4px; font-size: 9.5px; color: #c8d4e6; }
+  .g33-idcards .idcard.is-back .keywords.g33-kw-en { margin-top: 4px; font-size: 9.5px; color: #c8d4e6; }
 
   .g33-idno { margin-top: 56px; text-align: center; }
   .g33-idno h3 { font-size: 19px; }
   .g33-idno h3 small { margin-left: 6px; font-family: var(--f-serif-en); font-size: 14px; font-weight: 500; color: var(--muted); }
-  .g33-idno-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch; gap: 10px; margin: 18px 0 0; padding: 0; list-style: none; }
-  .g33-idno-part { min-width: 128px; padding: 14px 16px 12px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: #fff; }
+  .g33-idno-row { display: flex; flex-wrap: nowrap; justify-content: center; align-items: stretch; gap: 10px; margin: 18px 0 0; padding: 0; list-style: none; }
+  .g33-idno-part { flex: 0 1 168px; min-width: 0; padding: 14px 16px 12px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: #fff; }
   .g33-idno-part code { display: block; font-family: var(--f-serif-en); font-size: 24px; font-weight: 700; letter-spacing: .05em; color: var(--navy-900); line-height: 1.2; }
-  .g33-idno-part span { display: block; margin-top: 4px; font-size: 13.5px; font-weight: 600; color: var(--ink-2); }
+  .g33-idno-part > span { display: block; margin-top: 4px; font-size: 13.5px; font-weight: 600; color: var(--ink-2); }
   .g33-idno-part small { display: block; font-family: var(--f-serif-en); font-size: 12px; color: var(--muted); }
   .g33-idno-dash { align-self: center; color: var(--blue-300); font-family: var(--f-serif-en); font-size: 22px; }
   .g33-idno-note { margin: 18px 0 0; font-size: 13.5px; color: var(--muted); }
@@ -233,7 +237,7 @@
   @media (max-width: 1080px) {
     .g33-hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 340px); gap: 32px 40px; }
     .g33-award-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 400px); gap: 48px; }
-    .g33-award-values { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .g33-award-values li { flex: 0 0 calc((100% - 20px) / 3); }
   }
   @media (max-width: 860px) {
     .g33-hero { text-align: center; }
@@ -247,7 +251,7 @@
     .g33-award .section-head { margin-left: auto; margin-right: auto; }
     .g33-award .eyebrow::after { content: ""; width: 28px; height: 1px; background: currentColor; opacity: .55; }
     .g33-award-note { justify-content: center; }
-    .g33-award-values { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .g33-award-values li { flex: 1 1 0; }
     .g33-idcards { grid-template-columns: minmax(0, 440px); }
   }
   @media (max-width: 760px) {
@@ -261,7 +265,15 @@
     .g33-fields-head { margin-bottom: 30px; }
     .g33-head-en { font-size: 14.5px; }
     .g33-formula-box { flex-basis: 100%; }
-    .g33-steps { grid-template-columns: minmax(0, 1fr); gap: 10px; margin-top: -6%; }
+    .g33-map { margin: 0 calc(var(--gutter) * -1); }
+    .g33-map canvas { -webkit-mask-image: none; mask-image: none; }
+    .g33-steps { grid-template-columns: minmax(0, 1fr); gap: 10px; margin-top: 18px; }
+    .g33-field-sum { padding: 16px 14px; }
+    .g33-sum-cap { font-size: 10px; letter-spacing: .14em; }
+    .g33-field-sum h3 { font-size: 17px; }
+    .g33-sum-eq { font-size: 19px; letter-spacing: .02em; white-space: nowrap; }
+    .g33-sum-text { font-size: 13px; margin: 8px 0 14px; }
+    .g33-field-sum .link-arrow { font-size: 13.5px; }
     .g33-op { margin: 0 auto; width: 38px; height: 38px; font-size: 20px; }
     .g33-step { display: grid; grid-template-columns: 54px minmax(0, 1fr); gap: 2px 16px; align-items: center; padding: 18px 18px; text-align: left; }
     .g33-step-icon { grid-row: span 3; width: 54px; height: 54px; margin: 0; }
@@ -270,7 +282,7 @@
     .g33-step-label { margin-top: 4px; }
     .g33-pin-label { font-size: 12px; padding: 1px 7px; }
     .g33-award { padding: 72px 0; }
-    .g33-award-values { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px 4px; padding-top: 24px; }
+    .g33-award-values { gap: 14px 4px; padding-top: 24px; }
     .g33-av-icon { width: 46px; height: 46px; }
     .g33-av-icon svg { width: 21px; height: 21px; }
     .g33-award-values b { font-size: 14px; }
@@ -278,17 +290,25 @@
     .g33-award-values small.is-ko { font-size: 11px; }
     .g33-crystal-face { padding: 44px 22px 22px; }
     .g33-cr-text { font-size: 13px; }
+    .g33-pedestal { padding: 13px 12px 12px; }
     .g33-pedestal .keywords { font-size: 13.5px; }
+    .g33-pedestal .keywords.g33-kw-en { font-size: 8.5px; letter-spacing: .06em; }
+    .g33-pedestal .keywords.g33-kw-en span + span::before { margin: 0 .45em; }
     .g33-idno { margin-top: 44px; }
+    .g33-idno-row { flex-wrap: wrap; }
     .g33-idno-part { min-width: 0; flex: 1 1 40%; padding: 12px 10px 10px; }
     .g33-idno-dash { display: none; }
   }
-  @media (max-width: 400px) {
-    .g33-award-values { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .g33-eq { gap: 8px; }
-    .g33-eq-term { padding: 7px 9px 7px 8px; gap: 5px; }
-    .g33-eq-term b { font-size: 22px; }
+  @media (max-width: 480px) {
+    /* 공식: 한 줄 5칸 고정 (숫자 위 · 단위 아래) */
+    .g33-eq { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); gap: 6px; }
+    .g33-eq-term { flex-direction: column; justify-content: center; gap: 4px; padding: 9px 4px 8px; text-align: center; }
+    .g33-eq-term b { font-size: 24px; }
+    .g33-eq-term small { align-items: center; font-size: 12px; }
     .g33-eq-term small em { font-size: 8.5px; letter-spacing: .08em; }
+  }
+  @media (max-width: 400px) {
+    .g33-award-values li { flex: 0 0 calc((100% - 8px) / 3); }
   }
   @media print {
     .g33-subnav, .breadcrumb, .g33-hero-actions, .g33-field-sum .link-arrow, .g33-cta { display: none !important; }
@@ -304,11 +324,12 @@
 <main id="main">
   <!-- 상단: 라이트 히어로 -->
   <section class="page-hero g33-hero" aria-labelledby="page-title">
-    <div class="container g33-hero-grid">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="breadcrumb"><a href="index.html"><span class="ko">홈</span><span class="en">Home</span></a><span aria-hidden="true">/</span><span><span class="ko">글로벌 33</span><span class="en">Global 33</span></span></nav>
+      <div class="g33-hero-grid">
       <div class="g33-hero-text">
-        <nav class="breadcrumb" aria-label="breadcrumb"><a href="index.html"><span class="ko">홈</span><span class="en">Home</span></a><span aria-hidden="true">/</span><span><span class="ko">글로벌 33</span><span class="en">Global 33</span></span></nav>
         <p class="g33-hero-kicker"><span class="ko">분열을 넘어, 하나의 희망으로</span><span class="en">From Division to Hope, Together for a Better World</span></p>
-        <h1 id="page-title"><span class="ko">세계희망선언 글로벌 대표</span><span class="en">Global Representatives</span></h1>
+        <h1 id="page-title"><span class="ko">세계희망선언 <br class="show-mobile">글로벌 대표</span><span class="en">Global Representatives</span></h1>
         <p class="page-hero-en">Global 33</p>
         <p class="g33-hero-lead"><span class="ko">세계희망선언의 정신에 동의하고 지구와 인류의 더 나은 미래를 위해 헌신하는 사람들 — 나라마다 11개 분야에서 각 3인씩, 33인의 글로벌 대표를 선정합니다.</span><span class="en">People who share the spirit of the World Hope Declaration and devote themselves to a better future for humanity and the Earth — in every nation, 33 Global Representatives: 3 in each of 11 fields.</span></p>
         <div class="g33-eq" role="group" aria-label="각국 33인 = 11개 분야 × 각 3인" data-en-aria-label="33 per nation = 11 fields × 3 persons each">
@@ -362,6 +383,7 @@
           <text class="g33-emblem-cap" x="220" y="312" text-anchor="middle">GLOBAL</text>
         </svg>
       </figure>
+      </div>
     </div>
   </section>
 
@@ -512,7 +534,7 @@
           </div>
           <span class="g33-op" aria-hidden="true">=</span>
           <div class="g33-step is-result">
-            <span class="g33-step-icon" data-icon="group"></span>
+            <span class="g33-step-icon" data-icon="target"></span>
             <p class="g33-step-num"><b data-stat="target">6,435</b><small><span class="ko">인</span><span class="en">people</span></small></p>
             <p class="g33-step-label">Global Target</p>
             <p class="g33-step-desc"><span class="ko">글로벌 대표 네트워크 (목표)</span><span class="en">Global Representatives network (target)</span></p>
@@ -527,7 +549,7 @@
       <p class="g33-formula-line"><span class="ko">세계 각국 <b data-stat="per_country">33</b>인 × <b data-stat="countries">195</b>개국 = <b data-stat="target">6,435</b>인</span><span class="en"><b data-stat="per_country">33</b> per nation × <b data-stat="countries">195</b> nations = <b data-stat="target">6,435</b> representatives</span></p>
       <p class="g33-formula-line-en ko" lang="en"><span data-stat="per_country">33</span> Representatives per Nation × <span data-stat="countries">195</span> Countries = <span data-stat="target">6,435</span> Global Representatives</p>
       <p class="g33-live">
-        <span class="g33-live-chip"><span data-icon="users"></span><span class="ko">현재 참여자 수</span><span class="en">Current participants</span> <b data-stat="participants">21</b><span class="ko">명</span></span>
+        <span class="g33-live-chip"><span data-icon="users"></span><span class="ko">현재 참여자 수</span><span class="en">Current participants</span><span class="g33-live-num"><b data-stat="participants">21</b><span class="ko">명</span></span></span>
         <span class="g33-live-chip"><span data-icon="calendar"></span><span class="ko">기준일</span><span class="en">As of</span> <span data-stat="updated">2026-10-12</span></span>
       </p>
       <p class="g33-one"><span class="g33-one-ko"><span class="ko">공동의 선언, 하나의 인류</span><span class="en">One Declaration, One Humanity</span></span><span class="g33-one-en"><span class="ko">One Declaration, One Humanity</span><span class="en">World Hope Declaration</span></span></p>
@@ -584,7 +606,7 @@
         </div>
         <div class="g33-pedestal">
           <p class="keywords mb-0" lang="ko"><span>평화</span><span>지구환경</span><span>사람</span><span>연대</span><span>실천</span></p>
-          <p class="keywords en mb-0" lang="en"><span>PEACE</span><span>PLANET</span><span>PEOPLE</span><span>PARTNERSHIP</span><span>ACTION</span></p>
+          <p class="keywords g33-kw-en mb-0" lang="en"><span>PEACE</span><span>PLANET</span><span>PEOPLE</span><span>PARTNERSHIP</span><span>ACTION</span></p>
         </div>
         <figcaption class="sr-only"><span class="ko">글로벌 대표 패 디자인 예시</span><span class="en">Sample design of the Global Representative plaque</span></figcaption>
       </figure>
@@ -630,7 +652,7 @@
             <picture><source srcset="assets/img/brand/logo-mark-160.webp" type="image/webp"><img src="assets/img/brand/logo-mark-160.png" alt="" width="72" height="72" loading="lazy"></picture>
             <b lang="ko">세계희망선언</b><small lang="en">WORLD HOPE DECLARATION™</small>
             <p class="keywords mb-0" lang="ko"><span>평화</span><span>지구환경</span><span>사람</span><span>연대</span><span>실천</span></p>
-            <p class="keywords en mb-0" lang="en"><span>PEACE</span><span>PLANET</span><span>PEOPLE</span><span>PARTNERSHIP</span><span>ACTION</span></p>
+            <p class="keywords g33-kw-en mb-0" lang="en"><span>PEACE</span><span>PLANET</span><span>PEOPLE</span><span>PARTNERSHIP</span><span>ACTION</span></p>
           </figure>
         </div>
       </div>

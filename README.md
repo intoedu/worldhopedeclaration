@@ -2,103 +2,189 @@
 
 > 분열과 전쟁의 세상을 종식시키는 희망의 서막이 열린다.
 
-빌드 과정이 없는 정적 웹사이트입니다. 파일을 그대로 올리면 동작하고, 게시판·갤러리·문의·후원 신청·방문 통계는 Supabase를 연결하면 관리자 페이지에서 운영할 수 있습니다.
+**빌드 과정도, 서버도, 데이터베이스도 없는** 정적 웹사이트입니다. GitHub 저장소에 있는 파일이 그대로 홈페이지가 됩니다.
+
+| 무엇을 | 어떻게 |
+|---|---|
+| 호스팅 | **GitHub Pages** (main 브랜치, 무료) → https://intoedu.github.io/worldhopedeclaration/ |
+| 공지·소식, 갤러리, 응원 메시지 게시 | 저장소의 `data/*.json` 파일. 관리자 페이지(`/admin/`)에서 GitHub 토큰으로 로그인해 직접 수정 |
+| 문의·참여 신청, 정기 후원 신청, 희망 응원 메시지, 온라인 후원 결제 알림 | **담당자 이메일로 전송** (FormSubmit 무료 서비스, 실패하면 방문자의 메일 앱으로 대체) |
+| 온라인 결제 | PortOne V2 결제창 (결제 내역의 기준은 PortOne 관리자 콘솔) |
+| 방문 통계 (선택) | GoatCounter 그리고/또는 Google Analytics 4 |
 
 ## 메뉴와 기능
 
 | 페이지 | 파일 | 주요 기능 |
 |---|---|---|
-| 홈 | `index.html` | 메인 비주얼, 인사말 발췌, 선언→실천 4단계, 33인 희망선언, 사역 카드, 최신 소식, 갤러리 미리보기, 함께하기, 희망 응원 메시지 |
+| 홈 | `index.html` | 메인 비주얼, 인사말 발췌, 선언→실천 4단계, 33인 희망선언, 사역 카드, 최신 소식, 갤러리 미리보기, 함께하기, 희망 응원 메시지(접수 → 이메일, 게시는 관리자) |
 | 소개·인사말 | `about.html` | 취지문, 위원장 인사말, 조직 구성(위원회·연대), 오시는 길(지도) |
 | 사역 안내 | `ministry.html` | 다섯 가지 사역 |
 | 공지·소식 | `news.html`, `post.html` | 게시판(분류·검색·페이지 나눔), 상세 보기, 링크 복사, 글별 QR |
 | 갤러리 | `gallery.html` | 앨범별 보기, 크게 보기(키보드·스와이프) |
-| 문의하기 | `contact.html` | 문의·참여·동역 신청 폼 (`?type=join`으로 유형 자동 선택) |
-| 후원·헌금 | `donate.html` | 계좌 안내, 정기 후원 신청서, 온라인 결제(PortOne) |
+| 문의하기 | `contact.html` | 문의·참여·동역 신청 폼 → 이메일 (`?type=join`으로 유형 자동 선택) |
+| 후원·헌금 | `donate.html` | 계좌 안내, 정기 후원 신청서(→ 이메일), 온라인 결제(PortOne) |
 | 자주 묻는 질문 | `faq.html` | 분류별 FAQ |
 | QR코드 | `qr.html` | 홈페이지·메뉴별 QR 생성, 가운데 로고, PNG/SVG 저장, 인쇄 |
 | 개인정보처리방침 | `privacy.html` | 초안 (확정 필요 항목 표시) |
-| 관리자 | `admin/` | 대시보드(방문 통계), 글쓰기, 사진 올리기, 응원 승인, 문의·후원 확인, CSV 내려받기 |
+| 없는 주소 | `404.html` | 잘못된 주소 안내 (GitHub Pages 하위 경로에서도 디자인 유지) |
+| 관리자 | `admin/` | 공지·소식 글쓰기, 사진 올리기, 응원 메시지 게시 (GitHub 저장소 파일 직접 수정) |
 
 - **한/영 전환**: 모든 화면 상단 KOR / ENG (선택한 언어 유지, `?lang=en` 링크 가능)
 - **QR코드**: 모든 화면 상단 ‘QR코드’ 버튼 → 지금 보는 페이지의 QR 표시
-- **방문자 통계**: 하단에 오늘/전체 방문자 표시, 관리자에서 14일 그래프·인기 페이지 확인 (Supabase 연결 시)
+- **방문자 통계**: GoatCounter 연결 시 하단에 ‘누적 방문자’ 표시. 자세한 통계는 GoatCounter·GA4 화면에서 확인
 
-## 미리보기
+## 미리보기 (내 컴퓨터에서)
 
 ```bash
-npx serve .            # 또는: python3 -m http.server 8080
+npx serve .            # 또는: python3 -m http.server 8080  → http://localhost:8080/
 ```
+
+- 파일을 더블클릭(`file://`)해서 열면 브라우저 보안 정책 때문에 `data/*.json` 을 읽지 못해 게시판·갤러리가 비어 보입니다. 꼭 위처럼 간단한 로컬 서버로 여세요.
+- 미리보기에서도 폼을 전송하면 **실제로 메일이 발송**됩니다(아래 FormSubmit 참고).
 
 ## 설정 — `assets/js/config.js` 한 파일
 
-단체명·연락처·주소·후원 계좌·Supabase·결제·GA 설정이 모두 여기 있습니다. 값이 비어 있으면 그 기능은 ‘준비 중’으로 안전하게 표시됩니다.
+단체명·연락처·주소·후원 계좌·메일 수신 주소·관리자 저장소·결제·통계 설정이 모두 여기 있습니다. 값이 비어 있으면 그 기능은 ‘준비 중’으로 안전하게 표시되거나 꺼집니다.
 
-- `draft: true` → 상단에 ‘시안 미리보기’ 안내. **정식 오픈 시 `false`**
-- `bank` → 후원 계좌 (입력하면 ‘계좌번호 복사’ 버튼이 생깁니다)
-- `publicEmail` → 홈페이지에 공개할 이메일 (비우면 표시 안 함)
+| 항목 | 설명 |
+|---|---|
+| `siteUrl` | 공식 주소. QR코드·공유 링크의 기준 (비우면 현재 접속 주소). `scripts/set-domain.mjs` 가 자동 입력 |
+| `draft` | `true` → 상단에 ‘시안 미리보기’ 안내. **정식 오픈 시 `false`** |
+| `bank` | 후원 계좌 (입력하면 ‘계좌번호 복사’ 버튼이 생깁니다) |
+| `publicEmail` | 홈페이지에 공개할 이메일 (비우면 표시 안 함) |
+| `email.to` | 온라인 접수 메일을 받을 주소 (또는 FormSubmit 별칭) |
+| `email.service` | `"formsubmit"`(기본, 자동 전송) 또는 `"mailto"`(항상 방문자의 메일 앱으로 보내기) |
+| `github` | 관리자 페이지가 수정할 저장소 (`owner`, `repo`, `branch`) |
+| `portone` | 온라인 결제 `storeId`, `channelKey`, `payMethod` |
+| `analytics` | `goatcounter`(사이트 코드), `ga4`(측정 ID) — 둘 다 선택 |
+| `showVisitCounter` | GoatCounter 사용 시 하단 ‘누적 방문자’ 표시 여부 |
 
-## 배포 (Vercel 권장)
+## 배포 — GitHub Pages
 
-1. Vercel에서 이 저장소를 Import → Framework: **Other**, Build Command 없음, Output Directory: 루트(`.`)
-2. 도메인 연결 (Vercel → Settings → Domains)
-3. 도메인이 정해지면 한 번 실행 후 커밋:
+1. GitHub 저장소 **Settings → Pages → Build and deployment**
+   - Source: **Deploy from a branch**
+   - Branch: **main** / 폴더: **/ (root)** → Save
+2. 1~2분 뒤 https://intoedu.github.io/worldhopedeclaration/ 에서 열립니다. 이후 main 브랜치에 커밋할 때마다 자동으로 다시 게시됩니다(보통 몇 분 이내).
+3. 저장소 최상위의 빈 파일 **`.nojekyll`** 은 GitHub Pages 가 파일을 가공(Jekyll)하지 않고 그대로 게시하게 합니다. 지우지 마세요.
+4. 공식 주소를 config 와 검색엔진 정보에 반영하려면 한 번 실행 후 커밋합니다 (Node.js 18 이상):
+   ```bash
+   node scripts/set-domain.mjs https://intoedu.github.io/worldhopedeclaration
+   ```
+   → `config.js`의 `siteUrl`, 각 페이지의 canonical·og:url·og:image 절대주소, `sitemap.xml`, `robots.txt` 가 갱신됩니다. 여러 번 실행해도 안전합니다.
+
+참고
+- GitHub 무료 요금제에서는 **공개(public) 저장소**에서만 Pages 를 쓸 수 있습니다. 공개 저장소라면 `data/*.json`(게시된 글·사진·응원 메시지)과 그 변경 이력을 누구나 볼 수 있으니, 게시하지 않을 개인정보는 저장소에 넣지 마세요. 온라인 접수 내용(문의·신청)은 저장소에 저장되지 않고 이메일로만 전달됩니다.
+- 이 사이트는 하위 경로(`/worldhopedeclaration/`)에서 동작하도록 모든 경로를 **상대 경로**로 씁니다. 새 파일을 추가할 때도 `/assets/...` 처럼 `/` 로 시작하는 경로는 쓰지 마세요. (`404.html` 은 어떤 깊이의 주소에서 열려도 사이트 최상위를 기준으로 계산합니다)
+- GitHub Pages 는 응답 헤더(보안 헤더)를 직접 설정할 수 없습니다. 관리자 페이지는 페이지 안의 Content-Security-Policy 로 보호합니다.
+
+### 연결 도메인 (선택)
+
+1. 도메인을 정한 뒤 실행:
    ```bash
    node scripts/set-domain.mjs https://www.도메인
    ```
-   → `config.js`의 `siteUrl`, 각 페이지의 canonical·og:url·og:image 절대주소, `sitemap.xml`, `robots.txt`가 갱신됩니다.
+   → 위 항목들과 함께 저장소 최상위에 **`CNAME`** 파일(호스트 이름 한 줄)이 만들어지고, 필요한 DNS 설정이 화면에 안내됩니다.
+2. 커밋해 main 브랜치에 올립니다.
+3. 도메인 구입처의 DNS 관리에서 등록합니다.
+   - 루트 도메인(호스트 `@`) **A 레코드 4개**: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
+   - `www` **CNAME** → `intoedu.github.io`
+   - 같은 이름으로 이미 있던 다른 A/CNAME(포워딩·파킹) 레코드는 삭제
+4. 저장소 **Settings → Pages → Custom domain** 에 도메인이 표시되고 DNS 확인이 끝나면, 같은 화면의 **Enforce HTTPS** 를 켭니다. (DNS 반영·인증서 발급에 몇 분~최대 48시간)
+5. (권장) GitHub 계정(또는 조직) Settings → Pages 에서 도메인 소유 확인(Verified domains)을 해 두면 다른 사람이 이 도메인을 가로채 쓰는 것을 막을 수 있습니다.
+6. 새 주소에서 **문의 폼을 한 번 시험 전송**해 메일이 오는지 확인합니다 (FormSubmit 활성화가 주소별로 다시 필요할 수 있음). QR코드 인쇄물은 새 주소로 다시 만듭니다. (기존 github.io 주소는 GitHub 가 새 도메인으로 연결해 줍니다)
 
-`vercel.json`에 보안 헤더와 관리자 페이지 검색 제외가 설정되어 있습니다.
+다시 github.io 주소로 되돌릴 때는 `node scripts/set-domain.mjs https://intoedu.github.io/worldhopedeclaration` 을 실행하면 `CNAME` 이 삭제됩니다.
 
-## 게시판·갤러리·문의·통계 연결 (Supabase)
+### robots.txt 와 검색 노출
 
-1. supabase.com 에서 프로젝트 생성 (지역: Northeast Asia (Seoul) 권장)
-2. SQL Editor 에 `supabase/schema.sql` 전체를 붙여 넣고 실행 (여러 번 실행해도 안전)
-3. Authentication → Users 에서 관리자 계정 생성 → `schema.sql` 맨 아래 ‘관리자 등록’ 쿼리를 이메일만 바꿔 실행
-4. Authentication 설정에서 **신규 가입(Sign ups) 끄기**
-5. Project Settings → API 의 URL / anon key 를 `config.js`의 `supabase.url`, `supabase.anonKey` 에 입력
-6. `/admin/` 접속 → 로그인
+- `robots.txt` 에는 `Disallow: /admin/` 이 들어 있지만, 검색엔진은 **도메인 최상위의 `/robots.txt` 만** 읽습니다. 즉 `intoedu.github.io/worldhopedeclaration/` 같은 하위 경로 주소에서는 이 파일이 적용되지 않고, 연결 도메인을 붙인 뒤부터 적용됩니다.
+- 그래서 관리자 페이지에는 `<meta name="robots" content="noindex, nofollow">` 가 따로 들어 있습니다(주소와 관계없이 검색 제외).
+- `sitemap.xml` 은 Google Search Console·네이버 서치어드바이저에 직접 제출하면 됩니다.
 
-연결 전에는 `data/posts.json`, `data/gallery.json` 내용으로 화면이 구성되고, 문의·후원 신청은 메일 앱(`inquiryEmail`)으로 접수됩니다. 응원 메시지는 연결 후 활성화됩니다.
+## 온라인 접수 → 이메일 (FormSubmit)
 
-보안 설계: 모든 테이블에 RLS 적용 — 방문자는 ‘접수’만 가능하고 열람은 관리자만 가능합니다. 계좌번호·주민등록번호는 온라인으로 받지 않습니다.
+문의·참여 신청(`contact.html`), 정기 후원 신청(`donate.html`), 희망 응원 메시지(홈), 온라인 후원 결제 알림(결제 직후 자동)은 모두 `config.js` 의 **`email.to`** 주소로 메일이 갑니다. 서버 대신 [FormSubmit](https://formsubmit.co) 무료 메일 전송 서비스를 씁니다.
 
-## 온라인 결제 연결 (PortOne V2)
+1. **처음 한 번 활성화** — 사이트를 게시한 뒤 문의 폼에서 시험 접수를 한 번 보내면, `email.to` 수신함으로 FormSubmit 의 **활성화(Activate Form) 확인 메일**이 옵니다. 수신함 주인이 메일 속 **Activate** 버튼을 눌러야 그다음 접수부터 메일이 도착합니다. (스팸함도 확인)
+   - 활성화 전에는 자동 전송이 실패하므로, 방문자에게는 메일 앱으로 보내는 대체 화면이 뜹니다. **정식 오픈 전에 꼭 활성화**하세요.
+   - 활성화는 **접속 주소(도메인)별로 다시 필요할 수 있습니다.** 연결 도메인을 붙인 뒤, 또는 로컬 미리보기에서 시험한 경우에도 시험 접수를 다시 보내 확인하세요.
+2. **주소 숨기기(권장)** — 활성화 메일에 있는 무작위 문자열(별칭)을 `email.to` 에 이메일 주소 대신 넣으면 홈페이지 소스에서 실제 주소가 보이지 않습니다. 이때 메일 앱 대체 경로는 `publicEmail` 주소를 쓰므로 `publicEmail` 도 입력해 두세요.
+3. **대체 경로(mailto)** — 네트워크 차단·미활성화·서비스 장애 등으로 자동 전송이 실패하면, 내용이 채워진 메일을 방문자의 메일 앱에서 보내도록 안내합니다. `email.service: "mailto"` 로 바꾸면 항상 이 방식을 씁니다.
+4. 메일은 표 형식으로 오며, 신청자가 이메일을 적었다면 **답장하기**로 바로 회신할 수 있습니다.
+
+운영 원칙
+- 주민등록번호·계좌번호는 온라인으로 받지 않습니다(정기 후원 출금 정보는 담당자가 전화로 안내).
+- 접수 내용은 외부 서비스(FormSubmit)를 거쳐 전달되므로 개인정보처리방침에 위탁 사항으로 적습니다(운영 주체·국가 확인 필요).
+- 수신 메일함은 2단계 인증을 켜고 담당자만 접근하게 하며, 처리 완료된 접수 메일은 방침에 정한 기간(초안: 1년) 안에 삭제합니다.
+- 무료 서비스이므로 전송량 제한·장애가 있을 수 있습니다(조건은 FormSubmit 최신 안내 확인 필요). 급한 문의는 전국대표전화(1588-2716)도 함께 안내합니다.
+
+## 콘텐츠 관리 — 관리자 페이지 (`/admin/`)
+
+주소: https://intoedu.github.io/worldhopedeclaration/admin/ (연결 도메인 사용 시 `https://도메인/admin/`)
+
+관리자 화면은 GitHub API 로 저장소 파일(`data/posts.json`, `data/gallery.json`, `data/cheers.json`, `assets/img/uploads/`)을 직접 수정(커밋)합니다. 저장하면 GitHub Pages 가 자동으로 다시 게시하며, 홈페이지에 보이기까지 보통 1~10분 걸립니다.
+
+**GitHub 토큰 만들기 (관리자마다 각자, 처음 한 번)**
+1. 저장소에 쓰기 권한이 있는 계정으로 GitHub 로그인
+2. 프로필 사진 → **Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token**
+3. Resource owner: `intoedu` · **Expiration**: 사용 기간 지정(예: 90일, 만료되면 새로 발급)
+4. Repository access: **Only select repositories** → `worldhopedeclaration` **하나만**
+5. Repository permissions → **Contents: Read and write** (Metadata: Read-only 는 자동) — 그 밖의 권한은 주지 않습니다
+6. 생성된 `github_pat_…` 토큰을 관리자 로그인 칸에 붙여 넣기
+
+토큰 사용 원칙
+- 토큰은 비밀번호와 같습니다. 사람마다 따로 만들고, 공유·메신저 전송 금지. 담당자가 바뀌거나 유출이 의심되면 같은 화면에서 즉시 삭제(Delete)합니다.
+- ‘이 기기에서 기억하기’를 켜면 그 브라우저에만 저장되고, 끄면 탭을 닫을 때 지워집니다. 공용 컴퓨터에서는 켜지 마세요. 토큰은 GitHub(api.github.com) 외의 곳으로 전송되지 않습니다.
+- 조직(Organization) 저장소라면 조직 설정에 따라 토큰 승인이 필요할 수 있습니다.
+
+응원 메시지 게시 흐름: 방문자가 홈에서 접수 → 담당자 이메일로 도착 → 담당자가 내용을 확인해 관리자 ‘응원 메시지’ 탭에서 게시 → `data/cheers.json` 에 저장되어 홈에 표시.
+
+관리자 페이지 없이 GitHub 웹 화면에서 `data/*.json` 을 직접 고쳐도 됩니다(형식은 기존 항목을 그대로 따라 주세요. 이미지 경로는 `assets/img/...` 처럼 `/` 없이).
+
+## 방문자 통계 (선택)
+
+- **GoatCounter** — [goatcounter.com](https://www.goatcounter.com) 에서 가입하고 사이트 코드(예: `worldhope` → `https://worldhope.goatcounter.com`)를 `analytics.goatcounter` 에 입력합니다. 하단 ‘누적 방문자’를 보이려면 GoatCounter 설정에서 **Allow adding visitor counts on your website** 를 켭니다. 비영리(비상업) 이용은 무료로 안내되어 있습니다(요금·이용 조건 확인 필요).
+- **Google Analytics 4** — 측정 ID(`G-XXXXXXXXXX`)를 `analytics.ga4` 에 입력합니다. 쿠키를 사용하므로 개인정보처리방침 제9조에 사용 사실과 거부 방법을 적어야 합니다.
+- 관리자 페이지와 404 페이지는 집계하지 않습니다. 실제로 쓰는 도구에 맞춰 개인정보처리방침의 위탁·국외 이전(제5조)과 자동 수집(제9조) 항목을 고쳐 주세요.
+
+## 온라인 결제 (PortOne V2)
 
 1. PortOne 가입 → PG사(카드) 가맹 심사 → 채널 생성
-2. `config.js` 의 `portone.storeId`, `portone.channelKey` 입력 → 후원 페이지 결제 버튼 활성화
-3. 결제 검증 함수 배포 (브라우저 결과만 믿지 않고 서버에서 PortOne API로 확인 후 기록):
-   ```bash
-   supabase functions deploy verify-payment
-   supabase secrets set PORTONE_API_SECRET=... PORTONE_STORE_ID=store-... ALLOWED_ORIGIN=https://www.도메인
-   ```
-4. 관리자 → ‘온라인 후원’ 탭에서 내역 확인
+2. `config.js` 의 `portone.storeId`, `portone.channelKey` 입력 → 후원 페이지 결제 버튼 활성화 (둘 다 홈페이지에 공개되어도 되는 값입니다. API Secret 은 절대 넣지 마세요)
+3. 후원자가 결제를 마치면 담당자에게 **‘온라인 후원 결제 알림’ 메일**이 자동으로 갑니다.
 
-> PG 가맹은 단체 서류 심사가 필요하며, 후원(기부) 결제는 PG사별 심사 조건이 다를 수 있습니다. 실제 연동 시 PortOne 최신 문서로 필드명을 한 번 더 확인해 주세요.
+> 서버가 없으므로 결제 결과를 서버에서 검증하지 않습니다. 알림 메일은 후원자 브라우저가 보내는 **참고용**이며, 후원자가 결제 직후 창을 닫으면 오지 않을 수도 있습니다. **실제 결제 여부·금액은 반드시 PortOne 관리자 콘솔에서 결제번호로 확인**하고, 정기적으로 콘솔 내역과 대조해 주세요. 기부금 영수증 등은 콘솔 기록을 기준으로 처리합니다.
+>
+> PG 가맹은 단체 서류 심사가 필요하며, 후원(기부) 결제는 PG사별 심사 조건이 다를 수 있습니다. 실제 연동 시 PortOne 최신 문서로 설정을 한 번 더 확인해 주세요.
 
 ## 콘텐츠 교체
 
 - **로고**: `assets/img/logo.svg` 를 정식 로고로 덮어쓰기 (헤더·푸터·QR 가운데·파비콘에 반영). 공유 이미지 `assets/img/og-image.png`, `apple-touch-icon.png` 도 함께 교체
 - **대표자 사진**: `assets/img/portrait-placeholder.svg` 대신 사진 파일을 넣고 `about.html` 의 경로 수정
-- **사진·글**: Supabase 연결 후 관리자에서 올리기 (연결 전에는 `data/*.json` 수정)
+- **사진·글**: 관리자 페이지에서 올리기 (또는 `data/*.json` 직접 수정)
 - **문구**: 각 HTML 의 `<span class="ko">…</span><span class="en">…</span>` 쌍을 수정
 
 ## 폴더 구조
 
 ```
-index.html … faq.html, qr.html, privacy.html, 404.html
-admin/index.html           관리자
+index.html … faq.html, qr.html, privacy.html
+404.html                   없는 주소 안내 (하위 경로 자동 대응)
+.nojekyll                  GitHub Pages 가 파일을 그대로 게시하도록 (삭제 금지)
+admin/index.html           관리자 (GitHub 토큰 로그인)
 assets/css/style.css       디자인 (청색 + 새벽빛 골드)
 assets/js/config.js        ★ 사이트 설정
-assets/js/main.js          헤더·푸터·한영 전환·QR 팝업·통계
-assets/js/data.js          데이터 계층 (Supabase ↔ JSON)
+assets/js/main.js          헤더·푸터·한영 전환·QR 팝업·방문 통계
+assets/js/data.js          데이터(JSON 읽기)·이메일 전송
 assets/js/board.js · gallery.js · forms.js · donate.js · qr.js · admin.js
 assets/img/                로고(임시)·사진 자리표시·공유 이미지
-assets/vendor/             Pretendard 글꼴, QR 라이브러리, supabase-js (자체 호스팅)
-data/posts.json, gallery.json   연결 전 기본 데이터
-supabase/schema.sql        DB·권한·통계 함수
-supabase/functions/verify-payment   결제 검증
-scripts/set-domain.mjs     도메인 일괄 반영
+assets/img/uploads/        관리자에서 올린 사진 (올리면 자동 생성)
+assets/vendor/             Pretendard 글꼴, QR 라이브러리 (자체 호스팅)
+data/posts.json            공지·소식
+data/gallery.json          갤러리
+data/cheers.json           게시된 희망 응원 메시지
+scripts/set-domain.mjs     공식 주소 일괄 반영 (+ 연결 도메인용 CNAME)
+robots.txt                 검색엔진 안내 (sitemap.xml 은 set-domain 실행 시 생성)
+CNAME                      연결 도메인 사용 시에만 set-domain 이 생성
 docs/CONTENT_TODO.md       단체 자료·확인 사항 체크리스트
 ```
 
@@ -106,5 +192,4 @@ docs/CONTENT_TODO.md       단체 자료·확인 사항 체크리스트
 
 - Pretendard — SIL Open Font License 1.1 (`assets/vendor/pretendard/LICENSE.txt`)
 - qrcode-generator (Kazuhiko Arase) — MIT
-- supabase-js — MIT (`assets/vendor/supabase/LICENSE`)
 - 성경 영문 인용: KJV (퍼블릭 도메인), 국문: 개역개정

@@ -287,9 +287,9 @@
       </div>
       <div class="cheer-layout">
         <div class="cheer-list" id="cheer-list" aria-live="polite"></div>
-        <form class="form-card" data-wh-form="cheers" data-fallback="none" data-ok-ko="응원 메시지가 접수되었습니다. 확인 후 게시됩니다. 감사합니다!" data-ok-en="Thank you! Your message will appear after review.">
+        <form class="form-card" data-wh-form="cheers" data-subject-ko="[세계희망연대 홈페이지] 희망 응원 메시지" data-ok-ko="응원 메시지가 전달되었습니다. 확인 후 홈페이지에 게시됩니다. 감사합니다!" data-ok-en="Your message has been delivered. It will be posted on the website after review. Thank you!">
           <h3><span class="ko">응원 메시지 남기기</span><span class="en">Leave a message</span></h3>
-          <p><span class="ko">남겨 주신 메시지는 관리자 확인 후 게시됩니다.</span><span class="en">Messages are posted after review.</span></p>
+          <p><span class="ko">남겨 주신 메시지는 이메일로 담당자에게 전달되며, 확인 후 홈페이지에 게시됩니다.</span><span class="en">Your message is sent to our staff by email and posted on the website after review.</span></p>
           <div class="form-grid">
             <div class="field">
               <label for="cheer-name"><span class="ko">이름(닉네임)</span><span class="en">Name (or nickname)</span><span class="req">*</span></label>
@@ -305,7 +305,11 @@
             </div>
             <div class="hp-field" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
             <div class="field full">
-              <label class="check"><input type="checkbox" name="consent" required> <span><span class="ko">입력한 이름(닉네임)·지역·메시지가 홈페이지에 게시되는 것에 동의합니다.</span><span class="en">I agree that my name (nickname), region and message may be published on this website.</span></span></label>
+              <div class="consent-box">
+                <div class="ko">· 수집 항목: 이름(닉네임), 지역, 메시지<br>· 수집 목적: 응원 메시지 확인 및 홈페이지 게시<br>· 전달 방법: 입력하신 내용은 외부 이메일 전송 서비스 FormSubmit(formsubmit.co, 서버가 국외에 있을 수 있음)을 거쳐 담당자 이메일로 전달되며, 담당자가 확인한 메시지만 홈페이지에 게시됩니다.<br>· 보유 기간: 담당자 메일함 및 홈페이지에 게시 철회 요청 시까지 (요청 시 지체 없이 삭제)<br>· 동의를 거부하실 수 있으며, 이 경우 응원 메시지를 남기실 수 없습니다.</div>
+                <div class="en">· Items: name (nickname), region, message<br>· Purpose: to review your message and post it on this website<br>· Delivery: your message is sent to our staff by email through a third-party email relay service, FormSubmit (formsubmit.co), whose servers may be located outside Korea. Only messages approved by our staff are posted.<br>· Retention: kept in the staff mailbox and on the website until you ask us to remove it (removed promptly on request)<br>· You may decline; you will then be unable to leave a message.</div>
+              </div>
+              <label class="check"><input type="checkbox" name="consent" required data-label="개인정보 수집·이용 및 홈페이지 게시 동의"> <span><span class="ko">위 내용을 확인했으며, 개인정보 수집·이용과 입력한 이름(닉네임)·지역·메시지가 홈페이지에 게시되는 것에 동의합니다. (<a href="privacy.html">개인정보처리방침</a>)</span><span class="en">I have read the above and agree to the collection and use of this information and to my name (nickname), region and message being published on this website. (<a href="privacy.html">Privacy Policy</a>)</span></span></label>
             </div>
             <div class="full"><button type="submit" class="btn btn-primary btn-block"><span class="ko">응원 보내기</span><span class="en">Send</span></button></div>
           </div>

@@ -3,11 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+/* 404 페이지는 존재하지 않는 모든 주소(하위 폴더 포함)에서 그대로 표시됩니다.
+   아래의 상대 경로(assets/…, index.html)가 항상 사이트 최상위 기준이 되도록 <base> 를 먼저 지정합니다.
+   · GitHub Pages 프로젝트 사이트(*.github.io/저장소이름/…) → "/저장소이름/"
+   · 연결 도메인(사이트가 도메인 최상위에 있음) → "/" */
+(function () {
+  var base = "/";
+  if (/\.github\.io$/i.test(location.hostname)) {
+    var m = location.pathname.match(/^\/([^\/?#]+)/);
+    if (m) base = "/" + m[1].replace(/[^A-Za-z0-9._~%-]/g, "") + "/";
+  }
+  document.write('<base href="' + base + '">');
+})();
+</script>
 <title>페이지를 찾을 수 없습니다 | 세계희망연대</title>
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#0b1f44">
-<link rel="icon" href="/assets/img/logo.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/style.css">
 <script>(function(){try{var l=new URLSearchParams(location.search).get("lang")||localStorage.getItem("wh-lang");if(l==="en"){var h=document.documentElement;h.setAttribute("data-lang","en");h.lang="en";}}catch(e){}})();</script>
 </head>
 <body data-page="404" data-no-track data-title-en="Page not found | World Hope Alliance">
@@ -23,16 +37,16 @@
         <h1 class="hero-title" style="font-size:clamp(28px,4vw,44px)"><span class="ko">요청하신 페이지를 찾을 수 없습니다.</span><span class="en">We couldn’t find that page.</span></h1>
         <p class="hero-sub"><span class="ko">주소가 바뀌었거나 삭제된 페이지일 수 있습니다.</span><span class="en">The address may have changed or the page may have been removed.</span></p>
         <div class="hero-actions">
-          <a class="btn btn-gold btn-lg" href="/"><span class="ko">홈으로</span><span class="en">Go home</span></a>
-          <a class="btn btn-ghost-light btn-lg" href="/contact.html"><span class="ko">문의하기</span><span class="en">Contact us</span></a>
+          <a class="btn btn-gold btn-lg" href="index.html"><span class="ko">홈으로</span><span class="en">Go home</span></a>
+          <a class="btn btn-ghost-light btn-lg" href="contact.html"><span class="ko">문의하기</span><span class="en">Contact us</span></a>
         </div>
       </div>
     </div>
   </section>
 </main>
 <div id="site-footer"></div>
-<script src="/assets/js/config.js"></script>
-<script src="/assets/js/data.js"></script>
-<script src="/assets/js/main.js"></script>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/main.js"></script>
 </body>
 </html>

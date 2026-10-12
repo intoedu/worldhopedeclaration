@@ -42,6 +42,8 @@
   .decl-subnav li.is-group::before { content: ""; position: absolute; left: -9px; top: 50%; width: 1px; height: 16px; margin-top: -8px; background: var(--line-2); }
   .decl-subnav li.is-group ~ li.is-group { margin-left: 0; }
   .decl-subnav li.is-group ~ li.is-group::before { display: none; }
+  /* 메뉴로 이동하는 큰 구역: 위쪽 끝이 고정 메뉴(헤더 + 하위 메뉴 59px) 바로 아래에 오도록 */
+  .decl-values, .decl-closing { scroll-margin-top: calc(var(--header-h) + 58px); }
   /* 좁은 화면: 메뉴가 더 있을 때 가장자리를 흐리게 (스크롤 안내) */
   .decl-subnav ul.has-more-right { -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 44px), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 44px), transparent); }
   .decl-subnav ul.has-more-left { -webkit-mask-image: linear-gradient(90deg, transparent, #000 44px); mask-image: linear-gradient(90deg, transparent, #000 44px); }
@@ -359,7 +361,7 @@
   </section>
 
   <!-- 5대 가치 -->
-  <section class="section decl-values" id="values" aria-labelledby="values-title" style="scroll-margin-top:110px">
+  <section class="section decl-values" id="values" aria-labelledby="values-title">
     <div class="container">
       <div class="section-head center reveal">
         <h2 class="section-title" id="values-title"><span class="ko">세계희망선언 5대 가치</span><span class="en">The Five Values</span></h2>
@@ -406,7 +408,7 @@
   </section>
 
   <!-- 맺음: 공동의 선언, 하나의 인류 -->
-  <section class="cta-band decl-closing" id="together" aria-labelledby="together-title" style="scroll-margin-top:110px">
+  <section class="cta-band decl-closing" id="together" aria-labelledby="together-title">
     <div class="container">
       <picture>
         <source srcset="assets/img/brand/logo-mark-160.webp" type="image/webp">
@@ -481,6 +483,23 @@
       if (document.fonts && document.fonts.ready) document.fonts.ready.then(updateEdges);
       update();
       updateEdges();
+    }
+
+    // 주소에 #p1 같은 바로가기가 있으면(홈의 원칙 링크), 글꼴까지 모두 적용된 뒤 위치를 한 번 더 맞춤
+    // (부드러운 스크롤 도중 글꼴이 바뀌어 높이가 달라지면 도착 위치가 고정 메뉴 밑으로 어긋날 수 있음)
+    var hashTarget = null;
+    try { hashTarget = location.hash ? document.getElementById(decodeURIComponent(location.hash.slice(1))) : null; } catch (err) { hashTarget = null; }
+    if (hashTarget && targets.indexOf(hashTarget) !== -1 && hashTarget.scrollIntoView) {
+      var userMoved = false;
+      var markMoved = function () { userMoved = true; };
+      ["wheel", "touchstart", "keydown", "pointerdown"].forEach(function (type) {
+        window.addEventListener(type, markMoved, { once: true, passive: true });
+      });
+      var fontsReady = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+      var pageLoaded = document.readyState === "complete" ? Promise.resolve() : new Promise(function (resolve) { window.addEventListener("load", resolve); });
+      Promise.all([fontsReady, pageLoaded]).then(function () {
+        window.setTimeout(function () { if (!userMoved) hashTarget.scrollIntoView({ block: "start" }); }, 80);
+      });
     }
 
     // 인쇄하기: 스크롤 등장 효과가 남아 있지 않도록 모두 표시한 뒤 인쇄

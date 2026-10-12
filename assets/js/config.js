@@ -16,8 +16,10 @@ window.WH_CONFIG = {
   businessHours: { ko: "", en: "" }, // 운영시간 (확정 후 입력)
 
   /* ---- 시안 모드 ---- */
-  // true: 상단에 '시안 미리보기' 안내 바 표시. 정식 오픈 시 false 로 변경
+  // true: 시안 단계 표시(개인정보처리방침 등의 '시안' 안내 상자 · data-draft-only 요소). 정식 오픈 시 false 로 변경
   draft: true,
+  // true: 모든 페이지 맨 위에 '시안 미리보기' 안내 띠 표시 (고객 시안과 같은 화면을 위해 기본은 숨김)
+  draftBar: false,
 
   /* ---- 후원 계좌 (확정 후 입력) ---- */
   bank: {

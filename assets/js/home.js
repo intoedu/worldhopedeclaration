@@ -1,17 +1,16 @@
 /* ==========================================================================
    홈 화면 전용 스크립트 (index.html)
-   - 통계 띠(195개국 · 33인 · 6,435명 · 참여자)의 숫자는 data/stats.json 값입니다.
+   - 통계(195개국 · 33인 · 6,435명 · 참여자)의 숫자는 data/stats.json 값입니다.
      · 값 채우기: main.js 가 [data-stat] 요소를 자동으로 채움 (천 단위 쉼표,
        target 이 없으면 countries × per_country 로 계산). 실패하면 HTML 기본값 유지.
      · 이 파일: 통계 띠가 처음에 화면 아래쪽에 있을 때(주로 휴대폰), 화면에 들어오는
        순간 0 → 실제 값으로 숫자가 올라가는 효과만 더합니다.
        처음부터 보이는 경우·'동작 줄이기' 설정·구형 브라우저에서는 아무것도 하지 않습니다.
-   - 최신 소식 3건은 board.js(#latest-news)가 그립니다.
    ========================================================================== */
 (function () {
   "use strict";
   var WH = window.WH;
-  var band = document.querySelector(".stats-band");
+  var band = document.querySelector(".home-stats");
   if (!WH || !band) return;
 
   var reduce = false;
@@ -30,7 +29,7 @@
 
   /* 숫자 요소마다 상태 보관: idle(대기) → running(진행) → done(끝) */
   var items = [];
-  band.querySelectorAll(".stat-num b[data-stat]").forEach(function (el) {
+  band.querySelectorAll(".home-stat-num b[data-stat]").forEach(function (el) {
     var value = parse(el.textContent);
     if (value == null) return;
     // 화면 낭독기는 움직이는 숫자 대신 이 실제 값을 읽음

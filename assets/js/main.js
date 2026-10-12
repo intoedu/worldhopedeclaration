@@ -186,6 +186,7 @@
     hands: '<path d="M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16"/><path d="m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.8-2.9l-4.2 3.9"/><path d="m2 15 6 6"/>',
     message: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/>',
     users: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/>',
+    group: '<circle cx="12" cy="8.1" r="3.3"/><path d="M5.6 21v-3a6.4 6.4 0 0 1 12.8 0v3z"/><path d="M6.1 7.9a2.3 2.3 0 1 0 0 3.6M17.9 7.9a2.3 2.3 0 1 1 0 3.6"/><path d="M5.6 21H1.3v-2.4c0-2.8 2-5 4.8-5.4M18.4 21h4.3v-2.4c0-2.8-2-5-4.8-5.4"/>',
     people: '<circle cx="12" cy="7.5" r="3"/><circle cx="5" cy="9.5" r="2.2"/><circle cx="19" cy="9.5" r="2.2"/><path d="M6.5 20v-1.5a5.5 5.5 0 0 1 11 0V20"/><path d="M1.5 19.5v-.8A3.3 3.3 0 0 1 6 15.6M22.5 19.5v-.8a3.3 3.3 0 0 0-4.5-3.1"/>',
     user: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
     compass: '<circle cx="12" cy="12" r="10"/><path d="m16.2 7.8-2.1 6.3-6.3 2.1 2.1-6.3z"/>',
@@ -215,7 +216,7 @@
     seed: '<path d="M7 20h10M12 20v-8"/><path d="M12 12c0-3 2-6 6-6 0 3-2 6-6 6zM12 14c0-2.5-1.7-5-5-5 0 2.5 1.7 5 5 5z"/>',
     sprout: '<path d="M12 21v-9M8 21h8"/><path d="M12 12C12 8 9.5 5 5 5c0 4 2.5 7 7 7z"/><path d="M12 14c0-4 2.6-7.5 7-7.5 0 4.2-2.6 7.5-7 7.5z"/>',
     leaf: '<path d="M11 20A7 7 0 0 1 4 13C4 7 9 3 20 3c0 10-4 17-9 17z"/><path d="M4 21c2.5-5 6-8.5 11-11"/>',
-    target: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/><path d="m12 12 7.5-7.5M16.5 4.5h3v3"/>',
+    target: '<path d="M20.2 8.6A9.4 9.4 0 1 1 16.3 4.4"/><circle cx="11.6" cy="12.6" r="5.4"/><circle cx="11.6" cy="12.6" r="1.6"/><path d="m12.8 11.4 6.4-6.4"/><path d="m19.2 5-.5-2.2 1.6-1.3.6 1.6 1.6.6-1.3 1.6z"/>',
     award: '<circle cx="12" cy="9" r="6"/><path d="M8.2 13.6 7 22l5-3 5 3-1.2-8.4"/>',
     trophy: '<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/>',
     palette: '<path d="M12 22a10 10 0 1 1 10-10c0 2.8-2.2 4-4 4h-2a2 2 0 0 0-1.5 3.3A2 2 0 0 1 12 22z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7" r="1"/><circle cx="15" cy="7" r="1"/>',
@@ -230,7 +231,7 @@
     center: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.5"/><path d="M12 3v6.5M12 14.5V21M3 12h6.5M14.5 12H21"/>',
     unity: '<circle cx="12" cy="7.5" r="4.5"/><circle cx="7.5" cy="15" r="4.5"/><circle cx="16.5" cy="15" r="4.5"/>',
     /* 화면 조작 */
-    menu: '<path d="M3 6.5h18M3 12h18M3 17.5h18"/>',
+    menu: '<path d="M3 5h18M3 12h18M3 19h18"/>',
     close: '<path d="M18 6 6 18M6 6l12 12"/>',
     check: '<path d="m5 12.5 4.5 4.5L19 7.5"/>',
     "chevron-down": '<path d="m6 9 6 6 6-6"/>',
@@ -242,6 +243,8 @@
     instagram: '<rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.4A4 4 0 1 1 12.6 8 4 4 0 0 1 16 11.4zM17.5 6.5h.01"/>',
     facebook: '<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>',
     blog: '<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',
+    "youtube-fill": '<path fill="currentColor" stroke="none" fill-rule="evenodd" d="M22.6 7.2a2.9 2.9 0 0 0-2-2C18.8 4.7 12 4.7 12 4.7s-6.8 0-8.6.5a2.9 2.9 0 0 0-2 2A30 30 0 0 0 1 12a30 30 0 0 0 .4 4.8 2.9 2.9 0 0 0 2 2c1.8.5 8.6.5 8.6.5s6.8 0 8.6-.5a2.9 2.9 0 0 0 2-2A30 30 0 0 0 23 12a30 30 0 0 0-.4-4.8zM9.8 15.1V8.9l5.4 3.1z"/>',
+    "facebook-fill": '<path fill="currentColor" stroke="none" d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12z"/>',
     kakao: '<path d="M12 4C6.5 4 2 7.4 2 11.6c0 2.7 1.8 5 4.6 6.4L5.7 21l3.6-2.4c.9.2 1.8.3 2.7.3 5.5 0 10-3.4 10-7.6S17.5 4 12 4z"/>'
   };
   WH.icon = function (name) {
@@ -279,7 +282,7 @@
   // 모바일 하단 탭바
   var TABS = [
     { id: "declaration", href: "declaration.html", icon: "doc", ko: "세계희망선언문", en: "Declaration" },
-    { id: "global33", href: "global33.html", icon: "people", ko: "글로벌 33", en: "Global 33" },
+    { id: "global33", href: "global33.html", icon: "group", ko: "글로벌 33", en: "Global 33" },
     { id: "worldmap", href: "worldmap.html", icon: "world", ko: "세계지도", en: "World Map" },
     { id: "join", href: "join.html", icon: "sprout", ko: "참여하기", en: "Join" }
   ];
@@ -289,7 +292,7 @@
     { id: "contact", href: "contact.html", icon: "mail", ko: "문의하기", en: "Contact" },
     { id: "faq", href: "faq.html", icon: "message", ko: "자주 묻는 질문", en: "FAQ" },
     { id: "gallery", href: "gallery.html", icon: "image", ko: "갤러리", en: "Gallery" },
-    { id: "qr", href: "qr.html", icon: "qr", ko: "QR코드", en: "QR Code" }
+    { id: "qr", href: "qr.html", icon: "qr", ko: "QR코드 만들기", en: "QR Maker" }
   ];
   WH.nav = NAV;
 
@@ -315,7 +318,7 @@
   function brandHtml() {
     var name = C.name || {};
     return '<a class="brand" href="' + ROOT + 'index.html" aria-label="' + WH.esc((name.ko || "") + " 홈") + '" data-en-aria-label="' + WH.esc((name.en || "") + " — Home") + '">' +
-      logoImg(50) +
+      logoImg(72) +
       '<span class="brand-text" aria-hidden="true"><strong>' + WH.esc(name.ko || "") + "</strong><small>" + WH.esc(name.en || "") + "<sup>™</sup></small></span></a>";
   }
   function langButtons() {
@@ -332,7 +335,7 @@
     var skipHref = document.querySelector("base[href]") ? location.pathname + location.search + "#main" : "#main";
     mount.innerHTML =
       '<a class="skip-link" href="' + WH.esc(skipHref) + '">' + bi("본문 바로가기", "Skip to content") + "</a>" +
-      (C.draft ? '<div class="draft-bar">' + bi("<b>시안 미리보기</b> · 사진과 일부 문구는 단체 자료를 받은 뒤 교체됩니다.", "<b>Draft preview</b> · Photos and some text will be replaced with final materials.") + "</div>" : "");
+      (C.draftBar ? '<div class="draft-bar">' + bi("<b>시안 미리보기</b> · 사진과 일부 문구는 단체 자료를 받은 뒤 교체됩니다.", "<b>Draft preview</b> · Photos and some text will be replaced with final materials.") + "</div>" : "");
 
     var navItems = NAV.map(function (n) {
       return '<li><a href="' + ROOT + n.href + '"' + current(n.id) + ">" + bi(n.ko, n.en) + "</a></li>";
@@ -341,13 +344,13 @@
     var header = document.createElement("header");
     header.className = "site-header";
     header.innerHTML =
-      '<div class="container header-inner">' +
+      '<div class="header-inner">' +
       '<button type="button" class="icon-btn menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="전체 메뉴 열기" data-en-aria-label="Open menu">' + WH.icon("menu") + "</button>" +
       brandHtml() +
       '<nav class="gnb" aria-label="주 메뉴" data-en-aria-label="Main menu"><ul>' + navItems + "</ul></nav>" +
       '<div class="header-utils">' +
+      '<span class="util-sep util-sep-faint" aria-hidden="true"></span>' +
       '<div class="lang-switch" role="group" aria-label="언어 선택" data-en-aria-label="Language">' + langButtons() + "</div>" +
-      '<button type="button" class="icon-btn" data-qr-open aria-label="이 페이지 QR코드" data-en-aria-label="QR code for this page" title="QR코드" data-en-title="QR code">' + WH.icon("qr") + "</button>" +
       '<span class="util-sep" aria-hidden="true"></span>' +
       '<button type="button" class="icon-btn" data-search-open aria-label="사이트 검색" data-en-aria-label="Search the site" title="검색" data-en-title="Search">' + WH.icon("search") + "</button>" +
       "</div>" +
@@ -379,6 +382,7 @@
       MORE.map(function (m) {
         return '<li><a href="' + ROOT + m.href + '"' + (m.id === pageId() ? ' aria-current="page"' : "") + ">" + WH.icon(m.icon) + bi(m.ko, m.en) + "</a></li>";
       }).join("") +
+      '<li><button type="button" data-qr-open>' + WH.icon("qr") + bi("이 페이지 QR", "This page’s QR") + "</button></li>" +
       "</ul>" +
       '<div class="mnav-foot">' +
       (C.phone ? '<div class="mnav-phone">' + bi("전국대표전화", "Main line (Korea)") + '<a href="' + telHref() + '">' + WH.esc(C.phone) + "</a></div>" : "<div></div>") +
@@ -461,11 +465,15 @@
     onScroll();
   }
 
-  /* ---------------- 푸터 ---------------- */
+  /* ---------------- 푸터 ----------------
+     시안 그대로 한 줄: 세계희망연대 World Hope Declaration Network | 세계희망선언 World Hope Declaration
+     ……… 개인정보처리방침 · 이용약관 · 문의하기 · YouTube · Instagram · Facebook
+     SNS 주소(config.social)가 비어 있으면 세 아이콘은 장식으로만 표시(링크 아님, 화면 낭독기에서 숨김).
+     블로그·카카오 채널은 주소가 있을 때만 표시. 누적 방문자(.visit-counter)는 값이 있을 때만 나타남. */
   var SOCIAL = [
-    { key: "youtube", icon: "youtube", label: "YouTube" },
-    { key: "instagram", icon: "instagram", label: "Instagram" },
-    { key: "facebook", icon: "facebook", label: "Facebook" },
+    { key: "youtube", icon: "youtube-fill", label: "YouTube", always: true },
+    { key: "instagram", icon: "instagram", label: "Instagram", always: true },
+    { key: "facebook", icon: "facebook-fill", label: "Facebook", always: true },
     { key: "blog", icon: "blog", label: "Blog" },
     { key: "kakao", icon: "kakao", label: "KakaoTalk Channel" }
   ];
@@ -479,43 +487,32 @@
     if (!mount) return;
     var esc = WH.esc;
     var name = C.name || {}, decl = C.declaration || {};
-    var rep = C.representative || {}, addr = C.address || {}, hours = C.businessHours || {};
     var social = C.social || {};
-    var year = new Date().getFullYear();
 
-    var socialHtml = SOCIAL.filter(function (s) { return safeUrl(social[s.key]); }).map(function (s) {
-      return '<a href="' + esc(safeUrl(social[s.key])) + '" target="_blank" rel="noopener" aria-label="' + s.label + ' (새 창)" data-en-aria-label="' + s.label + ' (opens in a new tab)">' + WH.icon(s.icon) + "</a>";
+    var socialHtml = SOCIAL.map(function (s) {
+      var url = safeUrl(social[s.key]);
+      if (url) {
+        return '<a href="' + esc(url) + '" target="_blank" rel="noopener" aria-label="' + s.label + ' (새 창)" data-en-aria-label="' + s.label + ' (opens in a new tab)" title="' + s.label + '">' + WH.icon(s.icon) + "</a>";
+      }
+      return s.always ? '<span aria-hidden="true">' + WH.icon(s.icon) + "</span>" : "";
     }).join("");
 
-    var info = [
-      rep.ko || rep.en ? "<span><b>" + bi("대표", "Representative") + "</b>" + bi(esc(rep.ko || rep.en), esc(rep.en || rep.ko)) + "</span>" : "",
-      addr.ko || addr.en ? "<span><b>" + bi("주소", "Address") + "</b>" + bi(esc(addr.ko || addr.en), esc(addr.en || addr.ko)) + "</span>" : "",
-      C.phone ? "<span><b>" + bi("전국대표전화", "Main line") + '</b><a href="' + telHref() + '">' + esc(C.phone) + "</a></span>" : "",
-      C.registrationNo ? "<span><b>" + bi("고유번호", "Reg. No.") + "</b>" + esc(C.registrationNo) + "</span>" : "",
-      C.publicEmail ? "<span><b>" + bi("이메일", "Email") + '</b><a href="mailto:' + esc(C.publicEmail) + '">' + esc(C.publicEmail) + "</a></span>" : "",
-      hours.ko || hours.en ? "<span><b>" + bi("운영시간", "Hours") + "</b>" + bi(esc(hours.ko || hours.en), esc(hours.en || hours.ko)) + "</span>" : ""
-    ].join("");
-
     mount.outerHTML =
-      '<footer class="site-footer"><div class="container">' +
-      '<div class="footer-main">' +
+      '<footer class="site-footer"><div class="footer-inner">' +
       '<div class="footer-brands">' +
-      '<a class="footer-brand" href="' + ROOT + 'index.html"><b>' + esc(name.ko || "") + "</b><span>" + esc(name.en || "") + "</span></a>" +
+      '<a class="footer-brand" href="' + ROOT + 'index.html"><b>' + esc(name.ko || "") + '</b><span lang="en">' + esc(name.en || "") + "</span></a>" +
       '<span class="footer-sep" aria-hidden="true"></span>' +
-      '<a class="footer-brand" href="' + ROOT + 'declaration.html"><b>' + esc(decl.ko || "") + "</b><span>" + esc(decl.en || "") + "</span></a>" +
+      '<a class="footer-brand" href="' + ROOT + 'declaration.html"><b>' + esc(decl.ko || "") + '</b><span lang="en">' + esc(decl.en || "") + "</span></a>" +
       "</div>" +
       '<div class="footer-right">' +
+      '<span class="visit-counter" hidden></span>' +
       '<nav class="footer-links" aria-label="정책 및 문의" data-en-aria-label="Policies and contact">' +
-      '<a href="' + ROOT + 'privacy.html"><strong>' + bi("개인정보처리방침", "Privacy Policy") + "</strong></a>" +
+      '<a href="' + ROOT + 'privacy.html">' + bi("개인정보처리방침", "Privacy Policy") + "</a>" +
       '<a href="' + ROOT + 'terms.html">' + bi("이용약관", "Terms of Use") + "</a>" +
       '<a href="' + ROOT + 'contact.html">' + bi("문의하기", "Contact") + "</a>" +
       "</nav>" +
-      (socialHtml ? '<div class="footer-social">' + socialHtml + "</div>" : "") +
-      "</div></div>" +
-      (info ? '<div class="footer-info">' + info + "</div>" : "") +
-      '<div class="footer-bottom"><span>© ' + year + " " + esc(name.en || name.ko || "") + ". All rights reserved.</span>" +
-      '<div class="footer-meta"><span class="visit-counter" hidden></span><a href="' + ROOT + 'admin/">' + bi("관리자", "Admin") + "</a></div></div>" +
-      "</div></footer>";
+      '<div class="footer-social">' + socialHtml + "</div>" +
+      "</div></div></footer>";
   }
 
   /* ---------------- 사이트 검색 ---------------- */
@@ -638,6 +635,7 @@
     function quickHtml() {
       return '<div class="search-group"><h3 class="search-group-title">' + bi("바로가기", "Quick links") + '</h3><div class="search-quick">' +
         NAV.map(function (n) { return '<a href="' + ROOT + n.href + '">' + WH.esc(WH.t(n.ko, n.en)) + "</a>"; }).join("") +
+        '<button type="button" data-qr-open>' + WH.icon("qr") + WH.esc(WH.t("이 페이지 QR코드", "QR code for this page")) + "</button>" +
         "</div></div>";
     }
 
@@ -812,6 +810,10 @@
       var btn = e.target.closest("[data-qr-open]");
       if (!btn) return;
       e.preventDefault();
+      // 모바일 메뉴·검색 창 안의 버튼이면 그 창을 닫고, QR 창을 닫을 때 메뉴 버튼(또는 검색 전 위치)으로 돌아감
+      var back = null;
+      if (btn.closest(".mobile-nav") && WH.closeMenu) { WH.closeMenu(); back = document.querySelector(".menu-toggle"); }
+      else if (btn.closest(".search-overlay") && WH.closeSearch) { WH.closeSearch(); back = document.activeElement; }
       if (!modal) {
         modal = document.createElement("div");
         modal.className = "modal";
@@ -837,7 +839,7 @@
       }
       var url = btn.getAttribute("data-qr-url") || WH.pageUrl();
       modal.querySelector(".qr-url").textContent = url;
-      if (!modal.classList.contains("is-open")) { opener = btn; lockScroll(true); }
+      if (!modal.classList.contains("is-open")) { opener = back || btn; lockScroll(true); }
       modal.classList.add("is-open");
       modal.querySelector(".modal-close").focus();
       WH.loadQR().then(function () { WH.drawQR(modal.querySelector("canvas"), url, { size: 440, logo: true, margin: 2 }); });

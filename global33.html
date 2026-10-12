@@ -1,0 +1,676 @@
+<!doctype html>
+<html lang="ko" data-lang="ko" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>글로벌 33 | 세계희망연대</title>
+<meta name="description" content="세계희망선언 글로벌 대표 — 각국 33인(11개 분야 × 각 3인). 11개 분야와 글로벌 확장 구조, 글로벌 대표 패·ID 카드 예시를 소개합니다.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="세계희망연대">
+<meta property="og:title" content="글로벌 33 | 세계희망연대">
+<meta property="og:description" content="분열을 넘어, 하나의 희망으로 — 세계희망선언 글로벌 대표, 각국 33인(11개 분야 × 각 3인).">
+<meta property="og:image" content="assets/img/og-image.png">
+<meta name="theme-color" content="#13294b">
+<link rel="icon" href="assets/img/brand/favicon-64.png" type="image/png" sizes="64x64">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Serif:ital,wght@0,500;0,700;1,500&display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>(function(){try{var l=new URLSearchParams(location.search).get("lang")||localStorage.getItem("wh-lang");if(l==="en"){var h=document.documentElement;h.setAttribute("data-lang","en");h.lang="en";}}catch(e){}})();</script>
+<style>
+  /* ===== 글로벌 33 페이지 전용 (공통 style.css 의 토큰만 사용) ===== */
+
+  /* 메뉴로 이동하는 구역: 고정 헤더 + 하위 메뉴 아래에 오도록 */
+  .g33-anchor { scroll-margin-top: calc(var(--header-h) + 58px); }
+
+  /* ---------- 상단 히어로: 왼쪽 글 + 오른쪽 "33 = 11 × 3" 문장(紋章) ---------- */
+  .g33-hero { padding: 52px 0 64px; }
+  .g33-hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px); gap: 32px 64px; align-items: center; }
+  .g33-hero-text { min-width: 0; }
+  .page-hero.g33-hero p.g33-hero-kicker { margin: 0 0 12px; max-width: none; line-height: 1.6; font-family: var(--f-serif); font-size: clamp(16px, 1.55vw, 19px); font-weight: 500; letter-spacing: -0.01em; color: var(--navy-900); }
+  html[data-lang="en"] .page-hero.g33-hero p.g33-hero-kicker { font-family: var(--f-serif-en); letter-spacing: 0; }
+  .g33-hero h1 { font-size: clamp(32px, 4.3vw, 54px); font-weight: 900; letter-spacing: -0.035em; }
+  html[data-lang="en"] .g33-hero h1 { font-weight: 700; letter-spacing: -0.02em; }
+  .g33-hero .page-hero-en { margin-top: 12px; font-size: clamp(15px, 1.6vw, 20px); font-weight: 600; letter-spacing: .28em; }
+  .page-hero.g33-hero p.g33-hero-lead { margin-top: 20px; max-width: 600px; }
+
+  /* 각국 33인 = 11개 분야 × 3인 */
+  .g33-eq { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; margin-top: 28px; }
+  .g33-eq-term { display: inline-flex; align-items: center; gap: 9px; padding: 10px 16px 10px 14px; border: 1px solid var(--line-2); border-radius: var(--radius-sm); background: rgba(255, 255, 255, .86); color: var(--navy-900); }
+  .g33-eq-term b { font-family: var(--f-serif-en); font-size: 30px; font-weight: 700; line-height: 1; font-variant-numeric: lining-nums; }
+  .g33-eq-term small { display: flex; flex-direction: column; font-family: var(--f-serif); font-size: 14px; font-weight: 700; line-height: 1.3; }
+  .g33-eq-term small em { font-style: normal; font-family: var(--f-display); font-size: 9.5px; font-weight: 400; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  html[data-lang="en"] .g33-eq-term small { font-family: var(--f-serif-en); }
+  .g33-eq-term.is-result { background: var(--navy-900); border-color: var(--navy-900); color: #fff; }
+  .g33-eq-term.is-result small em { color: var(--gold-300); }
+  .g33-eq-op { font-family: var(--f-serif-en); font-size: 22px; line-height: 1; color: var(--muted); }
+  .g33-hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+
+  .g33-emblem { position: relative; width: 100%; max-width: 420px; margin-left: auto; }
+  .g33-emblem::before { content: ""; position: absolute; z-index: -1; inset: -12%; border-radius: 50%; background: radial-gradient(circle at 50% 46%, rgba(255, 236, 200, .7) 0%, rgba(255, 236, 200, 0) 58%); }
+  .g33-emblem svg { width: 100%; height: auto; overflow: visible; }
+  .g33-emblem-ring { fill: none; stroke: var(--blue-200); stroke-width: 1; }
+  .g33-emblem-ring.is-dash { stroke: var(--blue-300); stroke-dasharray: 1.5 6; stroke-linecap: round; }
+  .g33-emblem-tick { fill: none; stroke: var(--line-2); stroke-width: 1; }
+  .g33-emblem-core { fill: url(#g33-core); stroke: var(--line-2); stroke-width: 1; }
+  .g33-emblem .g33-emblem-no { font-family: var(--f-serif-en); font-size: 14px; font-weight: 700; }
+  .g33-emblem .g33-emblem-num { font-family: var(--f-display); font-size: 96px; font-weight: 600; fill: var(--navy-900); }
+  .g33-emblem .g33-emblem-cap { font-family: var(--f-display); font-size: 11.5px; letter-spacing: .26em; fill: var(--blue-700); }
+  .g33-emblem .g33-emblem-cap.is-gold { fill: var(--gold-600); font-size: 12.5px; letter-spacing: .18em; }
+
+  /* ---------- 하위 메뉴: 넓은 화면에서는 가운데 ---------- */
+  .g33-subnav ul { width: max-content; max-width: 100%; margin: 0 auto; }
+
+  /* ---------- 11개 분야 ---------- */
+  .g33-fields-head { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 28px 48px; margin-bottom: 44px; }
+  .g33-fields-head .section-head { margin-bottom: 0; max-width: 780px; }
+  .g33-paren { display: inline-block; font-size: .6em; font-weight: 700; letter-spacing: -0.01em; color: var(--blue-700); vertical-align: .12em; }
+  .g33-head-en { margin: 12px 0 0; font-family: var(--f-serif-en); font-size: 16px; font-weight: 500; line-height: 1.6; color: var(--ink-2); }
+  .g33-formula-box { flex: 0 1 390px; min-width: 0; padding: 16px 22px 15px; border: 1px solid var(--gold-300); border-radius: var(--radius-sm); background: #fff; text-align: center; box-shadow: 0 1px 0 var(--gold-100), var(--shadow-sm); }
+  .g33-formula-box .g33-fb-label { display: block; margin-bottom: 4px; font-family: var(--f-display); font-size: 11px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--gold-600); }
+  .g33-formula-box .g33-fb-main { margin: 0; font-family: var(--f-serif); font-size: clamp(17px, 1.6vw, 20px); font-weight: 700; color: var(--navy-900); line-height: 1.5; }
+  html[data-lang="en"] .g33-formula-box .g33-fb-main { font-family: var(--f-serif-en); }
+  .g33-formula-box .g33-fb-main b { font-family: var(--f-serif-en); font-weight: 700; }
+  .g33-formula-box .g33-fb-en { margin: 2px 0 0; font-family: var(--f-serif-en); font-size: 12.5px; color: var(--ink-2); line-height: 1.5; }
+
+  /* 분야별 포인트 색 (흰 글자와 대비 4.5:1 이상) */
+  .g33-fields > li:nth-child(1) { --accent: #a8452f; }
+  .g33-fields > li:nth-child(2) { --accent: #a65a14; }
+  .g33-fields > li:nth-child(3) { --accent: #86661c; }
+  .g33-fields > li:nth-child(4) { --accent: #55772a; }
+  .g33-fields > li:nth-child(5) { --accent: #1f6f4c; }
+  .g33-fields > li:nth-child(6) { --accent: #1b6672; }
+  .g33-fields > li:nth-child(7) { --accent: #24497b; }
+  .g33-fields > li:nth-child(8) { --accent: #2a5f9f; }
+  .g33-fields > li:nth-child(9) { --accent: #3f4794; }
+  .g33-fields > li:nth-child(10) { --accent: #5c4392; }
+  .g33-fields > li:nth-child(11) { --accent: #843a68; }
+  .g33-fields .field-card { isolation: isolate; border-top-color: var(--accent); transition: box-shadow .25s, border-color .25s; }
+  .g33-fields .field-card:hover { box-shadow: var(--shadow); }
+  .g33-fields .field-card::before { content: ""; position: absolute; z-index: -1; left: 0; right: 0; top: 0; height: 110px; background: linear-gradient(180deg, var(--accent), rgba(255, 255, 255, 0)); opacity: .07; pointer-events: none; }
+  .g33-fields .field-no { background: var(--accent); }
+  .g33-fields .field-count { color: var(--accent); background: #fff; }
+  .g33-fields .field-icon { display: grid; place-items: center; width: 54px; height: 54px; border-radius: 50%; background: #fff; color: var(--accent); border: 1px solid var(--line-2); border-color: color-mix(in srgb, var(--accent) 30%, #fff); }
+  .g33-fields .field-icon svg { width: 27px; height: 27px; stroke-width: 1.5; }
+  .g33-fields .field-en { color: var(--accent); }
+  html[data-lang="en"] .g33-fields .field-en { font-family: var(--f-serif); }
+
+  /* 12번째 칸: 요약 카드 (네이비) */
+  .g33-field-sum { position: relative; overflow: hidden; isolation: isolate; display: flex; flex-direction: column; min-width: 0; padding: 22px 22px 20px; border-radius: var(--radius-sm); background: radial-gradient(130% 100% at 100% 0%, #2a5797 0%, var(--navy-900) 52%, var(--navy-950) 100%); color: #c9d6ea; }
+  .g33-field-sum::after { content: ""; position: absolute; z-index: -1; right: -40%; bottom: -62%; width: 120%; aspect-ratio: 1; border-radius: 50%; border-top: 1px solid rgba(220, 196, 140, .45); }
+  .g33-sum-cap { font-family: var(--f-display); font-size: 11.5px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--gold-300); }
+  .g33-field-sum h3 { margin: 8px 0 0; color: #fff; font-size: 21px; }
+  .g33-sum-eq { margin: 6px 0 0; font-family: var(--f-display); font-size: 25px; font-weight: 600; letter-spacing: .06em; color: #fff; line-height: 1.3; }
+  .g33-sum-text { margin: 10px 0 18px; font-size: 14px; line-height: 1.6; color: #b8c7de; }
+  .g33-field-sum .link-arrow { margin-top: auto; color: #fff; font-size: 15px; }
+  .g33-field-sum .link-arrow:hover { color: var(--gold-300); }
+
+  /* ---------- 글로벌 확장 구조 ---------- */
+  .g33-structure { position: relative; overflow: hidden; }
+  .g33-expand { position: relative; max-width: 1120px; margin: 0 auto; }
+  .g33-map { position: relative; aspect-ratio: 360 / 134; }
+  .g33-map canvas { position: absolute; inset: 0; width: 100%; height: 100%; -webkit-mask-image: linear-gradient(180deg, #000 48%, rgba(0, 0, 0, .25) 78%, transparent 100%); mask-image: linear-gradient(180deg, #000 48%, rgba(0, 0, 0, .25) 78%, transparent 100%); }
+  .g33-pin { position: absolute; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; background: var(--gold-500); box-shadow: 0 0 0 3px #fff, 0 2px 8px rgba(19, 41, 75, .3); }
+  .g33-pin::after { content: ""; position: absolute; inset: -9px; border-radius: 50%; border: 1px solid var(--gold-500); opacity: 0; animation: g33-pulse 2.6s var(--ease) infinite; }
+  @keyframes g33-pulse { 0% { transform: scale(.5); opacity: .9; } 100% { transform: scale(1.8); opacity: 0; } }
+  .g33-pin-label { position: absolute; top: 50%; left: 20px; transform: translateY(-50%); padding: 2px 9px; border: 1px solid var(--line); border-radius: var(--radius-xs); background: rgba(255, 255, 255, .94); font-family: var(--f-serif); font-size: 13px; font-weight: 700; color: var(--navy-900); white-space: nowrap; box-shadow: var(--shadow-sm); }
+  html[data-lang="en"] .g33-pin-label { font-family: var(--f-serif-en); }
+  .g33-pin.is-left .g33-pin-label { left: auto; right: 20px; }
+
+  .g33-steps { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 0 16px; max-width: 980px; margin: -15% auto 0; }
+  .g33-step { min-width: 0; padding: 26px 18px 24px; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255, 255, 255, .95); box-shadow: var(--shadow); text-align: center; }
+  .g33-step-icon { display: grid; place-items: center; width: 58px; height: 58px; margin: 0 auto 14px; border-radius: 50%; border: 1px solid var(--blue-200); background: var(--blue-50); color: var(--navy-800); }
+  .g33-step-icon svg { width: 27px; height: 27px; stroke-width: 1.4; }
+  .g33-step-num { display: flex; align-items: baseline; justify-content: center; gap: 6px; margin: 0; color: var(--navy-900); line-height: 1.05; }
+  .g33-step-num b { font-family: var(--f-serif-en); font-size: clamp(34px, 3.4vw, 46px); font-weight: 700; font-variant-numeric: lining-nums; }
+  .g33-step-num small { font-family: var(--f-serif); font-size: 17px; font-weight: 700; }
+  html[data-lang="en"] .g33-step-num small { font-family: var(--f-serif-en); font-size: 15px; }
+  .g33-step-label { margin: 10px 0 0; font-family: var(--f-display); font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--blue-700); }
+  .g33-step-desc { margin: 4px 0 0; font-size: 14.5px; line-height: 1.55; color: var(--ink-2); }
+  .g33-step.is-result { border-color: var(--navy-900); background: radial-gradient(120% 120% at 50% 0%, #24497b 0%, var(--navy-900) 55%, var(--navy-950) 100%); }
+  .g33-step.is-result .g33-step-icon { border-color: rgba(255, 255, 255, .22); background: rgba(255, 255, 255, .07); color: #fff; }
+  .g33-step.is-result .g33-step-num { color: #fff; }
+  .g33-step.is-result .g33-step-label { color: var(--gold-300); }
+  .g33-step.is-result .g33-step-desc { color: #b8c7de; }
+  .g33-op { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--blue-200); background: #fff; font-family: var(--f-serif-en); font-size: 24px; line-height: 1; color: var(--blue-700); box-shadow: var(--shadow-sm); }
+
+  .g33-legend { justify-content: center; margin-top: 26px; }
+  .g33-legend .legend-dot.is-gold { box-shadow: 0 0 0 2px #fff, 0 0 0 3px var(--gold-300); }
+  .g33-formula-line { margin: 44px 0 0; text-align: center; font-family: var(--f-serif); font-size: clamp(20px, 2.3vw, 28px); font-weight: 700; letter-spacing: -0.02em; color: var(--navy-900); text-wrap: balance; }
+  html[data-lang="en"] .g33-formula-line { font-family: var(--f-serif-en); letter-spacing: 0; }
+  .g33-formula-line b { font-family: var(--f-serif-en); font-weight: 700; color: var(--blue-700); }
+  .g33-formula-line-en { margin: 6px 0 0; text-align: center; font-family: var(--f-serif-en); font-size: 15px; font-style: italic; color: var(--ink-2); }
+  .g33-live { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 10px; margin: 22px 0 0; font-size: 14.5px; color: var(--ink-2); }
+  .g33-live-chip { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border: 1px solid var(--line-2); border-radius: var(--radius-xs); background: #fff; }
+  .g33-live-chip svg { width: 18px; height: 18px; color: var(--blue-700); }
+  .g33-live-chip b { font-family: var(--f-serif-en); font-size: 17px; color: var(--navy-900); }
+  .g33-one { margin: 40px 0 0; text-align: center; }
+  .g33-one-ko { display: block; font-family: var(--f-serif); font-size: clamp(18px, 1.9vw, 22px); font-weight: 700; color: var(--navy-900); }
+  html[data-lang="en"] .g33-one-ko { font-family: var(--f-serif-en); }
+  .g33-one-en { display: block; margin-top: 4px; font-family: var(--f-display); font-size: 12.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--blue-700); }
+
+  /* ---------- 글로벌 대표 패 (어두운 띠 · 크리스털 패) ---------- */
+  .g33-award { position: relative; overflow: hidden; isolation: isolate; padding: 100px 0; background: radial-gradient(70% 95% at 76% 46%, #234a80 0%, var(--navy-900) 46%, var(--navy-950) 100%); color: #c9d6ea; }
+  .g33-award::before { content: ""; position: absolute; z-index: -1; right: 4%; top: 6%; width: 640px; max-width: 70%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(220, 196, 140, .2) 0%, rgba(220, 196, 140, 0) 62%); pointer-events: none; }
+  .g33-award::after { content: ""; position: absolute; z-index: -1; left: -20%; top: 78%; width: 140%; aspect-ratio: 1; border-radius: 50%; border-top: 1px solid rgba(220, 196, 140, .35); pointer-events: none; }
+  .g33-award-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 460px); gap: 56px 80px; align-items: center; }
+  .g33-award .section-head { margin-bottom: 0; }
+  .g33-award .eyebrow { color: var(--gold-300); }
+  .g33-award .section-title { color: #fff; }
+  .g33-award .section-sub { color: #9fb0ca; }
+  .g33-award .section-lead { color: #b6c5dc; }
+  .g33-award-values { list-style: none; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px 10px; margin-top: 36px; padding-top: 30px; border-top: 1px solid rgba(255, 255, 255, .12); }
+  .g33-award-values li { text-align: center; min-width: 0; }
+  .g33-av-icon { display: grid; place-items: center; width: 56px; height: 56px; margin: 0 auto 10px; border-radius: 50%; border: 1px solid rgba(220, 196, 140, .45); color: var(--gold-300); background: rgba(255, 255, 255, .04); }
+  .g33-av-icon svg { width: 25px; height: 25px; stroke-width: 1.4; }
+  .g33-award-values b { display: block; font-family: var(--f-head); font-size: 16.5px; font-weight: 700; color: #fff; line-height: 1.3; }
+  .g33-award-values small { display: block; margin-top: 3px; font-family: var(--f-display); font-size: 10.5px; letter-spacing: .14em; color: #9fb0ca; }
+  .g33-award-values small.is-ko { font-family: var(--f-serif); letter-spacing: .02em; font-size: 12px; }
+  .g33-award-note { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin: 30px 0 0; font-size: 13.5px; color: #9fb0ca; }
+  .g33-award .sample-tag { background: rgba(255, 255, 255, .08); color: var(--gold-300); border-color: rgba(220, 196, 140, .7); }
+
+  .g33-crystal-stage { position: relative; margin: 0; display: flex; flex-direction: column; align-items: center; }
+  .g33-crystal-stage::before { content: ""; position: absolute; z-index: -1; left: 50%; top: 42%; width: 120%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle, rgba(196, 220, 255, .28) 0%, rgba(196, 220, 255, 0) 60%); pointer-events: none; }
+  .g33-crystal-stage > .sample-tag { position: absolute; z-index: 2; top: 0; right: 0; }
+  .g33-crystal-wrap { position: relative; width: min(100%, 372px); filter: drop-shadow(0 26px 30px rgba(4, 12, 28, .45)); }
+  .g33-crystal { position: relative; padding: 6px; clip-path: polygon(50% 0, 78% 3.5%, 96% 15%, 100% 27%, 100% 100%, 0 100%, 0 27%, 4% 15%, 22% 3.5%); background: linear-gradient(135deg, #ffffff 0%, #c4d7f0 18%, #ffffff 36%, #9db9df 58%, #eef4fd 76%, #b3c9ea 100%); }
+  .g33-crystal-face { position: relative; isolation: isolate; overflow: hidden; padding: 50px 34px 26px; clip-path: polygon(50% 0, 78% 3.4%, 96% 14.8%, 100% 26.8%, 100% 100%, 0 100%, 0 26.8%, 4% 14.8%, 22% 3.4%); background: linear-gradient(162deg, #ffffff 0%, #f1f6fd 30%, #e1ebf8 58%, #eef4fc 80%, #ffffff 100%); text-align: center; color: var(--navy-900); }
+  /* 유리 반사광 */
+  .g33-crystal-face::before { content: ""; position: absolute; z-index: -1; inset: 0; pointer-events: none;
+    background:
+      linear-gradient(118deg, rgba(255, 255, 255, 0) 0 22%, rgba(255, 255, 255, .9) 23%, rgba(255, 255, 255, 0) 31%),
+      linear-gradient(118deg, rgba(255, 255, 255, 0) 0 60%, rgba(255, 255, 255, .7) 61%, rgba(255, 255, 255, 0) 65%),
+      linear-gradient(62deg, rgba(150, 184, 230, 0) 0 66%, rgba(150, 184, 230, .28) 67%, rgba(150, 184, 230, 0) 80%),
+      radial-gradient(90% 60% at 50% 0%, rgba(255, 244, 220, .55), rgba(255, 244, 220, 0) 70%); }
+  .g33-crystal-facets { position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .g33-crystal-face > *:not(svg.g33-crystal-facets) { position: relative; z-index: 2; }
+  .g33-cr-mark { position: relative; width: 132px; height: 94px; margin: 0 auto 2px; }
+  .g33-cr-mark svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .g33-cr-mark img { position: absolute; left: 50%; top: 50%; width: 58px; height: 58px; transform: translate(-50%, -53%); }
+  .g33-cr-title { margin: 0; font-family: var(--f-serif); font-size: 23px; font-weight: 900; letter-spacing: -0.02em; line-height: 1.3; }
+  .g33-cr-sub { margin: 2px 0 0; font-family: var(--f-display); font-size: 9.5px; font-weight: 600; letter-spacing: .16em; color: var(--blue-700); }
+  .g33-cr-role { margin: 16px 0 0; font-family: var(--f-serif); font-size: 19px; font-weight: 700; line-height: 1.3; }
+  .g33-cr-role small { display: block; margin-top: 1px; font-family: var(--f-serif-en); font-size: 12.5px; font-weight: 500; color: var(--ink-2); }
+  .g33-cr-rule { display: block; width: 92px; height: 10px; margin: 12px auto; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 92 10'%3E%3Cpath d='M0 5h38M54 5h38' stroke='%23b8913f' stroke-width='1'/%3E%3Cpath d='M46 1.5 49.5 5 46 8.5 42.5 5z' fill='none' stroke='%23b8913f'/%3E%3C/svg%3E") center / contain no-repeat; }
+  .g33-cr-text { margin: 0; font-family: var(--f-serif); font-size: 13.5px; font-weight: 500; line-height: 1.8; color: var(--navy-900); }
+  .g33-cr-text-en { margin: 8px 0 0; font-family: var(--f-serif-en); font-size: 11.5px; font-style: italic; line-height: 1.6; color: var(--ink-2); }
+  .g33-cr-date { margin: 14px 0 0; font-family: var(--f-serif-en); font-size: 13px; font-weight: 700; letter-spacing: .08em; color: var(--navy-800); }
+  .g33-cr-org { margin: 8px 0 0; font-family: var(--f-serif); font-size: 14.5px; font-weight: 700; line-height: 1.35; }
+  .g33-cr-org small { display: block; font-family: var(--f-serif-en); font-size: 11px; font-weight: 500; color: var(--ink-2); }
+  .g33-pedestal { position: relative; width: min(100%, 452px); margin-top: -1px; padding: 15px 22px 14px; text-align: center; clip-path: polygon(4% 0, 96% 0, 100% 100%, 0 100%); background: linear-gradient(180deg, #e8d29c 0, #b8913f 3px, #2c4f86 3px, #17325a 40%, #0b1a33 100%); }
+  .g33-pedestal .keywords { color: var(--gold-300); font-size: 15px; }
+  .g33-pedestal .keywords span + span::before { color: var(--gold-500); }
+  .g33-pedestal .keywords.en { margin-top: 3px; font-size: 10.5px; color: #d9c79b; }
+
+  /* ---------- ID 카드 (예시) ---------- */
+  .g33-idcards { display: grid; grid-template-columns: repeat(2, minmax(0, 440px)); justify-content: center; gap: 28px 40px; }
+  .g33-idcol { min-width: 0; }
+  .g33-side { display: flex; align-items: center; gap: 10px; margin: 0 0 12px; font-size: 14px; font-weight: 700; color: var(--navy-900); }
+  .g33-side::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+  .g33-side small { font-family: var(--f-serif-en); font-size: 13px; font-weight: 500; color: var(--muted); }
+  .g33-idcards .idcard { isolation: isolate; }
+  /* 앞면: 아래쪽에 옅은 지구 곡선 */
+  .g33-idcards .idcard:not(.is-back)::after { content: ""; position: absolute; z-index: -1; left: -30%; right: -30%; top: 84%; height: 140%; border-radius: 50%; background: radial-gradient(60% 40% at 50% 0%, rgba(80, 132, 200, .28), rgba(80, 132, 200, 0)); border-top: 1px solid rgba(43, 87, 151, .25); pointer-events: none; }
+  .g33-idcards .idcard-rows dd small { display: block; font-family: var(--f-serif-en); font-size: 10.5px; font-weight: 500; color: var(--ink-2); line-height: 1.3; }
+  .g33-idcards .idcard-rows dd.is-code { font-family: var(--f-serif-en); letter-spacing: .02em; white-space: nowrap; }
+  /* 뒷면: 점 무늬 + 금색 키워드 */
+  .g33-idcards .idcard.is-back::before { content: ""; position: absolute; z-index: -1; inset: 0; background: radial-gradient(rgba(255, 255, 255, .16) 1px, transparent 1.6px) 0 0 / 9px 9px; -webkit-mask-image: radial-gradient(70% 60% at 50% 45%, #000, transparent); mask-image: radial-gradient(70% 60% at 50% 45%, #000, transparent); pointer-events: none; }
+  .g33-idcards .idcard.is-back .keywords.en { margin-top: 4px; font-size: 9.5px; color: #c8d4e6; }
+
+  .g33-idno { margin-top: 56px; text-align: center; }
+  .g33-idno h3 { font-size: 19px; }
+  .g33-idno h3 small { margin-left: 6px; font-family: var(--f-serif-en); font-size: 14px; font-weight: 500; color: var(--muted); }
+  .g33-idno-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch; gap: 10px; margin: 18px 0 0; padding: 0; list-style: none; }
+  .g33-idno-part { min-width: 128px; padding: 14px 16px 12px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: #fff; }
+  .g33-idno-part code { display: block; font-family: var(--f-serif-en); font-size: 24px; font-weight: 700; letter-spacing: .05em; color: var(--navy-900); line-height: 1.2; }
+  .g33-idno-part span { display: block; margin-top: 4px; font-size: 13.5px; font-weight: 600; color: var(--ink-2); }
+  .g33-idno-part small { display: block; font-family: var(--f-serif-en); font-size: 12px; color: var(--muted); }
+  .g33-idno-dash { align-self: center; color: var(--blue-300); font-family: var(--f-serif-en); font-size: 22px; }
+  .g33-idno-note { margin: 18px 0 0; font-size: 13.5px; color: var(--muted); }
+
+  /* ---------- 반응형 ---------- */
+  @media (max-width: 1080px) {
+    .g33-hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 340px); gap: 32px 40px; }
+    .g33-award-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 400px); gap: 48px; }
+    .g33-award-values { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  @media (max-width: 860px) {
+    .g33-hero { text-align: center; }
+    .g33-hero .breadcrumb { justify-content: center; }
+    .g33-hero-grid { grid-template-columns: minmax(0, 1fr); }
+    .g33-emblem { order: -1; max-width: 270px; margin: 0 auto; }
+    .page-hero.g33-hero p.g33-hero-lead { margin-left: auto; margin-right: auto; }
+    .g33-eq, .g33-hero-actions { justify-content: center; }
+    .g33-award-grid { grid-template-columns: minmax(0, 1fr); }
+    .g33-award-text { text-align: center; }
+    .g33-award .section-head { margin-left: auto; margin-right: auto; }
+    .g33-award .eyebrow::after { content: ""; width: 28px; height: 1px; background: currentColor; opacity: .55; }
+    .g33-award-note { justify-content: center; }
+    .g33-award-values { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .g33-idcards { grid-template-columns: minmax(0, 440px); }
+  }
+  @media (max-width: 760px) {
+    .g33-hero { padding: 36px 0 44px; }
+    .g33-emblem { max-width: 230px; }
+    .g33-hero-actions .btn { flex: 1 1 100%; max-width: 360px; }
+    .g33-eq-term { padding: 8px 12px 8px 10px; gap: 7px; }
+    .g33-eq-term b { font-size: 25px; }
+    .g33-eq-term small { font-size: 12.5px; }
+    .g33-eq-op { font-size: 18px; }
+    .g33-fields-head { margin-bottom: 30px; }
+    .g33-head-en { font-size: 14.5px; }
+    .g33-formula-box { flex-basis: 100%; }
+    .g33-steps { grid-template-columns: minmax(0, 1fr); gap: 10px; margin-top: -6%; }
+    .g33-op { margin: 0 auto; width: 38px; height: 38px; font-size: 20px; }
+    .g33-step { display: grid; grid-template-columns: 54px minmax(0, 1fr); gap: 2px 16px; align-items: center; padding: 18px 18px; text-align: left; }
+    .g33-step-icon { grid-row: span 3; width: 54px; height: 54px; margin: 0; }
+    .g33-step-num { justify-content: flex-start; }
+    .g33-step-num b { font-size: 32px; }
+    .g33-step-label { margin-top: 4px; }
+    .g33-pin-label { font-size: 12px; padding: 1px 7px; }
+    .g33-award { padding: 72px 0; }
+    .g33-award-values { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px 4px; padding-top: 24px; }
+    .g33-av-icon { width: 46px; height: 46px; }
+    .g33-av-icon svg { width: 21px; height: 21px; }
+    .g33-award-values b { font-size: 14px; }
+    .g33-award-values small { font-size: 9px; letter-spacing: .06em; }
+    .g33-award-values small.is-ko { font-size: 11px; }
+    .g33-crystal-face { padding: 44px 22px 22px; }
+    .g33-cr-text { font-size: 13px; }
+    .g33-pedestal .keywords { font-size: 13.5px; }
+    .g33-idno { margin-top: 44px; }
+    .g33-idno-part { min-width: 0; flex: 1 1 40%; padding: 12px 10px 10px; }
+    .g33-idno-dash { display: none; }
+  }
+  @media (max-width: 400px) {
+    .g33-award-values { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .g33-eq { gap: 8px; }
+    .g33-eq-term { padding: 7px 9px 7px 8px; gap: 5px; }
+    .g33-eq-term b { font-size: 22px; }
+    .g33-eq-term small em { font-size: 8.5px; letter-spacing: .08em; }
+  }
+  @media print {
+    .g33-subnav, .breadcrumb, .g33-hero-actions, .g33-field-sum .link-arrow, .g33-cta { display: none !important; }
+    .g33-award { background: none; color: #000; padding: 24pt 0; }
+    .g33-award .section-title, .g33-award-values b { color: #000; }
+    .g33-map canvas { -webkit-mask-image: none; mask-image: none; }
+  }
+</style>
+</head>
+<body data-page="global33" data-title-en="Global 33 | World Hope Declaration Network">
+<div id="site-header"></div>
+
+<main id="main">
+  <!-- 상단: 라이트 히어로 -->
+  <section class="page-hero g33-hero" aria-labelledby="page-title">
+    <div class="container g33-hero-grid">
+      <div class="g33-hero-text">
+        <nav class="breadcrumb" aria-label="breadcrumb"><a href="index.html"><span class="ko">홈</span><span class="en">Home</span></a><span aria-hidden="true">/</span><span><span class="ko">글로벌 33</span><span class="en">Global 33</span></span></nav>
+        <p class="g33-hero-kicker"><span class="ko">분열을 넘어, 하나의 희망으로</span><span class="en">From Division to Hope, Together for a Better World</span></p>
+        <h1 id="page-title"><span class="ko">세계희망선언 글로벌 대표</span><span class="en">Global Representatives</span></h1>
+        <p class="page-hero-en">Global 33</p>
+        <p class="g33-hero-lead"><span class="ko">세계희망선언의 정신에 동의하고 지구와 인류의 더 나은 미래를 위해 헌신하는 사람들 — 나라마다 11개 분야에서 각 3인씩, 33인의 글로벌 대표를 선정합니다.</span><span class="en">People who share the spirit of the World Hope Declaration and devote themselves to a better future for humanity and the Earth — in every nation, 33 Global Representatives: 3 in each of 11 fields.</span></p>
+        <div class="g33-eq" role="group" aria-label="각국 33인 = 11개 분야 × 각 3인" data-en-aria-label="33 per nation = 11 fields × 3 persons each">
+          <span class="g33-eq-term"><b data-stat="fields">11</b><small><span class="ko">개 분야</span><span class="en">fields</span><em class="ko" lang="en">Fields</em></small></span>
+          <span class="g33-eq-op" aria-hidden="true">×</span>
+          <span class="g33-eq-term"><b data-stat="per_field">3</b><small><span class="ko">인</span><span class="en">persons</span><em>Per field</em></small></span>
+          <span class="g33-eq-op" aria-hidden="true">=</span>
+          <span class="g33-eq-term is-result"><b data-stat="per_country">33</b><small><span class="ko">인</span><span class="en">persons</span><em>Per nation</em></small></span>
+        </div>
+        <div class="g33-hero-actions">
+          <a class="btn btn-primary btn-lg" href="#fields"><span class="ko">11개 분야 보기</span><span class="en">See the 11 Fields</span><span data-icon="arrow-right"></span></a>
+          <a class="btn btn-outline btn-lg" href="join.html#nominate"><span class="ko">글로벌 대표 추천하기</span><span class="en">Nominate a Representative</span><span data-icon="arrow-right"></span></a>
+        </div>
+      </div>
+
+      <!-- 문장(紋章): 11개 분야 × 3인 = 33개의 점 (색은 아래 분야 카드와 같음) -->
+      <figure class="g33-emblem" aria-hidden="true">
+        <svg viewBox="0 0 440 440" focusable="false">
+          <defs>
+            <radialGradient id="g33-core" cx="50%" cy="38%" r="70%">
+              <stop offset="0" stop-color="#ffffff"/>
+              <stop offset=".7" stop-color="#f2f6fc"/>
+              <stop offset="1" stop-color="#e5edf8"/>
+            </radialGradient>
+          </defs>
+          <circle class="g33-emblem-ring is-dash" cx="220" cy="220" r="214"/>
+          <circle class="g33-emblem-ring" cx="220" cy="220" r="200"/>
+          <circle class="g33-emblem-ring" cx="220" cy="220" r="168"/>
+          <path class="g33-emblem-tick" d="M267.9 56.9L275.8 30.0M348.5 108.7L369.6 90.3M388.3 195.8L416.0 191.8M374.6 290.6L400.1 302.3M311.9 363.0L327.0 386.6M220.0 390.0L220.0 418.0M128.1 363.0L113.0 386.6M65.4 290.6L39.9 302.3M51.7 195.8L24.0 191.8M91.5 108.7L70.4 90.3M172.1 56.9L164.2 30.0"/>
+          <g fill="#a8452f"><circle cx="200.1" cy="37.1" r="6.4"/><circle cx="220.0" cy="36.0" r="6.4"/><circle cx="239.9" cy="37.1" r="6.4"/></g>
+          <g fill="#a65a14"><circle cx="302.2" cy="55.4" r="6.4"/><circle cx="319.5" cy="65.2" r="6.4"/><circle cx="335.6" cy="76.9" r="6.4"/></g>
+          <g fill="#86661c"><circle cx="378.1" cy="125.9" r="6.4"/><circle cx="387.4" cy="143.6" r="6.4"/><circle cx="394.6" cy="162.1" r="6.4"/></g>
+          <g fill="#55772a"><circle cx="403.9" cy="226.4" r="6.4"/><circle cx="402.1" cy="246.2" r="6.4"/><circle cx="398.2" cy="265.7" r="6.4"/></g>
+          <g fill="#1f6f4c"><circle cx="371.3" cy="324.8" r="6.4"/><circle cx="359.1" cy="340.5" r="6.4"/><circle cx="345.2" cy="354.8" r="6.4"/></g>
+          <g fill="#1b6672"><circle cx="290.6" cy="389.9" r="6.4"/><circle cx="271.8" cy="396.5" r="6.4"/><circle cx="252.5" cy="401.1" r="6.4"/></g>
+          <g fill="#24497b"><circle cx="187.5" cy="401.1" r="6.4"/><circle cx="168.2" cy="396.5" r="6.4"/><circle cx="149.4" cy="389.9" r="6.4"/></g>
+          <g fill="#2a5f9f"><circle cx="94.8" cy="354.8" r="6.4"/><circle cx="80.9" cy="340.5" r="6.4"/><circle cx="68.7" cy="324.8" r="6.4"/></g>
+          <g fill="#3f4794"><circle cx="41.8" cy="265.7" r="6.4"/><circle cx="37.9" cy="246.2" r="6.4"/><circle cx="36.1" cy="226.4" r="6.4"/></g>
+          <g fill="#5c4392"><circle cx="45.4" cy="162.1" r="6.4"/><circle cx="52.6" cy="143.6" r="6.4"/><circle cx="61.9" cy="125.9" r="6.4"/></g>
+          <g fill="#843a68"><circle cx="104.4" cy="76.9" r="6.4"/><circle cx="120.5" cy="65.2" r="6.4"/><circle cx="137.8" cy="55.4" r="6.4"/></g>
+          <g class="g33-emblem-no" text-anchor="middle">
+            <text x="220" y="75" fill="#a8452f">1</text><text x="301.1" y="98.8" fill="#a65a14">2</text><text x="356.4" y="162.7" fill="#86661c">3</text>
+            <text x="368.5" y="246.3" fill="#55772a">4</text><text x="333.4" y="323.2" fill="#1f6f4c">5</text><text x="262.3" y="368.9" fill="#1b6672">6</text>
+            <text x="177.7" y="368.9" fill="#24497b">7</text><text x="106.6" y="323.2" fill="#2a5f9f">8</text><text x="71.5" y="246.3" fill="#3f4794">9</text>
+            <text x="83.6" y="162.7" fill="#5c4392">10</text><text x="138.9" y="98.8" fill="#843a68">11</text>
+          </g>
+          <circle class="g33-emblem-core" cx="220" cy="220" r="118"/>
+          <image href="assets/img/brand/logo-mark-160.png" x="194" y="122" width="52" height="52"/>
+          <text class="g33-emblem-num" x="220" y="262" text-anchor="middle">33</text>
+          <text class="g33-emblem-cap is-gold" x="220" y="290" text-anchor="middle">11 × 3</text>
+          <text class="g33-emblem-cap" x="220" y="312" text-anchor="middle">GLOBAL</text>
+        </svg>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 페이지 안 메뉴 -->
+  <nav class="subnav g33-subnav" aria-label="글로벌 33 메뉴" data-en-aria-label="Global 33 sections">
+    <div class="container">
+      <ul>
+        <li><a href="#fields"><span class="ko">11개 분야</span><span class="en">11 Fields</span></a></li>
+        <li><a href="#structure"><span class="ko">글로벌 확장 구조</span><span class="en">Global Structure</span></a></li>
+        <li><a href="#plaque"><span class="ko">글로벌 대표 패</span><span class="en">Plaque</span></a></li>
+        <li><a href="#idcard"><span class="ko">ID 카드</span><span class="en">ID Card</span></a></li>
+        <li><a href="#nominate"><span class="ko">추천하기</span><span class="en">Nominate</span></a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ===== 1. 대한민국 글로벌 대표 33인 · 11개 분야 ===== -->
+  <section class="section g33-anchor" id="fields" aria-labelledby="fields-title">
+    <div class="container">
+      <div class="g33-fields-head">
+        <div class="section-head">
+          <span class="eyebrow">11 Fields × 3 Persons</span>
+          <h2 class="section-title" id="fields-title"><span class="ko">대한민국 세계희망선언 글로벌 대표 33인 선정 <span class="g33-paren">(11개 분야 × 각 3인)</span></span><span class="en">Korea’s 33 Global Representatives <span class="g33-paren">(11 Fields × 3 Persons Each)</span></span></h2>
+          <p class="g33-head-en"><span class="ko" lang="en">Korea’s 33 Global Representatives for the World Hope Declaration (11 Fields × 3 Persons Each)</span><span class="en">For the World Hope Declaration — the same structure is applied in every nation.</span></p>
+        </div>
+        <aside class="g33-formula-box" aria-label="글로벌 대표 목표" data-en-aria-label="Global target">
+          <span class="g33-fb-label">Global Formula</span>
+          <p class="g33-fb-main"><span class="ko">세계 각국 <b data-stat="per_country">33</b>인 × <b data-stat="countries">195</b>개국 = <b data-stat="target">6,435</b>인</span><span class="en"><b data-stat="per_country">33</b> per nation × <b data-stat="countries">195</b> nations = <b data-stat="target">6,435</b></span></p>
+          <p class="g33-fb-en"><span class="ko" lang="en"><span data-stat="per_country">33</span> Representatives per Nation × <span data-stat="countries">195</span> Countries = <span data-stat="target">6,435</span> Global Representatives</span><span class="en">Global Representatives (target)</span></p>
+        </aside>
+      </div>
+
+      <ol class="field-grid g33-fields">
+        <li class="field-card">
+          <div class="field-card-top"><span class="field-no">1</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
+          <span class="field-icon" data-icon="megaphone"></span>
+          <h3 class="field-name"><span class="ko">사회영향력</span><span class="en">Social Influence</span></h3>
+          <p class="field-en"><span class="ko" lang="en">Social Influence</span><span class="en" lang="ko">사회영향력</span></p>
+          <p class="field-desc"><span class="ko">사회에 긍정적 영향을 미치는 인물</span><span class="en">People who have a positive influence on society</span></p>
+        </li>
+        <li class="field-card">
+          <div class="field-card-top"><span class="field-no">2</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
+          <span class="field-icon" data-icon="trophy"></span>
+          <h3 class="field-name"><span class="ko">국위선양</span><span class="en">National Prestige</span></h3>
+          <p class="field-en"><span class="ko" lang="en">National Prestige</span><span class="en" lang="ko">국위선양</span></p>
+          <p class="field-desc"><span class="ko">국가의 위상을 높이는 인물</span><span class="en">People who raise the standing of their nation</span></p>
+        </li>
+        <li class="field-card">
+          <div class="field-card-top"><span class="field-no">3</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
+          <span class="field-icon" data-icon="book"></span>
+          <h3 class="field-name"><span class="ko">교육계</span><span class="en">Academia &amp; Education</span></h3>
+          <p class="field-en"><span class="ko" lang="en">Academia &amp; Education</span><span class="en" lang="ko">교육계</span></p>
+          <p class="field-desc"><span class="ko">교육과 지식으로 세대를 세우는 인물</span><span class="en">People who build up generations through education and knowledge</span></p>
+        </li>
+        <li class="field-card">
+          <div class="field-card-top"><span class="field-no">4</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
+          <span class="field-icon" data-icon="palette"></span>
+          <h3 class="field-name"><span class="ko">문화예술계</span><span class="en">Culture &amp; Arts</span></h3>
+          <p class="field-en"><span class="ko" lang="en">Culture &amp; Arts</span><span class="en" lang="ko">문화예술계</span></p>
+          <p class="field-desc"><span class="ko">문화를 통해 세상을 풍요롭게 하는 인물</span><span class="en">People who enrich the world through culture</span></p>
+        </li>
+        <li class="field-card">
+          <div class="field-card-top"><span class="field-no">5</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
+          <span class="field-icon" data-icon="cross"></span>
+          <h3 class="field-name"><span class="ko">종교계</span><span class="en">Religious Leaders</span></h3>
+          <p class="field-en"><span class="ko" lang="en">Religious Leaders</span><span class="en" lang="ko">종교계</span></p>
+          <p class="field-desc"><span class="ko">영적 가치와 사랑을 실천하는 인물</span><span class="en">People who live out spiritual values and love</span></p>
+        </li>
+        <li class="field-card">
+          <div class="field-card-top"><span class="field-no">6</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
+          <span class="field-icon" data-icon="chart"></span>
+          <h3 class="field-name"><span class="ko">산업계</span><span class="en">Industry &amp; Business</span></h3>
+          <p class="field-en"><span class="ko" lang="en">Industry &amp; Business</span><span class="en" lang="ko">산업계</span></p>
+          <p class="field-desc"><span class="ko">경제와 산업 발전으로 사회를 이끄는 인물</span><span class="en">People who lead society through economic and industrial growth</span></p>
+        </li>
+        <li class="field-card">
+          <div class="field-card-top"><span class="field-no">7</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
+          <span class="field-icon" data-icon="shield"></span>
+          <h3 class="field-name"><span class="ko">국방사회안전</span><span class="en">Defense, Safety &amp; Public Security</span></h3>
+          <p class="field-en"><span class="ko" lang="en">Defense, Safety &amp; Public Security</span><span class="en" lang="ko">국방사회안전</span></p>
+          <p class="field-desc"><span class="ko">국가와 국민의 안전을 지키는 인물</span><span class="en">People who protect the safety of the nation and its people</span></p>
+        </li>
+        <li class="field-card">
+          <div class="field-card-top"><span class="field-no">8</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
+          <span class="field-icon" data-icon="medical"></span>
+          <h3 class="field-name"><span class="ko">의료계</span><span class="en">Medical &amp; Health</span></h3>
+          <p class="field-en"><span class="ko" lang="en">Medical &amp; Health</span><span class="en" lang="ko">의료계</span></p>
+          <p class="field-desc"><span class="ko">생명과 건강을 지키는 인물</span><span class="en">People who protect life and health</span></p>
+        </li>
+        <li class="field-card">
+          <div class="field-card-top"><span class="field-no">9</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
+          <span class="field-icon" data-icon="tool"></span>
+          <h3 class="field-name"><span class="ko">생업종사자</span><span class="en">Workers &amp; Livelihood</span></h3>
+          <p class="field-en"><span class="ko" lang="en">Workers &amp; Livelihood</span><span class="en" lang="ko">생업종사자</span></p>
+          <p class="field-desc"><span class="ko">현장에서 땀 흘리는 모든 생업 종사자</span><span class="en">All who work hard on the ground to earn their living</span></p>
+        </li>
+        <li class="field-card">
+          <div class="field-card-top"><span class="field-no">10</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
+          <span class="field-icon" data-icon="users"></span>
+          <h3 class="field-name"><span class="ko">시민</span><span class="en">Citizens</span></h3>
+          <p class="field-en"><span class="ko" lang="en">Citizens</span><span class="en" lang="ko">시민</span></p>
+          <p class="field-desc"><span class="ko">선한 영향력을 실천하는 일반 시민 대표</span><span class="en">Representatives of ordinary citizens who spread good influence</span></p>
+        </li>
+        <li class="field-card">
+          <div class="field-card-top"><span class="field-no">11</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
+          <span class="field-icon" data-icon="landmark"></span>
+          <h3 class="field-name"><span class="ko">정치계(전·현직)</span><span class="en">Political Leaders (Current &amp; Former)</span></h3>
+          <p class="field-en"><span class="ko" lang="en">Political Leaders (Current &amp; Former)</span><span class="en" lang="ko">정치계(전·현직)</span></p>
+          <p class="field-desc"><span class="ko">공공의 미래를 위해 헌신하는 정치인</span><span class="en">Politicians dedicated to the future of the public</span></p>
+        </li>
+        <li class="g33-field-sum">
+          <span class="g33-sum-cap">One Nation</span>
+          <h3><span class="ko">한 나라, 33인</span><span class="en">One Nation, 33 People</span></h3>
+          <p class="g33-sum-eq"><span data-stat="fields">11</span> × <span data-stat="per_field">3</span> = <span data-stat="per_country">33</span></p>
+          <p class="g33-sum-text"><span class="ko">11개 분야에서 분야마다 3인씩, 세계희망선언의 정신으로 헌신하는 글로벌 대표를 세웁니다.</span><span class="en">Three in each of the 11 fields — Global Representatives devoted to the spirit of the World Hope Declaration.</span></p>
+          <a class="link-arrow" href="join.html#nominate"><span class="ko">글로벌 대표 추천하기</span><span class="en">Nominate a representative</span></a>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ===== 2. 글로벌 확장 구조 ===== -->
+  <section class="section section-sky g33-structure g33-anchor" id="structure" aria-labelledby="structure-title">
+    <div class="container">
+      <div class="section-head center">
+        <h2 class="section-title" id="structure-title"><span class="ko">글로벌 확장 구조</span><span class="en">Global Expansion Structure</span></h2>
+        <p class="section-sub"><span class="ko" lang="en">Global Expansion Structure</span><span class="en">From one nation to the world</span></p>
+        <p class="section-lead"><span class="ko">한 나라의 33인에서 세계 각국으로 — 함께 하나의 글로벌 대표 네트워크를 이룹니다.</span><span class="en">From 33 people in one nation to every nation of the world — together forming one global network of representatives.</span></p>
+      </div>
+
+      <div class="g33-expand">
+        <!-- 점으로 그린 세계지도 (global33.js 가 data/worldmap-dots.json 으로 그림) -->
+        <div class="g33-map" aria-hidden="true"><canvas width="1120" height="417"></canvas></div>
+
+        <div class="g33-steps" role="group" aria-label="세계 각국 33인 × 대상 국가 수 = 목표 인원" data-en-aria-label="33 per nation × number of nations = global target">
+          <div class="g33-step">
+            <span class="g33-step-icon" data-icon="people"></span>
+            <p class="g33-step-num"><b data-stat="per_country">33</b><small><span class="ko">인</span><span class="en">people</span></small></p>
+            <p class="g33-step-label">Per Nation</p>
+            <p class="g33-step-desc"><span class="ko">1개국 · <span data-stat="fields">11</span>개 분야 × <span data-stat="per_field">3</span>인</span><span class="en">1 nation · <span data-stat="fields">11</span> fields × <span data-stat="per_field">3</span></span></p>
+          </div>
+          <span class="g33-op" aria-hidden="true">×</span>
+          <div class="g33-step">
+            <span class="g33-step-icon" data-icon="world"></span>
+            <p class="g33-step-num"><b data-stat="countries">195</b><small><span class="ko">개국</span><span class="en">nations</span></small></p>
+            <p class="g33-step-label">Countries</p>
+            <p class="g33-step-desc"><span class="ko">세계희망선언 대상 국가</span><span class="en">Nations of the Declaration</span></p>
+          </div>
+          <span class="g33-op" aria-hidden="true">=</span>
+          <div class="g33-step is-result">
+            <span class="g33-step-icon" data-icon="group"></span>
+            <p class="g33-step-num"><b data-stat="target">6,435</b><small><span class="ko">인</span><span class="en">people</span></small></p>
+            <p class="g33-step-label">Global Target</p>
+            <p class="g33-step-desc"><span class="ko">글로벌 대표 네트워크 (목표)</span><span class="en">Global Representatives network (target)</span></p>
+          </div>
+        </div>
+
+        <ul class="legend g33-legend" data-g33-legend>
+          <li><span class="legend-dot"></span><span class="ko">세계희망선언 대상 국가</span><span class="en">Nations of the Declaration</span></li>
+        </ul>
+      </div>
+
+      <p class="g33-formula-line"><span class="ko">세계 각국 <b data-stat="per_country">33</b>인 × <b data-stat="countries">195</b>개국 = <b data-stat="target">6,435</b>인</span><span class="en"><b data-stat="per_country">33</b> per nation × <b data-stat="countries">195</b> nations = <b data-stat="target">6,435</b> representatives</span></p>
+      <p class="g33-formula-line-en ko" lang="en"><span data-stat="per_country">33</span> Representatives per Nation × <span data-stat="countries">195</span> Countries = <span data-stat="target">6,435</span> Global Representatives</p>
+      <p class="g33-live">
+        <span class="g33-live-chip"><span data-icon="users"></span><span class="ko">현재 참여자 수</span><span class="en">Current participants</span> <b data-stat="participants">21</b><span class="ko">명</span></span>
+        <span class="g33-live-chip"><span data-icon="calendar"></span><span class="ko">기준일</span><span class="en">As of</span> <span data-stat="updated">2026-10-12</span></span>
+      </p>
+      <p class="g33-one"><span class="g33-one-ko"><span class="ko">공동의 선언, 하나의 인류</span><span class="en">One Declaration, One Humanity</span></span><span class="g33-one-en"><span class="ko">One Declaration, One Humanity</span><span class="en">World Hope Declaration</span></span></p>
+    </div>
+  </section>
+
+  <!-- ===== 3. 글로벌 대표 패 (어두운 띠) ===== -->
+  <section class="g33-award g33-anchor" id="plaque" aria-labelledby="plaque-title">
+    <div class="container g33-award-grid">
+      <div class="g33-award-text">
+        <div class="section-head">
+          <span class="eyebrow">Global Representative Plaque</span>
+          <h2 class="section-title" id="plaque-title"><span class="ko">글로벌 대표 패</span><span class="en">The Global Representative Plaque</span></h2>
+          <p class="section-lead"><span class="ko">세계희망선언의 정신에 동의하고 지구와 인류의 더 나은 미래를 위해 헌신하는 글로벌 대표에게 드리는 패입니다. 패에는 세계희망선언의 다섯 가지 가치가 함께 새겨집니다.</span><span class="en">A plaque for Global Representatives who share the spirit of the World Hope Declaration and devote themselves to a better future for humanity and the Earth. It carries the five values of the Declaration.</span></p>
+        </div>
+        <ul class="g33-award-values">
+          <li><span class="g33-av-icon" data-icon="leaf"></span><b><span class="ko">평화</span><span class="en">Peace</span></b><small class="ko" lang="en">PEACE</small><small class="en is-ko" lang="ko">평화</small></li>
+          <li><span class="g33-av-icon" data-icon="world"></span><b><span class="ko">지구환경</span><span class="en">Planet</span></b><small class="ko" lang="en">PLANET</small><small class="en is-ko" lang="ko">지구환경</small></li>
+          <li><span class="g33-av-icon" data-icon="people"></span><b><span class="ko">사람</span><span class="en">People</span></b><small class="ko" lang="en">PEOPLE</small><small class="en is-ko" lang="ko">사람</small></li>
+          <li><span class="g33-av-icon" data-icon="hands"></span><b><span class="ko">연대</span><span class="en">Partnership</span></b><small class="ko" lang="en">PARTNERSHIP</small><small class="en is-ko" lang="ko">연대</small></li>
+          <li><span class="g33-av-icon" data-icon="sprout"></span><b><span class="ko">실천</span><span class="en">Action</span></b><small class="ko" lang="en">ACTION</small><small class="en is-ko" lang="ko">실천</small></li>
+        </ul>
+        <p class="g33-award-note"><span class="sample-tag"><span class="ko">예시</span><span class="en">Sample</span></span><span class="ko">패의 디자인과 날짜는 예시입니다.</span><span class="en">The plaque design and date are samples.</span></p>
+      </div>
+
+      <figure class="g33-crystal-stage">
+        <span class="sample-tag"><span class="ko">예시</span><span class="en">Sample</span></span>
+        <div class="g33-crystal-wrap">
+          <div class="g33-crystal">
+            <div class="g33-crystal-face">
+              <!-- 유리 깎은 면 -->
+              <svg class="g33-crystal-facets" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                <polygon points="50,3.2 76.5,6.6 93,17.2 96.5,28.4 96.5,97.6 3.5,97.6 3.5,28.4 7,17.2 23.5,6.6" fill="none" stroke="#ffffff" stroke-opacity=".95" vector-effect="non-scaling-stroke"/>
+                <path d="M50 0V3.2M78 3.5 76.5 6.6M96 15 93 17.2M100 27 96.5 28.4M100 100 96.5 97.6M0 100 3.5 97.6M0 27 3.5 28.4M4 15 7 17.2M22 3.5 23.5 6.6" fill="none" stroke="#7fa3d6" stroke-opacity=".5" vector-effect="non-scaling-stroke"/>
+              </svg>
+              <div class="g33-cr-mark" aria-hidden="true">
+                <svg viewBox="0 0 140 100" focusable="false">
+                  <defs><linearGradient id="g33gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ead39a"/><stop offset=".55" stop-color="#c49a45"/><stop offset="1" stop-color="#9c7a2e"/></linearGradient></defs>
+                  <path d="M59.1 93.7A45 45 0 0 1 44.8 12.7M80.9 93.7A45 45 0 0 0 95.2 12.7" fill="none" stroke="url(#g33gold)" stroke-width="1.2"/>
+                  <g fill="url(#g33gold)"><ellipse cx="53.1" cy="91.7" rx="7.2" ry="2.7" transform="rotate(230 53.1 91.7)"/><ellipse cx="41.7" cy="85.0" rx="6.8" ry="2.6" transform="rotate(247 41.7 85.0)"/><ellipse cx="32.7" cy="75.2" rx="6.5" ry="2.4" transform="rotate(264 32.7 75.2)"/><ellipse cx="27.0" cy="63.2" rx="6.1" ry="2.3" transform="rotate(281 27.0 63.2)"/><ellipse cx="25.0" cy="50.0" rx="5.8" ry="2.2" transform="rotate(298 25.0 50.0)"/><ellipse cx="27.0" cy="36.8" rx="5.4" ry="2.0" transform="rotate(315 27.0 36.8)"/><ellipse cx="32.7" cy="24.8" rx="5.0" ry="1.9" transform="rotate(332 32.7 24.8)"/><ellipse cx="48.0" cy="88.1" rx="5.1" ry="1.9" transform="rotate(178 48.0 88.1)"/><ellipse cx="37.8" cy="80.0" rx="4.9" ry="1.8" transform="rotate(195 37.8 80.0)"/><ellipse cx="30.5" cy="69.3" rx="4.6" ry="1.7" transform="rotate(212 30.5 69.3)"/><ellipse cx="26.5" cy="56.9" rx="4.4" ry="1.6" transform="rotate(229 26.5 56.9)"/><ellipse cx="26.4" cy="43.9" rx="4.1" ry="1.5" transform="rotate(246 26.4 43.9)"/><ellipse cx="30.1" cy="31.4" rx="3.8" ry="1.4" transform="rotate(263 30.1 31.4)"/><ellipse cx="86.9" cy="91.7" rx="7.2" ry="2.7" transform="rotate(-50 86.9 91.7)"/><ellipse cx="98.3" cy="85.0" rx="6.8" ry="2.6" transform="rotate(-67 98.3 85.0)"/><ellipse cx="107.3" cy="75.2" rx="6.5" ry="2.4" transform="rotate(-84 107.3 75.2)"/><ellipse cx="113.0" cy="63.2" rx="6.1" ry="2.3" transform="rotate(-101 113.0 63.2)"/><ellipse cx="115.0" cy="50.0" rx="5.8" ry="2.2" transform="rotate(-118 115.0 50.0)"/><ellipse cx="113.0" cy="36.8" rx="5.4" ry="2.0" transform="rotate(-135 113.0 36.8)"/><ellipse cx="107.3" cy="24.8" rx="5.0" ry="1.9" transform="rotate(-152 107.3 24.8)"/><ellipse cx="92.0" cy="88.1" rx="5.1" ry="1.9" transform="rotate(2 92.0 88.1)"/><ellipse cx="102.2" cy="80.0" rx="4.9" ry="1.8" transform="rotate(-15 102.2 80.0)"/><ellipse cx="109.5" cy="69.3" rx="4.6" ry="1.7" transform="rotate(-32 109.5 69.3)"/><ellipse cx="113.5" cy="56.9" rx="4.4" ry="1.6" transform="rotate(-49 113.5 56.9)"/><ellipse cx="113.6" cy="43.9" rx="4.1" ry="1.5" transform="rotate(-66 113.6 43.9)"/><ellipse cx="109.9" cy="31.4" rx="3.8" ry="1.4" transform="rotate(-83 109.9 31.4)"/></g>
+                </svg>
+                <picture><source srcset="assets/img/brand/logo-mark-160.webp" type="image/webp"><img src="assets/img/brand/logo-mark-160.png" alt="" width="58" height="58" loading="lazy"></picture>
+              </div>
+              <p class="g33-cr-title" lang="ko">세계희망선언</p>
+              <p class="g33-cr-sub" lang="en">WORLD HOPE DECLARATION™</p>
+              <p class="g33-cr-role"><span lang="ko">글로벌 대표</span><small lang="en">Global Representative</small></p>
+              <span class="g33-cr-rule" aria-hidden="true"></span>
+              <p class="g33-cr-text" lang="ko">당신은 세계희망선언의 정신에 동의하고 지구와 인류의 더 나은 미래를 위해 헌신하는 글로벌 대표로 선정되었기에 이 패를 드립니다.</p>
+              <p class="g33-cr-text-en" lang="en">In recognition of your commitment to the World Hope Declaration and your contribution to a better future for humanity and the Earth.</p>
+              <p class="g33-cr-date"><span aria-hidden="true">20XX. XX. XX.</span><span class="sr-only"><span class="ko">날짜 (예시)</span><span class="en">Date (sample)</span></span></p>
+              <p class="g33-cr-org"><span lang="ko">세계희망선언위원회</span><small lang="en">World Hope Declaration Council</small></p>
+            </div>
+          </div>
+        </div>
+        <div class="g33-pedestal">
+          <p class="keywords mb-0" lang="ko"><span>평화</span><span>지구환경</span><span>사람</span><span>연대</span><span>실천</span></p>
+          <p class="keywords en mb-0" lang="en"><span>PEACE</span><span>PLANET</span><span>PEOPLE</span><span>PARTNERSHIP</span><span>ACTION</span></p>
+        </div>
+        <figcaption class="sr-only"><span class="ko">글로벌 대표 패 디자인 예시</span><span class="en">Sample design of the Global Representative plaque</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===== 4. 글로벌 대표 ID 카드 (예시) ===== -->
+  <section class="section g33-anchor" id="idcard" aria-labelledby="idcard-title">
+    <div class="container">
+      <div class="section-head center">
+        <h2 class="section-title" id="idcard-title"><span class="ko">글로벌 대표 ID 카드 (예시)</span><span class="en">Global Representative ID Card (Sample)</span></h2>
+        <p class="section-sub"><span class="ko" lang="en">Global Representative ID Card (Example)</span><span class="en">Front &amp; Back</span></p>
+        <p class="section-lead"><span class="ko">글로벌 대표에게 발급되는 ID 카드의 디자인 예시입니다. 카드의 이름과 사진 자리는 가상의 예시입니다.</span><span class="en">A sample design of the ID card for Global Representatives. The name and photo on the card are fictional placeholders.</span></p>
+      </div>
+
+      <div class="g33-idcards">
+        <div class="g33-idcol">
+          <p class="g33-side" aria-hidden="true"><span lang="ko">앞면</span><small lang="en">Front</small></p>
+          <figure class="idcard" aria-label="ID 카드 앞면 예시" data-en-aria-label="ID card front (sample)">
+            <span class="sample-tag"><span class="ko">예시</span><span class="en">Sample</span></span>
+            <div class="idcard-head">
+              <picture><source srcset="assets/img/brand/logo-mark-160.webp" type="image/webp"><img src="assets/img/brand/logo-mark-160.png" alt="" width="38" height="38" loading="lazy"></picture>
+              <div><b lang="ko">세계희망선언</b><small lang="en">WORLD HOPE DECLARATION™</small></div>
+            </div>
+            <p class="idcard-role"><span lang="ko">글로벌 대표</span><small lang="en">Global Representative</small></p>
+            <div class="idcard-main">
+              <div class="idcard-photo" aria-hidden="true"></div>
+              <dl class="idcard-rows">
+                <div><dt>이름<small>Name</small></dt><dd>홍길동<small>HONG GIL-DONG</small></dd></div>
+                <div><dt>국가<small>Country</small></dt><dd>대한민국<small>KOREA</small></dd></div>
+                <div><dt>분야<small>Field</small></dt><dd>5. 종교계<small>Religious Leaders</small></dd></div>
+                <div><dt>ID No.</dt><dd class="is-code">WHD-KOR-05-001</dd></div>
+              </dl>
+              <div class="idcard-qr" data-g33-qr><canvas width="116" height="116" role="img" aria-label="글로벌 33 페이지 QR코드" data-en-aria-label="QR code for the Global 33 page"></canvas></div>
+            </div>
+            <p class="idcard-org"><span lang="ko">세계희망선언위원회</span><small lang="en">World Hope Declaration Council</small></p>
+          </figure>
+        </div>
+        <div class="g33-idcol">
+          <p class="g33-side" aria-hidden="true"><span lang="ko">뒷면</span><small lang="en">Back</small></p>
+          <figure class="idcard is-back" aria-label="ID 카드 뒷면 예시" data-en-aria-label="ID card back (sample)">
+            <span class="sample-tag"><span class="ko">예시</span><span class="en">Sample</span></span>
+            <picture><source srcset="assets/img/brand/logo-mark-160.webp" type="image/webp"><img src="assets/img/brand/logo-mark-160.png" alt="" width="72" height="72" loading="lazy"></picture>
+            <b lang="ko">세계희망선언</b><small lang="en">WORLD HOPE DECLARATION™</small>
+            <p class="keywords mb-0" lang="ko"><span>평화</span><span>지구환경</span><span>사람</span><span>연대</span><span>실천</span></p>
+            <p class="keywords en mb-0" lang="en"><span>PEACE</span><span>PLANET</span><span>PEOPLE</span><span>PARTNERSHIP</span><span>ACTION</span></p>
+          </figure>
+        </div>
+      </div>
+
+      <div class="g33-idno">
+        <h3><span class="ko">ID 번호 구성</span><span class="en">How the ID No. works</span><small>WHD-KOR-05-001</small></h3>
+        <ol class="g33-idno-row">
+          <li class="g33-idno-part"><code>WHD</code><span class="ko">세계희망선언</span><span class="en">Declaration</span><small>World Hope Declaration</small></li>
+          <li class="g33-idno-dash" aria-hidden="true">–</li>
+          <li class="g33-idno-part"><code>KOR</code><span class="ko">국가 코드</span><span class="en">Country code</span><small><span class="ko">대한민국</span><span class="en">Korea</span></small></li>
+          <li class="g33-idno-dash" aria-hidden="true">–</li>
+          <li class="g33-idno-part"><code>05</code><span class="ko">분야 번호</span><span class="en">Field No.</span><small><span class="ko">5. 종교계</span><span class="en">5. Religious Leaders</span></small></li>
+          <li class="g33-idno-dash" aria-hidden="true">–</li>
+          <li class="g33-idno-part"><code>001</code><span class="ko">일련번호</span><span class="en">Serial No.</span><small><span class="ko">분야 안의 순번</span><span class="en">within the field</span></small></li>
+        </ol>
+        <p class="g33-idno-note"><span class="ko">QR코드는 이 페이지 주소로 연결되는 예시입니다.</span><span class="en">The QR code is a sample linking to this page.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 5. 추천하기 ===== -->
+  <section class="cta-band light g33-cta g33-anchor" id="nominate" aria-labelledby="nominate-title">
+    <div class="container cta-inner">
+      <div>
+        <span class="eyebrow">Nominate</span>
+        <h2 class="cta-title" id="nominate-title"><span class="ko">글로벌 대표 추천하기</span><span class="en">Nominate a Global Representative</span></h2>
+        <p class="cta-text"><span class="ko">세계희망선언의 정신에 동의하고 지구와 인류의 더 나은 미래를 위해 헌신하는 분을 11개 분야 가운데 해당 분야로 추천해 주세요.</span><span class="en">Do you know someone who shares the spirit of the World Hope Declaration and is devoted to a better future for humanity and the Earth? Nominate them in one of the 11 fields.</span></p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-primary btn-lg" href="join.html#nominate"><span class="ko">글로벌 대표 추천하기</span><span class="en">Nominate a Representative</span><span data-icon="arrow-right"></span></a>
+        <a class="btn btn-outline btn-lg" href="declaration.html"><span class="ko">세계희망선언문 보기</span><span class="en">Read the Declaration</span><span data-icon="arrow-right"></span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/global33.js"></script>
+</body>
+</html>

@@ -409,29 +409,39 @@
     els.forEach(function (el) { io.observe(el); });
   }
 
-  /* ---------------- GA4 (선택) ---------------- */
-  function setupAnalytics() {
-    var id = C.gaMeasurementId;
-    if (!id || location.pathname.indexOf("/admin") !== -1) return;
-    WH.loadScript("https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(id)).catch(function () {});
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = function () { window.dataLayer.push(arguments); };
-    window.gtag("js", new Date());
-    window.gtag("config", id);
+  /* ---------------- 방문자 통계 (GoatCounter · GA4, 선택) ---------------- */
+  var A = C.analytics || {};
+  function trackable() {
+    return !document.body.hasAttribute("data-no-track") && location.pathname.indexOf("/admin") === -1;
   }
-
-  /* ---------------- 방문 통계 (Supabase 연결 시) ---------------- */
+  function setupAnalytics() {
+    if (!trackable()) return;
+    if (A.ga4) {
+      WH.loadScript("https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(A.ga4)).catch(function () {});
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () { window.dataLayer.push(arguments); };
+      window.gtag("js", new Date());
+      window.gtag("config", A.ga4);
+    }
+    if (A.goatcounter) {
+      var s = document.createElement("script");
+      s.async = true;
+      s.src = "https://gc.zgo.at/count.js";
+      s.setAttribute("data-goatcounter", "https://" + encodeURIComponent(A.goatcounter) + ".goatcounter.com/count");
+      document.head.appendChild(s);
+    }
+  }
+  /* 하단 '누적 방문자' 표시: GoatCounter 공개 카운터 (설정에서 'Allow adding visitor counts' 필요, 수 시간 단위로 갱신) */
   function setupVisits() {
-    if (!WH.db || !WH.db.enabled || document.body.hasAttribute("data-no-track")) return;
-    WH.db.trackVisit().then(function () {
-      if (!C.showVisitCounter) return;
-      return WH.db.visitStats().then(function (s) {
+    if (!A.goatcounter || !C.showVisitCounter) return;
+    fetch("https://" + encodeURIComponent(A.goatcounter) + ".goatcounter.com/counter/TOTAL.json")
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (d) {
         var el = document.querySelector(".visit-counter");
-        if (!el || !s) return;
-        el.innerHTML = "<span>" + bi("오늘", "Today") + " <b>" + Number(s.today || 0).toLocaleString() + "</b></span><span>" + bi("전체", "Total") + " <b>" + Number(s.total || 0).toLocaleString() + "</b></span>";
+        if (!el || !d || d.count == null) return;
+        el.innerHTML = "<span>" + bi("누적 방문자", "Total visitors") + " <b>" + WH.esc(d.count) + "</b></span>";
         el.hidden = false;
-      });
-    }).catch(function () {});
+      }).catch(function () {});
   }
 
   /* ---------------- 초기화 ---------------- */

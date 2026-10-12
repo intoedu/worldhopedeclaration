@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="ko" data-lang="ko" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>대한민국 대표 33인 추천 | 세계희망연대</title>
+<meta name="description" content="세계희망선언문 채택 서명자가 될 대한민국 대표 33인(11개 분야 × 분야별 3인)을 추천받습니다. 분야별 선정 기준과 추천 방법을 안내합니다.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="세계희망연대">
+<meta property="og:title" content="대한민국 대표 33인 추천 | 세계희망연대">
+<meta property="og:description" content="세계희망선언 글로벌 대표 — 대한민국 대표 33인을 추천받습니다. 11개 분야 × 분야별 3인.">
+<meta property="og:image" content="assets/img/og-image.png">
+<meta name="theme-color" content="#13294b">
+<link rel="icon" href="assets/img/brand/favicon-64.png" type="image/png" sizes="64x64">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Serif:ital,wght@0,500;0,700;1,500&display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>(function(){try{var l=new URLSearchParams(location.search).get("lang")||localStorage.getItem("wh-lang");if(l==="en"){var h=document.documentElement;h.setAttribute("data-lang","en");h.lang="en";}}catch(e){}})();</script>
+<style>
+  /* ===== 대한민국 대표 33인 추천 페이지 전용 (공통 style.css 토큰 사용) ===== */
+  .k33-anchor { scroll-margin-top: calc(var(--header-h) + 58px); }
+
+  /* 히어로 */
+  .k33-hero { padding: 40px 0 60px; }
+  .k33-hero .breadcrumb { margin-bottom: 8px; }
+  .k33-hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 380px); gap: 32px 64px; align-items: center; }
+  .page-hero.k33-hero p.k33-kicker { margin: 0 0 12px; max-width: none; font-family: var(--f-serif); font-size: clamp(16px, 1.55vw, 19px); font-weight: 500; color: var(--navy-900); }
+  html[data-lang="en"] .page-hero.k33-hero p.k33-kicker { font-family: var(--f-serif-en); }
+  .k33-hero h1 { font-size: clamp(30px, 4vw, 50px); font-weight: 900; letter-spacing: -0.035em; }
+  html[data-lang="en"] .k33-hero h1 { font-weight: 700; letter-spacing: -0.02em; }
+  .k33-hero .page-hero-en { margin-top: 12px; font-size: clamp(13px, 1.4vw, 17px); font-weight: 600; letter-spacing: .24em; }
+  .page-hero.k33-hero p.k33-lead { margin-top: 18px; max-width: 620px; }
+  .k33-hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .k33-badge { position: relative; margin: 0; text-align: center; }
+  .k33-badge img { width: 100%; max-width: 360px; height: auto; margin: 0 auto; border-radius: var(--radius-lg); box-shadow: 0 30px 60px -36px rgba(12, 28, 54, .55); }
+  .k33-badge figcaption { margin-top: 10px; font-size: 13px; color: var(--muted); }
+
+  /* 모집 개요 */
+  .k33-overview { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .k33-ov { padding: 22px 22px 20px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
+  .k33-ov-label { display: flex; align-items: center; gap: 10px; margin: 0 0 8px; font-family: var(--f-display); font-size: 11.5px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--blue-700); }
+  .k33-ov-label svg { width: 18px; height: 18px; }
+  .k33-ov h3 { margin: 0 0 6px; font-family: var(--f-head); font-size: 18px; font-weight: 700; color: var(--navy-900); }
+  .k33-ov p { margin: 0; font-size: 14.5px; line-height: 1.65; color: var(--ink-2); }
+  .k33-ov p b { color: var(--navy-900); }
+  .k33-tbd { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 12px; font-weight: 700; color: #8a5d0d; background: var(--gold-100, #fcf1dc); }
+
+  /* 추천 절차 */
+  .k33-steps { list-style: none; margin: 28px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; counter-reset: k; border-top: 1px solid var(--line); }
+  .k33-steps li { position: relative; padding: 20px 18px 6px 0; }
+  .k33-steps li + li { padding-left: 18px; border-left: 1px solid var(--line); }
+  .k33-steps b { display: block; font-family: var(--f-serif-en); font-size: 14px; font-weight: 700; color: var(--gold-600); }
+  .k33-steps h3 { margin: 6px 0 4px; font-family: var(--f-head); font-size: 17px; font-weight: 700; color: var(--navy-900); }
+  .k33-steps p { margin: 0; font-size: 14px; line-height: 1.6; color: var(--ink-2); }
+
+  /* 분야별 안내 */
+  .k33-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+  .k33-field { border: 1px solid var(--line); border-radius: var(--radius); background: #fff; overflow: hidden; }
+  .k33-field-head { display: flex; align-items: center; gap: 14px; padding: 16px 20px; background: var(--bg-alt, #f5f8fc); border-bottom: 1px solid var(--line); }
+  .k33-field-no { flex-shrink: 0; width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; background: var(--navy-900); color: #fff; font-family: var(--f-serif-en); font-weight: 700; font-size: 15px; }
+  .k33-field-head h3 { margin: 0; font-family: var(--f-head); font-size: 19px; font-weight: 700; color: var(--navy-900); }
+  .k33-field-head small { display: block; font-family: var(--f-serif-en); font-size: 13px; font-weight: 500; color: var(--muted); }
+  .k33-field-head .k33-count { margin-left: auto; font-family: var(--f-serif); font-weight: 700; color: var(--blue-700); white-space: nowrap; }
+  .k33-subs { list-style: none; margin: 0; padding: 0; }
+  .k33-sub { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 4px 12px; align-items: start; padding: 14px 20px; }
+  .k33-sub + .k33-sub { border-top: 1px solid var(--line); }
+  .k33-sub-no { font-family: var(--f-serif-en); font-size: 13px; font-weight: 700; color: var(--muted); padding-top: 2px; }
+  .k33-sub-name { margin: 0; font-family: var(--f-head); font-size: 16px; font-weight: 700; color: var(--navy-900); }
+  .k33-sub-name small { margin-left: 6px; font-family: var(--f-serif-en); font-size: 12.5px; font-weight: 500; color: var(--muted); }
+  .k33-sub-text { margin: 3px 0 0; font-size: 14px; line-height: 1.6; color: var(--ink-2); }
+  .k33-sub .btn { grid-row: span 2; align-self: center; }
+  .k33-fields-note { margin-top: 18px; }
+
+  /* 선정 시 드리는 것 */
+  .k33-award { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 28px 48px; align-items: center; }
+  .k33-award-imgs { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 16px; align-items: end; }
+  .k33-award-imgs figure { margin: 0; }
+  .k33-award-imgs img { width: 100%; height: auto; border-radius: var(--radius); border: 1px solid var(--line); }
+  .k33-award-imgs figcaption { margin-top: 8px; font-size: 13px; color: var(--muted); text-align: center; }
+  .k33-award ul { margin: 16px 0 0; padding-left: 18px; color: var(--ink-2); line-height: 1.8; }
+
+  /* 추천서 (참여하기 페이지 추천서와 같은 모양) */
+  .k33-layout { display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: 40px 64px; align-items: start; }
+  .k33-form h3 { font-size: 23px; }
+  .k33-form .form-card-en { display: block; margin: 0 0 6px; font-family: var(--f-display); font-size: 12px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--blue-700); }
+  .k33-fs { min-width: 0; margin: 0; padding: 0; border: 0; }
+  .k33-fs + .k33-fs { margin-top: 8px; padding-top: 22px; border-top: 1px solid var(--line); }
+  .k33-fs legend { display: flex; align-items: center; gap: 10px; float: left; width: 100%; margin: 0 0 16px; padding: 0; font-family: var(--f-head); font-size: 17px; font-weight: 700; color: var(--navy-900); }
+  .k33-fs legend + * { clear: both; }
+  .k33-fs + .form-grid { margin-top: 22px; padding-top: 22px; border-top: 1px solid var(--line); }
+  .k33-form .consent-box { max-height: 180px; }
+  .k33-form .check + .check { margin-top: 10px; }
+  .k33-form input[readonly] { background: var(--bg-alt, #f5f8fc); color: var(--ink-2); }
+  .k33-side .notice-box { margin-top: 16px; }
+  .k33-side .link-arrow { margin-top: 16px; }
+
+  @media (max-width: 960px) {
+    .k33-hero-grid, .k33-award, .k33-layout { grid-template-columns: minmax(0, 1fr); }
+    .k33-badge img { max-width: 280px; }
+    .k33-overview { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .k33-fields { grid-template-columns: minmax(0, 1fr); }
+    .k33-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .k33-steps li:nth-child(3) { padding-left: 0; border-left: 0; }
+  }
+  @media (max-width: 600px) {
+    .k33-overview, .k33-steps { grid-template-columns: minmax(0, 1fr); }
+    .k33-steps li + li { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
+    .k33-sub { grid-template-columns: 34px minmax(0, 1fr); }
+    .k33-sub .btn { grid-column: 2; grid-row: auto; justify-self: start; margin-top: 8px; }
+    .k33-field-head .k33-count { display: none; }
+  }
+</style>
+</head>
+<body data-page="korea33" data-nav="global33" data-title-en="Nominate Korea’s 33 Representatives | World Hope Declaration Network">
+<div id="site-header"></div>
+
+<main id="main">
+  <!-- ===== 히어로 ===== -->
+  <section class="page-hero k33-hero">
+    <div class="container k33-hero-grid">
+      <div>
+        <nav class="breadcrumb" aria-label="breadcrumb"><a href="index.html"><span class="ko">홈</span><span class="en">Home</span></a><span aria-hidden="true">/</span><a href="global33.html"><span class="ko">글로벌 33</span><span class="en">Global 33</span></a><span aria-hidden="true">/</span><span><span class="ko">대한민국 대표 33인 추천</span><span class="en">Nominate Korea’s 33</span></span></nav>
+        <p class="k33-kicker"><span class="ko">세계희망선언문 채택 서명자 · 글로벌 대표</span><span class="en">Signatories of the World Hope Declaration · Global Representatives</span></p>
+        <h1><span class="ko">대한민국 대표 33인을 추천받습니다</span><span class="en">Nominate Korea’s 33 Representatives</span></h1>
+        <p class="page-hero-en">KOREA’S 33 GLOBAL REPRESENTATIVES</p>
+        <p class="k33-lead"><span class="ko">세계희망선언의 정신에 동의하고 지구와 인류의 더 나은 미래를 위해 헌신하는 분을 추천해 주세요. 11개 분야에서 분야별 3인, 모두 <b data-stat="per_country">33</b>인을 선정합니다.</span><span class="en">Recommend someone who shares the spirit of the World Hope Declaration and is devoted to a better future for humanity and the Earth. Three people will be selected in each of 11 fields — <b data-stat="per_country">33</b> in all.</span></p>
+        <div class="k33-hero-actions">
+          <a class="btn btn-primary btn-lg" href="#form"><span class="ko">추천서 작성하기</span><span class="en">Write a nomination</span><span data-icon="arrow-right"></span></a>
+          <a class="btn btn-outline btn-lg" href="#fields"><span class="ko">분야별 안내 보기</span><span class="en">See the 11 fields</span><span data-icon="arrow-right"></span></a>
+        </div>
+      </div>
+      <figure class="k33-badge">
+        <img src="assets/img/award/plaque.webp" width="605" height="680" alt="세계희망선언 글로벌 대표 33인 선정패 예시" data-en-alt="Sample plaque for World Hope Declaration Global Representatives">
+        <figcaption><span class="ko">글로벌 대표 선정패 (예시 이미지)</span><span class="en">Global Representative plaque (sample image)</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===== 모집 개요 ===== -->
+  <section class="section k33-anchor" id="overview" aria-labelledby="overview-title">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">OVERVIEW</span>
+        <h2 class="section-title" id="overview-title"><span class="ko">모집 개요</span><span class="en">Overview</span></h2>
+      </div>
+      <div class="k33-overview">
+        <div class="k33-ov">
+          <p class="k33-ov-label"><span data-icon="group"></span>Representatives</p>
+          <h3><span class="ko">선정 인원</span><span class="en">Number</span></h3>
+          <p><span class="ko"><b><span data-stat="fields">11</span>개 분야 × 분야별 <span data-stat="per_field">3</span>인 = <span data-stat="per_country">33</span>인</b></span><span class="en"><b><span data-stat="fields">11</span> fields × <span data-stat="per_field">3</span> persons = <span data-stat="per_country">33</span></b></span></p>
+        </div>
+        <div class="k33-ov">
+          <p class="k33-ov-label"><span data-icon="heart"></span>Who</p>
+          <h3><span class="ko">추천 대상</span><span class="en">Who to nominate</span></h3>
+          <p><span class="ko">세계희망선언의 정신에 동의하고 지구와 인류의 더 나은 미래를 위해 헌신하는 대한민국의 인물</span><span class="en">A person in Korea who shares the spirit of the World Hope Declaration and is devoted to a better future for humanity and the Earth</span></p>
+        </div>
+        <div class="k33-ov">
+          <p class="k33-ov-label"><span data-icon="doc"></span>How</p>
+          <h3><span class="ko">추천 방법</span><span class="en">How to nominate</span></h3>
+          <p><span class="ko">이 페이지의 <a href="#form">온라인 추천서</a> 또는 전국대표전화 <a href="tel:15882716"><b>1588-2716</b></a></span><span class="en">Use the <a href="#form">online form</a> on this page or call <a href="tel:15882716"><b>1588-2716</b></a></span></p>
+        </div>
+        <div class="k33-ov">
+          <p class="k33-ov-label"><span data-icon="calendar"></span>Period</p>
+          <h3><span class="ko">모집 기간</span><span class="en">Period</span></h3>
+          <p><span class="ko">추후 공지 <span class="k33-tbd">확정 예정</span></span><span class="en">To be announced <span class="k33-tbd">TBA</span></span></p>
+        </div>
+        <div class="k33-ov">
+          <p class="k33-ov-label"><span data-icon="filecheck"></span>Selection</p>
+          <h3><span class="ko">선정</span><span class="en">Selection</span></h3>
+          <p><span class="ko">세계희망선언위원회가 분야별 선정 기준(예시)에 따라 검토합니다. 세부 절차는 확정되는 대로 안내합니다.</span><span class="en">The World Hope Declaration Council reviews nominations against the field criteria (examples). Details will be announced once finalized.</span></p>
+        </div>
+        <div class="k33-ov">
+          <p class="k33-ov-label"><span data-icon="award"></span>Recognition</p>
+          <h3><span class="ko">선정 시</span><span class="en">If selected</span></h3>
+          <p><span class="ko">글로벌 대표 선정패 · ID 카드 · 배지 (예시)</span><span class="en">Global Representative plaque, ID card and pin (examples)</span></p>
+        </div>
+      </div>
+
+      <ol class="k33-steps" aria-label="추천 절차" data-en-aria-label="Nomination steps">
+        <li><b>STEP 01</b><h3><span class="ko">추천서 제출</span><span class="en">Submit</span></h3><p><span class="ko">분야를 골라 온라인 추천서를 보내거나 전화로 추천합니다.</span><span class="en">Choose a field and send the online form, or call us.</span></p></li>
+        <li><b>STEP 02</b><h3><span class="ko">접수 확인</span><span class="en">Confirmation</span></h3><p><span class="ko">담당자가 접수 내용과 피추천인 본인의 동의를 확인합니다.</span><span class="en">Our staff confirm the details and the nominee’s consent.</span></p></li>
+        <li><b>STEP 03</b><h3><span class="ko">검토·선정</span><span class="en">Review</span></h3><p><span class="ko">세계희망선언위원회가 분야별 기준에 따라 검토합니다.</span><span class="en">The Council reviews nominations by field.</span></p></li>
+        <li><b>STEP 04</b><h3><span class="ko">선정 안내</span><span class="en">Notification</span></h3><p><span class="ko">선정되신 분께 개별로 안내드립니다.</span><span class="en">Selected nominees are notified individually.</span></p></li>
+      </ol>
+      <p class="muted" style="margin-top:12px;font-size:13.5px"><span class="ko">※ 추천 절차는 확정 시 바뀔 수 있습니다. 추천이 곧 선정을 뜻하지는 않습니다.</span><span class="en">※ The process may change once finalized. A nomination does not guarantee selection.</span></p>
+    </div>
+  </section>
+
+  <!-- ===== 분야별 안내 ===== -->
+  <section class="section section-sky k33-anchor" id="fields" aria-labelledby="fields-title">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">11 FIELDS × 3</span>
+        <h2 class="section-title" id="fields-title"><span class="ko">분야별 추천 안내</span><span class="en">Guide by Field</span></h2>
+        <p class="section-lead"><span class="ko">각국 33인 세계희망선언문 채택 서명자 선정 기준입니다. 추천하실 분에게 맞는 세부 분야를 골라 <b>‘이 분야로 추천’</b>을 누르면 추천서에 분야가 미리 선택됩니다.</span><span class="en">Selection criteria for the 33 signatories per country. Pick the sub-field that fits your nominee and press <b>“Nominate in this field”</b> — the form will be pre-filled.</span></p>
+      </div>
+      <div class="k33-fields" id="k33-fields" aria-live="polite">
+        <p class="muted"><span class="ko">분야 안내를 불러오는 중입니다…</span><span class="en">Loading the fields…</span></p>
+      </div>
+      <div class="notice-box blue k33-fields-note"><span class="ko">선정 기준은 예시이며 확정 시 바뀔 수 있습니다.</span><span class="en">These criteria are examples and may change when finalized.</span></div>
+    </div>
+  </section>
+
+  <!-- ===== 선정 시 ===== -->
+  <section class="section k33-anchor" id="award" aria-labelledby="award-title">
+    <div class="container k33-award">
+      <div class="k33-award-imgs">
+        <figure>
+          <img src="assets/img/award/plaque.webp" width="605" height="680" alt="글로벌 대표 33인 선정패 예시" data-en-alt="Sample plaque" loading="lazy">
+          <figcaption><span class="ko">선정패 (예시)</span><span class="en">Plaque (sample)</span></figcaption>
+        </figure>
+        <figure>
+          <img src="assets/img/award/pin.webp" width="376" height="306" alt="세계희망선언 배지 예시" data-en-alt="Sample pin badge" loading="lazy">
+          <figcaption><span class="ko">배지 (예시)</span><span class="en">Pin badge (sample)</span></figcaption>
+        </figure>
+      </div>
+      <div>
+        <span class="eyebrow">RECOGNITION</span>
+        <h2 class="section-title" id="award-title"><span class="ko">선정되신 분께</span><span class="en">For Those Selected</span></h2>
+        <p class="section-lead"><span class="ko">“당신은 세계희망선언의 정신에 동의하고 지구와 인류의 더 나은 미래를 위해 헌신하는 글로벌 대표로 선정되었기에 이 패를 드립니다.”</span><span class="en">“In recognition of your commitment to the World Hope Declaration and your contribution to a better future for humanity and the Earth.”</span></p>
+        <ul>
+          <li><span class="ko">글로벌 대표 선정패</span><span class="en">Global Representative plaque</span></li>
+          <li><span class="ko">글로벌 대표 ID 카드 — <a href="global33.html#idcard">예시 보기</a></span><span class="en">Global Representative ID card — <a href="global33.html#idcard">see the sample</a></span></li>
+          <li><span class="ko">세계희망선언 배지</span><span class="en">World Hope Declaration pin</span></li>
+        </ul>
+        <p class="muted" style="font-size:13.5px"><span class="ko">※ 위 이미지와 구성은 예시이며, 실제 수여 내용은 확정 후 안내합니다.</span><span class="en">※ Images and items are examples; final details will be announced.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 추천서 ===== -->
+  <section class="section section-sky k33-anchor" id="form" aria-labelledby="form-title">
+    <div class="container k33-layout">
+      <aside class="k33-side">
+        <span class="eyebrow">NOMINATION</span>
+        <h2 class="section-title" id="form-title"><span class="ko">대표 33인 추천서</span><span class="en">Nomination Form</span></h2>
+        <p class="section-lead"><span class="ko">보내 주신 추천은 이메일로 담당자에게 전달되며, 확인 후 연락드립니다.</span><span class="en">Your nomination is sent to our staff by email; we will contact you after review.</span></p>
+        <div class="notice-box"><span class="ko">추천하시기 전에 꼭 <b>피추천인 본인</b>에게 추천 사실을 알리고, 이름·소속 등 정보를 보내는 것에 대한 동의를 받아 주세요.</span><span class="en">Before you nominate someone, please tell <b>the nominee</b> and obtain their permission to share their information with us.</span></div>
+        <a class="link-arrow" href="#fields"><span class="ko">분야별 선정 기준 보기</span><span class="en">Selection criteria by field</span></a>
+        <p class="muted" style="margin-top:18px;font-size:14px"><span class="ko">전화 추천·문의: 전국대표전화 <a href="tel:15882716"><b>1588-2716</b></a></span><span class="en">By phone: <a href="tel:15882716"><b>1588-2716</b></a></span></p>
+      </aside>
+
+      <form class="form-card k33-form" id="k33-form" data-wh-form="nominations" data-subject-ko="[세계희망연대 홈페이지] 대한민국 대표 33인 추천" data-ok-ko="추천이 담당자에게 전달되었습니다. 확인 후 연락드리겠습니다. 감사합니다." data-ok-en="Your nomination has been sent to our staff. We will contact you after review. Thank you.">
+        <span class="form-card-en">Nomination · Republic of Korea</span>
+        <h3><span class="ko">대한민국 대표 33인 추천서</span><span class="en">Korea’s 33 — Nomination</span></h3>
+        <p><span class="ko"><span style="color:var(--danger)">*</span> 표시는 필수 입력 항목입니다.</span><span class="en">Fields marked <span style="color:var(--danger)">*</span> are required.</span></p>
+
+        <fieldset class="k33-fs">
+          <legend><span class="ko">추천인 정보</span><span class="en">About you</span></legend>
+          <div class="form-grid">
+            <div class="field">
+              <label for="k-name"><span class="ko">이름</span><span class="en">Your name</span><span class="req">*</span></label>
+              <input type="text" id="k-name" name="name" maxlength="40" required autocomplete="name" data-label="추천인 이름">
+            </div>
+            <div class="field">
+              <label for="k-rel"><span class="ko">피추천인과의 관계</span><span class="en">Relationship to nominee</span></label>
+              <input type="text" id="k-rel" name="relation" maxlength="40" autocomplete="off" data-label="피추천인과의 관계" placeholder="예) 동료, 지인, 본인" data-en-placeholder="e.g. colleague, friend, self">
+            </div>
+            <div class="field">
+              <label for="k-phone"><span class="ko">연락처</span><span class="en">Phone</span><span class="req">*</span></label>
+              <input type="tel" id="k-phone" name="phone" maxlength="20" required autocomplete="tel" placeholder="010-0000-0000" data-label="추천인 연락처">
+            </div>
+            <div class="field">
+              <label for="k-email"><span class="ko">이메일</span><span class="en">Email</span><span class="req">*</span></label>
+              <input type="email" id="k-email" name="email" maxlength="80" required autocomplete="email" placeholder="name@example.com" data-label="추천인 이메일">
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="k33-fs">
+          <legend><span class="ko">피추천인 정보</span><span class="en">About the nominee</span></legend>
+          <div class="form-grid">
+            <div class="field">
+              <label for="k-nominee"><span class="ko">이름</span><span class="en">Nominee’s name</span><span class="req">*</span></label>
+              <input type="text" id="k-nominee" name="nominee_name" maxlength="40" required autocomplete="off" data-label="피추천인 이름">
+            </div>
+            <div class="field">
+              <label for="k-country"><span class="ko">국가</span><span class="en">Country</span></label>
+              <input type="text" id="k-country" name="nominee_country" value="대한민국" readonly data-label="피추천인 국가">
+            </div>
+            <div class="field">
+              <label for="k-field"><span class="ko">추천 분야</span><span class="en">Field</span><span class="req">*</span></label>
+              <select id="k-field" name="nominee_field" required data-label="추천 분야">
+                <option value="" data-en="Select a field">분야를 골라 주세요</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="k-sub"><span class="ko">세부 분야</span><span class="en">Sub-field</span><span class="req">*</span></label>
+              <select id="k-sub" name="nominee_subfield" required data-label="세부 분야">
+                <option value="" data-en="Select a field first">분야를 먼저 골라 주세요</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label for="k-org"><span class="ko">소속·직함</span><span class="en">Organization & title</span></label>
+              <input type="text" id="k-org" name="nominee_org" maxlength="80" autocomplete="off" data-label="피추천인 소속·직함">
+            </div>
+            <div class="field full">
+              <label for="k-intro"><span class="ko">주요 활동과 추천 사유</span><span class="en">Main activities and reason</span><span class="req">*</span></label>
+              <textarea id="k-intro" name="nominee_intro" maxlength="2000" required data-label="주요 활동·추천 사유" placeholder="피추천인의 공개된 활동과 공적, 추천하시는 이유를 적어 주세요." data-en-placeholder="Describe the nominee’s public work and why you recommend them."></textarea>
+              <p class="hint"><span class="ko">공개된 활동 위주로 적어 주시고, 건강·신앙 등 민감한 정보나 주민등록번호는 적지 말아 주세요.</span><span class="en">Please focus on public activities and leave out sensitive details (health, beliefs) and ID numbers.</span></p>
+            </div>
+            <div class="field full">
+              <label for="k-link"><span class="ko">참고 링크 (선택)</span><span class="en">Reference link (optional)</span></label>
+              <input type="url" id="k-link" name="nominee_link" maxlength="300" autocomplete="off" data-label="참고 링크" placeholder="기사·홈페이지 주소" data-en-placeholder="Article or website URL">
+            </div>
+            <div class="field full">
+              <label for="k-contact"><span class="ko">피추천인 연락처 (선택)</span><span class="en">Nominee’s phone or email (optional)</span></label>
+              <input type="text" id="k-contact" name="nominee_contact" maxlength="80" autocomplete="off" data-label="피추천인 연락처" placeholder="전화번호 또는 이메일" data-en-placeholder="Phone number or email">
+              <p class="hint"><span class="ko">피추천인 본인이 동의한 경우에만 적어 주세요.</span><span class="en">Only if the nominee has agreed to share it.</span></p>
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="form-grid">
+          <div class="hp-field" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
+          <div class="field full">
+            <span class="label"><span class="ko">개인정보 수집·이용 동의</span><span class="en">Consent to collection and use of personal information</span><span class="req">*</span></span>
+            <div class="consent-box" tabindex="0" role="region" aria-label="개인정보 수집·이용 안내" data-en-aria-label="Privacy notice">
+              <div class="ko">
+                · 수집 항목: (추천인) 이름, 연락처, 이메일, 피추천인과의 관계(선택) / (피추천인) 이름, 국가, 추천 분야·세부 분야, 소속·직함(선택), 주요 활동과 추천 사유, 참고 링크(선택), 연락처(선택)<br>
+                · 수집 목적: 대한민국 대표 33인 추천의 접수·검토와 추천인·피추천인 연락<br>
+                · 피추천인 정보: 다른 사람의 개인정보를 적으실 때에는 미리 피추천인 본인에게 추천 사실을 알리고 정보 제공에 대한 동의를 받아야 합니다. 피추천인이 요청하면 정보를 받은 경로(추천인)와 이용 목적을 알려 드리며, 피추천인이 원하지 않으면 지체 없이 삭제합니다.<br>
+                · 전달 방법: 입력하신 내용은 홈페이지에 저장되지 않고, 외부 이메일 전송 서비스 FormSubmit(formsubmit.co, 서버가 국외에 있을 수 있음)을 거쳐 담당자 이메일로 전달됩니다. 전송이 원활하지 않으면 이용자의 메일 앱으로 직접 보내실 수 있습니다.<br>
+                · 보유 기간: 담당자 메일함에 보관하며 검토(회신) 완료 후 1년 이내에 삭제 (동의 철회 또는 피추천인의 삭제 요청 시 지체 없이 파기)<br>
+                · 동의를 거부하실 수 있으며, 이 경우 온라인 추천이 제한됩니다. 전화(1588-2716)로는 추천·문의하실 수 있습니다.
+              </div>
+              <div class="en">
+                · Items: (you) name, phone, email, relationship (optional) / (nominee) name, country, field and sub-field, organization and title (optional), main activities and reason, reference link (optional), phone or email (optional)<br>
+                · Purpose: to receive and review nominations for Korea’s 33 Representatives and to contact you and the nominee<br>
+                · About the nominee: before you share another person’s information, you must tell them about the nomination and obtain their permission. If the nominee asks, we will tell them where we received their information (you) and why we use it, and we will delete it promptly if they do not wish us to keep it.<br>
+                · Delivery: your submission is not stored on this website. It is sent to our staff by email through a third-party email relay service, FormSubmit (formsubmit.co), whose servers may be located outside Korea. If online delivery fails, you can send it from your own email app instead.<br>
+                · Retention: kept in the staff mailbox and deleted within 1 year after the review is completed (deleted promptly upon withdrawal of consent or at the nominee’s request)<br>
+                · You may decline; online nomination will then be unavailable, but you can still contact us at 1588-2716.
+              </div>
+            </div>
+            <label class="check"><input type="checkbox" name="consent" required data-label="개인정보 수집·이용 동의 (추천인·피추천인 정보)"> <span><span class="ko">위 내용을 확인했으며 개인정보 수집·이용에 동의합니다. (<a href="privacy.html">개인정보처리방침</a>)</span><span class="en">I have read the above and agree. (<a href="privacy.html">Privacy Policy</a>)</span></span></label>
+            <label class="check"><input type="checkbox" name="nominee_consent" value="yes" required data-label="피추천인 본인 동의 확인" data-msg-ko="피추천인 본인의 동의를 받으셨는지 확인해 주세요." data-msg-en="Please confirm that the nominee has agreed to share their information."> <span><span class="ko">피추천인 본인에게 추천 사실을 알리고, 위 정보를 보내는 것에 대한 동의를 받았습니다.</span><span class="en">I have told the nominee about this nomination and they have agreed to share the information above.</span></span></label>
+          </div>
+          <div class="full">
+            <button type="submit" class="btn btn-primary btn-lg btn-block"><span class="ko">추천서 보내기</span><span class="en">Send nomination</span></button>
+            <p class="form-status" role="status"></p>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/forms.js"></script>
+<script>
+  /* 분야별 안내 렌더링 + 추천서 분야·세부 분야 연동 (data/selection-criteria.json) */
+  (function () {
+    "use strict";
+    var box = document.getElementById("k33-fields");
+    var fieldSel = document.getElementById("k33-form") && document.getElementById("k-field");
+    var subSel = document.getElementById("k-sub");
+    var rows = [];
+    var esc = WH.esc;
+    function pad(n) { return (n < 10 ? "0" : "") + n; }
+    function groups() {
+      var out = [];
+      rows.forEach(function (r) {
+        var g = out[out.length - 1];
+        if (!g || g.no !== r.field_no) { g = { no: r.field_no, ko: r.field_ko, en: r.field_en, subs: [] }; out.push(g); }
+        g.subs.push(r);
+      });
+      return out;
+    }
+    function opt(value, ko, en, selected) {
+      var o = document.createElement("option");
+      o.value = value; o.setAttribute("data-ko", ko); o.setAttribute("data-en", en);
+      o.textContent = WH.lang() === "en" ? en : ko;
+      if (selected) o.selected = true;
+      return o;
+    }
+    function fillFields() {
+      var cur = fieldSel.value;
+      while (fieldSel.options.length > 1) fieldSel.remove(1);
+      groups().forEach(function (g) { fieldSel.appendChild(opt(pad(g.no), g.no + ". " + g.ko, g.no + ". " + g.en, pad(g.no) === cur)); });
+    }
+    function fillSubs(selectNo) {
+      var f = parseInt(fieldSel.value, 10);
+      while (subSel.options.length) subSel.remove(0);
+      if (!f) { subSel.appendChild(opt("", "분야를 먼저 골라 주세요", "Select a field first", true)); return; }
+      subSel.appendChild(opt("", "세부 분야를 골라 주세요", "Select a sub-field", !selectNo));
+      rows.filter(function (r) { return r.field_no === f; }).forEach(function (r) {
+        subSel.appendChild(opt(String(r.no), r.no + ". " + r.sub_ko, r.no + ". " + r.sub_en, String(r.no) === String(selectNo)));
+      });
+    }
+    function render() {
+      if (!rows.length) return;
+      box.innerHTML = groups().map(function (g) {
+        return '<article class="k33-field" id="field-' + pad(g.no) + '">' +
+          '<header class="k33-field-head"><span class="k33-field-no">' + g.no + "</span><div><h3>" + esc(WH.t(g.ko, g.en)) + "</h3><small>" + esc(WH.t(g.en, g.ko)) + "</small></div>" +
+          '<span class="k33-count">' + WH.t(g.subs.length + "인", g.subs.length + " persons") + "</span></header>" +
+          '<ul class="k33-subs">' + g.subs.map(function (r) {
+            return '<li class="k33-sub"><span class="k33-sub-no">' + pad(r.no) + "</span>" +
+              '<div><p class="k33-sub-name">' + esc(WH.t(r.sub_ko, r.sub_en)) + "<small>" + esc(WH.t(r.sub_en, r.sub_ko)) + "</small></p>" +
+              '<p class="k33-sub-text">' + esc(WH.t(r.criteria_ko, r.criteria_en)) + "</p></div>" +
+              '<button type="button" class="btn btn-outline btn-sm" data-pick="' + r.no + '">' + WH.t("이 분야로 추천", "Nominate in this field") + "</button></li>";
+          }).join("") + "</ul></article>";
+      }).join("");
+    }
+    box.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-pick]");
+      if (!b) return;
+      var r = rows.filter(function (x) { return String(x.no) === b.getAttribute("data-pick"); })[0];
+      if (!r) return;
+      fieldSel.value = pad(r.field_no);
+      fillSubs(r.no);
+      document.getElementById("form").scrollIntoView({ behavior: "smooth", block: "start" });
+      setTimeout(function () { document.getElementById("k-nominee").focus({ preventScroll: true }); }, 500);
+    });
+    fieldSel.addEventListener("change", function () { fillSubs(); });
+    document.addEventListener("wh:lang", function () { render(); fillFields(); fillSubs(subSel.value); });
+    WH.db.json("selection-criteria").then(function (d) {
+      rows = (d && d.rows) || [];
+      if (!rows.length) { box.innerHTML = '<p class="muted">' + WH.t("분야 안내를 불러오지 못했습니다. 전국대표전화 1588-2716으로 문의해 주세요.", "Could not load the fields. Please call 1588-2716.") + "</p>"; return; }
+      render(); fillFields(); fillSubs();
+      if (location.hash && /^#field-\d\d$/.test(location.hash)) { var t = document.querySelector(location.hash); if (t) t.scrollIntoView(); }
+    });
+  })();
+</script>
+</body>
+</html>

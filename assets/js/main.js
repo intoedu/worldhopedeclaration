@@ -277,7 +277,8 @@
     gallery: "news",
     donate: "join",
     contact: "about",
-    faq: "about"
+    faq: "about",
+    korea33: "global33"
   };
   // 모바일 하단 탭바
   var TABS = [
@@ -288,6 +289,7 @@
   ];
   // 모바일 전체 메뉴 아래쪽 바로가기
   var MORE = [
+    { id: "korea33", href: "korea33.html", icon: "group", ko: "대한민국 대표 33인 추천", en: "Nominate Korea’s 33" },
     { id: "donate", href: "donate.html", icon: "heart", ko: "후원·헌금", en: "Give" },
     { id: "contact", href: "contact.html", icon: "mail", ko: "문의하기", en: "Contact" },
     { id: "faq", href: "faq.html", icon: "message", ko: "자주 묻는 질문", en: "FAQ" },
@@ -522,6 +524,7 @@
     { href: "declaration.html", ko: "세계희망선언문", en: "The Declaration", dko: "세계희망선언 5대 원칙과 5대 가치 — 이중개념·종속구조·수평논리·중심기축·공평화합", den: "Five principles and five values — Dualism, Dependent Structure, Horizontal Logic, Centrium, R.P.U.", k: "선언문 5대 원칙 five principles 이중개념 dualism 종속구조 dependent structure 수평논리 horizontal logic 중심기축 centrium 공평화합 rpu righteousness peace united 5대 가치 values 평화 지구환경 planet 사람 people 연대 partnership 실천 action" },
     { href: "vision.html", ko: "비전과 미션", en: "Vision & Mission", dko: "세계희망선언이 향하는 비전과 사명", den: "The vision and mission of the World Hope Declaration", k: "비전 미션 vision mission 사명 목표 goal 사역 ministry 선교행진 mission march" },
     { href: "global33.html", ko: "글로벌 33", en: "Global 33", dko: "각국 글로벌 대표 33인 선정 — 11개 분야 × 분야별 3인", den: "33 Global Representatives per country — 11 fields × 3 persons each", k: "33인 대표 representatives 11개 분야 fields 사회영향력 국위선양 교육계 문화예술계 종교계 산업계 국방사회안전 의료계 생업종사자 시민 정치계 id card 카드 패 plaque" },
+    { href: "korea33.html", ko: "대한민국 대표 33인 추천", en: "Nominate Korea’s 33", dko: "세계희망선언문 채택 서명자 · 11개 분야 × 3인 추천 안내와 추천서", den: "Nominate Korea’s 33 representatives — guide by field and nomination form", k: "추천 nominate nomination 대한민국 korea 33인 대표 서명자 signatory 선정 기준 criteria 분야 field 추천서" },
     { href: "worldmap.html", ko: "세계지도", en: "World Map", dko: "세계희망선언 대상 국가와 국가별 대표 선정 현황", den: "Countries of the World Hope Declaration and selection status", k: "세계지도 world map 지도 국가 countries nations 현황 status 대한민국 korea" },
     { href: "news.html", ko: "소식", en: "News", dko: "공지사항 · 소식 · 언론보도", den: "Notices, news and press", k: "공지 notice 소식 news 언론보도 press 게시판 board" },
     { href: "join.html", ko: "참여하기", en: "Join", dko: "세계희망선언에 참여하고 함께 희망을 선언합니다", den: "Join the World Hope Declaration", k: "참여 join 신청 apply 참가 동역 partner 응원 cheer" },

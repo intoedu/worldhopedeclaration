@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /admin/
+# Sitemap: (도메인 확정 후 `node scripts/set-domain.mjs https://도메인` 실행 시 자동 추가)

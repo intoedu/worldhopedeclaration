@@ -1,0 +1,35 @@
+[
+  {
+    "id": "welcome",
+    "category": "notice",
+    "pinned": true,
+    "published": true,
+    "created_at": "2026-10-08T09:00:00+09:00",
+    "title_ko": "세계희망연대 홈사이트를 엽니다",
+    "title_en": "The World Hope Alliance Website Is Now Open",
+    "body_ko": "선악을 아는 지식을 미혹으로 받아 머리에 장착하고 사는 사람들은 그 지식으로 인해 지금 같은 유토피아도 만들었지만, 다툼과 반목과 이기로 가득한 전쟁터를 만든 현실의 이중성을 꼬집으며, 그 속에 종속된 인간을 수평의 사상과 중심진리인 사랑의 속성을 되찾아 하나님 나라로 귀화하는 인생 시나리오를 세상에 구체적으로 펼쳐가는 대장정의 선교행진이랍니다.\n\n그 시작을 대중 속에서 함께 이어가기 위해 오늘 이 홈사이트를 엽니다.\n\n앞으로 이곳을 통해 세계희망선언과 세계희망연대의 소식을 전해 드리겠습니다. 많은 관심과 응원 부탁드립니다.\n\n세계희망연대",
+    "body_en": "Humanity, having received the knowledge of good and evil through deception and carrying it in their minds, has used that knowledge to build today’s near-utopia — and yet has also made the world a battlefield full of strife, hostility and selfishness. Pointing to this duality of our reality, this is a long mission march that unfolds before the world, in concrete ways, a life scenario in which people bound within it recover a horizontal way of thinking and the nature of love — the central truth — and become naturalized citizens of the Kingdom of God.\n\nToday we open this website to carry that beginning forward together with the public.\n\nThrough this site we will share news of the World Hope Declaration and the World Hope Alliance. We ask for your interest and encouragement.\n\nWorld Hope Alliance"
+  },
+  {
+    "id": "site-guide",
+    "category": "notice",
+    "pinned": false,
+    "published": true,
+    "created_at": "2026-10-08T09:10:00+09:00",
+    "title_ko": "홈페이지 이용 안내 (한/영 전환 · QR코드 · 문의)",
+    "title_en": "How to Use This Website (Language · QR Code · Contact)",
+    "body_ko": "세계희망연대 홈페이지 이용 방법을 안내해 드립니다.\n\n1. 한국어/영어 전환 — 화면 맨 위의 KOR / ENG 버튼으로 언어를 바꿀 수 있습니다.\n2. QR코드 — 맨 위의 ‘QR코드’ 버튼을 누르면 지금 보고 계신 페이지의 QR코드가 나타납니다. ‘QR코드’ 페이지에서는 홈페이지와 각 메뉴의 QR코드를 만들어 저장하고 인쇄할 수 있습니다.\n3. 문의·참여 신청 — ‘문의하기’ 메뉴에서 일반 문의와 참여·동역 신청을 남기실 수 있습니다.\n4. 후원·헌금 — ‘후원·헌금’ 메뉴에서 후원 방법을 확인하실 수 있습니다.\n\n전국대표전화 1588-2716",
+    "body_en": "Here is how to use the World Hope Alliance website.\n\n1. Language — Use the KOR / ENG buttons at the very top of the page to switch languages.\n2. QR code — Tap “QR Code” at the top to show a QR code for the page you are viewing. On the QR Code page you can create, save and print QR codes for the website and each menu.\n3. Contact & participation — Use the Contact page to send a general inquiry or apply to take part.\n4. Giving — See the Give page for ways to support the mission.\n\nMain line (Korea): 1588-2716"
+  },
+  {
+    "id": "join-cheer",
+    "category": "news",
+    "pinned": false,
+    "published": true,
+    "created_at": "2026-10-08T09:20:00+09:00",
+    "title_ko": "희망 응원 메시지와 참여 신청을 받습니다",
+    "title_en": "We Welcome Messages of Hope and Applications to Join",
+    "body_ko": "세계희망연대는 희망의 선교행진을 국민 모두와 함께 이어가고자 합니다.\n\n홈 화면의 ‘희망 응원 메시지’에 한마디를 남겨 주세요. 남겨 주신 메시지는 확인 후 홈페이지에 게시됩니다.\n\n함께 걷고자 하시는 분은 ‘문의하기’에서 ‘참여·동역 신청’을 선택해 연락처를 남겨 주시면 담당자가 연락드리겠습니다.",
+    "body_en": "The World Hope Alliance hopes to carry this mission march of hope forward together with everyone.\n\nPlease leave a few words in “Messages of Hope” on the home page. Messages are posted on the website after review.\n\nIf you would like to walk with us, choose “Join / Partner” on the Contact page and leave your details — we will get in touch."
+  }
+]

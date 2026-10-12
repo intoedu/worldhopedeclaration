@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500">
+<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e3ecfb"/><stop offset="1" stop-color="#bcd2f6"/></linearGradient></defs>
+<rect width="400" height="500" fill="url(#g)"/>
+<circle cx="200" cy="190" r="78" fill="#ffffff" fill-opacity=".75"/>
+<path d="M60 500c0-92 63-158 140-158s140 66 140 158z" fill="#ffffff" fill-opacity=".75"/>
+<text x="200" y="470" text-anchor="middle" font-family="Pretendard, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif" font-size="20" fill="#1a4ba8" font-weight="600">대표자 사진 준비 중</text>
+</svg>

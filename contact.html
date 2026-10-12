@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ko" data-lang="ko" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>문의하기 | 세계희망연대</title>
+<meta name="description" content="세계희망연대에 문의하거나 참여·동역을 신청해 주세요. 전국대표전화 1588-2716">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="세계희망연대">
+<meta property="og:title" content="문의하기 | 세계희망연대">
+<meta property="og:description" content="문의 및 참여·동역 신청 · 전국대표전화 1588-2716">
+<meta property="og:image" content="assets/img/og-image.png">
+<meta name="theme-color" content="#0b1f44">
+<link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700&display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>(function(){try{var l=new URLSearchParams(location.search).get("lang")||localStorage.getItem("wh-lang");if(l==="en"){var h=document.documentElement;h.setAttribute("data-lang","en");h.lang="en";}}catch(e){}})();</script>
+</head>
+<body data-page="contact" data-title-en="Contact | World Hope Alliance">
+<div id="site-header"></div>
+
+<main id="main">
+  <section class="page-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="breadcrumb"><a href="index.html"><span class="ko">홈</span><span class="en">Home</span></a><span aria-hidden="true">/</span><span><span class="ko">문의하기</span><span class="en">Contact</span></span></nav>
+      <h1><span class="ko">문의하기</span><span class="en">Contact Us</span></h1>
+      <p><span class="ko">궁금한 점, 참여·동역 신청, 협력 제안을 남겨 주세요. 확인 후 연락드리겠습니다.</span><span class="en">Send us your questions, applications to join, or partnership proposals. We’ll get back to you.</span></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="contact-layout">
+        <aside class="contact-side">
+          <div class="contact-tile navy">
+            <h3><span class="ko">전국대표전화</span><span class="en">Main line (Korea)</span></h3>
+            <a class="phone" href="tel:15882716">1588-2716</a>
+            <span class="ko">전화로도 편하게 문의하실 수 있습니다.</span><span class="en">Feel free to call us as well.</span>
+          </div>
+          <div class="contact-tile">
+            <h3><span class="ko">주소</span><span class="en">Address</span></h3>
+            <p class="mb-0"><span class="ko">세종특별자치시 보람동 732</span><span class="en">732 Boram-dong, Sejong-si, Republic of Korea</span></p>
+            <a class="link-arrow mt-2" href="about.html#location"><span class="ko">오시는 길</span><span class="en">Directions</span></a>
+          </div>
+          <div class="contact-tile">
+            <h3><span class="ko">이런 내용을 남겨 주세요</span><span class="en">What you can send us</span></h3>
+            <ul>
+              <li><span class="ko">세계희망연대·희망선언에 관한 일반 문의</span><span class="en">General questions about the Alliance and the Declaration</span></li>
+              <li><span class="ko">선교행진 참여·동역 신청</span><span class="en">Applications to join or partner</span></li>
+              <li><span class="ko">후원 관련 문의</span><span class="en">Questions about giving</span></li>
+              <li><span class="ko">단체·교회 협력 제안, 언론·취재 요청</span><span class="en">Partnership proposals, media requests</span></li>
+            </ul>
+          </div>
+        </aside>
+
+        <form class="form-card" id="contact-form" data-wh-form="inquiries" data-subject-ko="[세계희망연대 홈페이지] 문의" data-ok-ko="문의가 담당자에게 전달되었습니다. 확인 후 연락드리겠습니다. 감사합니다." data-ok-en="Your message has been sent to our staff. We will get back to you soon. Thank you.">
+          <h3><span class="ko">온라인 문의·참여 신청</span><span class="en">Online inquiry &amp; application</span></h3>
+          <p><span class="ko"><span class="req" style="color:var(--danger)">*</span> 표시는 필수 입력 항목입니다. 보내 주신 내용은 이메일로 담당자에게 전달됩니다.</span><span class="en">Fields marked <span style="color:var(--danger)">*</span> are required. Your message is delivered to our staff by email.</span></p>
+          <div class="form-grid">
+            <div class="field full">
+              <label for="c-type"><span class="ko">문의 유형</span><span class="en">Type</span><span class="req">*</span></label>
+              <select id="c-type" name="type" required>
+                <option value="general" data-en="General inquiry">일반 문의</option>
+                <option value="join" data-en="Join / Partner">참여·동역 신청</option>
+                <option value="donation" data-en="Giving">후원 문의</option>
+                <option value="partnership" data-en="Partnership proposal">협력 제안</option>
+                <option value="press" data-en="Media / Press">언론·취재</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="c-name"><span class="ko">이름</span><span class="en">Name</span><span class="req">*</span></label>
+              <input type="text" id="c-name" name="name" maxlength="40" required autocomplete="name">
+            </div>
+            <div class="field">
+              <label for="c-org"><span class="ko">소속(교회·단체)</span><span class="en">Organization / Church</span></label>
+              <input type="text" id="c-org" name="org" maxlength="60" autocomplete="organization">
+            </div>
+            <div class="field">
+              <label for="c-phone"><span class="ko">연락처</span><span class="en">Phone</span><span class="req">*</span></label>
+              <input type="tel" id="c-phone" name="phone" maxlength="20" required autocomplete="tel" placeholder="010-0000-0000">
+            </div>
+            <div class="field">
+              <label for="c-email"><span class="ko">이메일</span><span class="en">Email</span></label>
+              <input type="email" id="c-email" name="email" maxlength="80" autocomplete="email" placeholder="name@example.com">
+            </div>
+            <div class="field full">
+              <label for="c-message"><span class="ko">내용</span><span class="en">Message</span><span class="req">*</span></label>
+              <textarea id="c-message" name="message" maxlength="3000" required placeholder="문의하실 내용을 적어 주세요." data-en-placeholder="Please write your message."></textarea>
+            </div>
+            <div class="hp-field" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
+            <div class="field full">
+              <span class="label"><span class="ko">개인정보 수집·이용 동의</span><span class="en">Consent to collection and use of personal information</span></span>
+              <div class="consent-box">
+                <div class="ko">
+                  · 수집 항목: 이름, 연락처, 이메일, 소속, 문의 내용<br>
+                  · 수집 목적: 문의 및 참여·동역 신청에 대한 확인과 회신<br>
+                  · 전달 방법: 입력하신 내용은 홈페이지에 저장되지 않고, 외부 이메일 전송 서비스 FormSubmit(formsubmit.co, 서버가 국외에 있을 수 있음)을 거쳐 담당자 이메일로 전달됩니다. 전송이 원활하지 않으면 이용자의 메일 앱으로 직접 보내실 수 있습니다.<br>
+                  · 보유 기간: 담당자 메일함에 보관하며 처리(회신) 완료 후 1년 이내에 삭제 (동의 철회 요청 시 지체 없이 파기)<br>
+                  · 동의를 거부하실 수 있으며, 이 경우 온라인 접수가 제한됩니다. 전화(1588-2716)로는 문의하실 수 있습니다.
+                </div>
+                <div class="en">
+                  · Items: name, phone, email, organization, message<br>
+                  · Purpose: to review and respond to inquiries and applications<br>
+                  · Delivery: your submission is not stored on this website. It is sent to our staff by email through a third-party email relay service, FormSubmit (formsubmit.co), whose servers may be located outside Korea. If online delivery fails, you can send it from your own email app instead.<br>
+                  · Retention: kept in the staff mailbox and deleted within 1 year after we have handled it (deleted promptly upon withdrawal of consent)<br>
+                  · You may decline; online submission will then be unavailable, but you can still call 1588-2716.
+                </div>
+              </div>
+              <label class="check"><input type="checkbox" name="consent" required> <span><span class="ko">위 내용을 확인했으며 개인정보 수집·이용에 동의합니다. (<a href="privacy.html">개인정보처리방침</a>)</span><span class="en">I have read the above and agree. (<a href="privacy.html">Privacy Policy</a>)</span></span></label>
+            </div>
+            <div class="full"><button type="submit" class="btn btn-primary btn-lg btn-block"><span class="ko">문의 보내기</span><span class="en">Send</span></button></div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/forms.js"></script>
+<script>
+  // ?type=join 등으로 들어오면 문의 유형 자동 선택
+  (function () {
+    var t = WH.param("type"), sel = document.getElementById("c-type");
+    if (t && sel.querySelector('option[value="' + t + '"]')) sel.value = t;
+  })();
+</script>
+</body>
+</html>

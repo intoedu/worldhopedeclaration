@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="ko" data-lang="ko" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>세계희망선언문 | 세계희망연대</title>
+<meta name="description" content="세계희망선언문 — 분열을 넘어 화해로, 절망을 넘어 희망으로. 이중개념·종속구조·수평논리·중심기축·공평화합의 5대 원칙과 평화·지구환경·사람·연대·실천의 5대 가치를 소개합니다.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="세계희망연대">
+<meta property="og:title" content="세계희망선언문 | 세계희망연대">
+<meta property="og:description" content="분열을 넘어 화해로, 절망을 넘어 희망으로 — 인류와 지구의 더 나은 미래를 위해, 지금, 세계가 함께 희망을 선언합니다.">
+<meta property="og:image" content="assets/img/og-image.png">
+<meta name="theme-color" content="#13294b">
+<link rel="icon" href="assets/img/brand/favicon-64.png" type="image/png" sizes="64x64">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Serif:ital,wght@0,500;0,700;1,500&display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>(function(){try{var l=new URLSearchParams(location.search).get("lang")||localStorage.getItem("wh-lang");if(l==="en"){var h=document.documentElement;h.setAttribute("data-lang","en");h.lang="en";}}catch(e){}})();</script>
+<style>
+  /* ===== 세계희망선언문 페이지 전용 (공통 style.css 의 토큰만 사용) ===== */
+
+  /* 장식선: 가는 금색 선 + 가운데 마름모 */
+  .decl-ornament { display: block; width: 136px; height: 14px; margin: 22px auto 0; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 136 14'%3E%3Cpath d='M0 7h54M82 7h54' stroke='%23b8913f' stroke-width='1'/%3E%3Ccircle cx='58.5' cy='7' r='1.2' fill='%23b8913f'/%3E%3Ccircle cx='77.5' cy='7' r='1.2' fill='%23b8913f'/%3E%3Cpath d='M68 1.5 73.5 7 68 12.5 62.5 7z' fill='none' stroke='%23b8913f'/%3E%3Ccircle cx='68' cy='7' r='1.6' fill='%23b8913f'/%3E%3C/svg%3E") center / contain no-repeat; }
+
+  /* 상단 히어로 */
+  .decl-hero { padding: 60px 0 58px; }
+  .decl-hero .decl-hero-mark { width: 60px; height: 60px; margin: 0 auto 14px; }
+  .decl-hero h1 { font-size: clamp(34px, 4.6vw, 54px); font-weight: 900; letter-spacing: -0.035em; }
+  html[data-lang="en"] .decl-hero h1 { font-weight: 700; letter-spacing: -0.02em; }
+  .decl-hero .page-hero-en sup, .decl-doc-mark sup, .decl-closing-en sup { font-size: .7em; letter-spacing: 0; margin-left: .1em; }
+  .page-hero.decl-hero p.decl-hero-line { margin: 18px auto 0; max-width: none; font-family: var(--f-serif); font-size: clamp(19px, 2.3vw, 27px); font-weight: 700; line-height: 1.55; letter-spacing: -0.02em; color: var(--navy-900); }
+  html[data-lang="en"] .page-hero.decl-hero p.decl-hero-line { font-family: var(--f-serif-en); font-weight: 500; letter-spacing: 0; }
+  .page-hero.decl-hero p.decl-hero-line, .page-hero.decl-hero p.decl-hero-sub, .decl-preamble p, .decl-closing .cta-text { text-wrap: balance; }
+  .page-hero.decl-hero p.decl-hero-sub { margin: 6px auto 0; font-family: var(--f-serif-en); font-size: clamp(14.5px, 1.45vw, 17px); font-style: italic; font-weight: 500; color: var(--ink-2); }
+
+  /* 페이지 안 메뉴: 넓은 화면에서는 가운데, 좁으면 가로 스크롤 */
+  .decl-subnav ul { width: max-content; max-width: 100%; margin: 0 auto; }
+  .decl-subnav a b { margin-right: 5px; font-family: var(--f-serif-en); font-weight: 700; color: var(--gold-600); }
+  .decl-subnav li.is-group { position: relative; margin-left: 14px; }
+  .decl-subnav li.is-group::before { content: ""; position: absolute; left: -9px; top: 50%; width: 1px; height: 16px; margin-top: -8px; background: var(--line-2); }
+  .decl-subnav li.is-group ~ li.is-group { margin-left: 0; }
+  .decl-subnav li.is-group ~ li.is-group::before { display: none; }
+
+  /* 선언문 무대 (안개 낀 산 배경) */
+  .decl-stage { position: relative; overflow: hidden; isolation: isolate; padding: 84px 0 var(--space-section); background: linear-gradient(180deg, #e9f0f7 0%, #f2f6fa 24%, #f8fafc 62%, #fff 100%); }
+  .decl-stage .mountains { height: 360px; }
+
+  /* 두루마리 느낌의 문서 카드 (위·아래 네이비 축 + 금색 마개) */
+  .decl-scroll { position: relative; max-width: 1000px; margin: 0 auto; }
+  .decl-scroll::before, .decl-scroll::after { content: ""; position: absolute; z-index: 2; left: -16px; right: -16px; height: 14px; border-radius: 7px; pointer-events: none;
+    background:
+      radial-gradient(circle at 7px 50%, var(--gold-300) 0 4.6px, var(--gold-600) 5px, transparent 5.6px),
+      radial-gradient(circle at calc(100% - 7px) 50%, var(--gold-300) 0 4.6px, var(--gold-600) 5px, transparent 5.6px),
+      linear-gradient(180deg, #3a5f95 0%, var(--navy-900) 48%, var(--navy-950) 100%);
+    box-shadow: 0 4px 10px -2px rgba(12, 28, 54, .3); }
+  .decl-scroll::before { top: -7px; }
+  .decl-scroll::after { bottom: -7px; }
+  .decl-doc { position: relative; padding: 70px 76px 58px; border: 1px solid #e6dbc2; border-radius: 3px; background: linear-gradient(180deg, #f9f4e8 0%, #fefcf7 9%, #fffdf9 50%, #fefcf7 91%, #f8f2e4 100%); box-shadow: 0 46px 90px -56px rgba(19, 41, 75, .45), 0 2px 8px rgba(19, 41, 75, .05); color: var(--ink); }
+  .decl-doc::before { content: ""; position: absolute; inset: 12px; border: 1px solid rgba(184, 145, 63, .3); border-radius: 2px; pointer-events: none; }
+
+  /* 문서 머리 */
+  .decl-doc-head { position: relative; text-align: center; margin-bottom: 44px; }
+  .decl-doc-head picture, .decl-doc-head img { width: 68px; height: 68px; margin: 0 auto; }
+  .decl-doc-mark { margin: 10px 0 0; font-family: var(--f-display); font-size: 13px; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: var(--gold-600); }
+  .decl-preamble { margin: 26px auto 0; max-width: 680px; }
+  .decl-preamble-main { margin: 0; font-family: var(--f-serif); font-size: clamp(19px, 2.2vw, 25px); font-weight: 700; line-height: 1.65; letter-spacing: -0.02em; color: var(--navy-900); }
+  html[data-lang="en"] .decl-preamble-main { font-family: var(--f-serif-en); font-weight: 500; letter-spacing: 0; }
+  .decl-preamble-sub { margin: 10px 0 0; font-family: var(--f-serif-en); font-size: 15.5px; font-style: italic; font-weight: 500; color: var(--ink-2); }
+  .decl-doc-title { margin: 30px 0 0; font-family: var(--f-head); font-size: clamp(22px, 2.4vw, 28px); font-weight: 700; letter-spacing: -0.02em; }
+  .decl-doc-head .section-sub { margin-top: 4px; }
+
+  /* 원칙 목록 (문서 안) */
+  .decl-doc .decl-list { border-top-color: rgba(19, 41, 75, .85); }
+  .decl-doc .decl-item { border-bottom-color: rgba(184, 145, 63, .26); scroll-margin-top: 140px; }
+  .decl-doc .decl-item:last-child { border-bottom: 0; padding-bottom: 8px; }
+  .decl-doc .decl-icon { background: radial-gradient(circle at 50% 32%, #fff 0%, #f1f5fb 100%); }
+  html[data-lang="en"] .decl-doc .decl-title { font-family: var(--f-serif-en); letter-spacing: -0.01em; }
+  .decl-orig { margin: 0 0 4px; font-family: var(--f-serif); font-size: 15px; font-weight: 700; letter-spacing: .02em; color: var(--gold-600); }
+  .decl-orig .decl-hanja { font-weight: 500; margin-left: 4px; color: var(--muted); }
+  html[data-lang="en"] .decl-doc .decl-en-text { margin-top: 2px; font-size: 16.5px; line-height: 1.85; color: var(--ink-2); }
+
+  /* 서명 */
+  .decl-sign { margin: 40px 0 0; text-align: center; }
+  .decl-sign .decl-ornament { margin: 0 auto 18px; }
+  .decl-sign b { display: block; font-family: var(--f-serif); font-size: 21px; font-weight: 900; letter-spacing: .04em; color: var(--navy-900); line-height: 1.4; }
+  .decl-sign span { display: block; margin-top: 2px; font-family: var(--f-display); font-size: 12.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--blue-700); }
+
+  /* 5대 가치: 한·영 함께 */
+  .decl-values .value-en { text-transform: uppercase; }
+  .decl-values .value-en.is-ko { font-family: var(--f-serif); letter-spacing: .06em; font-weight: 700; }
+  .decl-values .value-text { min-height: 3.2em; }
+  html[data-lang="en"] .decl-values .value-text { min-height: 0; }
+
+  /* 맺음: 공동의 선언, 하나의 인류 (네이비 띠) */
+  .decl-closing { padding: 88px 0 80px; text-align: center; }
+  .decl-closing::after { right: auto; left: 50%; top: 62%; width: max(1100px, 120%); transform: translateX(-50%); }
+  .decl-closing picture, .decl-closing .decl-closing-mark { width: 72px; height: 72px; margin: 0 auto 18px; }
+  .decl-closing .cta-title { font-size: clamp(26px, 3.2vw, 38px); }
+  .decl-closing-en { margin: 8px 0 0; font-family: var(--f-display); font-size: clamp(12.5px, 1.3vw, 15px); letter-spacing: .2em; text-transform: uppercase; color: var(--gold-300); }
+  .decl-closing .cta-text { margin: 18px auto 0; font-size: 17px; line-height: 1.85; }
+  .decl-closing .cta-actions { justify-content: center; margin-top: 34px; }
+  .decl-tools { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 14px; }
+  .decl-tools .btn { min-height: 42px; padding: 0 18px; font-size: 14.5px; border-color: rgba(255, 255, 255, .35); color: #d6e0ef; }
+  .decl-tools .btn:hover { color: #fff; border-color: #fff; }
+  .decl-closing .keywords { margin: 40px 0 0; font-size: 17px; color: #fff; }
+  /* 영문 키워드 줄 (.keywords.en 은 언어 전환용 .en 클래스와 겹쳐 한국어 화면에서 숨겨지므로 별도 클래스 사용) */
+  .decl-closing .decl-kw-en { margin-top: 6px; font-family: var(--f-display); font-weight: 400; font-size: 12.5px; letter-spacing: .14em; color: var(--gold-300); }
+
+  @media (max-width: 760px) {
+    .decl-hero { padding: 40px 0 40px; }
+    .decl-hero .decl-hero-mark { width: 48px; height: 48px; margin-bottom: 10px; }
+    .decl-stage { padding-top: 48px; }
+    .decl-stage .mountains { height: 220px; }
+    .decl-scroll::before, .decl-scroll::after { left: -8px; right: -8px; height: 12px; border-radius: 6px;
+      background:
+        radial-gradient(circle at 6px 50%, var(--gold-300) 0 3.8px, var(--gold-600) 4.2px, transparent 4.8px),
+        radial-gradient(circle at calc(100% - 6px) 50%, var(--gold-300) 0 3.8px, var(--gold-600) 4.2px, transparent 4.8px),
+        linear-gradient(180deg, #3a5f95 0%, var(--navy-900) 48%, var(--navy-950) 100%); }
+    .decl-scroll::before { top: -6px; }
+    .decl-scroll::after { bottom: -6px; }
+    .decl-doc { padding: 46px 20px 36px; }
+    .decl-doc::before { inset: 7px; }
+    .decl-doc-head { margin-bottom: 30px; }
+    .decl-doc-head picture, .decl-doc-head img { width: 56px; height: 56px; }
+    .decl-doc-mark { font-size: 11px; letter-spacing: .18em; }
+    .decl-preamble-sub { font-size: 14px; }
+    .decl-doc .decl-item { scroll-margin-top: 124px; }
+    html[data-lang="en"] .decl-doc .decl-en-text { font-size: 15.5px; }
+    .decl-sign b { font-size: 19px; }
+    .decl-sign span { font-size: 11px; letter-spacing: .14em; }
+    .decl-closing { padding: 60px 0 56px; }
+    .decl-closing .cta-text { font-size: 15.5px; }
+    .decl-tools .btn { flex: 1 1 0; }
+    .decl-closing .keywords { font-size: 15px; }
+    .decl-closing .decl-kw-en { font-size: 11px; letter-spacing: .1em; }
+  }
+
+  /* 태블릿: 5대 가치 3 + 2 가운데 정렬 */
+  @media (min-width: 561px) and (max-width: 960px) {
+    .decl-values .values { display: flex; flex-wrap: wrap; justify-content: center; gap: 34px 20px; }
+    .decl-values .value { flex: 0 1 calc((100% - 40px) / 3); }
+  }
+  /* 휴대폰: 원칙 본문을 전체 폭으로, 5대 가치는 아이콘 왼쪽 목록형 */
+  @media (max-width: 560px) {
+    .decl-doc .decl-item { grid-template-columns: 52px minmax(0, 1fr); gap: 0 14px; padding: 24px 0; }
+    .decl-doc .decl-body { display: contents; }
+    .decl-doc .decl-no, .decl-doc .decl-icon { grid-row: 1 / span 2; grid-column: 1; }
+    .decl-doc .decl-icon { width: 52px; height: 52px; }
+    .decl-doc .decl-icon svg { width: 24px; height: 24px; }
+    .decl-doc .decl-orig, .decl-doc .decl-title { grid-column: 2; align-self: center; }
+    .decl-doc .decl-title { margin: 0; font-size: 20px; }
+    .decl-doc .decl-text, .decl-doc .decl-en-title, .decl-doc .decl-en-text { grid-column: 1 / -1; }
+    .decl-doc .decl-text { margin-top: 14px; }
+    html[data-lang="en"] .decl-doc .decl-en-text { margin-top: 12px; }
+    .decl-values .values { display: block; border-top: 1px solid var(--line); }
+    .decl-values .value { display: grid; grid-template-columns: 60px minmax(0, 1fr); column-gap: 16px; padding: 18px 2px; text-align: left; border-bottom: 1px solid var(--line); }
+    .decl-values .value-icon { grid-row: 1 / span 4; width: 60px; height: 60px; margin: 0; }
+    .decl-values .value-icon svg { width: 27px; height: 27px; }
+    .decl-values .value-ko { font-size: 19px; }
+    .decl-values .value-text { min-height: 0; margin-top: 6px; font-size: 14.5px; }
+    .decl-values .value-text br { display: none; }
+  }
+
+  /* 인쇄: 1쪽 = 선언문 전체, 2쪽 = 5대 가치 · 맺음 (A4) */
+  @media print {
+    @page { size: A4; margin: 10mm 12mm; }
+    html, body { background: #fff !important; }
+    .decl-subnav, .breadcrumb, .mountains, .decl-hero picture, .decl-closing .cta-actions, .decl-tools, .decl-closing picture { display: none !important; }
+    .decl-hero { padding: 0 0 8pt !important; border: 0; background: none; }
+    .decl-hero h1 { font-size: 22pt; }
+    .decl-hero .page-hero-en { margin-top: 2pt; font-size: 8.5pt; }
+    .decl-hero .decl-ornament { margin-top: 6pt; height: 10px; }
+    .page-hero.decl-hero p.decl-hero-line { font-size: 13pt; margin-top: 6pt; }
+    .page-hero.decl-hero p.decl-hero-sub { margin-top: 2pt; font-size: 9.5pt; }
+    .decl-stage { padding: 0 !important; background: none; overflow: visible; }
+    .decl-scroll { max-width: none; }
+    .decl-scroll::before, .decl-scroll::after { display: none; }
+    .decl-doc { padding: 12pt 20pt 8pt; background: #fff; border: 1px solid #c9b07a; box-shadow: none; }
+    .decl-doc::before { inset: 3pt; }
+    .decl-doc-head { margin-bottom: 8pt; }
+    .decl-doc-head picture, .decl-doc-mark { display: none !important; }
+    .decl-preamble { margin-top: 0; }
+    .decl-preamble-main { font-size: 11.5pt; line-height: 1.55; }
+    .decl-preamble-sub { margin-top: 2pt; font-size: 9pt; }
+    .decl-doc-head .decl-ornament { display: none; }
+    .decl-doc-title { margin-top: 8pt; font-size: 12.5pt; }
+    .decl-doc-head .section-sub { margin-top: 0; font-size: 7.5pt; }
+    .decl-item { break-inside: avoid; padding: 5pt 0 !important; gap: 0 10pt !important; grid-template-columns: 22px 34px minmax(0, 1fr) !important; }
+    .decl-no { width: 20px !important; height: 20px !important; font-size: 9pt !important; background: none !important; color: #13294b !important; border: 1px solid #13294b; margin: 2pt 0 0 !important; grid-area: auto !important; }
+    .decl-icon { width: 34px !important; height: 34px !important; background: none !important; grid-area: auto !important; }
+    .decl-icon svg { width: 17px !important; height: 17px !important; }
+    .decl-body { grid-column: auto !important; grid-row: auto !important; }
+    .decl-title { font-size: 11.5pt; margin-bottom: 2pt; }
+    .decl-text { font-size: 9.5pt; line-height: 1.55; color: #222; }
+    .decl-orig { font-size: 9pt; margin-bottom: 1pt; }
+    .decl-en-title { font-size: 9.5pt; margin: 3pt 0 0; }
+    .decl-en-text { font-size: 8.5pt !important; line-height: 1.45 !important; color: #444 !important; }
+    html[data-lang="en"] .decl-doc .decl-en-text { font-size: 10pt !important; color: #222 !important; }
+    .decl-sign { margin-top: 4pt; padding-top: 6pt; border-top: 1px solid rgba(184, 145, 63, .45); break-inside: avoid; }
+    .decl-sign .decl-ornament { display: none; }
+    .decl-sign b, .decl-sign span { display: inline; }
+    .decl-sign b { font-size: 11.5pt; }
+    .decl-sign span { margin-left: 8pt; font-size: 7.5pt; }
+    .decl-values { break-before: page; padding: 0 !important; }
+    .decl-values .section-head { margin-bottom: 14pt; }
+    .values { gap: 16pt 8pt !important; }
+    .value-icon { width: 54px; height: 54px; margin-bottom: 6pt; background: none; }
+    .value-icon svg { width: 24px; height: 24px; }
+    .value-ko { font-size: 13pt; }
+    .value-text { font-size: 9.5pt; min-height: 0 !important; }
+    .value-text-en { font-size: 8.5pt; }
+    .decl-closing { padding: 28pt 0 0 !important; background: none !important; color: #13294b; break-inside: avoid; }
+    .decl-closing::after { display: none; }
+    .decl-closing-en, .decl-closing .decl-kw-en { color: #9c7a2e !important; }
+    .decl-closing .cta-title, .decl-closing .keywords { color: #13294b !important; }
+    .decl-closing .cta-text { color: #333 !important; font-size: 10.5pt; }
+    .decl-closing .keywords { margin-top: 12pt; }
+  }
+</style>
+</head>
+<body data-page="declaration" data-title-en="The Declaration | World Hope Declaration Network">
+<div id="site-header"></div>
+
+<main id="main">
+  <!-- 상단: 라이트 히어로 -->
+  <section class="page-hero center decl-hero" aria-labelledby="page-title">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="breadcrumb"><a href="index.html"><span class="ko">홈</span><span class="en">Home</span></a><span aria-hidden="true">/</span><span><span class="ko">세계희망선언</span><span class="en">Declaration</span></span></nav>
+      <picture>
+        <source srcset="assets/img/brand/logo-mark-160.webp" type="image/webp">
+        <img class="decl-hero-mark" src="assets/img/brand/logo-mark-160.png" alt="" width="60" height="60">
+      </picture>
+      <h1 id="page-title"><span class="ko">세계희망선언문</span><span class="en">The Declaration</span></h1>
+      <p class="page-hero-en">The World Hope Declaration<sup>™</sup></p>
+      <span class="decl-ornament" aria-hidden="true"></span>
+      <p class="decl-hero-line"><span class="ko">분열을 넘어 화해로, 절망을 넘어 희망으로</span><span class="en">From Division to Reconciliation, From Despair to Hope</span></p>
+      <p class="decl-hero-sub ko" lang="en">From Division to Reconciliation, From Despair to Hope</p>
+    </div>
+  </section>
+
+  <!-- 페이지 안 메뉴 -->
+  <nav class="subnav decl-subnav" aria-label="선언문 메뉴" data-en-aria-label="Declaration sections">
+    <div class="container">
+      <ul>
+        <li><a href="#p1"><b>1</b><span class="ko">이중개념</span><span class="en">Dualism</span></a></li>
+        <li><a href="#p2"><b>2</b><span class="ko">종속구조</span><span class="en">Dependent</span></a></li>
+        <li><a href="#p3"><b>3</b><span class="ko">수평논리</span><span class="en">Horizontal</span></a></li>
+        <li><a href="#p4"><b>4</b><span class="ko">중심기축</span><span class="en">Centrium</span></a></li>
+        <li><a href="#p5"><b>5</b><span class="ko">공평화합</span><span class="en">R.P.U.</span></a></li>
+        <li class="is-group"><a href="#values"><span class="ko">5대 가치</span><span class="en">Five Values</span></a></li>
+        <li class="is-group"><a href="#together"><span class="ko">공동의 선언</span><span class="en">One Humanity</span></a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- 선언문 본문 (두루마리 형식 문서) -->
+  <section class="decl-stage" id="principles" aria-labelledby="principles-title">
+    <div class="mountains" aria-hidden="true"></div>
+    <div class="container">
+      <div class="decl-scroll">
+        <article class="decl-doc">
+          <header class="decl-doc-head reveal">
+            <picture>
+              <source srcset="assets/img/brand/logo-mark-160.webp" type="image/webp">
+              <img src="assets/img/brand/logo-mark-160.png" alt="" width="68" height="68" loading="lazy">
+            </picture>
+            <p class="decl-doc-mark">World Hope Declaration<sup>™</sup></p>
+            <div class="decl-preamble" id="preamble">
+              <p class="decl-preamble-main"><span class="ko">인류와 지구의 더 나은 미래를 위해,<br>지금, 세계가 함께 희망을 선언합니다.</span><span class="en">Now, the World Declares Hope<br>for a Better Future for All.</span></p>
+              <p class="decl-preamble-sub ko" lang="en">Now, the World Declares Hope for a Better Future for All.</p>
+            </div>
+            <span class="decl-ornament" aria-hidden="true"></span>
+            <h2 class="decl-doc-title" id="principles-title"><span class="ko">세계희망선언 5대 원칙</span><span class="en">The Five Principles</span></h2>
+            <p class="section-sub">Five Principles</p>
+          </header>
+
+          <ol class="decl-list">
+            <!-- 1. 이중개념 (중립 아이콘: 겹친 두 원 — 태극 문양 사용 금지) -->
+            <li class="decl-item reveal" id="p1">
+              <span class="decl-no">1</span>
+              <span class="decl-icon" data-icon="circles"></span>
+              <div class="decl-body">
+                <p class="decl-orig en" lang="ko">이중개념 <span class="decl-hanja">二重槪念</span></p>
+                <h3 class="decl-title"><span class="ko"><span class="decl-name">이중개념</span> <span class="decl-hanja">二重槪念</span> <span class="decl-key" lang="en">Dualism</span> 을 인정하라.</span><span class="en">Recognize Dualism.</span></h3>
+                <p class="decl-text ko">우리는 세상에 존재하는 두 가지 차원의 개념(절대와 상대, 영과 물질, 선과 악, 이상과 현실)을 인정하고, 그 구조를 올바로 이해한다.</p>
+                <p class="decl-en-title ko" lang="en">Recognize Dualism.</p>
+                <p class="decl-en-text" lang="en">Acknowledge the twofold reality (absolute and relative, spirit and matter, good and evil, ideal and reality) and understand its structure correctly.</p>
+              </div>
+            </li>
+            <!-- 2. 종속구조 -->
+            <li class="decl-item reveal" id="p2">
+              <span class="decl-no">2</span>
+              <span class="decl-icon" data-icon="layers"></span>
+              <div class="decl-body">
+                <p class="decl-orig en" lang="ko">종속구조 <span class="decl-hanja">從屬構造</span></p>
+                <h3 class="decl-title"><span class="ko"><span class="decl-name">종속구조</span> <span class="decl-hanja">從屬構造</span> <span class="decl-key" lang="en">Dependent</span> 를 직시하라.</span><span class="en">Face the Dependent Structure.</span></h3>
+                <p class="decl-text ko">개인, 사회, 국가, 인류, 자연이 서로 연결된 종속구조 속에 있음을 직시하고, 그 영향을 깊이 인식한다.</p>
+                <p class="decl-en-title ko" lang="en">Face the Dependent Structure.</p>
+                <p class="decl-en-text" lang="en">Recognize that individuals, society, nations, humanity, and nature are in an interconnected dependent structure, and understand its impact deeply.</p>
+              </div>
+            </li>
+            <!-- 3. 수평논리 -->
+            <li class="decl-item reveal" id="p3">
+              <span class="decl-no">3</span>
+              <span class="decl-icon" data-icon="horizontal"></span>
+              <div class="decl-body">
+                <p class="decl-orig en" lang="ko">수평논리 <span class="decl-hanja">水平論理</span></p>
+                <h3 class="decl-title"><span class="ko"><span class="decl-name">수평논리</span> <span class="decl-hanja">水平論理</span> <span class="decl-key" lang="en">Horizontal</span> 를 적용하라.</span><span class="en">Apply Horizontal Logic.</span></h3>
+                <p class="decl-text ko">지배와 경쟁이 아닌, 존중과 협력의 수평적 논리를 모든 영역에 적용한다.</p>
+                <p class="decl-en-title ko" lang="en">Apply Horizontal Logic.</p>
+                <p class="decl-en-text" lang="en">Apply the horizontal logic of respect and cooperation instead of dominance and competition to all areas of life.</p>
+              </div>
+            </li>
+            <!-- 4. 중심기축 -->
+            <li class="decl-item reveal" id="p4">
+              <span class="decl-no">4</span>
+              <span class="decl-icon" data-icon="center"></span>
+              <div class="decl-body">
+                <p class="decl-orig en" lang="ko">중심기축 <span class="decl-hanja">中心基軸</span></p>
+                <h3 class="decl-title"><span class="ko"><span class="decl-name">중심기축</span> <span class="decl-hanja">中心基軸</span> <span class="decl-key" lang="en">Centrium</span> 을 확립하라.</span><span class="en">Establish the Centrium.</span></h3>
+                <p class="decl-text ko">변화하는 세상 속에서도 흔들리지 않는 중심기축(진리, 사랑, 생명, 창조질서)을 확립하여 모든 가치와 방향의 기준으로 삼는다.</p>
+                <p class="decl-en-title ko" lang="en">Establish the Centrium.</p>
+                <p class="decl-en-text" lang="en">Establish an unshakable central axis (truth, love, life, creation order) as the standard for all values and directions, even in a changing world.</p>
+              </div>
+            </li>
+            <!-- 5. 공평화합 -->
+            <li class="decl-item reveal" id="p5">
+              <span class="decl-no">5</span>
+              <span class="decl-icon" data-icon="unity"></span>
+              <div class="decl-body">
+                <p class="decl-orig en" lang="ko">공평화합 <span class="decl-hanja">公平和合</span></p>
+                <h3 class="decl-title"><span class="ko"><span class="decl-name">공평화합</span> <span class="decl-hanja">公平和合</span> <span class="decl-key" lang="en">R.P.U</span> 를 생활신조화하라.</span><span class="en">Make R.P.U. a Way of Life.</span></h3>
+                <p class="decl-text ko">의(義, righteousness), 평화(peace), 연합(united)을 삶의 원리로 삼아, 개인과 공동체, 인류와 지구가 함께 살아가는 길을 실천한다.</p>
+                <p class="decl-en-title ko" lang="en">Make R.P.U. a Way of Life.</p>
+                <p class="decl-en-text" lang="en">Live by righteousness, peace, and united, and put them into practice as the path for individuals, communities, humanity, and the Earth to live together.</p>
+              </div>
+            </li>
+          </ol>
+
+          <footer class="decl-sign">
+            <span class="decl-ornament" aria-hidden="true"></span>
+            <b>세계희망선언위원회</b>
+            <span lang="en">World Hope Declaration Council</span>
+          </footer>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5대 가치 -->
+  <section class="section decl-values" id="values" aria-labelledby="values-title" style="scroll-margin-top:110px">
+    <div class="container">
+      <div class="section-head center reveal">
+        <h2 class="section-title" id="values-title"><span class="ko">세계희망선언 5대 가치</span><span class="en">The Five Values</span></h2>
+        <p class="section-sub">Five Values</p>
+      </div>
+      <ul class="values reveal">
+        <li class="value">
+          <span class="value-icon" data-icon="leaf"></span>
+          <h3 class="value-ko"><span class="ko">평화</span><span class="en">Peace</span></h3>
+          <span class="value-en ko" lang="en">Peace</span><span class="value-en is-ko en" lang="ko">평화</span>
+          <p class="value-text"><span class="ko">분쟁을 넘어 <br>화해와 공존으로</span><span class="en">From Conflict to Reconciliation and Coexistence</span></p>
+          <p class="value-text-en ko" lang="en">From Conflict to Reconciliation and Coexistence</p>
+        </li>
+        <li class="value">
+          <span class="value-icon" data-icon="world"></span>
+          <h3 class="value-ko"><span class="ko">지구환경</span><span class="en">Planet</span></h3>
+          <span class="value-en ko" lang="en">Planet</span><span class="value-en is-ko en" lang="ko">지구환경</span>
+          <p class="value-text"><span class="ko">지구를 지키는 <br>책임 있는 실천으로</span><span class="en">For a Greener and Healthier Earth</span></p>
+          <p class="value-text-en ko" lang="en">For a Greener and Healthier Earth</p>
+        </li>
+        <li class="value">
+          <span class="value-icon" data-icon="people"></span>
+          <h3 class="value-ko"><span class="ko">사람</span><span class="en">People</span></h3>
+          <span class="value-en ko" lang="en">People</span><span class="value-en is-ko en" lang="ko">사람</span>
+          <p class="value-text"><span class="ko">모든 생명의 존엄과 <br>더 나은 삶을 위해</span><span class="en">For the Dignity of All Life and a Better Life for Humanity</span></p>
+          <p class="value-text-en ko" lang="en">For the Dignity of All Life and a Better Life for Humanity</p>
+        </li>
+        <li class="value">
+          <span class="value-icon" data-icon="hands"></span>
+          <h3 class="value-ko"><span class="ko">연대</span><span class="en">Partnership</span></h3>
+          <span class="value-en ko" lang="en">Partnership</span><span class="value-en is-ko en" lang="ko">연대</span>
+          <p class="value-text"><span class="ko">다양한 가치의 연대로 <br>함께 만드는 변화</span><span class="en">Together in Diversity for Lasting Change</span></p>
+          <p class="value-text-en ko" lang="en">Together in Diversity for Lasting Change</p>
+        </li>
+        <li class="value">
+          <span class="value-icon" data-icon="sprout"></span>
+          <h3 class="value-ko"><span class="ko">실천</span><span class="en">Action</span></h3>
+          <span class="value-en ko" lang="en">Action</span><span class="value-en is-ko en" lang="ko">실천</span>
+          <p class="value-text"><span class="ko">오늘의 선언을 <br>내일의 현실로</span><span class="en">From Today’s Declaration to Tomorrow’s Reality</span></p>
+          <p class="value-text-en ko" lang="en">From Today’s Declaration to Tomorrow’s Reality</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 맺음: 공동의 선언, 하나의 인류 -->
+  <section class="cta-band decl-closing" id="together" aria-labelledby="together-title" style="scroll-margin-top:110px">
+    <div class="container">
+      <picture>
+        <source srcset="assets/img/brand/logo-mark-160.webp" type="image/webp">
+        <img class="decl-closing-mark" src="assets/img/brand/logo-mark-160.png" alt="" width="72" height="72" loading="lazy">
+      </picture>
+      <h2 class="cta-title" id="together-title"><span class="ko">공동의 선언, 하나의 인류</span><span class="en">One Declaration, One Humanity</span></h2>
+      <p class="decl-closing-en"><span class="ko">One Declaration, One Humanity</span><span class="en">World Hope Declaration<sup>™</sup></span></p>
+      <p class="cta-text"><span class="ko">분열을 넘어, 하나의 희망으로.<br>세계희망선언의 정신에 동의하신다면, 지금 선언에 함께해 주세요.</span><span class="en">From Division to Hope, Together for a Better World.<br>If you share the spirit of the World Hope Declaration, join the declaration today.</span></p>
+      <div class="cta-actions">
+        <a class="btn btn-light btn-lg" href="join.html"><span class="ko">선언에 참여하기</span><span class="en">Join the Declaration</span><span data-icon="arrow-right"></span></a>
+        <a class="btn btn-ghost-light btn-lg" href="global33.html"><span class="ko">글로벌 33 알아보기</span><span class="en">Explore Global 33</span><span data-icon="arrow-right"></span></a>
+      </div>
+      <div class="decl-tools">
+        <button type="button" class="btn btn-ghost-light" data-print><span data-icon="printer"></span><span class="ko">인쇄하기</span><span class="en">Print</span></button>
+        <button type="button" class="btn btn-ghost-light" data-qr-open><span data-icon="qr"></span><span class="ko">QR코드</span><span class="en">QR code</span></button>
+      </div>
+      <p class="keywords"><span>평화</span><span>지구환경</span><span>사람</span><span>연대</span><span>실천</span></p>
+      <p class="keywords decl-kw-en" lang="en"><span>PEACE</span><span>PLANET</span><span>PEOPLE</span><span>PARTNERSHIP</span><span>ACTION</span></p>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+  // 세계희망선언문 페이지: 하위 메뉴 현재 위치 강조 · 인쇄 버튼
+  (function () {
+    "use strict";
+    var nav = document.querySelector(".decl-subnav");
+    var list = nav ? nav.querySelector("ul") : null;
+    var links = nav ? Array.prototype.slice.call(nav.querySelectorAll("a")) : [];
+    var targets = links.map(function (a) { return document.getElementById(a.getAttribute("href").slice(1)); });
+    var current = -2, ticking = false;
+
+    // 현재 보이는 구역의 메뉴를 강조하고, 좁은 화면에서는 그 메뉴가 보이도록 가로 스크롤
+    function update() {
+      ticking = false;
+      var line = (nav ? nav.getBoundingClientRect().bottom : 0) + 40, cur = -1;
+      targets.forEach(function (el, i) { if (el && el.getBoundingClientRect().top <= line) cur = i; });
+      if (cur === current) return;
+      current = cur;
+      links.forEach(function (a, i) { a.classList.toggle("is-active", i === cur); });
+      if (cur >= 0 && list && list.scrollWidth > list.clientWidth) {
+        var a = links[cur], left = a.offsetLeft - list.offsetLeft;
+        if (left < list.scrollLeft || left + a.offsetWidth > list.scrollLeft + list.clientWidth) {
+          list.scrollLeft = Math.max(0, left - 24);
+        }
+      }
+    }
+    function onScroll() {
+      if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+    }
+    if (links.length) {
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", onScroll);
+      update();
+    }
+
+    // 인쇄하기: 스크롤 등장 효과가 남아 있지 않도록 모두 표시한 뒤 인쇄
+    document.addEventListener("click", function (e) {
+      var btn = e.target.closest("[data-print]");
+      if (!btn) return;
+      e.preventDefault();
+      document.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("is-in"); });
+      window.print();
+    });
+  })();
+</script>
+</body>
+</html>

@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>세계지도 | 세계희망연대</title>
+<title>세계지도 — 참여 국가 현황 | 세계희망연대</title>
 <meta name="description" content="세계희망선언 세계지도 — 세계희망선언에 함께하는 나라와 나라별 글로벌 대표 33인 선정 현황을 점 지도로 한눈에 봅니다.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="세계희망연대">
-<meta property="og:title" content="세계지도 | 세계희망연대">
+<meta property="og:title" content="세계지도 — 참여 국가 현황 | 세계희망연대">
 <meta property="og:description" content="세계희망선언에 함께하는 나라와 나라별 글로벌 대표 33인 선정 현황">
 <meta property="og:image" content="https://www.worldhopedeclaration.com/assets/img/og-image.png">
 <meta property="og:url" content="https://www.worldhopedeclaration.com/worldmap.html">
@@ -55,7 +55,7 @@
 
   /* 참여 국가 표시 (HTML 버튼 — 화면 크기와 관계없이 같은 크기, 키보드로 이동 가능) */
   .wm-markers { position: absolute; inset: 0; }
-  .wm-marker { position: absolute; width: 34px; height: 34px; margin: -17px 0 0 -17px; padding: 0; border: 0; border-radius: 50%; background: none; color: #f0d595; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .wm-marker { position: absolute; width: 40px; height: 40px; margin: -20px 0 0 -20px; padding: 0; border: 0; border-radius: 50%; background: none; color: #f0d595; cursor: pointer; -webkit-tap-highlight-color: transparent; }
   .wm-marker-dot { position: absolute; left: 50%; top: 50%; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: #f0d595; box-shadow: 0 0 0 2px rgba(12, 28, 54, .85), 0 0 0 3.5px rgba(240, 213, 149, .85), 0 0 16px 5px rgba(240, 213, 149, .45); transition: background .2s, transform .2s var(--ease); }
   /* 퍼지는 고리: 기본 상태(움직임 줄이기 설정 시 그대로 보임) = 정지된 고리 */
   .wm-marker::before, .wm-marker::after { content: ""; position: absolute; left: 50%; top: 50%; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; border: 1.5px solid rgba(240, 213, 149, .9); pointer-events: none; transform: scale(2.1); opacity: .5; }
@@ -123,8 +123,8 @@
   html[data-lang="en"] .wm-fields-sub { font-family: var(--f-serif-en); }
   .wm-field-list { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 0 0 20px; padding: 0; }
   .wm-field-list li { display: flex; align-items: center; gap: 10px; min-width: 0; min-height: 58px; padding: 10px 12px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius-sm); }
-  .wm-field-icon { display: grid; place-items: center; flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%; background: var(--blue-50); border: 1px solid var(--blue-100); color: var(--navy-800); }
-  .wm-field-icon svg { width: 18px; height: 18px; stroke-width: 1.5; }
+  .wm-field-icon { display: flex; flex-shrink: 0; color: var(--navy-700); }
+  .wm-field-icon svg { width: 22px; height: 22px; stroke-width: 1.4; }
   .wm-field-no { flex-shrink: 0; font-family: var(--f-serif-en); font-size: 12.5px; font-weight: 700; color: var(--gold-600); }
   .wm-field-name { min-width: 0; font-size: 14.5px; font-weight: 600; line-height: 1.35; color: var(--navy-900); }
   html[data-lang="en"] .wm-field-name { font-size: 13.5px; }
@@ -190,8 +190,7 @@
     .wm-fields-title { font-size: 19px; }
     .wm-field-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
     .wm-field-list li { gap: 8px; padding: 9px 10px; min-height: 54px; }
-    .wm-field-icon { width: 30px; height: 30px; }
-    .wm-field-icon svg { width: 16px; height: 16px; }
+    .wm-field-icon svg { width: 20px; height: 20px; }
     .wm-field-no { display: none; }
     .wm-field-name { font-size: 14px; }
     html[data-lang="en"] .wm-field-name { font-size: 12.5px; }
@@ -208,12 +207,12 @@
   }
 </style>
 </head>
-<body data-page="worldmap" data-title-en="World Map | World Hope Declaration Network">
+<body data-page="worldmap" data-title-en="World Map — Participating Nations | World Hope Declaration Network">
 <div id="site-header"></div>
 
 <main id="main">
   <!-- 상단: 라이트 히어로 -->
-  <section class="page-hero" aria-labelledby="page-title">
+  <section class="page-hero no-motif" aria-labelledby="page-title">
     <div class="container">
       <nav class="breadcrumb" aria-label="breadcrumb"><a href="index.html"><span class="ko">홈</span><span class="en">Home</span></a><span aria-hidden="true">/</span><span><span class="ko">세계지도</span><span class="en">World Map</span></span></nav>
       <h1 id="page-title"><span class="ko">세계지도</span><span class="en">World Map</span></h1>
@@ -314,7 +313,7 @@
           </div>
           <p class="wm-formula"><span class="ko">세계 각국 <b data-stat="per_country">33</b>인 × <b data-stat="countries">195</b>개국 = <b data-stat="target">6,435</b>인</span><span class="en"><b data-stat="per_country">33</b> per nation × <b data-stat="countries">195</b> nations = <b data-stat="target">6,435</b></span></p>
           <div class="wm-side-actions">
-            <a class="btn btn-primary btn-lg btn-block" href="join.html#declare"><span class="ko">우리나라 참여 신청</span><span class="en">Apply for Your Nation</span><span data-icon="arrow-right"></span></a>
+            <a class="btn btn-primary btn-lg btn-block" href="join.html#declare"><span class="ko">선언에 참여하기</span><span class="en">Join the Declaration</span><span data-icon="arrow-right"></span></a>
             <a class="btn btn-outline btn-block" href="global33.html"><span class="ko">글로벌 33 알아보기</span><span class="en">About Global 33</span><span data-icon="arrow-right"></span></a>
           </div>
         </aside>

@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>글로벌 33 | 세계희망연대</title>
+<title>글로벌 33 — 나라마다 대표 33인 | 세계희망연대</title>
 <meta name="description" content="세계희망선언 글로벌 대표 — 각국 33인(11개 분야 × 각 3인). 11개 분야와 글로벌 확장 구조, 글로벌 대표 패·ID 카드 예시를 소개합니다.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="세계희망연대">
-<meta property="og:title" content="글로벌 33 | 세계희망연대">
+<meta property="og:title" content="글로벌 33 — 나라마다 대표 33인 | 세계희망연대">
 <meta property="og:description" content="분열을 넘어, 하나의 희망으로 — 세계희망선언 글로벌 대표, 각국 33인(11개 분야 × 각 3인).">
 <meta property="og:image" content="https://www.worldhopedeclaration.com/assets/img/og-image.png">
 <meta property="og:url" content="https://www.worldhopedeclaration.com/global33.html">
@@ -27,28 +27,28 @@
   .g33-anchor { scroll-margin-top: calc(var(--header-h) + 58px); }
 
   /* ---------- 상단 히어로: 왼쪽 글 + 오른쪽 "33 = 11 × 3" 문장(紋章) ---------- */
-  .g33-hero { padding: 40px 0 64px; }
-  .g33-hero .breadcrumb { margin-bottom: 8px; }
-  .g33-hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px); gap: 32px 64px; align-items: center; }
-  .g33-hero-text { min-width: 0; }
-  .page-hero.g33-hero p.g33-hero-kicker { margin: 0 0 12px; max-width: none; line-height: 1.6; font-family: var(--f-serif); font-size: clamp(16px, 1.55vw, 19px); font-weight: 500; letter-spacing: -0.01em; color: var(--navy-900); }
-  html[data-lang="en"] .page-hero.g33-hero p.g33-hero-kicker { font-family: var(--f-serif-en); letter-spacing: 0; }
-  .g33-hero h1 { font-size: clamp(32px, 4.3vw, 54px); font-weight: 900; letter-spacing: -0.035em; }
+  /* 공통 머리말 공식(금색 눈썹글 → 제목 → 부제 → 설명) + 오른쪽 문장(紋章) */
+  .g33-hero { padding: 72px 0 72px; }
+  .g33-hero-grid { width: 100%; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px); gap: 32px 64px; align-items: center; }
+  .g33-hero-text { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; }
+  .g33-hero h1 { order: -1; font-size: clamp(32px, 4vw, 48px); font-weight: 900; letter-spacing: -0.035em; }
+  .g33-hero .page-hero-en { order: -2; }
   html[data-lang="en"] .g33-hero h1 { font-weight: 700; letter-spacing: -0.02em; }
-  .g33-hero .page-hero-en { margin-top: 12px; font-size: clamp(15px, 1.6vw, 20px); font-weight: 600; letter-spacing: .28em; }
-  .page-hero.g33-hero p.g33-hero-lead { margin-top: 20px; max-width: 600px; }
+  .page-hero.g33-hero p.g33-hero-kicker { margin: 12px 0 0; max-width: none; line-height: 1.6; font-family: var(--f-serif); font-size: clamp(17px, 1.55vw, 20px); font-weight: 500; letter-spacing: -0.01em; color: var(--navy-800); }
+  html[data-lang="en"] .page-hero.g33-hero p.g33-hero-kicker { font-family: var(--f-serif-en); font-style: italic; letter-spacing: 0; }
+  .page-hero.g33-hero p.g33-hero-lead { margin-top: 18px; max-width: 600px; }
 
   /* 각국 33인 = 11개 분야 × 3인 */
   .g33-eq { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; margin-top: 28px; }
   .g33-eq-term { display: inline-flex; align-items: center; gap: 9px; padding: 10px 16px 10px 14px; border: 1px solid var(--line-2); border-radius: var(--radius-sm); background: rgba(255, 255, 255, .86); color: var(--navy-900); }
   .g33-eq-term b { font-family: var(--f-serif-en); font-size: 30px; font-weight: 700; line-height: 1; font-variant-numeric: lining-nums; }
   .g33-eq-term small { display: flex; flex-direction: column; font-family: var(--f-serif); font-size: 14px; font-weight: 700; line-height: 1.3; }
-  .g33-eq-term small em { font-style: normal; font-family: var(--f-display); font-size: 9.5px; font-weight: 400; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  .g33-eq-term small em { font-style: normal; font-family: var(--f-display); font-size: 11px; font-weight: 400; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
   html[data-lang="en"] .g33-eq-term small { font-family: var(--f-serif-en); }
   .g33-eq-term.is-result { background: var(--navy-900); border-color: var(--navy-900); color: #fff; }
   .g33-eq-term.is-result small em { color: var(--gold-300); }
   .g33-eq-op { font-family: var(--f-serif-en); font-size: 22px; line-height: 1; color: var(--muted); }
-  .g33-hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+  .g33-hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
 
   .g33-emblem { position: relative; width: 100%; max-width: 420px; margin-left: auto; }
   .g33-emblem::before { content: ""; position: absolute; z-index: -1; inset: -12%; border-radius: 50%; background: radial-gradient(circle at 50% 46%, rgba(255, 236, 200, .7) 0%, rgba(255, 236, 200, 0) 58%); }
@@ -77,32 +77,24 @@
   .g33-formula-box .g33-fb-main b { font-family: var(--f-serif-en); font-weight: 700; }
   .g33-formula-box .g33-fb-en { margin: 2px 0 0; font-family: var(--f-serif-en); font-size: 12.5px; color: var(--ink-2); line-height: 1.5; }
 
-  /* 분야별 포인트 색 (흰 글자와 대비 4.5:1 이상) */
-  .g33-fields > li:nth-child(1) { --accent: #a8452f; }
-  .g33-fields > li:nth-child(2) { --accent: #a65a14; }
-  .g33-fields > li:nth-child(3) { --accent: #86661c; }
-  .g33-fields > li:nth-child(4) { --accent: #55772a; }
-  .g33-fields > li:nth-child(5) { --accent: #1f6f4c; }
-  .g33-fields > li:nth-child(6) { --accent: #1b6672; }
-  .g33-fields > li:nth-child(7) { --accent: #24497b; }
-  .g33-fields > li:nth-child(8) { --accent: #2a5f9f; }
-  .g33-fields > li:nth-child(9) { --accent: #3f4794; }
-  .g33-fields > li:nth-child(10) { --accent: #5c4392; }
-  .g33-fields > li:nth-child(11) { --accent: #843a68; }
-  .g33-fields .field-card { isolation: isolate; border-top-color: var(--accent); transition: box-shadow .25s, border-color .25s; }
-  .g33-fields .field-card:hover { box-shadow: var(--shadow); }
-  .g33-fields .field-card::before { content: ""; position: absolute; z-index: -1; left: 0; right: 0; top: 0; height: 110px; background: linear-gradient(180deg, var(--accent), rgba(255, 255, 255, 0)); opacity: .07; pointer-events: none; }
-  .g33-fields .field-no { background: var(--accent); }
-  .g33-fields .field-count { color: var(--accent); background: #fff; }
-  .g33-fields .field-icon { display: grid; place-items: center; width: 54px; height: 54px; border-radius: 50%; background: #fff; color: var(--accent); border: 1px solid var(--line-2); border-color: color-mix(in srgb, var(--accent) 30%, #fff); }
-  .g33-fields .field-icon svg { width: 27px; height: 27px; stroke-width: 1.5; }
-  .g33-fields .field-en { color: var(--accent); }
+  /* 분야별 색: 번호 앞 8px 점에만 씀 (채도 55%·명도 45% 안팎으로 낮춤 — 위 문장(紋章)의 점과 같은 색) */
+  .g33-fields > li:nth-child(1) { --accent: #b24b34; }
+  .g33-fields > li:nth-child(2) { --accent: #b27034; }
+  .g33-fields > li:nth-child(3) { --accent: #b28c34; }
+  .g33-fields > li:nth-child(4) { --accent: #79aa3c; }
+  .g33-fields > li:nth-child(5) { --accent: #34b27b; }
+  .g33-fields > li:nth-child(6) { --accent: #34a0b2; }
+  .g33-fields > li:nth-child(7) { --accent: #3469b2; }
+  .g33-fields > li:nth-child(8) { --accent: #346db2; }
+  .g33-fields > li:nth-child(9) { --accent: #454da1; }
+  .g33-fields > li:nth-child(10) { --accent: #63489d; }
+  .g33-fields > li:nth-child(11) { --accent: #9f467e; }
   html[data-lang="en"] .g33-fields .field-en { font-family: var(--f-serif); }
 
   /* 12번째 칸: 요약 카드 (네이비) */
   .g33-field-sum { position: relative; overflow: hidden; isolation: isolate; display: flex; flex-direction: column; min-width: 0; padding: 22px 22px 20px; border-radius: var(--radius-sm); background: radial-gradient(130% 100% at 100% 0%, #2a5797 0%, var(--navy-900) 52%, var(--navy-950) 100%); color: #c9d6ea; }
   .g33-field-sum::after { content: ""; position: absolute; z-index: -1; right: -30%; bottom: -40%; width: 90%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(220, 196, 140, .2) 0%, rgba(220, 196, 140, 0) 65%); pointer-events: none; }
-  .g33-sum-cap { font-family: var(--f-display); font-size: 11.5px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--gold-300); }
+  .g33-sum-cap { font-family: var(--f-display); font-size: 12px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--gold-300); }
   .g33-field-sum h3 { margin: 8px 0 0; color: #fff; font-size: 21px; }
   .g33-sum-eq { margin: 6px 0 0; font-family: var(--f-display); font-size: 25px; font-weight: 600; letter-spacing: .06em; color: #fff; line-height: 1.3; }
   .g33-sum-text { margin: 10px 0 18px; font-size: 14px; line-height: 1.6; color: #b8c7de; }
@@ -123,8 +115,8 @@
 
   .g33-steps { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 0 16px; max-width: 980px; margin: -15% auto 0; }
   .g33-step { min-width: 0; padding: 26px 18px 24px; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255, 255, 255, .95); box-shadow: var(--shadow); text-align: center; }
-  .g33-step-icon { display: grid; place-items: center; width: 58px; height: 58px; margin: 0 auto 14px; border-radius: 50%; border: 1px solid var(--blue-200); background: var(--blue-50); color: var(--navy-800); }
-  .g33-step-icon svg { width: 27px; height: 27px; stroke-width: 1.4; }
+  .g33-step-icon { display: flex; justify-content: center; margin: 0 auto 14px; color: var(--navy-700); }
+  .g33-step-icon svg { width: 30px; height: 30px; stroke-width: 1.25; }
   .g33-step-num { display: flex; align-items: baseline; justify-content: center; gap: 6px; margin: 0; color: var(--navy-900); line-height: 1.05; }
   .g33-step-num b { font-family: var(--f-serif-en); font-size: clamp(34px, 3.4vw, 46px); font-weight: 700; font-variant-numeric: lining-nums; }
   .g33-step-num small { font-family: var(--f-serif); font-size: 17px; font-weight: 700; }
@@ -132,11 +124,11 @@
   .g33-step-label { margin: 10px 0 0; font-family: var(--f-display); font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--blue-700); }
   .g33-step-desc { margin: 4px 0 0; font-size: 14.5px; line-height: 1.55; color: var(--ink-2); }
   .g33-step.is-result { border-color: var(--navy-900); background: radial-gradient(120% 120% at 50% 0%, #24497b 0%, var(--navy-900) 55%, var(--navy-950) 100%); }
-  .g33-step.is-result .g33-step-icon { border-color: rgba(255, 255, 255, .22); background: rgba(255, 255, 255, .07); color: #fff; }
+  .g33-step.is-result .g33-step-icon { color: var(--gold-300); }
   .g33-step.is-result .g33-step-num { color: #fff; }
   .g33-step.is-result .g33-step-label { color: var(--gold-300); }
   .g33-step.is-result .g33-step-desc { color: #b8c7de; }
-  .g33-op { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--blue-200); background: #fff; font-family: var(--f-serif-en); font-size: 24px; line-height: 1; color: var(--blue-700); box-shadow: var(--shadow-sm); }
+  .g33-op { display: grid; place-items: center; width: 32px; height: 44px; font-family: var(--f-serif-en); font-size: 30px; line-height: 1; color: var(--gold-500); }
 
   .g33-legend { justify-content: center; margin-top: 26px; }
   .g33-legend .legend-dot.is-gold { box-shadow: 0 0 0 2px #fff, 0 0 0 3px var(--gold-300); }
@@ -157,7 +149,8 @@
   /* ---------- 글로벌 대표 패 (어두운 띠 · 크리스털 패) ---------- */
   .g33-award { position: relative; overflow: hidden; isolation: isolate; padding: 100px 0; background: radial-gradient(70% 95% at 76% 46%, #234a80 0%, var(--navy-900) 46%, var(--navy-950) 100%); color: #c9d6ea; }
   .g33-award::before { content: ""; position: absolute; z-index: -1; right: 4%; top: 6%; width: 640px; max-width: 70%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(220, 196, 140, .2) 0%, rgba(220, 196, 140, 0) 62%); pointer-events: none; }
-  .g33-award::after { content: ""; position: absolute; z-index: -1; left: -20%; top: 78%; width: 140%; aspect-ratio: 1; border-radius: 50%; border-top: 1px solid rgba(220, 196, 140, .35); pointer-events: none; }
+  /* 옅은 점 세계지도 (지평선 곡선 대신) */
+  .g33-award::after { content: ""; position: absolute; z-index: -1; inset: 0; background: url("assets/img/brand/dotmap-light.svg") left -6% bottom -24% / 52% auto no-repeat; opacity: .12; pointer-events: none; }
   .g33-award-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 460px); gap: 56px 80px; align-items: center; }
   .g33-award .section-head { margin-bottom: 0; }
   .g33-award .eyebrow { color: var(--gold-300); }
@@ -166,10 +159,10 @@
   .g33-award .section-lead { color: #b6c5dc; }
   .g33-award-values { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 16px 10px; margin-top: 36px; padding-top: 30px; border-top: 1px solid rgba(255, 255, 255, .12); }
   .g33-award-values li { flex: 1 1 0; text-align: center; min-width: 0; }
-  .g33-av-icon { display: grid; place-items: center; width: 56px; height: 56px; margin: 0 auto 10px; border-radius: 50%; border: 1px solid rgba(220, 196, 140, .45); color: var(--gold-300); background: rgba(255, 255, 255, .04); }
-  .g33-av-icon svg { width: 25px; height: 25px; stroke-width: 1.4; }
+  .g33-av-icon { display: flex; justify-content: center; margin: 0 auto 12px; color: var(--gold-300); }
+  .g33-av-icon svg { width: 28px; height: 28px; stroke-width: 1.25; }
   .g33-award-values b { display: block; font-family: var(--f-head); font-size: 16.5px; font-weight: 700; color: #fff; line-height: 1.3; }
-  .g33-award-values small { display: block; margin-top: 3px; font-family: var(--f-display); font-size: 10.5px; letter-spacing: .14em; color: #9fb0ca; }
+  .g33-award-values small { display: block; margin-top: 3px; font-family: var(--f-display); font-size: 11px; letter-spacing: .12em; color: #9fb0ca; }
   .g33-award-values small.is-ko { font-family: var(--f-serif); letter-spacing: .02em; font-size: 12px; }
   .g33-award-note { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin: 30px 0 0; font-size: 13.5px; color: #9fb0ca; }
   .g33-award .sample-tag { background: rgba(255, 255, 255, .08); color: var(--gold-300); border-color: rgba(220, 196, 140, .7); }
@@ -193,21 +186,21 @@
   .g33-cr-mark svg { position: absolute; inset: 0; width: 100%; height: 100%; }
   .g33-cr-mark img { position: absolute; left: 50%; top: 50%; width: 58px; height: 58px; transform: translate(-50%, -53%); }
   .g33-cr-title { margin: 0; font-family: var(--f-serif); font-size: 23px; font-weight: 900; letter-spacing: -0.02em; line-height: 1.3; }
-  .g33-cr-sub { margin: 2px 0 0; font-family: var(--f-display); font-size: 9.5px; font-weight: 600; letter-spacing: .16em; color: var(--blue-700); }
+  .g33-cr-sub { margin: 2px 0 0; font-family: var(--f-display); font-size: 11px; font-weight: 600; letter-spacing: .12em; color: var(--blue-700); }
   .g33-cr-role { margin: 16px 0 0; font-family: var(--f-serif); font-size: 19px; font-weight: 700; line-height: 1.3; }
   .g33-cr-role small { display: block; margin-top: 1px; font-family: var(--f-serif-en); font-size: 12.5px; font-weight: 500; color: var(--ink-2); }
   .g33-cr-rule { display: block; width: 92px; height: 10px; margin: 12px auto; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 92 10'%3E%3Cpath d='M0 5h38M54 5h38' stroke='%23b8913f' stroke-width='1'/%3E%3Cpath d='M46 1.5 49.5 5 46 8.5 42.5 5z' fill='none' stroke='%23b8913f'/%3E%3C/svg%3E") center / contain no-repeat; }
   .g33-cr-text { margin: 0; font-family: var(--f-serif); font-size: 13.5px; font-weight: 500; line-height: 1.8; color: var(--navy-900); }
-  .g33-cr-text-en { margin: 8px 0 0; font-family: var(--f-serif-en); font-size: 11.5px; font-style: italic; line-height: 1.6; color: var(--ink-2); }
+  .g33-cr-text-en { margin: 8px 0 0; font-family: var(--f-serif-en); font-size: 12px; font-style: italic; line-height: 1.6; color: var(--ink-2); }
   .g33-cr-date { margin: 14px 0 0; font-family: var(--f-serif-en); font-size: 13px; font-weight: 700; letter-spacing: .08em; color: var(--navy-800); }
   .g33-cr-org { margin: 8px 0 0; font-family: var(--f-serif); font-size: 14.5px; font-weight: 700; line-height: 1.35; }
-  .g33-cr-org small { display: block; font-family: var(--f-serif-en); font-size: 11px; font-weight: 500; color: var(--ink-2); }
+  .g33-cr-org small { display: block; font-family: var(--f-serif-en); font-size: 11.5px; font-weight: 500; color: var(--ink-2); }
   .g33-pedestal { position: relative; width: min(100%, 452px); margin-top: -1px; padding: 15px 22px 14px; text-align: center; clip-path: polygon(4% 0, 96% 0, 100% 100%, 0 100%); background: linear-gradient(180deg, #e8d29c 0, #b8913f 3px, #2c4f86 3px, #17325a 40%, #0b1a33 100%); }
   .g33-pedestal .keywords { color: var(--gold-300); font-size: 15px; }
   .g33-pedestal .keywords span + span::before { color: var(--gold-500); }
   /* 영문 키워드 줄 (.keywords.en 은 언어 전환용 .en 과 겹치므로 별도 클래스) */
   .keywords.g33-kw-en { font-family: var(--f-display); font-weight: 400; letter-spacing: .14em; font-size: 13px; }
-  .g33-pedestal .keywords.g33-kw-en { margin-top: 3px; font-size: 10.5px; color: #d9c79b; }
+  .g33-pedestal .keywords.g33-kw-en { margin-top: 3px; font-size: 11px; color: #d9c79b; }
 
   /* ---------- ID 카드 (예시) ---------- */
   .g33-idcards { display: grid; grid-template-columns: repeat(2, minmax(0, 440px)); justify-content: center; gap: 28px 40px; }
@@ -242,12 +235,8 @@
     .g33-award-values li { flex: 0 0 calc((100% - 20px) / 3); }
   }
   @media (max-width: 860px) {
-    .g33-hero { text-align: center; }
-    .g33-hero .breadcrumb { justify-content: center; }
     .g33-hero-grid { grid-template-columns: minmax(0, 1fr); }
-    .g33-emblem { order: -1; max-width: 270px; margin: 0 auto; }
-    .page-hero.g33-hero p.g33-hero-lead { margin-left: auto; margin-right: auto; }
-    .g33-eq, .g33-hero-actions { justify-content: center; }
+    .g33-emblem { max-width: 260px; margin: 0 auto; }
     .g33-award-grid { grid-template-columns: minmax(0, 1fr); }
     .g33-award-text { text-align: center; }
     .g33-award .section-head { margin-left: auto; margin-right: auto; }
@@ -257,9 +246,13 @@
     .g33-idcards { grid-template-columns: minmax(0, 440px); }
   }
   @media (max-width: 760px) {
-    .g33-hero { padding: 36px 0 44px; }
-    .g33-emblem { max-width: 230px; }
-    .g33-hero-actions .btn { flex: 1 1 100%; max-width: 360px; }
+    /* 휴대폰 머리말: 문장(紋章)은 아래 분야 목록·공식과 겹치므로 숨기고, 버튼은 한 줄에 하나 */
+    .g33-hero { padding: 24px 0 28px; }
+    .g33-emblem { display: none; }
+    .page-hero.g33-hero p.g33-hero-kicker { display: none; }   /* 같은 표어가 페이지 곳곳에 있어 휴대폰 머리말에서는 생략 */
+    .g33-eq { margin-top: 16px; }
+    .g33-hero-actions { display: grid; gap: 10px; width: 100%; margin-top: 18px; }
+    .g33-hero-actions .btn { width: 100%; min-height: 50px; }
     .g33-eq-term { padding: 8px 12px 8px 10px; gap: 7px; }
     .g33-eq-term b { font-size: 25px; }
     .g33-eq-term small { font-size: 12.5px; }
@@ -270,44 +263,52 @@
     .g33-map { margin: 0 calc(var(--gutter) * -1); }
     .g33-map canvas { -webkit-mask-image: none; mask-image: none; }
     .g33-steps { grid-template-columns: minmax(0, 1fr); gap: 10px; margin-top: 18px; }
-    .g33-field-sum { padding: 16px 14px; }
-    .g33-sum-cap { font-size: 10px; letter-spacing: .14em; }
+    .g33-field-sum { margin-top: 14px; padding: 20px 18px; border-radius: var(--radius-lg); }
+    .g33-sum-cap { font-size: 11px; letter-spacing: .14em; }
     .g33-field-sum h3 { font-size: 17px; }
     .g33-sum-eq { font-size: 19px; letter-spacing: .02em; white-space: nowrap; }
     .g33-sum-text { font-size: 13px; margin: 8px 0 14px; }
     .g33-field-sum .link-arrow { font-size: 13.5px; }
-    .g33-op { margin: 0 auto; width: 38px; height: 38px; font-size: 20px; }
-    .g33-step { display: grid; grid-template-columns: 54px minmax(0, 1fr); gap: 2px 16px; align-items: center; padding: 18px 18px; text-align: left; }
-    .g33-step-icon { grid-row: span 3; width: 54px; height: 54px; margin: 0; }
+    .g33-op { margin: 0 auto; width: 32px; height: 28px; font-size: 24px; }
+    .g33-step { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 2px 18px; align-items: center; padding: 18px 18px; text-align: left; }
+    .g33-step-icon { grid-row: span 3; margin: 0; }
     .g33-step-num { justify-content: flex-start; }
     .g33-step-num b { font-size: 32px; }
     .g33-step-label { margin-top: 4px; }
     .g33-pin-label { font-size: 12px; padding: 1px 7px; }
     .g33-award { padding: 72px 0; }
     .g33-award-values { gap: 14px 4px; padding-top: 24px; }
-    .g33-av-icon { width: 46px; height: 46px; }
-    .g33-av-icon svg { width: 21px; height: 21px; }
+    .g33-av-icon svg { width: 24px; height: 24px; }
     .g33-award-values b { font-size: 14px; }
-    .g33-award-values small { font-size: 9px; letter-spacing: .06em; }
+    .g33-award-values small { font-size: 11px; letter-spacing: .02em; }
     .g33-award-values small.is-ko { font-size: 11px; }
     .g33-crystal-face { padding: 44px 22px 22px; }
     .g33-cr-text { font-size: 13px; }
     .g33-pedestal { padding: 13px 12px 12px; }
     .g33-pedestal .keywords { font-size: 13.5px; }
-    .g33-pedestal .keywords.g33-kw-en { font-size: 8.5px; letter-spacing: .06em; }
+    .g33-pedestal .keywords.g33-kw-en { font-size: 11px; letter-spacing: .04em; }
     .g33-pedestal .keywords.g33-kw-en span + span::before { margin: 0 .45em; }
     .g33-idno { margin-top: 44px; }
     .g33-idno-row { flex-wrap: wrap; }
     .g33-idno-part { min-width: 0; flex: 1 1 40%; padding: 12px 10px 10px; }
     .g33-idno-dash { display: none; }
   }
+  @media (max-width: 760px) {
+    /* ID 카드 예시: 휴대폰에서는 카드 비율을 풀고 작은 글자를 11px 이상으로 */
+    .g33-idcards .idcard { aspect-ratio: auto; }
+    .g33-idcards .idcard-head small, .g33-idcards .idcard-role small, .g33-idcards .idcard-rows dt, .g33-idcards .idcard-rows dt small,
+    .g33-idcards .idcard-rows dd small, .g33-idcards .idcard-org small, .g33-idcards .idcard.is-back small { font-size: 11px; }
+    .g33-idcards .idcard-rows > div { grid-template-columns: 58px 1fr; }
+    .g33-idcards .idcard.is-back .keywords.g33-kw-en { font-size: 11px; letter-spacing: .06em; }
+    .g33-idcards .idcard.is-back .keywords.g33-kw-en span + span::before { margin: 0 .4em; }
+  }
   @media (max-width: 480px) {
     /* 공식: 한 줄 5칸 고정 (숫자 위 · 단위 아래) */
     .g33-eq { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); gap: 6px; }
-    .g33-eq-term { flex-direction: column; justify-content: center; gap: 4px; padding: 9px 4px 8px; text-align: center; }
+    .g33-eq-term { flex-direction: column; justify-content: center; gap: 3px; padding: 8px 4px 7px; text-align: center; }
     .g33-eq-term b { font-size: 24px; }
     .g33-eq-term small { align-items: center; font-size: 12px; }
-    .g33-eq-term small em { font-size: 8.5px; letter-spacing: .08em; }
+    .g33-eq-term small em { display: none; }   /* 휴대폰: 영문 보조 이름표는 생략 (단위만) */
   }
   @media (max-width: 400px) {
     .g33-award-values li { flex: 0 0 calc((100% - 8px) / 3); }
@@ -320,12 +321,12 @@
   }
 </style>
 </head>
-<body data-page="global33" data-title-en="Global 33 | World Hope Declaration Network">
+<body data-page="global33" data-title-en="Global 33 — 33 Representatives per Nation | World Hope Declaration Network">
 <div id="site-header"></div>
 
 <main id="main">
   <!-- 상단: 라이트 히어로 -->
-  <section class="page-hero g33-hero" aria-labelledby="page-title">
+  <section class="page-hero no-motif g33-hero" aria-labelledby="page-title">
     <div class="container">
       <nav class="breadcrumb" aria-label="breadcrumb"><a href="index.html"><span class="ko">홈</span><span class="en">Home</span></a><span aria-hidden="true">/</span><span><span class="ko">글로벌 33</span><span class="en">Global 33</span></span></nav>
       <div class="g33-hero-grid">
@@ -361,17 +362,17 @@
           <circle class="g33-emblem-ring" cx="220" cy="220" r="200"/>
           <circle class="g33-emblem-ring" cx="220" cy="220" r="168"/>
           <path class="g33-emblem-tick" d="M267.9 56.9L275.8 30.0M348.5 108.7L369.6 90.3M388.3 195.8L416.0 191.8M374.6 290.6L400.1 302.3M311.9 363.0L327.0 386.6M220.0 390.0L220.0 418.0M128.1 363.0L113.0 386.6M65.4 290.6L39.9 302.3M51.7 195.8L24.0 191.8M91.5 108.7L70.4 90.3M172.1 56.9L164.2 30.0"/>
-          <g fill="#a8452f"><circle cx="200.1" cy="37.1" r="6.4"/><circle cx="220.0" cy="36.0" r="6.4"/><circle cx="239.9" cy="37.1" r="6.4"/></g>
-          <g fill="#a65a14"><circle cx="302.2" cy="55.4" r="6.4"/><circle cx="319.5" cy="65.2" r="6.4"/><circle cx="335.6" cy="76.9" r="6.4"/></g>
-          <g fill="#86661c"><circle cx="378.1" cy="125.9" r="6.4"/><circle cx="387.4" cy="143.6" r="6.4"/><circle cx="394.6" cy="162.1" r="6.4"/></g>
-          <g fill="#55772a"><circle cx="403.9" cy="226.4" r="6.4"/><circle cx="402.1" cy="246.2" r="6.4"/><circle cx="398.2" cy="265.7" r="6.4"/></g>
-          <g fill="#1f6f4c"><circle cx="371.3" cy="324.8" r="6.4"/><circle cx="359.1" cy="340.5" r="6.4"/><circle cx="345.2" cy="354.8" r="6.4"/></g>
-          <g fill="#1b6672"><circle cx="290.6" cy="389.9" r="6.4"/><circle cx="271.8" cy="396.5" r="6.4"/><circle cx="252.5" cy="401.1" r="6.4"/></g>
-          <g fill="#24497b"><circle cx="187.5" cy="401.1" r="6.4"/><circle cx="168.2" cy="396.5" r="6.4"/><circle cx="149.4" cy="389.9" r="6.4"/></g>
-          <g fill="#2a5f9f"><circle cx="94.8" cy="354.8" r="6.4"/><circle cx="80.9" cy="340.5" r="6.4"/><circle cx="68.7" cy="324.8" r="6.4"/></g>
-          <g fill="#3f4794"><circle cx="41.8" cy="265.7" r="6.4"/><circle cx="37.9" cy="246.2" r="6.4"/><circle cx="36.1" cy="226.4" r="6.4"/></g>
-          <g fill="#5c4392"><circle cx="45.4" cy="162.1" r="6.4"/><circle cx="52.6" cy="143.6" r="6.4"/><circle cx="61.9" cy="125.9" r="6.4"/></g>
-          <g fill="#843a68"><circle cx="104.4" cy="76.9" r="6.4"/><circle cx="120.5" cy="65.2" r="6.4"/><circle cx="137.8" cy="55.4" r="6.4"/></g>
+          <g fill="#b24b34"><circle cx="200.1" cy="37.1" r="4"/><circle cx="220.0" cy="36.0" r="4"/><circle cx="239.9" cy="37.1" r="4"/></g>
+          <g fill="#b27034"><circle cx="302.2" cy="55.4" r="4"/><circle cx="319.5" cy="65.2" r="4"/><circle cx="335.6" cy="76.9" r="4"/></g>
+          <g fill="#b28c34"><circle cx="378.1" cy="125.9" r="4"/><circle cx="387.4" cy="143.6" r="4"/><circle cx="394.6" cy="162.1" r="4"/></g>
+          <g fill="#79aa3c"><circle cx="403.9" cy="226.4" r="4"/><circle cx="402.1" cy="246.2" r="4"/><circle cx="398.2" cy="265.7" r="4"/></g>
+          <g fill="#34b27b"><circle cx="371.3" cy="324.8" r="4"/><circle cx="359.1" cy="340.5" r="4"/><circle cx="345.2" cy="354.8" r="4"/></g>
+          <g fill="#34a0b2"><circle cx="290.6" cy="389.9" r="4"/><circle cx="271.8" cy="396.5" r="4"/><circle cx="252.5" cy="401.1" r="4"/></g>
+          <g fill="#3469b2"><circle cx="187.5" cy="401.1" r="4"/><circle cx="168.2" cy="396.5" r="4"/><circle cx="149.4" cy="389.9" r="4"/></g>
+          <g fill="#346db2"><circle cx="94.8" cy="354.8" r="4"/><circle cx="80.9" cy="340.5" r="4"/><circle cx="68.7" cy="324.8" r="4"/></g>
+          <g fill="#454da1"><circle cx="41.8" cy="265.7" r="4"/><circle cx="37.9" cy="246.2" r="4"/><circle cx="36.1" cy="226.4" r="4"/></g>
+          <g fill="#63489d"><circle cx="45.4" cy="162.1" r="4"/><circle cx="52.6" cy="143.6" r="4"/><circle cx="61.9" cy="125.9" r="4"/></g>
+          <g fill="#9f467e"><circle cx="104.4" cy="76.9" r="4"/><circle cx="120.5" cy="65.2" r="4"/><circle cx="137.8" cy="55.4" r="4"/></g>
           <g class="g33-emblem-no" text-anchor="middle">
             <text x="220" y="75" fill="#a8452f">1</text><text x="301.1" y="98.8" fill="#a65a14">2</text><text x="356.4" y="162.7" fill="#86661c">3</text>
             <text x="368.5" y="246.3" fill="#55772a">4</text><text x="333.4" y="323.2" fill="#1f6f4c">5</text><text x="262.3" y="368.9" fill="#1b6672">6</text>
@@ -420,77 +421,77 @@
 
       <ol class="field-grid g33-fields">
         <li class="field-card">
-          <div class="field-card-top"><span class="field-no">1</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
+          <div class="field-card-top"><span class="field-no"><span class="field-dot" aria-hidden="true"></span><span class="field-word">Field&nbsp;</span>01</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
           <span class="field-icon" data-icon="megaphone"></span>
           <h3 class="field-name"><span class="ko">사회영향력</span><span class="en">Social Influence</span></h3>
           <p class="field-en"><span class="ko" lang="en">Social Influence</span><span class="en" lang="ko">사회영향력</span></p>
           <p class="field-desc"><span class="ko">사회에 긍정적 영향을 미치는 인물</span><span class="en">People who have a positive influence on society</span></p>
         </li>
         <li class="field-card">
-          <div class="field-card-top"><span class="field-no">2</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
+          <div class="field-card-top"><span class="field-no"><span class="field-dot" aria-hidden="true"></span><span class="field-word">Field&nbsp;</span>02</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
           <span class="field-icon" data-icon="trophy"></span>
           <h3 class="field-name"><span class="ko">국위선양</span><span class="en">National Prestige</span></h3>
           <p class="field-en"><span class="ko" lang="en">National Prestige</span><span class="en" lang="ko">국위선양</span></p>
           <p class="field-desc"><span class="ko">국가의 위상을 높이는 인물</span><span class="en">People who raise the standing of their nation</span></p>
         </li>
         <li class="field-card">
-          <div class="field-card-top"><span class="field-no">3</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
+          <div class="field-card-top"><span class="field-no"><span class="field-dot" aria-hidden="true"></span><span class="field-word">Field&nbsp;</span>03</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
           <span class="field-icon" data-icon="book"></span>
           <h3 class="field-name"><span class="ko">교육계</span><span class="en">Academia &amp; Education</span></h3>
           <p class="field-en"><span class="ko" lang="en">Academia &amp; Education</span><span class="en" lang="ko">교육계</span></p>
           <p class="field-desc"><span class="ko">교육과 지식으로 세대를 세우는 인물</span><span class="en">People who build up generations through education and knowledge</span></p>
         </li>
         <li class="field-card">
-          <div class="field-card-top"><span class="field-no">4</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
+          <div class="field-card-top"><span class="field-no"><span class="field-dot" aria-hidden="true"></span><span class="field-word">Field&nbsp;</span>04</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
           <span class="field-icon" data-icon="palette"></span>
           <h3 class="field-name"><span class="ko">문화예술계</span><span class="en">Culture &amp; Arts</span></h3>
           <p class="field-en"><span class="ko" lang="en">Culture &amp; Arts</span><span class="en" lang="ko">문화예술계</span></p>
           <p class="field-desc"><span class="ko">문화를 통해 세상을 풍요롭게 하는 인물</span><span class="en">People who enrich the world through culture</span></p>
         </li>
         <li class="field-card">
-          <div class="field-card-top"><span class="field-no">5</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
+          <div class="field-card-top"><span class="field-no"><span class="field-dot" aria-hidden="true"></span><span class="field-word">Field&nbsp;</span>05</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
           <span class="field-icon" data-icon="cross"></span>
           <h3 class="field-name"><span class="ko">종교계</span><span class="en">Religious Leaders</span></h3>
           <p class="field-en"><span class="ko" lang="en">Religious Leaders</span><span class="en" lang="ko">종교계</span></p>
           <p class="field-desc"><span class="ko">영적 가치와 사랑을 실천하는 인물</span><span class="en">People who live out spiritual values and love</span></p>
         </li>
         <li class="field-card">
-          <div class="field-card-top"><span class="field-no">6</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
+          <div class="field-card-top"><span class="field-no"><span class="field-dot" aria-hidden="true"></span><span class="field-word">Field&nbsp;</span>06</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
           <span class="field-icon" data-icon="chart"></span>
           <h3 class="field-name"><span class="ko">산업계</span><span class="en">Industry &amp; Business</span></h3>
           <p class="field-en"><span class="ko" lang="en">Industry &amp; Business</span><span class="en" lang="ko">산업계</span></p>
           <p class="field-desc"><span class="ko">경제와 산업 발전으로 사회를 이끄는 인물</span><span class="en">People who lead society through economic and industrial growth</span></p>
         </li>
         <li class="field-card">
-          <div class="field-card-top"><span class="field-no">7</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
+          <div class="field-card-top"><span class="field-no"><span class="field-dot" aria-hidden="true"></span><span class="field-word">Field&nbsp;</span>07</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
           <span class="field-icon" data-icon="shield"></span>
           <h3 class="field-name"><span class="ko">국방사회안전</span><span class="en">Defense, Safety &amp; Public Security</span></h3>
           <p class="field-en"><span class="ko" lang="en">Defense, Safety &amp; Public Security</span><span class="en" lang="ko">국방사회안전</span></p>
           <p class="field-desc"><span class="ko">국가와 국민의 안전을 지키는 인물</span><span class="en">People who protect the safety of the nation and its people</span></p>
         </li>
         <li class="field-card">
-          <div class="field-card-top"><span class="field-no">8</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
+          <div class="field-card-top"><span class="field-no"><span class="field-dot" aria-hidden="true"></span><span class="field-word">Field&nbsp;</span>08</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
           <span class="field-icon" data-icon="medical"></span>
           <h3 class="field-name"><span class="ko">의료계</span><span class="en">Medical &amp; Health</span></h3>
           <p class="field-en"><span class="ko" lang="en">Medical &amp; Health</span><span class="en" lang="ko">의료계</span></p>
           <p class="field-desc"><span class="ko">생명과 건강을 지키는 인물</span><span class="en">People who protect life and health</span></p>
         </li>
         <li class="field-card">
-          <div class="field-card-top"><span class="field-no">9</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
+          <div class="field-card-top"><span class="field-no"><span class="field-dot" aria-hidden="true"></span><span class="field-word">Field&nbsp;</span>09</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
           <span class="field-icon" data-icon="tool"></span>
           <h3 class="field-name"><span class="ko">생업종사자</span><span class="en">Workers &amp; Livelihood</span></h3>
           <p class="field-en"><span class="ko" lang="en">Workers &amp; Livelihood</span><span class="en" lang="ko">생업종사자</span></p>
           <p class="field-desc"><span class="ko">현장에서 땀 흘리는 모든 생업 종사자</span><span class="en">All who work hard on the ground to earn their living</span></p>
         </li>
         <li class="field-card">
-          <div class="field-card-top"><span class="field-no">10</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
+          <div class="field-card-top"><span class="field-no"><span class="field-dot" aria-hidden="true"></span><span class="field-word">Field&nbsp;</span>10</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
           <span class="field-icon" data-icon="users"></span>
           <h3 class="field-name"><span class="ko">시민</span><span class="en">Citizens</span></h3>
           <p class="field-en"><span class="ko" lang="en">Citizens</span><span class="en" lang="ko">시민</span></p>
           <p class="field-desc"><span class="ko">선한 영향력을 실천하는 일반 시민 대표</span><span class="en">Representatives of ordinary citizens who spread good influence</span></p>
         </li>
         <li class="field-card">
-          <div class="field-card-top"><span class="field-no">11</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
+          <div class="field-card-top"><span class="field-no"><span class="field-dot" aria-hidden="true"></span><span class="field-word">Field&nbsp;</span>11</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
           <span class="field-icon" data-icon="landmark"></span>
           <h3 class="field-name"><span class="ko">정치계(전·현직)</span><span class="en">Political Leaders (Current &amp; Former)</span></h3>
           <p class="field-en"><span class="ko" lang="en">Political Leaders (Current &amp; Former)</span><span class="en" lang="ko">정치계(전·현직)</span></p>
@@ -618,7 +619,7 @@
   <!-- ===== 4. 글로벌 대표 ID 카드 (예시) ===== -->
   <section class="section g33-anchor" id="idcard" aria-labelledby="idcard-title">
     <div class="container">
-      <div class="section-head center">
+      <div class="section-head split">
         <h2 class="section-title" id="idcard-title"><span class="ko">글로벌 대표 ID 카드 (예시)</span><span class="en">Global Representative ID Card (Sample)</span></h2>
         <p class="section-sub"><span class="ko" lang="en">Global Representative ID Card (Example)</span><span class="en">Front &amp; Back</span></p>
         <p class="section-lead"><span class="ko">글로벌 대표에게 발급되는 ID 카드의 디자인 예시입니다. 카드의 이름과 사진 자리는 가상의 예시입니다.</span><span class="en">A sample design of the ID card for Global Representatives. The name and photo on the card are fictional placeholders.</span></p>

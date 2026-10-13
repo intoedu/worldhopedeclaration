@@ -24,17 +24,17 @@
   /* ===== 대한민국 대표 33인 추천 페이지 전용 (공통 style.css 토큰 사용) ===== */
   .k33-anchor { scroll-margin-top: calc(var(--header-h) + 58px); }
 
-  /* 히어로 */
-  .k33-hero { padding: 40px 0 60px; }
-  .k33-hero .breadcrumb { margin-bottom: 8px; }
+  /* 히어로: 공통 머리말 공식(금색 눈썹글 → 제목 → 부제 → 설명) + 오른쪽 선정패 */
+  .k33-hero { padding: 64px 0 64px; }
   .k33-hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 380px); gap: 32px 64px; align-items: center; }
-  .page-hero.k33-hero p.k33-kicker { margin: 0 0 12px; max-width: none; font-family: var(--f-serif); font-size: clamp(16px, 1.55vw, 19px); font-weight: 500; color: var(--navy-900); }
-  html[data-lang="en"] .page-hero.k33-hero p.k33-kicker { font-family: var(--f-serif-en); }
-  .k33-hero h1 { font-size: clamp(30px, 4vw, 50px); font-weight: 900; letter-spacing: -0.035em; }
+  .k33-hero-text { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; }
+  .k33-hero h1 { order: -1; font-size: clamp(30px, 3.8vw, 46px); font-weight: 900; letter-spacing: -0.035em; }
+  .k33-hero .page-hero-en { order: -2; }
   html[data-lang="en"] .k33-hero h1 { font-weight: 700; letter-spacing: -0.02em; }
-  .k33-hero .page-hero-en { margin-top: 12px; font-size: clamp(13px, 1.4vw, 17px); font-weight: 600; letter-spacing: .24em; }
+  .page-hero.k33-hero p.k33-kicker { margin: 12px 0 0; max-width: none; font-family: var(--f-serif); font-size: clamp(16px, 1.5vw, 19px); font-weight: 500; color: var(--navy-800); }
+  html[data-lang="en"] .page-hero.k33-hero p.k33-kicker { font-family: var(--f-serif-en); font-style: italic; }
   .page-hero.k33-hero p.k33-lead { margin-top: 18px; max-width: 620px; }
-  .k33-hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .k33-hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
   .k33-badge { position: relative; margin: 0; text-align: center; }
   .k33-badge img { width: 100%; max-width: 360px; height: auto; margin: 0 auto; border-radius: var(--radius-lg); box-shadow: 0 30px 60px -36px rgba(12, 28, 54, .55); }
   .k33-badge figcaption { margin-top: 10px; font-size: 13px; color: var(--muted); }
@@ -42,10 +42,12 @@
   /* 모집 개요 */
   .k33-overview { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
   .k33-ov { padding: 22px 22px 20px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
-  .k33-ov-label { display: flex; align-items: center; gap: 10px; margin: 0 0 8px; font-family: var(--f-display); font-size: 11.5px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--blue-700); }
+  .k33-ov-label { display: flex; align-items: center; gap: 10px; margin: 0 0 8px; font-family: var(--f-display); font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--gold-600); }
+  .k33-ov-label [data-icon] { display: inline-flex; color: var(--navy-700); }
   .k33-ov-label svg { width: 18px; height: 18px; }
   .k33-ov h3 { margin: 0 0 6px; font-family: var(--f-head); font-size: 18px; font-weight: 700; color: var(--navy-900); }
   .k33-ov p { margin: 0; font-size: 14.5px; line-height: 1.65; color: var(--ink-2); }
+  .k33-ov p .tel-chip { margin: 6px 0 0; }
   .k33-ov p b { color: var(--navy-900); }
   .k33-tbd { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 12px; font-weight: 700; color: #8a5d0d; background: var(--gold-100, #fcf1dc); }
 
@@ -53,27 +55,41 @@
   .k33-steps { list-style: none; margin: 28px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; counter-reset: k; border-top: 1px solid var(--line); }
   .k33-steps li { position: relative; padding: 20px 18px 6px 0; }
   .k33-steps li + li { padding-left: 18px; border-left: 1px solid var(--line); }
-  .k33-steps b { display: block; font-family: var(--f-serif-en); font-size: 14px; font-weight: 700; color: var(--gold-600); }
+  .k33-steps b { display: block; font-family: var(--f-display); font-size: 13px; font-weight: 600; letter-spacing: .12em; color: var(--gold-600); }
   .k33-steps h3 { margin: 6px 0 4px; font-family: var(--f-head); font-size: 17px; font-weight: 700; color: var(--navy-900); }
   .k33-steps p { margin: 0; font-size: 14px; line-height: 1.6; color: var(--ink-2); }
 
-  /* 분야별 안내 */
-  .k33-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
-  .k33-field { border: 1px solid var(--line); border-radius: var(--radius); background: #fff; overflow: hidden; }
-  .k33-field-head { display: flex; align-items: center; gap: 14px; padding: 16px 20px; background: var(--bg-alt, #f5f8fc); border-bottom: 1px solid var(--line); }
-  .k33-field-no { flex-shrink: 0; width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; background: var(--navy-900); color: #fff; font-family: var(--f-serif-en); font-weight: 700; font-size: 15px; }
-  .k33-field-head h3 { margin: 0; font-family: var(--f-head); font-size: 19px; font-weight: 700; color: var(--navy-900); }
-  .k33-field-head small { display: block; font-family: var(--f-serif-en); font-size: 13px; font-weight: 500; color: var(--muted); }
-  .k33-field-head .k33-count { margin-left: auto; font-family: var(--f-serif); font-weight: 700; color: var(--blue-700); white-space: nowrap; }
+  /* 분야별 안내: 분야마다 접고 펼치는 묶음 (첫 분야만 펼침). 세부 분야 한 줄 전체가 '이 분야로 추천' 버튼 */
+  .k33-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 24px; align-items: start; }
+  .k33-group { border: 1px solid var(--line); border-radius: var(--radius); background: #fff; overflow: hidden; scroll-margin-top: calc(var(--header-h) + 72px); transition: border-color var(--dur-2), box-shadow var(--dur-2); }
+  .k33-group[open] { border-color: var(--line-2); box-shadow: 0 12px 28px rgba(19, 41, 75, .06); }
+  .k33-group-head { display: grid; grid-template-columns: 40px minmax(0, 1fr) auto 20px; align-items: center; gap: 0 12px; min-height: 64px; padding: 10px 18px 10px 20px; list-style: none; cursor: pointer; }
+  .k33-group-head::-webkit-details-marker { display: none; }
+  .k33-group-head:hover { background: var(--sky-50); }
+  .k33-field-no { font-family: var(--f-display); font-size: 28px; font-weight: 400; line-height: 1; color: var(--gold-500); font-variant-numeric: lining-nums; }
+  .k33-group-name { min-width: 0; }
+  .k33-group-name b { display: block; font-family: var(--f-head); font-size: 17px; font-weight: 700; line-height: 1.4; color: var(--navy-900); }
+  .k33-group-name small { display: block; font-family: var(--f-serif-en); font-size: 13px; font-weight: 500; line-height: 1.4; color: var(--muted); }
+  .k33-count { font-family: var(--f-serif); font-size: 15px; font-weight: 700; color: var(--navy-900); white-space: nowrap; }
+  html[data-lang="en"] .k33-count { font-family: var(--f-serif-en); font-size: 14px; }
+  .k33-chev { display: inline-flex; color: var(--navy-700); transition: transform var(--dur-2) var(--ease-out); }
+  .k33-chev svg { width: 20px; height: 20px; stroke-width: 1.6; }
+  .k33-group[open] .k33-chev { transform: rotate(180deg); }
   .k33-subs { list-style: none; margin: 0; padding: 0; }
-  .k33-sub { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 4px 12px; align-items: start; padding: 14px 20px; }
-  .k33-sub + .k33-sub { border-top: 1px solid var(--line); }
-  .k33-sub-no { font-family: var(--f-serif-en); font-size: 13px; font-weight: 700; color: var(--muted); padding-top: 2px; }
-  .k33-sub-name { margin: 0; font-family: var(--f-head); font-size: 16px; font-weight: 700; color: var(--navy-900); }
-  .k33-sub-name small { margin-left: 6px; font-family: var(--f-serif-en); font-size: 12.5px; font-weight: 500; color: var(--muted); }
-  .k33-sub-text { margin: 3px 0 0; font-size: 14px; line-height: 1.6; color: var(--ink-2); }
-  .k33-sub .btn { grid-row: span 2; align-self: center; }
+  .k33-sub { display: grid; grid-template-columns: 32px minmax(0, 1fr) 20px; gap: 0 12px; align-items: center; width: 100%; min-height: 64px; padding: 14px 18px 14px 20px; border: 0; border-top: 1px solid var(--line); background: none; text-align: left; color: inherit; line-height: inherit; transition: background var(--dur-1); }
+  .k33-sub:hover, .k33-sub:focus-visible { background: var(--blue-50); }
+  .k33-sub:focus-visible { outline-offset: -2px; }
+  .k33-sub-no { align-self: start; padding-top: 2px; font-family: var(--f-display); font-size: 13px; font-weight: 600; color: var(--gold-600); }
+  .k33-sub-body { min-width: 0; }
+  .k33-sub-name { display: block; font-family: var(--f-head); font-size: 16px; font-weight: 700; line-height: 1.45; color: var(--navy-900); }
+  .k33-sub-name small { margin-left: 6px; font-family: var(--f-serif-en); font-size: 13px; font-weight: 500; color: var(--muted); }
+  .k33-sub-text { display: block; margin-top: 3px; font-size: 14px; line-height: 1.6; color: var(--ink-2); }
+  .k33-sub-go { display: inline-flex; color: var(--navy-700); transition: transform var(--dur-2) var(--ease-out); }
+  .k33-sub-go svg { width: 18px; height: 18px; }
+  .k33-sub:hover .k33-sub-go { transform: translateX(3px); }
   .k33-fields-note { margin-top: 18px; }
+  /* 페이지 안 메뉴: 넓은 화면에서는 가운데 */
+  .k33-subnav ul { width: max-content; max-width: 100%; margin: 0 auto; }
 
   /* 선정 시 드리는 것 */
   .k33-award { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 28px 48px; align-items: center; }
@@ -86,32 +102,47 @@
   /* 추천서 (참여하기 페이지 추천서와 같은 모양) */
   .k33-layout { display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: 40px 64px; align-items: start; }
   .k33-form h3 { font-size: 23px; }
-  .k33-form .form-card-en { display: block; margin: 0 0 6px; font-family: var(--f-display); font-size: 12px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--blue-700); }
+  .k33-form .form-card-en { display: block; margin: 0 0 6px; font-family: var(--f-display); font-size: 12px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--gold-600); }
   .k33-fs { min-width: 0; margin: 0; padding: 0; border: 0; }
   .k33-fs + .k33-fs { margin-top: 8px; padding-top: 22px; border-top: 1px solid var(--line); }
   .k33-fs legend { display: flex; align-items: center; gap: 10px; float: left; width: 100%; margin: 0 0 16px; padding: 0; font-family: var(--f-head); font-size: 17px; font-weight: 700; color: var(--navy-900); }
   .k33-fs legend + * { clear: both; }
   .k33-fs + .form-grid { margin-top: 22px; padding-top: 22px; border-top: 1px solid var(--line); }
-  .k33-form .consent-box { max-height: 180px; }
-  .k33-form .check + .check { margin-top: 10px; }
+  .k33-side .tel-chip { margin-left: 4px; }
   .k33-form input[readonly] { background: var(--bg-alt, #f5f8fc); color: var(--ink-2); }
   .k33-side .notice-box { margin-top: 16px; }
   .k33-side .link-arrow { margin-top: 16px; }
 
   @media (max-width: 960px) {
     .k33-hero-grid, .k33-award, .k33-layout { grid-template-columns: minmax(0, 1fr); }
-    .k33-badge img { max-width: 280px; }
+    .k33-badge { justify-self: start; }
+    .k33-badge img { max-width: 240px; margin: 0; }
     .k33-overview { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .k33-fields { grid-template-columns: minmax(0, 1fr); }
     .k33-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .k33-steps li:nth-child(3) { padding-left: 0; border-left: 0; }
   }
+  @media (max-width: 760px) {
+    /* 휴대폰 머리말: 선정패 그림은 아래 '선정되신 분께'에 같은 그림이 있어 생략, 버튼은 한 줄에 하나 */
+    .k33-hero { padding: 28px 0 32px; }
+    .k33-badge { display: none; }
+    .k33-hero-actions { display: grid; gap: 10px; width: 100%; margin-top: 24px; }
+    .k33-hero-actions .btn { width: 100%; min-height: 50px; }
+    .k33-group-head { grid-template-columns: 34px minmax(0, 1fr) auto 20px; padding: 10px 14px 10px 16px; }
+    .k33-field-no { font-size: 24px; }
+    .k33-sub { padding: 14px 14px 14px 16px; grid-template-columns: 28px minmax(0, 1fr) 18px; }
+  }
   @media (max-width: 600px) {
+    /* 휴대폰: 개요는 테두리 상자 대신 가는 선으로 나눈 목록 (페이지 길이를 줄임) */
     .k33-overview, .k33-steps { grid-template-columns: minmax(0, 1fr); }
+    .k33-overview { gap: 0; border-bottom: 1px solid var(--line); }
+    .k33-ov { padding: 16px 0; border: 0; border-top: 1px solid var(--line); border-radius: 0; background: none; }
+    .k33-steps li { padding: 14px 0 12px; }
     .k33-steps li + li { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
-    .k33-sub { grid-template-columns: 34px minmax(0, 1fr); }
-    .k33-sub .btn { grid-column: 2; grid-row: auto; justify-self: start; margin-top: 8px; }
-    .k33-field-head .k33-count { display: none; }
+    .k33-sub-name small { display: block; margin: 0; }
+    .k33-group-head { min-height: 56px; }
+    .k33-award-imgs { grid-template-columns: minmax(0, 200px) minmax(0, 120px); }
+    #overview, #fields, #award, #form { padding: 56px 0; }
   }
 </style>
 </head>
@@ -120,9 +151,9 @@
 
 <main id="main">
   <!-- ===== 히어로 ===== -->
-  <section class="page-hero k33-hero">
+  <section class="page-hero no-motif k33-hero">
     <div class="container k33-hero-grid">
-      <div>
+      <div class="k33-hero-text">
         <nav class="breadcrumb" aria-label="breadcrumb"><a href="index.html"><span class="ko">홈</span><span class="en">Home</span></a><span aria-hidden="true">/</span><a href="global33.html"><span class="ko">글로벌 33</span><span class="en">Global 33</span></a><span aria-hidden="true">/</span><span><span class="ko">대한민국 대표 33인 추천</span><span class="en">Nominate Korea’s 33</span></span></nav>
         <p class="k33-kicker"><span class="ko">세계희망선언문 채택 서명자 · 글로벌 대표</span><span class="en">Signatories of the World Hope Declaration · Global Representatives</span></p>
         <h1><span class="ko">대한민국 대표 33인을 추천받습니다</span><span class="en">Nominate Korea’s 33 Representatives</span></h1>
@@ -139,6 +170,17 @@
       </figure>
     </div>
   </section>
+
+  <!-- ===== 페이지 안 메뉴 ===== -->
+  <nav class="subnav k33-subnav" aria-label="대표 33인 추천 메뉴" data-en-aria-label="Nominate Korea’s 33 sections">
+    <div class="container">
+      <ul>
+        <li><a href="#overview"><span class="ko">모집 개요</span><span class="en">Overview</span></a></li>
+        <li><a href="#fields"><span class="ko">분야별 안내</span><span class="en">Guide by Field</span></a></li>
+        <li><a href="#form"><span class="ko">추천서</span><span class="en">Nomination</span></a></li>
+      </ul>
+    </div>
+  </nav>
 
   <!-- ===== 모집 개요 ===== -->
   <section class="section k33-anchor" id="overview" aria-labelledby="overview-title">
@@ -161,7 +203,7 @@
         <div class="k33-ov">
           <p class="k33-ov-label"><span data-icon="doc"></span>How</p>
           <h3><span class="ko">추천 방법</span><span class="en">How to nominate</span></h3>
-          <p><span class="ko">이 페이지의 <a href="#form">온라인 추천서</a> 또는 전국대표전화 <a href="tel:15882716"><b>1588-2716</b></a></span><span class="en">Use the <a href="#form">online form</a> on this page or call <a href="tel:15882716"><b>1588-2716</b></a></span></p>
+          <p><span class="ko">이 페이지의 <a href="#form">온라인 추천서</a> 또는 전국대표전화 <a class="tel-chip" href="tel:15882716"><span data-icon="phone"></span>1588-2716</a></span><span class="en">Use the <a href="#form">online form</a> on this page or call <a class="tel-chip" href="tel:15882716"><span data-icon="phone"></span>1588-2716</a></span></p>
         </div>
         <div class="k33-ov">
           <p class="k33-ov-label"><span data-icon="calendar"></span>Period</p>
@@ -193,10 +235,10 @@
   <!-- ===== 분야별 안내 ===== -->
   <section class="section section-sky k33-anchor" id="fields" aria-labelledby="fields-title">
     <div class="container">
-      <div class="section-head">
+      <div class="section-head split">
         <span class="eyebrow">11 FIELDS × 3</span>
         <h2 class="section-title" id="fields-title"><span class="ko">분야별 추천 안내</span><span class="en">Guide by Field</span></h2>
-        <p class="section-lead"><span class="ko">각국 33인 세계희망선언문 채택 서명자 선정 기준입니다. 추천하실 분에게 맞는 세부 분야를 골라 <b>‘이 분야로 추천’</b>을 누르면 추천서에 분야가 미리 선택됩니다.</span><span class="en">Selection criteria for the 33 signatories per country. Pick the sub-field that fits your nominee and press <b>“Nominate in this field”</b> — the form will be pre-filled.</span></p>
+        <p class="section-lead"><span class="ko">각국 33인 세계희망선언문 채택 서명자 선정 기준입니다. 추천하실 분에게 맞는 세부 분야를 골라 누르면 추천서에 분야가 미리 선택됩니다.</span><span class="en">Selection criteria for the 33 signatories per country. Pick the sub-field that fits your nominee — the form will be pre-filled.</span></p>
       </div>
       <div class="k33-fields" id="k33-fields" aria-live="polite">
         <p class="muted"><span class="ko">분야 안내를 불러오는 중입니다…</span><span class="en">Loading the fields…</span></p>
@@ -241,7 +283,7 @@
         <p class="section-lead"><span class="ko">보내 주신 추천은 이메일로 담당자에게 전달되며, 확인 후 연락드립니다.</span><span class="en">Your nomination is sent to our staff by email; we will contact you after review.</span></p>
         <div class="notice-box"><span class="ko">추천하시기 전에 꼭 <b>피추천인 본인</b>에게 추천 사실을 알리고, 이름·소속 등 정보를 보내는 것에 대한 동의를 받아 주세요.</span><span class="en">Before you nominate someone, please tell <b>the nominee</b> and obtain their permission to share their information with us.</span></div>
         <a class="link-arrow" href="#fields"><span class="ko">분야별 선정 기준 보기</span><span class="en">Selection criteria by field</span></a>
-        <p class="muted" style="margin-top:18px;font-size:14px"><span class="ko">전화 추천·문의: 전국대표전화 <a href="tel:15882716"><b>1588-2716</b></a></span><span class="en">By phone: <a href="tel:15882716"><b>1588-2716</b></a></span></p>
+        <p class="muted" style="margin-top:18px;font-size:14px"><span class="ko">전화 추천·문의: 전국대표전화 <a class="tel-chip" href="tel:15882716"><span data-icon="phone"></span>1588-2716</a></span><span class="en">By phone: <a class="tel-chip" href="tel:15882716"><span data-icon="phone"></span>1588-2716</a></span></p>
       </aside>
 
       <form class="form-card k33-form" id="k33-form" data-wh-form="nominations" data-subject-ko="[세계희망연대 홈페이지] 대한민국 대표 33인 추천" data-ok-ko="추천이 담당자에게 전달되었습니다. 확인 후 연락드리겠습니다. 감사합니다." data-ok-en="Your nomination has been sent to our staff. We will contact you after review. Thank you.">
@@ -319,24 +361,41 @@
           <div class="hp-field" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
           <div class="field full">
             <span class="label"><span class="ko">개인정보 수집·이용 동의</span><span class="en">Consent to collection and use of personal information</span><span class="req">*</span></span>
-            <div class="consent-box" tabindex="0" role="region" aria-label="개인정보 수집·이용 안내" data-en-aria-label="Privacy notice">
-              <div class="ko">
-                · 수집 항목: (추천인) 이름, 연락처, 이메일, 피추천인과의 관계(선택) / (피추천인) 이름, 국가, 추천 분야·세부 분야, 소속·직함(선택), 주요 활동과 추천 사유, 참고 링크(선택), 연락처(선택)<br>
-                · 수집 목적: 대한민국 대표 33인 추천의 접수·검토와 추천인·피추천인 연락<br>
-                · 피추천인 정보: 다른 사람의 개인정보를 적으실 때에는 미리 피추천인 본인에게 추천 사실을 알리고 정보 제공에 대한 동의를 받아야 합니다. 피추천인이 요청하면 정보를 받은 경로(추천인)와 이용 목적을 알려 드리며, 피추천인이 원하지 않으면 지체 없이 삭제합니다.<br>
-                · 전달 방법: 입력하신 내용은 홈페이지에 저장되지 않고, 외부 이메일 전송 서비스 FormSubmit(formsubmit.co, 서버가 국외에 있을 수 있음)을 거쳐 담당자 이메일로 전달됩니다. 전송이 원활하지 않으면 이용자의 메일 앱으로 직접 보내실 수 있습니다.<br>
-                · 보유 기간: 담당자 메일함에 보관하며 검토(회신) 완료 후 1년 이내에 삭제 (동의 철회 또는 피추천인의 삭제 요청 시 지체 없이 파기)<br>
-                · 동의를 거부하실 수 있으며, 이 경우 온라인 추천이 제한됩니다. 전화(1588-2716)로는 추천·문의하실 수 있습니다.
+            <ul class="consent-list ko">
+              <li><b>수집 항목</b><span>(추천인) 이름, 연락처, 이메일, 피추천인과의 관계(선택) / (피추천인) 이름, 국가, 추천 분야·세부 분야, 소속·직함(선택), 주요 활동과 추천 사유, 참고 링크(선택), 연락처(선택)</span></li>
+              <li><b>수집 목적</b><span>대한민국 대표 33인 추천의 접수·검토와 추천인·피추천인 연락</span></li>
+              <li><b>전달 방법</b><span>입력하신 내용은 홈페이지에 저장되지 않고, 외부 이메일 전송 서비스 FormSubmit(formsubmit.co, 서버가 국외에 있을 수 있음)을 거쳐 담당자 이메일로 전달됩니다. 전송이 원활하지 않으면 이용자의 메일 앱으로 직접 보내실 수 있습니다.</span></li>
+              <li><b>보유 기간</b><span>담당자 메일함에 보관하며 검토(회신) 완료 후 1년 이내에 삭제 (동의 철회 또는 피추천인의 삭제 요청 시 지체 없이 파기)</span></li>
+              <li class="is-note">동의를 거부하실 수 있으며, 이 경우 온라인 추천이 제한됩니다. 전화(1588-2716)로는 추천·문의하실 수 있습니다.</li>
+            </ul>
+            <ul class="consent-list en">
+              <li><b>Items</b><span>(you) name, phone, email, relationship (optional) / (nominee) name, country, field and sub-field, organization and title (optional), main activities and reason, reference link (optional), phone or email (optional)</span></li>
+              <li><b>Purpose</b><span>to receive and review nominations for Korea’s 33 Representatives and to contact you and the nominee</span></li>
+              <li><b>Delivery</b><span>your submission is not stored on this website. It is sent to our staff by email through a third-party email relay service, FormSubmit (formsubmit.co), whose servers may be located outside Korea. If online delivery fails, you can send it from your own email app instead.</span></li>
+              <li><b>Retention</b><span>kept in the staff mailbox and deleted within 1 year after the review is completed (deleted promptly upon withdrawal of consent or at the nominee’s request)</span></li>
+              <li class="is-note">You may decline; online nomination will then be unavailable, but you can still contact us at 1588-2716.</li>
+            </ul>
+            <details class="consent-more">
+              <summary><span class="ko">개인정보 수집·이용 안내 전문 보기 (필수)</span><span class="en">Read the full privacy notice (required)</span></summary>
+              <div class="consent-box is-full" role="region" aria-label="개인정보 수집·이용 안내" data-en-aria-label="Privacy notice">
+                <div class="ko">
+                  · 수집 항목: (추천인) 이름, 연락처, 이메일, 피추천인과의 관계(선택) / (피추천인) 이름, 국가, 추천 분야·세부 분야, 소속·직함(선택), 주요 활동과 추천 사유, 참고 링크(선택), 연락처(선택)<br>
+                  · 수집 목적: 대한민국 대표 33인 추천의 접수·검토와 추천인·피추천인 연락<br>
+                  · 피추천인 정보: 다른 사람의 개인정보를 적으실 때에는 미리 피추천인 본인에게 추천 사실을 알리고 정보 제공에 대한 동의를 받아야 합니다. 피추천인이 요청하면 정보를 받은 경로(추천인)와 이용 목적을 알려 드리며, 피추천인이 원하지 않으면 지체 없이 삭제합니다.<br>
+                  · 전달 방법: 입력하신 내용은 홈페이지에 저장되지 않고, 외부 이메일 전송 서비스 FormSubmit(formsubmit.co, 서버가 국외에 있을 수 있음)을 거쳐 담당자 이메일로 전달됩니다. 전송이 원활하지 않으면 이용자의 메일 앱으로 직접 보내실 수 있습니다.<br>
+                  · 보유 기간: 담당자 메일함에 보관하며 검토(회신) 완료 후 1년 이내에 삭제 (동의 철회 또는 피추천인의 삭제 요청 시 지체 없이 파기)<br>
+                  · 동의를 거부하실 수 있으며, 이 경우 온라인 추천이 제한됩니다. 전화(1588-2716)로는 추천·문의하실 수 있습니다.
+                </div>
+                <div class="en">
+                  · Items: (you) name, phone, email, relationship (optional) / (nominee) name, country, field and sub-field, organization and title (optional), main activities and reason, reference link (optional), phone or email (optional)<br>
+                  · Purpose: to receive and review nominations for Korea’s 33 Representatives and to contact you and the nominee<br>
+                  · About the nominee: before you share another person’s information, you must tell them about the nomination and obtain their permission. If the nominee asks, we will tell them where we received their information (you) and why we use it, and we will delete it promptly if they do not wish us to keep it.<br>
+                  · Delivery: your submission is not stored on this website. It is sent to our staff by email through a third-party email relay service, FormSubmit (formsubmit.co), whose servers may be located outside Korea. If online delivery fails, you can send it from your own email app instead.<br>
+                  · Retention: kept in the staff mailbox and deleted within 1 year after the review is completed (deleted promptly upon withdrawal of consent or at the nominee’s request)<br>
+                  · You may decline; online nomination will then be unavailable, but you can still contact us at 1588-2716.
+                </div>
               </div>
-              <div class="en">
-                · Items: (you) name, phone, email, relationship (optional) / (nominee) name, country, field and sub-field, organization and title (optional), main activities and reason, reference link (optional), phone or email (optional)<br>
-                · Purpose: to receive and review nominations for Korea’s 33 Representatives and to contact you and the nominee<br>
-                · About the nominee: before you share another person’s information, you must tell them about the nomination and obtain their permission. If the nominee asks, we will tell them where we received their information (you) and why we use it, and we will delete it promptly if they do not wish us to keep it.<br>
-                · Delivery: your submission is not stored on this website. It is sent to our staff by email through a third-party email relay service, FormSubmit (formsubmit.co), whose servers may be located outside Korea. If online delivery fails, you can send it from your own email app instead.<br>
-                · Retention: kept in the staff mailbox and deleted within 1 year after the review is completed (deleted promptly upon withdrawal of consent or at the nominee’s request)<br>
-                · You may decline; online nomination will then be unavailable, but you can still contact us at 1588-2716.
-              </div>
-            </div>
+            </details>
             <label class="check"><input type="checkbox" name="consent" required data-label="개인정보 수집·이용 동의 (추천인·피추천인 정보)"> <span><span class="ko">위 내용을 확인했으며 개인정보 수집·이용에 동의합니다. (<a href="privacy.html">개인정보처리방침</a>)</span><span class="en">I have read the above and agree. (<a href="privacy.html">Privacy Policy</a>)</span></span></label>
             <label class="check"><input type="checkbox" name="nominee_consent" value="yes" required data-label="피추천인 본인 동의 확인" data-msg-ko="피추천인 본인의 동의를 받으셨는지 확인해 주세요." data-msg-en="Please confirm that the nominee has agreed to share their information."> <span><span class="ko">피추천인 본인에게 추천 사실을 알리고, 위 정보를 보내는 것에 대한 동의를 받았습니다.</span><span class="en">I have told the nominee about this nomination and they have agreed to share the information above.</span></span></label>
           </div>
@@ -395,20 +454,33 @@
         subSel.appendChild(opt(String(r.no), r.no + ". " + r.sub_ko, r.no + ". " + r.sub_en, String(r.no) === String(selectNo)));
       });
     }
+    var opened = null;   // 펼쳐 둔 분야 번호 (언어를 바꿔 다시 그려도 그대로)
+    function icon(name) { return WH.icon ? WH.icon(name) : ""; }
     function render() {
       if (!rows.length) return;
-      box.innerHTML = groups().map(function (g) {
-        return '<article class="k33-field" id="field-' + pad(g.no) + '">' +
-          '<header class="k33-field-head"><span class="k33-field-no">' + g.no + "</span><div><h3>" + esc(WH.t(g.ko, g.en)) + "</h3><small>" + esc(WH.t(g.en, g.ko)) + "</small></div>" +
-          '<span class="k33-count">' + WH.t(g.subs.length + "인", g.subs.length + " persons") + "</span></header>" +
+      var gs = groups();
+      if (!opened) { opened = {}; opened[gs[0].no] = true; }   // 처음에는 첫 분야만 펼침
+      box.innerHTML = gs.map(function (g) {
+        return '<details class="k33-group" id="field-' + pad(g.no) + '" data-no="' + g.no + '"' + (opened[g.no] ? " open" : "") + ">" +
+          '<summary class="k33-group-head"><span class="k33-field-no" aria-hidden="true">' + pad(g.no) + "</span>" +
+          '<span class="k33-group-name"><b><span class="sr-only">' + g.no + ". </span>" + esc(WH.t(g.ko, g.en)) + "</b><small>" + esc(WH.t(g.en, g.ko)) + "</small></span>" +
+          '<span class="k33-count">' + WH.t(g.subs.length + "인", g.subs.length + " persons") + "</span>" +
+          '<span class="k33-chev" aria-hidden="true">' + icon("chevron-down") + "</span></summary>" +
           '<ul class="k33-subs">' + g.subs.map(function (r) {
-            return '<li class="k33-sub"><span class="k33-sub-no">' + pad(r.no) + "</span>" +
-              '<div><p class="k33-sub-name">' + esc(WH.t(r.sub_ko, r.sub_en)) + "<small>" + esc(WH.t(r.sub_en, r.sub_ko)) + "</small></p>" +
-              '<p class="k33-sub-text">' + esc(WH.t(r.criteria_ko, r.criteria_en)) + "</p></div>" +
-              '<button type="button" class="btn btn-outline btn-sm" data-pick="' + r.no + '">' + WH.t("이 분야로 추천", "Nominate in this field") + "</button></li>";
-          }).join("") + "</ul></article>";
+            return '<li><button type="button" class="k33-sub" data-pick="' + r.no + '">' +
+              '<span class="k33-sub-no" aria-hidden="true">' + pad(r.no) + "</span>" +
+              '<span class="k33-sub-body"><span class="k33-sub-name">' + esc(WH.t(r.sub_ko, r.sub_en)) + "<small>" + esc(WH.t(r.sub_en, r.sub_ko)) + "</small></span>" +
+              '<span class="k33-sub-text">' + esc(WH.t(r.criteria_ko, r.criteria_en)) + "</span>" +
+              '<span class="sr-only"> — ' + WH.t("이 분야로 추천", "Nominate in this field") + "</span></span>" +
+              '<span class="k33-sub-go" aria-hidden="true">' + icon("arrow-right") + "</span></button></li>";
+          }).join("") + "</ul></details>";
       }).join("");
     }
+    // 펼침 상태 기억
+    box.addEventListener("toggle", function (e) {
+      var d = e.target;
+      if (d && d.classList && d.classList.contains("k33-group") && opened) opened[d.getAttribute("data-no")] = d.open;
+    }, true);
     box.addEventListener("click", function (e) {
       var b = e.target.closest("[data-pick]");
       if (!b) return;
@@ -420,12 +492,19 @@
       setTimeout(function () { document.getElementById("k-nominee").focus({ preventScroll: true }); }, 500);
     });
     fieldSel.addEventListener("change", function () { fillSubs(); });
+    // korea33.html#field-05 처럼 분야 주소로 오면 그 분야를 펼쳐서 보여 줌
+    function openFromHash() {
+      if (!/^#field-\d\d$/.test(location.hash)) return;
+      var t = document.querySelector(location.hash);
+      if (t) { t.open = true; t.scrollIntoView(); }
+    }
+    window.addEventListener("hashchange", openFromHash);
     document.addEventListener("wh:lang", function () { render(); fillFields(); fillSubs(subSel.value); });
     WH.db.json("selection-criteria").then(function (d) {
       rows = (d && d.rows) || [];
       if (!rows.length) { box.innerHTML = '<p class="muted">' + WH.t("분야 안내를 불러오지 못했습니다. 전국대표전화 1588-2716으로 문의해 주세요.", "Could not load the fields. Please call 1588-2716.") + "</p>"; return; }
       render(); fillFields(); fillSubs();
-      if (location.hash && /^#field-\d\d$/.test(location.hash)) { var t = document.querySelector(location.hash); if (t) t.scrollIntoView(); }
+      openFromHash();
     });
   })();
 </script>

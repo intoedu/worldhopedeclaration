@@ -7,6 +7,12 @@
    2) 배경 움직임 멈춤: 히어로 사진·원칙 띠·사진 타일이 화면 밖에 있거나 다른 탭을 보는 동안
       .is-paused 를 붙여 움직임을 멈춤 (style.css ‘모션’)
    3) 휴대폰 5대 원칙 카드: 아래 점 5개로 지금 몇 번째 카드인지 표시
+   4) 첫 화면 아래 이야기(index.html S1–S8)의 자료 채우기
+      · 글로벌 33: data/selection-criteria.json 의 분야(field_no) 11개 → 분야 칸
+      · 세계희망지도: data/countries.json → 참여 국가 수·진행 상황, data/worldmap-dots.json → 금색 표시 위치
+      · 소식: data/posts.json 최근 3개(고정 글 먼저). 글이 없으면 섹션을 숨김 / 응원: data/cheers.json (게시된 것이 있을 때만)
+      · 연락처: assets/js/config.js 의 phone · address · publicEmail
+      글자는 한·영을 함께 넣어 두므로(.ko/.en) 언어를 바꿔도 다시 그릴 필요가 없음
    '동작 줄이기' 설정이면 1)은 하지 않음(처음부터 최종 값). 구형 브라우저에서는 아무것도 하지 않음.
    ========================================================================== */
 (function () {
@@ -18,10 +24,10 @@
   try { reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
   var hasIO = "IntersectionObserver" in window;
 
-  /* ---------------- 2) 화면 밖·다른 탭에서는 배경 움직임 멈춤 ---------------- */
+  /* ---------------- 2) 화면 밖·다른 탭에서는 배경 움직임 멈춤 (지도 위 금색 표시의 물결 포함) ---------------- */
   (function () {
     if (!hasIO) return;
-    var targets = Array.prototype.slice.call(document.querySelectorAll(".home-hero, .home-principles, .home-tiles"));
+    var targets = Array.prototype.slice.call(document.querySelectorAll(".home-hero, .home-principles, .home-tiles, .hs-map"));
     if (!targets.length) return;
     var inView = new Map();
     function apply(el) { el.classList.toggle("is-paused", document.hidden || !inView.get(el)); }
@@ -64,6 +70,187 @@
       });
     }, { root: list, threshold: 0.6 });
     cards.forEach(function (c) { io.observe(c); });
+  })();
+
+  /* ---------------- 4) 첫 화면 아래 이야기: 자료 채우기 ---------------- */
+  (function () {
+    var db = WH.db;
+    if (!db || typeof db.json !== "function") return;
+    var esc = WH.esc;
+    // 한·영 두 벌을 함께 넣음 (값은 미리 esc 한 HTML)
+    function bi(ko, en) { return WH.bi(ko, en || ko); }
+    function $(sel, root) { return (root || document).querySelector(sel); }
+    function $$(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+    function pad2(n) { return (n < 10 ? "0" : "") + n; }
+    // 화면에 가까워졌을 때 한 번만 실행 (큰 자료는 필요할 때 불러옴)
+    function whenNear(el, fn) {
+      if (!hasIO) { fn(); return; }
+      var io = new IntersectionObserver(function (entries) {
+        if (entries.some(function (e) { return e.isIntersecting; })) { io.disconnect(); fn(); }
+      }, { rootMargin: "600px 0px" });
+      io.observe(el);
+    }
+
+    /* ---- S3. 글로벌 33: 11개 분야 칸 (data/selection-criteria.json 의 field_no 별 첫 줄) ---- */
+    var fieldList = $('[data-hs="fields"]');
+    if (fieldList) {
+      db.json("selection-criteria").then(function (d) {
+        var rows = d && Array.isArray(d.rows) ? d.rows : [];
+        var seen = {}, fields = [];
+        rows.forEach(function (r) {
+          var no = r ? parseInt(r.field_no, 10) : NaN;
+          if (!(no > 0) || seen[no]) return;
+          seen[no] = true;
+          var ko = String(r.field_ko || r.field_en || "").trim(), en = String(r.field_en || r.field_ko || "").trim();
+          if (ko) fields.push({ no: no, ko: ko, en: en });
+        });
+        fields.sort(function (a, b) { return a.no - b.no; });
+        // 자료를 못 읽으면 분야 칸 묶음 전체를 숨김 (빈 칸을 보여 주지 않음)
+        if (!fields.length) { fieldList.hidden = true; return; }
+        fieldList.insertAdjacentHTML("afterbegin", fields.map(function (f, i) {
+          return '<li class="hs-field" style="--k:' + i + '">' +
+            '<span class="hs-field-no"><i aria-hidden="true"></i>' + pad2(f.no) + "</span>" +
+            '<b class="hs-field-name">' + bi(esc(f.ko), esc(f.en)) + "</b>" +
+            '<span class="hs-field-en">' + bi('<span lang="en">' + esc(f.en) + "</span>", '<span lang="ko">' + esc(f.ko) + "</span>") + "</span>" +
+            "</li>";
+        }).join(""));
+        var sum = $(".hs-field-sum", fieldList);
+        if (sum) sum.style.setProperty("--k", fields.length);
+      });
+    }
+
+    /* ---- S4. 세계희망지도: 참여 국가 수 · 나라별 진행 상황 · 금색 표시 ---- */
+    var notes = $('[data-hs="notes"]');
+    var art = $('[data-hs="map"]');
+    // 점 지도 SVG 의 좌표 (scripts/build-dotmap.mjs 와 같은 식): x = (경도 + 180) × 2.5, y = (78 − 위도) × 2.5, 그림 900 × 335
+    var MAP_W = 900, MAP_H = 335, MAP_K = 2.5, MAP_LAT0 = 78;
+    function normCode(c) {
+      var s = String(c == null ? "" : c).trim();
+      return /^\d{1,3}$/.test(s) ? ("00" + s).slice(-3) : s;
+    }
+    function names(c) {
+      var ko = String(c.name_ko || c.name_en || "").trim(), en = String(c.name_en || c.name_ko || "").trim();
+      return { ko: esc(ko), en: esc(en) };
+    }
+    function placePins(list, m) {
+      if (!art || !m || !Array.isArray(m.dots)) return; // 지도 자료를 못 읽으면 HTML 의 기본 표시를 그대로 둠
+      var html = "";
+      list.forEach(function (c) {
+        var code = normCode(c.code);
+        var own = m.dots.filter(function (d) { return d && normCode(d[2]) === code; });
+        if (!own.length) return;
+        // 그 나라 점들의 가운데에서 가장 가까운 점 (섬·속령 때문에 바다 위로 가지 않게 — worldmap.js 와 같은 방식)
+        var sx = 0, sy = 0;
+        own.forEach(function (d) { sx += Number(d[0]); sy += Number(d[1]); });
+        var mx = sx / own.length, my = sy / own.length, best = own[0], bd = Infinity;
+        own.forEach(function (d) {
+          var dx = Number(d[0]) - mx, dy = Number(d[1]) - my, dd = dx * dx + dy * dy;
+          if (dd < bd) { bd = dd; best = d; }
+        });
+        var left = (Number(best[0]) + 180) * MAP_K / MAP_W * 100;
+        var top = (MAP_LAT0 - Number(best[1])) * MAP_K / MAP_H * 100;
+        if (!(left >= 0 && left <= 100 && top >= 0 && top <= 100)) return;
+        var n = names(c);
+        html += '<span class="hs-map-pin' + (left > 62 ? " is-left" : "") + '" style="left:' + left.toFixed(2) + "%;top:" + top.toFixed(2) + '%" aria-hidden="true">' +
+          "<i></i><b>" + bi(n.ko, n.en) + "</b></span>";
+      });
+      $$(".hs-map-pin", art).forEach(function (p) { p.parentNode.removeChild(p); });
+      if (html) art.insertAdjacentHTML("beforeend", html);
+    }
+    if (notes || art || $('[data-hs="count"]')) {
+      db.json("countries").then(function (rows) {
+        if (!Array.isArray(rows)) return;
+        // 참여 국가 = 이름이 있는 항목 수 (worldmap.js 와 같은 기준)
+        var list = rows.filter(function (r) { return r && typeof r === "object" && String(r.name_ko || r.name_en || "").trim(); });
+        $$('[data-hs="count"]').forEach(function (el) { el.textContent = WH.fmtNum(list.length); });
+        if (notes) {
+          notes.innerHTML = list.map(function (c) {
+            var n = names(c);
+            var ko = c.note_ko ? n.ko + " · " + esc(c.note_ko) : n.ko;
+            var en = c.note_en ? n.en + " · " + esc(c.note_en) : n.en;
+            return "<li>" + bi(ko, en) + "</li>";
+          }).join("");
+          notes.hidden = !list.length;
+        }
+        if (!art) return;
+        if (!list.length) { placePins([], { dots: [] }); return; }
+        whenNear(art, function () {
+          db.json("worldmap-dots").then(function (m) { placePins(list, m); });
+        });
+      });
+    }
+
+    /* ---- S6. 소식 (최근 3개 · 고정 글 먼저) · 희망 응원 메시지 ---- */
+    var news = $('[data-hs="news"]');
+    var postList = news ? $('[data-hs="posts"]', news) : null;
+    // 분류 이름은 board.js 와 같음
+    var CATS = { notice: ["공지", "Notice", "badge-notice"], news: ["소식", "News", "badge-news"], press: ["언론보도", "Press", "badge-press"] };
+    // 본문 첫 문단 (빈 줄로 나뉜 첫 덩어리) — 글자는 화면에 넣을 때 esc
+    function firstPara(text) { return String(text || "").trim().split(/\n\s*\n/)[0].replace(/\s+/g, " ").trim(); }
+    function postItem(p, i) {
+      var cat = CATS[p.category] || [p.category || "", p.category || "", "badge-sample"];
+      var url = "post.html?id=" + encodeURIComponent(p.id);
+      var tKo = p.title_ko || p.title_en || "", tEn = p.title_en || p.title_ko || "";
+      var bKo = firstPara(p.body_ko || p.body_en), bEn = firstPara(p.body_en || p.body_ko);
+      return '<li class="hs-post" style="--k:' + i + '">' +
+        '<p class="hs-post-meta">' +
+          (cat[0] ? '<span class="badge ' + cat[2] + '">' + bi(esc(cat[0]), esc(cat[1])) + "</span>" : "") +
+          (p.pinned ? '<span class="hs-post-pin" data-icon="thumbtack"></span><span class="sr-only">' + bi("고정", "Pinned") + "</span>" : "") +
+          '<time class="hs-post-date" datetime="' + esc(p.created_at) + '">' + esc(WH.fmtDate(p.created_at)) + "</time>" +
+        "</p>" +
+        '<h3 class="hs-post-title"><a class="hs-stretch" href="' + url + '">' + bi(esc(tKo), esc(tEn)) + "</a></h3>" +
+        (bKo || bEn ? '<p class="hs-post-excerpt">' + bi(esc(bKo), esc(bEn)) + "</p>" : "") +
+        '<span class="hs-post-more" aria-hidden="true">' + bi("자세히 보기", "Read more") + '<span data-icon="arrow-right"></span></span>' +
+        "</li>";
+    }
+    if (news && postList && typeof db.listPosts === "function") {
+      db.listPosts({ page: 1, size: 3 }).then(function (res) {
+        var items = res && Array.isArray(res.items) ? res.items : [];
+        if (!items.length) return; // 글이 없으면 섹션을 숨긴 채로 둠
+        postList.innerHTML = items.map(postItem).join("");
+        if (WH.fillIcons) WH.fillIcons(postList);
+        news.hidden = false;
+      }).catch(function () {});
+
+      // 응원 메시지: 게시된 것이 있을 때만 (없으면 아무것도 보이지 않음)
+      var cheerBox = $('[data-hs="cheers"]', news), cheerList = $('[data-hs="cheer-list"]', news);
+      if (cheerBox && cheerList && typeof db.listCheers === "function") {
+        db.listCheers(6).then(function (rows) {
+          var list = (Array.isArray(rows) ? rows : []).filter(function (c) { return c && String(c.message || "").trim(); });
+          if (!list.length) return;
+          cheerList.innerHTML = list.map(function (c, i) {
+            var who = c.name ? esc(c.name) : bi("익명", "Anonymous");
+            return '<figure class="hs-cheer" style="--k:' + i + '"><blockquote><p>' + esc(c.message) + "</p></blockquote>" +
+              "<figcaption>" + who + (c.region ? " · " + esc(c.region) : "") + "</figcaption></figure>";
+          }).join("");
+          cheerBox.hidden = false;
+        }).catch(function () {});
+      }
+    }
+
+    /* ---- S7·S8. 연락처: assets/js/config.js 값으로 (비어 있으면 그 줄을 숨김) ---- */
+    var C = WH.config || {};
+    function hideOwner(el) { var box = el.closest("li") || el; box.hidden = true; }
+    if (C.phone) {
+      var tel = "tel:" + String(C.phone).replace(/[^0-9+]/g, "");
+      $$('[data-hs="tel"]').forEach(function (a) { a.setAttribute("href", tel); });
+      $$('[data-hs="phone"]').forEach(function (el) { el.textContent = C.phone; });
+    } else {
+      $$('[data-hs="tel"]').forEach(function (a) {
+        hideOwner(a);
+        var dot = a.previousElementSibling;
+        if (dot && dot.classList.contains("hs-dot")) dot.hidden = true;
+      });
+    }
+    var addr = C.address || {};
+    $$('[data-hs="address"]').forEach(function (el) {
+      if (addr.ko || addr.en) el.innerHTML = bi(esc(addr.ko || addr.en), esc(addr.en || addr.ko));
+      else hideOwner(el);
+    });
+    $$('[data-hs="email"]').forEach(function (a) {
+      if (/@/.test(C.publicEmail || "")) { a.setAttribute("href", "mailto:" + C.publicEmail); a.textContent = C.publicEmail; }
+      else hideOwner(a);
+    });
   })();
 
   /* ---------------- 1) 참여자 수 올라가기 ---------------- */

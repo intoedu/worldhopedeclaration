@@ -368,6 +368,26 @@ HTML 에 **기본값을 적은 요소**에 `data-stat="키"` 를 달면 main.js 
 ```
 화면 폭 전체(컨테이너 밖에 둠), 4칸 → 960px 이하 2×2.
 
+### 첫 화면 아래 이야기 `.hs` (index.html S1–S8 · style.css ‘홈 — 첫 화면 아래 이야기’)
+시안 첫 화면(히어로·통계·5대 원칙·타일) 아래에 8개 섹션이 이어집니다. 문구는 **모두 다른 페이지 문구를 그대로** 가져왔고
+(출처는 index.html 의 섹션 주석), 원래 페이지 문구를 고치면 홈도 함께 고쳐 주세요.
+
+| 섹션 | 클래스 | 바탕 | 자료 |
+|---|---|---|---|
+| S1 선언 한 문장 | `.hs-statement` | 흰색 | declaration.html 머리말 · vision.html 미션 설명 · 취지문 한 구절 |
+| S2 5대 원칙 풀이 + 5대 가치 | `.hs-alt.hs-decl` | 아이보리 | declaration.html #p1–#p5 · #values (왼쪽 제목은 따라 내려옴, 960px 이하 해제) |
+| S3 글로벌 33 | `.hs-g33` | 흰색 | 분야 11칸 = `data/selection-criteria.json`(home.js) · 추천 절차 = korea33.html |
+| S4 세계희망지도 | `.hs-map` | 네이비 | `assets/img/brand/dotmap-light.svg` + 참여 국가 `data/countries.json` (금색 표시 위치는 `worldmap-dots.json` 으로 계산) |
+| S5 위원장 인사말 | `.hs-msg` | 흰색 | about.html #greeting (사진·대체 글 포함) |
+| S6 소식·응원 | `.hs-alt.hs-news` | 아이보리 | `data/posts.json` 최근 3개(글이 없으면 섹션 숨김) · `data/cheers.json`(게시된 것이 있을 때만) |
+| S7 함께하기 | `.hs-act` | 네이비 | declaration.html ‘공동의 선언, 하나의 인류’ · join.html 세 갈래 (후원 링크는 후원 방법 확정 뒤) |
+| S8 말씀·연락처 | `.hs-close` | 흰색 | vision.html 로마서 15:13(© 표기 포함) · `config.js` phone/address/publicEmail |
+
+공통 부품: `.hs-eyebrow`(금색 선 + 대문자 꼬리표, 가운데 정렬은 부모에 `.is-center`) · `.hs-title` · `.hs-lead` · `.hs-link`(화살표 4px 이동) ·
+`.hs-actions`(버튼 줄) · `.hs-rule`(48px 금색 선). 카드·줄 전체를 누르게 하려면 제목 링크에 `.hs-stretch`(읽기 프로그램은 제목만 링크로 읽음).
+등장 효과: 요소에 `.reveal` + `style="--i:n"`(main.js), 칸 묶음은 `.hs-stagger reveal` + 칸마다 `--k`(0.055초 간격).
+처음에 숨겨 두는 모습은 ‘동작 줄이기’가 아닐 때만 적용됩니다. 계속 움직이는 것은 지도 금색 표시의 물결 하나(화면 밖에서는 멈춤).
+
 ## 11. 세계희망선언문 부품
 
 ### 상세 원칙 목록 `.decl-list`

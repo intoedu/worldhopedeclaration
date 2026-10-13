@@ -79,19 +79,19 @@ npx serve .            # 또는: python3 -m http.server 8080  → http://localho
 
 ### 연결 도메인 (선택)
 
-1. 도메인을 정한 뒤 실행:
-   ```bash
-   node scripts/set-domain.mjs https://www.도메인
-   ```
-   → 위 항목들과 함께 저장소 최상위에 **`CNAME`** 파일(호스트 이름 한 줄)이 만들어지고, 필요한 DNS 설정이 화면에 안내됩니다.
-2. 커밋해 main 브랜치에 올립니다.
-3. 도메인 구입처의 DNS 관리에서 등록합니다.
-   - 루트 도메인(호스트 `@`) **A 레코드 4개**: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
-   - `www` **CNAME** → `intoedu.github.io`
-   - 같은 이름으로 이미 있던 다른 A/CNAME(포워딩·파킹) 레코드는 삭제
-4. 저장소 **Settings → Pages → Custom domain** 에 도메인이 표시되고 DNS 확인이 끝나면, 같은 화면의 **Enforce HTTPS** 를 켭니다. (DNS 반영·인증서 발급에 몇 분~최대 48시간)
-5. (권장) GitHub 계정(또는 조직) Settings → Pages 에서 도메인 소유 확인(Verified domains)을 해 두면 다른 사람이 이 도메인을 가로채 쓰는 것을 막을 수 있습니다.
-6. 새 주소에서 **문의 폼을 한 번 시험 전송**해 메일이 오는지 확인합니다 (FormSubmit 활성화가 주소별로 다시 필요할 수 있음). QR코드 인쇄물은 새 주소로 다시 만듭니다. (기존 github.io 주소는 GitHub 가 새 도메인으로 연결해 줍니다)
+GitHub 공식 문서(Managing / Verifying a custom domain for your GitHub Pages site) 기준, 사이트가 끊기지 않고 가로채기 위험도 없는 순서입니다. `node scripts/set-domain.mjs https://www.도메인` 을 실행하면 같은 안내가 화면에 나옵니다.
+
+1. **도메인 소유 확인(권장)** — GitHub 계정(프로필 사진 → **Settings**) → **Pages** → **Add a domain** → 루트 도메인(예: `worldhopedeclaration.com`) 입력 → 화면의 **TXT 레코드**(호스트 `_github-pages-challenge-계정이름`, 값은 GitHub 화면에 표시)를 도메인 구입처 DNS 에 추가 → **Verify**. 확인된 도메인은 다른 GitHub 사용자가 가로채 쓸 수 없습니다. TXT 레코드는 지우지 않습니다.
+2. **DNS 등록** (도메인 구입처의 DNS 관리)
+   - 루트 도메인(호스트 `@`) **A 레코드 4개**: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153` (선택: AAAA `2606:50c0:8000::153` ~ `8003::153`)
+   - `www` **CNAME** → `intoedu.github.io` (저장소 이름은 붙이지 않음)
+   - 같은 이름(`@`, `www`)에 있던 다른 A/AAAA/CNAME(파킹·포워딩)은 삭제, 메일용 MX·TXT 는 유지, 와일드카드(`*`) 레코드는 만들지 않음
+3. **반영 확인** — 보통 수 분~수 시간(최대 24시간). 온라인 DNS 조회 또는 `dig`(Windows 는 PowerShell `Resolve-DnsName`)로 위 값이 나오는지 확인합니다.
+4. 저장소 **Settings → Pages → Custom domain** 에 `www.도메인` 입력 → **Save** (GitHub 가 main 에 `CNAME` 파일 커밋을 만듭니다. `www` 로 넣으면 루트 도메인은 자동으로 `www` 로 이동합니다)
+5. main 을 받아온 뒤 `node scripts/set-domain.mjs https://www.도메인` 실행 → 커밋 (siteUrl·canonical·og:url·og:image·`sitemap.xml`·`robots.txt`·`CNAME`)
+6. 인증서가 발급되면 같은 화면의 **Enforce HTTPS** 를 켭니다. (HTTPS 는 보통 1시간 안, 체크박스가 켜질 수 있게 되기까지 최대 24시간. 오래 안 되면 Custom domain 을 Remove → 다시 Save)
+7. 새 주소에서 **문의 폼을 한 번 시험 전송** → FormSubmit 확인 메일의 **Activate** 클릭(새 주소에서 다시 활성화가 필요할 수 있음) → 다시 시험. 관리자(`/admin/`)는 새 주소에서 다시 로그인합니다(브라우저 저장소가 주소별로 따로임).
+8. QR코드 인쇄물은 새 주소가 https 로 열리는 것을 확인한 뒤 만듭니다. 기존 github.io 주소가 새 도메인으로 넘어가는지는 공식 문서에 명시가 없어 **직접 확인 필요**합니다.
 
 다시 github.io 주소로 되돌릴 때는 `node scripts/set-domain.mjs https://intoedu.github.io/worldhopedeclaration` 을 실행하면 `CNAME` 이 삭제됩니다.
 

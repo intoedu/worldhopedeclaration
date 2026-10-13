@@ -56,8 +56,14 @@ for (const p of pages) {
   const url = p === "index.html" ? `${base}/` : `${base}/${p}`;
   html = html.replace(/\n<link rel="canonical"[^>]*>/g, "").replace(/\n<meta property="og:url"[^>]*>/g, "");
   html = html.replace(/<meta property="og:image" content="[^"]*">/, `<meta property="og:image" content="${base}/assets/img/og-image.png">`);
-  if (p !== "post.html") {
-    html = html.replace(/(<meta property="og:image"[^>]*>)/, `$1\n<meta property="og:url" content="${url}">\n<link rel="canonical" href="${url}">`);
+  if (p !== "post.html" && !isNoindex(p)) {
+    // og:image 묶음(og:image:width/height/alt 포함)의 마지막 줄 뒤에 넣음
+    const ogImgs = [...html.matchAll(/<meta property="og:image[^"]*"[^>]*>/g)];
+    if (ogImgs.length) {
+      const last = ogImgs[ogImgs.length - 1];
+      const at = last.index + last[0].length;
+      html = html.slice(0, at) + `\n<meta property="og:url" content="${url}">\n<link rel="canonical" href="${url}">` + html.slice(at);
+    }
   }
   writeFileSync(file, html);
 }
@@ -128,17 +134,24 @@ ${aRecords}
      그리고 www.${host} (호스트 'www') — CNAME → ${pagesHost}
    · ${host} 가 하위 도메인(예: hope.example.org)이면 — 그 이름으로 CNAME → ${pagesHost} 하나만 등록`;
   console.log(`
-[다음 단계 — 연결 도메인 ${host}]
-1) 이 변경 사항(CNAME 포함)을 커밋해 main 브랜치에 올립니다.
-2) 도메인 구입처(가비아·카페24 등)의 DNS 관리에서 아래 레코드를 등록합니다.
+[다음 단계 — 연결 도메인 ${host}]  (GitHub 공식 문서 순서 기준, 사이트가 끊기지 않는 순서)
+1) 도메인 소유 확인(권장, 가로채기 방지): GitHub ${ghOwner} 계정 → 프로필 사진 → Settings → Pages
+   → Add a domain → '${apex}' → 화면에 나온 TXT 레코드(호스트 _github-pages-challenge-${ghOwner})를
+   도메인 구입처 DNS 에 추가 → Verify. 이 TXT 레코드는 지우지 않고 계속 둡니다.
+2) 도메인 구입처(가비아 등)의 DNS 관리에서 아래 레코드를 등록합니다.
 ${dns}
-   ※ 같은 이름으로 이미 등록된 다른 A/CNAME 레코드(포워딩·파킹 등)는 삭제합니다.
-3) GitHub 저장소 Settings → Pages → Custom domain 에 '${host}' 가 표시되는지 확인합니다.
-   (DNS 반영에는 몇 분~최대 48시간이 걸릴 수 있습니다)
-4) 인증서 발급이 끝나면 같은 화면에서 'Enforce HTTPS' 를 켭니다.
-5) 새 주소에서 문의 폼을 한 번 시험 전송해 메일이 도착하는지 확인합니다.
-   (FormSubmit 이 새 주소에서 다시 활성화(Activate) 확인 메일을 보낼 수 있습니다)
-6) 만들어 둔 QR코드는 새 주소 기준으로 다시 저장·인쇄합니다.`);
+   ※ 같은 이름(@, www)에 있던 다른 A/AAAA/CNAME(파킹·포워딩)은 삭제. 메일용 MX·TXT 는 그대로 둠.
+   ※ 와일드카드(*) 레코드는 만들지 않습니다.
+3) DNS 반영 확인(보통 수 분~수 시간, 최대 24시간): 온라인 DNS 조회 또는
+   dig ${apex} +noall +answer -t A   /   dig ${host} +nostats +nocomments +nocmd
+4) 저장소 Settings → Pages → Custom domain 에 '${host}' 입력 → Save
+   (GitHub 가 main 에 CNAME 파일 커밋을 만듭니다 → 이 스크립트 결과를 올리기 전에 main 을 먼저 받아오세요)
+5) 이 변경 사항(siteUrl·canonical·sitemap·robots·CNAME)을 커밋해 main 에 올립니다.
+6) 인증서 발급 후(HTTPS 는 최대 1시간, 체크박스는 최대 24시간) 같은 화면에서 'Enforce HTTPS' 를 켭니다.
+7) 새 주소에서 문의 폼을 한 번 시험 전송 → FormSubmit 'Activate' 확인 메일이 오면 눌러 다시 활성화.
+   관리자(/admin/)는 새 주소에서 다시 로그인합니다(브라우저 저장소가 주소별로 따로임).
+8) QR코드 인쇄물은 새 주소가 https 로 열리는 것을 확인한 뒤 만듭니다.
+   기존 github.io 주소가 새 도메인으로 넘어가는지는 공식 문서에 명시가 없으니 직접 열어 확인하세요.`);
 } else {
   console.log(`
 [다음 단계 — GitHub Pages 기본 주소]

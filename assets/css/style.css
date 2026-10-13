@@ -187,7 +187,7 @@ sup { font-size: max(9px, .45em); vertical-align: super; line-height: 0; margin-
 /* 헤더 자리: main.js 가 헤더를 넣기 전에도 높이를 비워 두어 본문이 밀리지 않게 함 */
 #site-header { min-height: var(--header-h); }
 @media (min-width: 1280px) { :root { --header-h: 76px; } }
-.site-header { position: sticky; top: 0; z-index: 100; background: rgba(255, 255, 255, .92); transition: box-shadow var(--dur-2) var(--ease), transform .25s var(--ease); }
+.site-header { position: sticky; top: 0; z-index: 100; background: rgba(255, 255, 255, .92); box-shadow: 0 1px 0 rgba(19, 41, 75, .07); transition: box-shadow var(--dur-2) var(--ease), transform .25s var(--ease); }
 @supports ((-webkit-backdrop-filter: blur(8px)) or (backdrop-filter: blur(8px))) {
   .site-header { -webkit-backdrop-filter: saturate(1.2) blur(12px); backdrop-filter: saturate(1.2) blur(12px); }
   /* 맨 위에서는 헤더 뒤로 지나가는 내용이 없어 흐림 효과가 보이지 않음 → 끔 (바로 아래 움직이는 배경 사진 때문에 매 프레임 다시 흐리게 계산하지 않도록) */
@@ -785,23 +785,27 @@ a.principle:hover .principle-title { color: var(--blue-700); }
      원칙 카드·타일·푸터가 같은 왼쪽 끝 (1440px 화면 x=100, 1920px 화면 x=340)
    · 히어로 높이(--hero-h): 화면 폭의 44% (520–700px) — 화면이 낮으면 통계 카드가 첫 화면에 보이도록 줄임.
      사진(1600×624)은 히어로 높이에 맞춰 그리고, 사진 속 해가 화면 폭의 76% 에 오도록 놓음(왼쪽은 바탕색으로 사라짐)
-   · 통계 카드는 히어로 아래 끝에 --lap 만큼 걸침. 카드 뒤로 안개 낀 산(.home-band)이 이어짐
-   · ™ 는 첫 화면에서 큰 제목에 한 번만 (의뢰인 요청 2026-10-13)
-   · 760px 이하: 모바일 시안 (가운데 정렬 히어로 · 4칸 통계 카드 · 원칙 카드 넘기기 · 하단 탭바).
+   · 통계 카드(위쪽 2px 금색 선)는 히어로 아래 끝에 --lap 만큼 걸침. 사진은 카드 위쪽 뒤까지 이어지다가 --feather 동안
+     띠 맨 위 색으로 사라지고, 그 아래로 안개 낀 산(.home-band)이 이어짐 → 사진과 띠 사이에 곧은 경계선 없음
+   · ™ 는 한 화면에 한 번만: 큰 제목(세계희망선언™ / World Hope Declaration™)에만 (의뢰인 요청 2026-10-13)
+   · 760px 이하: 가운데 정렬 히어로 · 아이보리 주 버튼 + 흰 테두리 유리 버튼 · 2×2 통계 카드(영문 이름은 줄이지 않음) ·
+     원칙 카드 넘기기 · 하단 탭바.
      사진 타일 4곳은 하단 탭바와 같아 휴대폰에서는 숨김
    · 다른 페이지용 공용 부품(.wh-hero/.stats-band/.principles-band/.tiles)은 위쪽에 그대로 둠
    ========================================================================== */
-.home { --lap: 76px; background: #fbfaf7; }
+.home { --lap: 76px; --feather: 128px; background: #fbfaf7; }
 .home-frame { position: relative; max-width: calc(var(--container) + var(--gutter) * 2); margin: 0 auto; padding: 0 var(--gutter); }
 .hm-m { display: none; }   /* 모바일에서만 보이는 글 */
 
 /* ---------- 히어로 ---------- */
 .home-hero {
-  --hero-h: clamp(520px, min(44vw, 100vh - var(--header-h) - 110px), 700px);
+  --hero-h: clamp(520px, min(44vw, 100vh - var(--header-h) - 120px), 700px);
   --sun-x: 76%;
   position: relative; overflow: hidden; isolation: isolate; height: var(--hero-h);
 }
-@supports (height: 100svh) { .home-hero { --hero-h: clamp(520px, min(44vw, 100svh - var(--header-h) - 110px), 700px); } }
+@supports (height: 100svh) { .home-hero { --hero-h: clamp(520px, min(44vw, 100svh - var(--header-h) - 120px), 700px); } }
+html[data-lang="en"] .home-hero { --hero-h: clamp(540px, min(44vw + 36px, 100vh - var(--header-h) - 100px), 736px); }
+@supports (height: 100svh) { html[data-lang="en"] .home-hero { --hero-h: clamp(540px, min(44vw + 36px, 100svh - var(--header-h) - 100px), 736px); } }
 /* 배경 묶음: 바탕색(사진 왼쪽 끝 색을 이어 줌) + 사진 + 햇빛 + 고운 입자 + 글자 뒤 새벽빛 */
 .home-hero-media {
   position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none;
@@ -829,6 +833,12 @@ a.principle:hover .principle-title { color: var(--blue-700); }
   content: ""; position: absolute; inset: 0; z-index: 1;
   background: radial-gradient(ellipse min(820px, 62vw) 82% at calc(max(var(--gutter), (100% - var(--container)) / 2) + min(300px, 24vw)) 45%, rgba(253, 252, 249, .8) 0%, rgba(253, 252, 249, .55) 42%, rgba(253, 252, 249, 0) 100%);
 }
+/* 아래 끝: 사진이 통계 카드 위쪽(--lap) 뒤까지 이어지다가 마지막 --feather 동안 띠 맨 위 색(안개 사진 윗줄 색)으로 사라짐
+   → 사진과 안개 낀 산 사이에 곧은 경계선이 생기지 않음 */
+.home-hero::after {
+  content: ""; position: absolute; z-index: -1; left: 0; right: 0; bottom: 0; height: var(--feather); pointer-events: none;
+  background: linear-gradient(180deg, rgba(241, 240, 236, 0) 0%, rgba(241, 240, 236, .1) 18%, rgba(241, 240, 236, .32) 38%, rgba(241, 240, 236, .62) 58%, rgba(241, 240, 236, .88) 78%, #f1f0ec 100%);
+}
 .home-hero-inner { height: 100%; display: flex; align-items: center; padding-bottom: var(--lap); }
 .home-hero-text { --t: clamp(60px, 6.6vw, 100px); position: relative; z-index: 1; max-width: 680px; color: var(--navy-900); }
 /* 눈썹글: 금색 가는 선 + 한 줄 */
@@ -840,9 +850,10 @@ a.principle:hover .principle-title { color: var(--blue-700); }
 /* 영문 이름: 큰 제목과 같은 폭으로 (글자 사이 간격으로 맞춤) */
 .home-hero-en { margin: calc(var(--t) * .16) 0 0; font-family: var(--f-display); font-size: calc(var(--t) * .258); font-weight: 500; line-height: 1.2; letter-spacing: .33em; color: #24497b; white-space: nowrap; }
 .home-hero-en sup { position: relative; top: -.55em; margin-left: -.22em; font-family: var(--f-serif-en); font-size: .5em; letter-spacing: 0; vertical-align: baseline; line-height: 0; }
-.home-hero-lead { max-width: 34em; margin: clamp(26px, 2.4vw, 36px) 0 0; font-size: clamp(16.5px, 1.32vw, 19px); font-weight: 400; line-height: 1.72; letter-spacing: -0.012em; color: #26364f; }
+.home-hero-rule { display: block; height: 1px; margin: clamp(22px, 2vw, 30px) 0 0; background: linear-gradient(90deg, var(--gold-500) 0 44px, rgba(19, 41, 75, .16) 44px 100%); transform-origin: left center; }
+.home-hero-lead { max-width: 34em; margin: clamp(20px, 1.8vw, 26px) 0 0; font-size: clamp(16.5px, 1.32vw, 19px); font-weight: 400; line-height: 1.72; letter-spacing: -0.012em; color: #26364f; }
 .home-hero-lead .dot { margin: 0 .1em; }
-.home-hero-quote { margin: clamp(10px, .9vw, 14px) 0 0; font-family: var(--f-serif-en); font-style: italic; font-size: clamp(14.5px, 1.12vw, 16.5px); font-weight: 500; line-height: 1.6; color: #66748a; }
+.home-hero-quote { margin: clamp(10px, .9vw, 14px) 0 0; font-family: var(--f-serif-en); font-style: italic; font-size: clamp(14.5px, 1.12vw, 16.5px); font-weight: 500; line-height: 1.6; color: #55637a; }
 .home-hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: clamp(30px, 2.8vw, 42px); }
 /* 히어로 버튼: 평평한 모양(모서리 4px). 마우스를 올리면 바탕이 왼쪽부터 차오르고 화살표가 4px 밀림 */
 .home-btn {
@@ -863,23 +874,32 @@ a.principle:hover .principle-title { color: var(--blue-700); }
 .home-btn-line::before { background: #13294b; }
 .home-btn-line:is(:hover, :focus-visible) { color: #fff; border-color: #13294b; }
 /* 오른쪽 세로 문구(시안): 본문 틀 오른쪽 끝선 · 세 줄 · 오른쪽에 가는 흰 선 */
-.home-hero-vertical { position: absolute; z-index: 1; top: clamp(34px, 3.6vw, 56px); right: var(--gutter); margin: 0; padding: 4px 18px 4px 0; border-right: 1px solid rgba(255, 255, 255, .8); text-align: right; font-family: var(--f-display); font-size: clamp(12px, .95vw, 14px); font-weight: 500; line-height: 2.05; letter-spacing: .26em; color: #fff; text-shadow: 0 1px 12px rgba(10, 30, 60, .4); }
+.home-hero-vertical { position: absolute; z-index: 1; top: clamp(34px, 3.6vw, 56px); right: var(--gutter); margin: 0; padding: 4px 18px 4px 0; border-right: 1px solid rgba(255, 255, 255, .8); text-align: right; font-family: var(--f-display); font-size: clamp(12px, .95vw, 14px); font-weight: 600; line-height: 2.05; letter-spacing: .26em; color: #fff; text-shadow: 0 1px 2px rgba(10, 30, 60, .28), 0 1px 14px rgba(10, 30, 60, .45); }
 .home-hero-vertical span { display: block; margin-right: -.26em; white-space: nowrap; }
-.home-hero-vertical i { font-style: normal; opacity: .7; }
+.home-hero-vertical i { font-style: normal; font-weight: 400; opacity: .9; }
 /* 아주 넓은 화면(2200px 이상): 세로 문구가 해 왼쪽의 밝은 하늘에 놓이므로 네이비 글자 */
 @media (min-width: 2200px) { .home-hero-vertical { color: #24497b; border-right-color: rgba(36, 73, 123, .45); text-shadow: 0 0 14px rgba(255, 255, 255, .6); } }
-/* 영어: 큰 제목 "World Hope" + 아래 줄 "DECLARATION™" (™ 는 여기 한 번만) */
-html[data-lang="en"] .home-hero-title { font-family: var(--f-serif-en); font-weight: 700; font-size: calc(var(--t) * .93); letter-spacing: -0.02em; }
+/* 영어: 큰 제목 "World Hope Declaration™"(이름 전체, 두 줄 · ™ 는 여기 한 번만) + 아래 한글 이름 '세계희망선언'(넓은 자간) */
+html[data-lang="en"] .home-hero-title { max-width: 6.3em; font-family: var(--f-serif-en); font-weight: 700; font-size: calc(var(--t) * .74); line-height: 1.04; letter-spacing: -0.02em; white-space: normal; }
+html[data-lang="en"] .home-hero-title .nb { white-space: nowrap; }
+html[data-lang="en"] .home-hero-title sup { top: -1.75em; font-size: .24em; }
 html[data-lang="en"] .home-hero-kicker { font-family: var(--f-serif-en); letter-spacing: .005em; }
 html[data-lang="en"] .home-hero-lead { letter-spacing: 0; }
-html[data-lang="en"] .home-hero-en { font-size: calc(var(--t) * .3); letter-spacing: .36em; }
-html[data-lang="en"] .home-hero-en sup { margin-left: -.26em; }
+html[data-lang="en"] .home-hero-en { margin-top: calc(var(--t) * .17); font-family: var(--f-serif); font-size: calc(var(--t) * .21); font-weight: 500; letter-spacing: .5em; }
+
+/* 낮은 화면(노트북 1280×720 · 1366×768 등): 제목과 사이 간격을 화면 높이에 맞춰 줄여, 통계 카드까지 첫 화면에 넉넉히 들어오게 */
+@media (min-width: 761px) and (max-height: 800px) {
+  .home-hero-text { --t: clamp(56px, min(6.6vw, 10.2vh), 100px); }
+  .home-hero-rule { margin-top: 18px; }
+  .home-hero-lead { margin-top: 16px; }
+  .home-hero-actions { margin-top: 26px; }
+}
 
 /* ---------- 띠: 통계 카드 · 5대 원칙 · 사진 타일 (위쪽에 안개 낀 산) ---------- */
-.home-band { position: relative; isolation: isolate; background: linear-gradient(180deg, #f7f4ee 0%, #f9f7f2 45%, #fbfaf8 78%, #fff 100%); }
+.home-band { position: relative; isolation: isolate; display: flow-root; background: linear-gradient(180deg, #f1f0ec 0%, #f7f4ee 8%, #f9f7f2 45%, #fbfaf8 78%, #fff 100%); }
 /* 안개 낀 산(1600×287): 띠 위쪽 상자(.home-band-mist, 넘치는 곳은 잘림) 안에서 폭 108%(천천히 좌우로 흐를 여유)에 맞춘 높이,
    아래쪽은 바탕으로 사라짐. 띠 자체는 자르지 않음(통계 카드가 히어로 위로 걸쳐 있으므로) */
-.home-band-mist { position: absolute; z-index: -1; top: 0; left: 0; right: 0; height: calc(108vw * 287 / 1600); overflow: hidden; pointer-events: none; -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 100%); mask-image: linear-gradient(180deg, #000 55%, transparent 100%); }
+.home-band-mist { position: absolute; z-index: -1; top: 0; left: 0; right: 0; height: calc(108vw * 287 / 1600); overflow: hidden; pointer-events: none; -webkit-mask-image: linear-gradient(180deg, transparent 0, rgba(0, 0, 0, .55) 9%, #000 22%, #000 55%, transparent 100%); mask-image: linear-gradient(180deg, transparent 0, rgba(0, 0, 0, .55) 9%, #000 22%, #000 55%, transparent 100%); }
 .home-band-mist::before {
   content: ""; position: absolute; top: 0; bottom: 0; left: -4%; right: -4%;
   background: url("../img/home/principles-mist.jpg") center top / 100% 100% no-repeat;
@@ -890,7 +910,7 @@ html[data-lang="en"] .home-hero-en sup { margin-left: -.26em; }
 /* ---------- 통계 카드: 히어로 아래 끝에 걸친 흰 카드 · 4칸 '아이콘 | 숫자·설명' ---------- */
 .home-stats { position: relative; z-index: 2; margin-top: calc(-1 * var(--lap)); }
 .home-stats-card {
-  position: relative; background: #fff; border-radius: 10px;
+  position: relative; overflow: hidden; background: #fff; border-radius: 8px;
   box-shadow: 0 0 0 1px rgba(19, 41, 75, .05), 0 28px 56px -28px rgba(12, 28, 54, .32), 0 10px 22px -12px rgba(12, 28, 54, .12);
 }
 /* 둘째 칸(대표 33인)은 영문 이름이 길어 조금 넓게 → 넓은 화면에서 네 칸의 이름이 모두 한 줄 */
@@ -904,11 +924,14 @@ html[data-lang="en"] .home-hero-en sup { margin-left: -.26em; }
 .home-stat-num b { font-family: var(--f-serif-en); font-size: clamp(34px, 3.1vw, 46px); font-weight: 700; letter-spacing: -0.015em; font-variant-numeric: tabular-nums lining-nums; }
 .home-stat-num small { margin-left: 6px; font-family: var(--f-serif); font-size: clamp(13px, 1.05vw, 15px); font-weight: 700; letter-spacing: -0.02em; color: #24497b; }
 .home-stat-label { margin: 0; font-family: var(--f-display); font-size: clamp(10.5px, .8vw, 11.5px); font-weight: 600; line-height: 1.45; letter-spacing: .12em; text-transform: uppercase; color: #8a6d2b; }
-.home-stat-desc { margin: 10px 0 0; font-size: clamp(12.5px, .95vw, 13.5px); line-height: 1.5; letter-spacing: -0.01em; color: #66748a; }
+.home-stats-card::before { content: ""; position: absolute; z-index: 1; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, #b8913f, #d6bd85 50%, #b8913f); transform-origin: left center; }
+.home-stat-desc { margin: 10px 0 0; font-size: clamp(12.5px, .95vw, 13.5px); line-height: 1.5; letter-spacing: -0.01em; color: #5d6b80; }
+/* 영어: 단위(nations · people)는 이름·설명과 겹치므로 숨김 → 숫자 · 이름 · 설명 */
+html[data-lang="en"] .home-stat-num small { display: none; }
 /* 기준일: 데스크톱은 참여자 수 칸의 설명 아래 줄(.home-stat-asof), 휴대폰은 카드 아래 한 줄(.home-stats-note) */
 .home-stat-asof { display: block; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .home-stat-sep { display: none; }
-.home-stats-note { display: none; margin: 0; font-size: 12px; line-height: 1.4; color: #8a94a6; font-variant-numeric: tabular-nums; }
+.home-stats-note { display: none; margin: 0; font-size: 12px; line-height: 1.4; color: #687487; font-variant-numeric: tabular-nums; }
 /* 761px 이상: 금색 영문 이름(위) → 숫자 → 설명. 네 칸이 같은 줄을 나눠 써서(subgrid), 한 칸의 이름이 두 줄이 되어도
    숫자·설명 줄이 어긋나지 않음 (한 줄짜리 이름은 숫자 바로 위에 붙음). 읽는 순서(HTML)는 숫자 → 이름 → 설명 그대로 */
 @media (min-width: 761px) {
@@ -1045,8 +1068,8 @@ html[data-lang="en"] .home-tile-title { font-family: var(--f-serif-en); letter-s
   .hm-m { display: inline; }
 
   /* 히어로: 보통 흐름으로 쌓음(글자 크기를 키워도 잘리지 않음). 높이는 첫 화면에 통계 카드까지 보이게 */
-  .home-hero { height: auto; min-height: clamp(460px, calc(100vh - 53px - var(--tabbar-h) - 172px), 600px); display: flex; flex-direction: column; }
-  @supports (height: 100svh) { .home-hero { min-height: clamp(460px, calc(100svh - 53px - var(--tabbar-h) - 172px), 600px); } }
+  .home-hero { height: auto; min-height: clamp(420px, calc(100vh - 53px - var(--tabbar-h) - 186px), 600px); display: flex; flex-direction: column; }
+  @supports (height: 100svh) { .home-hero { min-height: clamp(420px, calc(100svh - 53px - var(--tabbar-h) - 186px), 600px); } }
   .home-hero-media { background: #8fb3d3; }
   .home-hero-bg { inset: 0; width: auto; height: auto; left: 0; top: 0; transform-origin: 43% 46%; }
   .home-hero-bg picture { position: absolute; inset: 0; }
@@ -1074,37 +1097,47 @@ html[data-lang="en"] .home-tile-title { font-family: var(--f-serif-en); letter-s
   .home-hero-en { margin-top: 10px; font-size: clamp(14px, 4.55vw, 19px); letter-spacing: .1em; margin-right: -.1em; white-space: normal; color: #13284a; }
   .home-hero-lead { max-width: 330px; margin: 14px auto 0; font-size: 15.5px; line-height: 1.62; letter-spacing: -0.01em; color: #15284a; text-wrap: balance; }
   .home-hero-quote { margin-top: 8px; font-size: 13.5px; line-height: 1.5; color: #2c3d5a; }
-  .home-hero-actions { flex-direction: column; flex-wrap: nowrap; gap: 10px; margin: auto 0 0; padding: 28px 18px 26px; }
+  .home-hero-rule { display: none; }
+  .home-hero-lead { margin-top: 14px; }
+  .home-hero-actions { flex-direction: column; flex-wrap: nowrap; gap: 10px; margin: auto 0 0; padding: 28px 18px 24px; }
   .home-btn { width: 100%; min-width: 0; height: 52px; padding: 0 20px 0 22px; font-size: 16px; justify-content: center; gap: 14px; }
-  .home-btn-solid { background: #0f2447; border-color: rgba(255, 255, 255, .14); box-shadow: 0 10px 24px -10px rgba(0, 8, 24, .6); }
-  .home-btn-line { background: #fbfaf6; border-color: #fbfaf6; color: #0f2447; box-shadow: 0 8px 20px -10px rgba(0, 8, 24, .45); }
-  .home-btn-line::before { background: #fff; }
-  .home-btn-line:is(:hover, :focus-visible) { color: #0f2447; border-color: #fff; }
-  html[data-lang="en"] .home-hero-title { font-size: clamp(38px, 11.6vw, 48px); }
-  html[data-lang="en"] .home-hero-en { font-size: clamp(14px, 4.4vw, 18px); letter-spacing: .3em; }
+  /* 버튼은 어두운 지구 위: 주 버튼은 아이보리(가장 또렷하게), 둘째 버튼은 흰 테두리 + 옅은 네이비 유리 */
+  .home-btn-solid { background: #fbfaf6; border-color: #fbfaf6; color: #0f2447; box-shadow: 0 12px 26px -12px rgba(0, 8, 24, .7); }
+  .home-btn-solid::before { background: #fff; }
+  .home-btn-solid:is(:hover, :focus-visible) { color: #0f2447; border-color: #fff; }
+  .home-btn-line { background: rgba(8, 24, 50, .52); border-color: rgba(255, 255, 255, .78); color: #fff; }
+  .home-btn-line::before { background: rgba(255, 255, 255, .16); }
+  .home-btn-line:is(:hover, :focus-visible) { color: #fff; border-color: #fff; }
+  .home-hero-actions :focus-visible { outline-color: var(--gold-300); }
+  @supports ((-webkit-backdrop-filter: blur(6px)) or (backdrop-filter: blur(6px))) { .home-btn-line { -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); } }
+  html[data-lang="en"] .home-hero-title { max-width: none; font-size: clamp(36px, 10.8vw, 46px); line-height: 1.06; }
+  html[data-lang="en"] .home-hero-title sup { top: -1.85em; font-size: .27em; }
+  html[data-lang="en"] .home-hero-en { display: none; }   /* 휴대폰 영어: 제목(이름 전체, 두 줄)만 — 한글 부제는 생략해 첫 화면 길이를 지킴 */
   html[data-lang="en"] .home-hero-kicker { font-size: 15px; text-wrap: balance; }
   html[data-lang="en"] .home-hero-kicker::before, html[data-lang="en"] .home-hero-kicker::after { display: none; }   /* 영문 눈썹글은 길어서 선 없이 */
   html[data-lang="en"] .home-hero-lead { font-size: 15px; max-width: 345px; }
 
   /* 띠: 아이보리 바탕(안개 사진 없이) */
+  .home-hero::after { display: none; }
   .home-band { background: #f8f6f1; }
   .home-band-mist { display: none; }
 
-  /* 통계: 히어로 아래 끝에 걸친 둥근 카드 · 4칸 */
-  .home-stats-card { border-radius: 12px; box-shadow: 0 0 0 1px rgba(19, 41, 75, .05), 0 18px 36px -20px rgba(12, 28, 54, .38); }
-  .home-stats-list { grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 18px 2px 12px; }
-  .home-stat { display: flex; flex-direction: column; align-items: center; gap: 0; padding: 0 2px; text-align: center; border-left: 1px solid #eceae5; }
-  .home-stat:first-child { padding-left: 2px; }
-  .home-stat-icon { justify-content: center; padding: 0; }
-  .home-stat-icon svg { width: 30px; height: 30px; stroke-width: 1.35; }
-  .home-stat-body { margin-top: 8px; }
-  .home-stat-num { flex-direction: column; align-items: center; gap: 3px; }
-  .home-stat-num b { font-size: 23px; }
-  .home-stat-num small { margin-left: 0; font-size: 11.5px; }
-  .home-stat-label { margin-top: 6px; font-size: 9.5px; line-height: 1.3; letter-spacing: .05em; }
-  html[data-lang="en"] .home-stat-num small { display: none; }
+  /* 통계: 히어로 아래 끝에 걸친 카드 · 2×2 (칸마다 '아이콘 · 숫자 단위' + 금색 영문 이름 전체 — 줄여 쓰지 않음) */
+  .home-stats-card { border-radius: 10px; box-shadow: 0 0 0 1px rgba(19, 41, 75, .05), 0 18px 36px -20px rgba(12, 28, 54, .38); }
+  .home-stats-list { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 2px 0 0; }
+  .home-stat { display: grid; grid-template-columns: 24px minmax(0, 1fr); align-content: start; align-items: center; column-gap: 9px; padding: 14px 10px 12px 16px; border-left: 1px solid #eceae5; }
+  .home-stat:first-child { padding-left: 16px; }
+  .home-stat:nth-child(odd) { border-left: 0; }
+  .home-stat:nth-child(n+3) { border-top: 1px solid #eceae5; }
+  .home-stat-body { display: contents; }
+  .home-stat-icon { grid-column: 1; grid-row: 1; padding: 0; }
+  .home-stat-icon svg { width: 24px; height: 24px; stroke-width: 1.4; }
+  .home-stat-num { grid-column: 2; grid-row: 1; }
+  .home-stat-num b { font-size: 25px; }
+  .home-stat-num small { margin-left: 4px; font-size: 12px; }
+  .home-stat-label { grid-column: 1 / -1; grid-row: 2; margin-top: 7px; font-size: 10px; line-height: 1.4; letter-spacing: .07em; }
   .home-stat-desc { display: none; }
-  .home-stats-note { display: block; margin: 0 14px; padding: 9px 0 11px; border-top: 1px solid #f0eee9; text-align: center; font-size: 11.5px; }
+  .home-stats-note { display: block; padding: 8px 16px 10px; border-top: 1px solid #eceae5; text-align: center; font-size: 11.5px; }
 
   /* 5대 원칙: 머리줄(제목 · 영문 · 화살표) + 넘겨 보는 카드(다음 카드가 살짝 보임) + 아래 점 표시 */
   .home-principles { padding: 34px 0 36px; }
@@ -1145,6 +1178,12 @@ html[data-lang="en"] .home-tile-title { font-family: var(--f-serif-en); letter-s
 
   /* 사진 타일: 휴대폰에서는 하단 탭바와 같은 4곳이라 숨김 */
   .home-tiles { display: none; }
+}
+@media (max-width: 760px) and (max-height: 760px) {
+  .home-hero-text { padding-top: 26px; }
+  .home-hero-title { margin-top: 10px; }
+  .home-hero-actions { gap: 8px; padding: 22px 18px 20px; }
+  .home-btn { height: 48px; }
 }
 
 /* ==========================================================================
@@ -1380,9 +1419,9 @@ html[data-lang="en"] .hs-post-title { font-family: var(--f-serif-en); font-size:
 .hs-cheers .hs-links { margin-top: 16px; }
 
 /* ---------- S7. 함께하기 (네이비): 세 갈래 카드 ---------- */
-.hs-act { overflow: hidden; isolation: isolate; color: #d6e0ef; background: linear-gradient(120deg, var(--navy-950) 0%, var(--navy-800) 100%); }
-/* 오른쪽 아래 점 세계지도 (하위 페이지 맺음 띠 .cta-band 와 같은 장식) */
-.hs-act::after { content: ""; position: absolute; z-index: -1; inset: 0; background: url("../img/brand/dotmap-light.svg") right -8% bottom -30% / 56% auto no-repeat; opacity: .12; pointer-events: none; }
+/* S4(세계지도)와 다른 모양: 점 지도 없이, 아래쪽 가운데에서 떠오르는 옅은 새벽빛(첫 화면 햇빛과 같은 색) + 아래로 조금 밝아지는 네이비
+   (홈의 어두운 띠는 S4 · S7 둘뿐이고 서로 붙지 않음 — 사이에 흰색 S5 · 아이보리 S6) */
+.hs-act { overflow: hidden; isolation: isolate; color: #d6e0ef; background: radial-gradient(1240px 320px at 50% 100%, rgba(255, 216, 156, .13) 0%, rgba(255, 216, 156, .05) 46%, rgba(255, 216, 156, 0) 100%), linear-gradient(180deg, #0c1c36 0%, #11284c 50%, #18396a 100%); }
 .hs-act-text { margin: 20px auto 0; max-width: 640px; font-size: 17px; line-height: 1.8; color: #c6d3e6; }
 .hs-act-cards { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 56px; }
 .hs-act-card { position: relative; display: flex; flex-direction: column; gap: 12px; min-width: 0; padding: 30px 28px 26px; border: 1px solid rgba(255, 255, 255, .16); border-radius: 6px; background: rgba(255, 255, 255, .06); transition: background-color var(--dur-2), border-color var(--dur-2), transform var(--dur-2) var(--ease-out); }
@@ -2308,15 +2347,17 @@ html[data-lang="en"] .consent-list li { grid-template-columns: 6.4em minmax(0, 1
 
 @keyframes wh-line { from { transform: scaleX(0); } to { transform: none; } }
 
-/* 홈 첫 화면 등장 (1.4초 안에 끝남): 사진이 서서히 나타나며 제자리로 → 금색 선이 그어지며 눈썹글 → 제목 → 영문 →
-   설명 → 버튼 → 통계 카드 → 세로 문구 (fill-mode backwards: 끝난 뒤에는 원래 모습 그대로라 남아 있을 필요가 없음) */
+/* 홈 첫 화면 등장 (약 2.2초 안에 끝남): 사진이 서서히 나타나며 제자리로 → 금색 선이 그어지며 눈썹글 → 제목 → 영문 → 가는 선 →
+   설명 → 버튼 → 통계 카드(위쪽 금색 선이 왼쪽부터) → 세로 문구 (fill-mode backwards: 끝난 뒤에는 원래 모습 그대로라 남아 있을 필요가 없음) */
 .home-hero-kicker { animation: wh-rise 900ms var(--ease-out) backwards; }
 .home-hero-kicker::before, .home-hero-kicker::after { animation: wh-line 1100ms var(--ease-out) 250ms backwards; }
 .home-hero-title { animation: wh-rise 900ms var(--ease-out) 70ms backwards; }
 .home-hero-en { animation: wh-rise 900ms var(--ease-out) 140ms backwards; }
+.home-hero-rule { animation: wh-line 1300ms var(--ease-out) 260ms backwards; }
 .home-hero-lead, .home-hero-quote { animation: wh-rise 900ms var(--ease-out) 210ms backwards; }
 .home-hero-actions { animation: wh-rise 900ms var(--ease-out) 280ms backwards; }
 .home-stats-card { animation: wh-rise 1000ms var(--ease-out) 360ms backwards; }
+.home-stats-card::before { animation: wh-line 1400ms var(--ease-out) 820ms backwards; }
 .home-hero-vertical { animation: wh-fade 1200ms var(--ease-out) 450ms backwards; }
 
 /* 하위 페이지 머리말: 제목·설명이 차례로 떠오름 */

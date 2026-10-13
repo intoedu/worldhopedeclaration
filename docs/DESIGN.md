@@ -376,14 +376,47 @@ HTML 에 **기본값을 적은 요소**에 `data-stat="키"` 를 달면 main.js 
 화면 폭 전체(컨테이너 밖에 둠), 4칸 → 960px 이하 2×2.
 
 ### 홈 첫 화면 (index.html 전용 `.home-*` · style.css ‘홈 (index.html 전용)’)
-위의 공용 부품과 같은 구성을 홈 전용으로 다듬은 것입니다.
-- `.home-hero`: 높이 `--hero-h` = 화면 폭의 44%(520–700px, 화면이 낮으면 줄임). 사진 속 해가 화면 폭 `--sun-x`(76%)에 오도록 사진을 놓고,
-  글 뒤에는 옅은 새벽빛 막. 큰 제목 `세계희망선언™` 과 영문 `WORLD HOPE DECLARATION` 은 같은 폭(글자 사이 간격으로 맞춤).
-  **™ 는 첫 화면에서 큰 제목에 한 번만**(영어 화면은 `DECLARATION™` 한 번).
-- `.home-band`: 통계 카드 · 5대 원칙 · 사진 타일이 놓이는 띠. 위쪽 `.home-band-mist`(안개 낀 산, 천천히 좌우로 흐름) → 아래로 흰색(S1 과 이어짐).
-- `.home-stats-card`: 히어로 아래 끝에 `--lap`(76px, 휴대폰 30px)만큼 걸친 흰 카드. 데스크톱은 금색 영문 이름 → 숫자 → 설명(읽는 순서는 숫자 먼저).
+위의 공용 부품과 같은 구성을 홈 전용으로 다듬은 것입니다. (2026-10-13 의뢰인: “디테일도 잘 보고 … 디자인도 더 잘할 수 있으면 바꿔도 돼” →
+시안 C(밝은 새벽빛 시안을 살린 고급화)를 바탕으로, 다른 시안의 좋은 점을 더함)
+```html
+<section class="home-hero" aria-labelledby="hero-title">
+  <div class="home-hero-media" aria-hidden="true"><div class="home-hero-bg"><picture>…</picture><span class="home-hero-sun"></span></div></div>
+  <div class="home-frame home-hero-inner">
+    <div class="home-hero-text">
+      <p class="home-hero-kicker">…</p>
+      <h1 class="home-hero-title" id="hero-title"><span class="ko">세계희망<wbr>선<span class="nb">언<sup>™</sup></span></span><span class="en">World Hope <span class="nb">Declaration<sup>™</sup></span></span></h1>
+      <p class="home-hero-en"><span class="ko">WORLD HOPE DECLARATION</span><span class="en" lang="ko">세계희망선언</span></p>
+      <span class="home-hero-rule" aria-hidden="true"></span>   <!-- 가는 선 · 앞쪽 44px 금색 (휴대폰 숨김) -->
+      <p class="home-hero-lead">…</p> <p class="home-hero-quote" lang="en">…</p>
+      <div class="home-hero-actions"><a class="home-btn home-btn-solid" …>…</a><a class="home-btn home-btn-line" …>…</a></div>
+    </div>
+    <p class="home-hero-vertical" aria-hidden="true"><span><i>ONE</i> HUMANITY</span>…</p>   <!-- ™ 넣지 않음 -->
+  </div>
+</section>
+<div class="home-band"><div class="home-band-mist" aria-hidden="true"></div> 통계 카드 · 5대 원칙 · 사진 타일 </div>
+```
+- `.home-hero`: 높이 `--hero-h` = 화면 폭의 44%(520–700px, 화면이 낮으면 줄임 · 영어는 제목이 두 줄이라 +36px, 최대 736px).
+  사진 속 해가 화면 폭 `--sun-x`(76%)에 오도록 사진을 놓고, 글 뒤에는 옅은 새벽빛 막. 사진 확대는 1920px 화면에서도 약 1.13배(1.25배 이하).
+  큰 제목 `세계희망선언™` 과 영문 `WORLD HOPE DECLARATION` 은 같은 폭(글자 사이 간격으로 맞춤). 영어 화면은 이름 전체
+  `World Hope Declaration™`(두 줄) + 아래 한글 `세계희망선언`(넓은 자간). 화면 높이 800px 이하(1280×720 · 1366×768 노트북 등)는 제목·간격을 줄임.
+- **™ 는 한 화면에 한 번만** — 큰 제목에만. 세로 문구(ONE HUMANITY…)·헤더 로고·통계에는 넣지 않습니다(점검: 보이는 글자에서 ™ 개수 = 1).
+- 히어로 아래 끝: 통계 카드가 `--lap`(76px, 휴대폰 30px)만큼 사진 위에 걸치고, 사진은 카드 위쪽 뒤까지 이어지다가 마지막
+  `--feather`(128px) 동안 띠 맨 위 색(#f1f0ec, 안개 사진 윗줄 색)으로 사라짐(`.home-hero::after`). `.home-band` 는 `display: flow-root`
+  (카드의 음수 여백이 띠 밖으로 새어 띠가 사진을 덮지 않게). 안개 사진도 맨 위는 투명에서 시작 → 사진과 띠 사이에 곧은 선이 없음.
+- `.home-stats-card`: 흰 카드 · 모서리 8px · 위쪽 2px 금색 선(처음 열 때 왼쪽부터 그어짐). 데스크톱은 금색 영문 이름 → 숫자 → 설명
+  (읽는 순서는 숫자 먼저, subgrid 로 네 칸 줄 맞춤). 영어는 단위(nations·people)를 숨기고 참여자 칸 설명은 ‘As of 날짜’만(같은 말 반복 없음).
+  휴대폰은 **2×2**: 칸마다 ‘아이콘 · 숫자 단위’ 한 줄 + 금색 영문 이름 전체(REPRESENTATIVES / PER COUNTRY 처럼 두 줄까지, 줄여 쓰지 않음),
+  아래에 기준일 한 줄. 390×844·360×740 에서 카드 전체가 하단 탭바 위, 카카오톡 안 브라우저(390×664)에서도 네 숫자가 모두 보임.
+- 버튼: 데스크톱(밝은 하늘 위)은 네이비 주 버튼 + 네이비 테두리 버튼. 휴대폰(어두운 지구 위)은 **아이보리 주 버튼 + 흰 테두리 유리 버튼**
+  (주 버튼이 가장 또렷하게 · 키보드 표시는 금색).
+- 세로 문구: 낱말은 굵게, ‘ONE’ 은 가늘게(불투명 .9) + 또렷한 그림자 → 1920px 의 옅은 하늘에서도 읽힘(2200px 이상은 네이비 글자). 스크롤 안내 표시는 두지 않음.
+- 헤더: 맨 위에서도 아래에 아주 옅은 가는 선(모든 페이지) → 흰 헤더와 히어로·머리말의 경계가 또렷함.
 - `.home-pr`: 5대 원칙 카드(마우스를 올리면 떠오르며 위쪽 금색 선 · 표식이 화살표로). 휴대폰은 옆으로 넘기는 카드 + 점 표시.
 - `.home-tile-desc`: 타일 설명 줄 = main.js 사이트 검색 색인(`PAGES`)의 페이지 설명 문구 그대로(숫자는 `data-stat`).
+- 움직임: 히어로 사진이 천천히 다가오고 햇빛이 숨 쉬듯, 안개 낀 산이 천천히 좌우로, 타일 사진이 천천히 다가옴(화면 밖·다른 탭에서는 멈춤).
+  처음 열 때 글이 차례로 떠오르고 가는 선·카드 금색 선이 그어지며, 참여자 수가 0에서 올라감. **‘동작 줄이기’면 모두 멈춘 최종 모습**(참여자 수도 처음부터 최종 값).
+- 넣지 않기로 한 것: 휴대폰 히어로의 한 줄 표어(ONE HUMANITY • …) — 바로 위 영문 인용과 겹치고 첫 화면 길이를 늘림. 휴대폰 원칙 목록형 —
+  시안의 넘기는 카드 유지(홈 길이).
 
 ### 첫 화면 아래 이야기 `.hs` (index.html S1–S8 · style.css ‘홈 — 첫 화면 아래 이야기’)
 시안 첫 화면(히어로·통계·5대 원칙·타일) 아래에 8개 섹션이 이어집니다. 문구는 **모두 다른 페이지 문구를 그대로** 가져왔고
@@ -397,13 +430,18 @@ HTML 에 **기본값을 적은 요소**에 `data-stat="키"` 를 달면 main.js 
 | S4 세계희망지도 | `.hs-map` | 네이비 | `assets/img/brand/dotmap-light.svg` + 참여 국가 `data/countries.json` (금색 표시 위치는 `worldmap-dots.json` 으로 계산) |
 | S5 위원장 인사말 | `.hs-msg` | 흰색 | about.html #greeting (사진·대체 글 포함) |
 | S6 소식·응원 | `.hs-alt.hs-news` | 아이보리 | `data/posts.json` 최근 3개(글이 없으면 섹션 숨김) · `data/cheers.json`(게시된 것이 있을 때만) |
-| S7 함께하기 | `.hs-act` | 네이비 | declaration.html ‘공동의 선언, 하나의 인류’ · join.html 세 갈래 (후원 링크는 후원 방법 확정 뒤) |
+| S7 함께하기 | `.hs-act` | 네이비(아래쪽 새벽빛) | declaration.html ‘공동의 선언, 하나의 인류’ · join.html 세 갈래 (후원 링크는 후원 방법 확정 뒤) |
 | S8 말씀·연락처 | `.hs-close` | 흰색 | vision.html 로마서 15:13(© 표기 포함) · `config.js` phone/address/publicEmail |
 
 공통 부품: `.hs-eyebrow`(금색 선 + 대문자 꼬리표, 가운데 정렬은 부모에 `.is-center`) · `.hs-title` · `.hs-lead` · `.hs-link`(화살표 4px 이동) ·
 `.hs-actions`(버튼 줄) · `.hs-rule`(48px 금색 선). 카드·줄 전체를 누르게 하려면 제목 링크에 `.hs-stretch`(읽기 프로그램은 제목만 링크로 읽음).
 등장 효과: 요소에 `.reveal` + `style="--i:n"`(main.js), 칸 묶음은 `.hs-stagger reveal` + 칸마다 `--k`(0.055초 간격).
 처음에 숨겨 두는 모습은 ‘동작 줄이기’가 아닐 때만 적용됩니다. 계속 움직이는 것은 지도 금색 표시의 물결 하나(화면 밖에서는 멈춤).
+
+**바탕 순서(리듬)**: 밝은 첫 화면 → 흰색 S1 → 아이보리 S2 → 흰색 S3 → **네이비 S4** → 흰색 S5 → 아이보리 S6 → **네이비 S7** → 흰색 S8 → 네이비 푸터.
+홈의 어두운 띠는 S4·S7 둘뿐이고 서로 붙지 않습니다(S6 이 숨겨져도 사이에 흰색 S5). 두 띠는 모양을 다르게 둡니다 —
+S4 는 오른쪽이 밝은 네이비 + 점 세계지도, S7 은 점 지도 없이 아래쪽 가운데에서 떠오르는 옅은 새벽빛(첫 화면 햇빛 색) + 아래로 밝아지는 네이비.
+(하위 페이지 맺음 띠 `.cta-band` 는 그대로 점 지도 장식)
 
 ## 11. 세계희망선언문 부품
 

@@ -56,7 +56,7 @@
 - [ ] 개인정보처리방침의 위탁·국외 이전(제5조), 자동 수집(제9조)을 실제 사용하는 서비스에 맞춰 확정
 - [ ] 게시 철회·삭제 요청 시 변경 이력까지 정리할 담당자(Git 사용 가능) 지정 — 절차는 `README.md` ‘게시 철회·삭제 요청 처리’
 - [ ] 공식 주소 반영 `node scripts/set-domain.mjs https://intoedu.github.io/worldhopedeclaration` (도메인을 쓰면 아래 항목으로)
-- [ ] (도메인 사용 시) `node scripts/set-domain.mjs https://www.도메인` → 커밋 → DNS 등록(A 레코드 185.199.108.153 / 109.153 / 110.153 / 111.153, `www` CNAME → `intoedu.github.io`) → Settings → Pages 에서 **Enforce HTTPS** 켜기 → 새 주소에서 이메일 접수 다시 시험(FormSubmit 재활성화 필요할 수 있음) → QR 인쇄물 새로 만들기
+- [ ] (도메인 사용 시) `README.md` ‘연결 도메인’ 순서대로: 도메인 소유 확인(TXT) → DNS 등록(A 레코드 185.199.108.153 / 109.153 / 110.153 / 111.153, `www` CNAME → `intoedu.github.io`) → Settings → Pages → Custom domain 에 `www.도메인` 저장 → `node scripts/set-domain.mjs https://www.도메인` 커밋 → **Enforce HTTPS** → 새 주소에서 이메일 접수 다시 시험(FormSubmit 재활성화) → 관리자 재로그인 → QR 인쇄물 새로 만들기
 - [ ] `config.js` 의 `draft: false` 로 변경 → 시안 안내 바 제거
 
 ## 6. 대한민국 대표 33인 추천 (korea33.html) 확인 사항

@@ -1445,8 +1445,7 @@ html[data-lang="en"] .ministry-body blockquote { font-family: var(--f-serif-en);
 @keyframes wh-settle { from { transform: scale(1.07); } to { transform: none; } }
 @keyframes wh-glow { 0%, 100% { filter: drop-shadow(0 0 0 rgba(184, 145, 63, 0)); } 50% { filter: drop-shadow(0 0 10px rgba(184, 145, 63, .45)); } }
 
-/* 홈 첫 화면: 지구 이미지가 천천히 자리 잡고, 문구가 차례로 떠오름 */
-.home-hero-bg img { transform-origin: 72% 50%; animation: wh-settle 2.8s var(--ease) both; }
+/* 홈 첫 화면: 문구가 차례로 떠오름 */
 .home-hero-text > * { animation: wh-rise .9s var(--ease) both; }
 .home-hero-text > :nth-child(1) { animation-delay: .15s; }
 .home-hero-text > :nth-child(2) { animation-delay: .3s; }
@@ -1477,6 +1476,92 @@ html[data-lang="en"] .ministry-body blockquote { font-family: var(--f-serif-en);
 .about-purpose-text .purpose-call::after { margin-left: 0; transform-origin: left center; }
 .purpose-call.is-in::after, .no-js .purpose-call::after { transform: scaleX(1); }
 
+/* ---- 홈 배경이 계속 움직임 (의뢰인 요청 2026-10-13 “배경사진도 움직여야”) ---- */
+@keyframes wh-drift { from { transform: none; } to { transform: scale(1.075) translate(-.8%, .5%); } }
+@keyframes wh-sun { from { opacity: .5; transform: translate(-50%, -50%) scale(.9); } to { opacity: 1; transform: translate(-50%, -50%) scale(1.14); } }
+@keyframes wh-spin { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
+@keyframes wh-flare { 0%, 100% { opacity: .25; transform: translate(-50%, -50%) scaleX(.8); } 50% { opacity: .8; transform: translate(-50%, -50%) scaleX(1.12); } }
+@keyframes wh-mote { 0% { transform: translate3d(0, 0, 0); opacity: 0; } 12%, 80% { opacity: var(--o, .7); } 100% { transform: translate3d(var(--dx, 18px), var(--rise, -440px), 0); opacity: 0; } }
+@keyframes wh-shine { 0% { background-position: 100% 0; } 22%, 100% { background-position: 0% 0; } }
+@keyframes wh-line { 0% { transform: translateY(-100%); opacity: 0; } 15%, 80% { opacity: 1; } 100% { transform: translateY(340%); opacity: 0; } }
+@keyframes wh-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(calc(-3 * var(--hu, 1px))); } }
+@keyframes wh-pan { from { transform: translateX(-2.2%) scale(1.02); } to { transform: translateX(2.2%) scale(1.05); } }
+@keyframes wh-fog { from { transform: translateX(-7%); } to { transform: translateX(7%); } }
+@keyframes wh-kb { from { transform: scale(1); } to { transform: scale(1.09); } }
+@keyframes wh-sheen { 0%, 70% { transform: translateX(-130%) skewX(-18deg); } 100% { transform: translateX(330%) skewX(-18deg); } }
+@keyframes wh-breathe { from { opacity: .7; transform: scale(.95); } to { opacity: 1; transform: scale(1.06); } }
+
+/* 히어로 배경 묶음: 처음엔 살짝 크게 → 제자리(시안 그대로) → 30초 주기로 햇빛 쪽으로 천천히 다가갔다 돌아옴 */
+.home-hero-media { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none;
+  --sun-x: calc(100% - 301 * var(--hu)); --sun-y: calc(202 * var(--hu)); }
+.home-hero-media > * { will-change: transform; }
+/* 사진: 해 위치(사진 폭의 73%, 높이의 46.5%)를 중심으로 확대 → 해는 제자리에 있고 지구가 다가오는 느낌 */
+.home-hero-media .home-hero-bg { z-index: 0; transform-origin: calc(100% - 301 * var(--hu)) calc(202 * var(--hu)); animation: wh-settle 2.8s var(--ease) both, wh-drift 30s ease-in-out 2.8s infinite alternate; }
+/* 햇빛 · 빛줄기 · 가로 빛 번짐 (사진 속 해 위치에 맞춤) */
+.home-hero-sun, .home-hero-rays, .home-hero-flare { position: absolute; z-index: 1; left: var(--sun-x); top: var(--sun-y); border-radius: 50%; transform: translate(-50%, -50%); }
+.home-hero-sun { width: calc(250 * var(--hu)); height: calc(250 * var(--hu)); background: radial-gradient(circle, rgba(255, 252, 240, .95) 0%, rgba(255, 238, 196, .55) 18%, rgba(255, 226, 170, .2) 42%, rgba(255, 226, 170, 0) 70%); animation: wh-sun 7s ease-in-out infinite alternate; }
+.home-hero-rays { width: calc(900 * var(--hu)); height: calc(900 * var(--hu)); opacity: .55;
+  background: repeating-conic-gradient(from 0deg, rgba(255, 255, 255, .2) 0deg 2.5deg, rgba(255, 255, 255, 0) 2.5deg 14deg);
+  -webkit-mask-image: radial-gradient(circle, #000 0%, rgba(0, 0, 0, .55) 16%, rgba(0, 0, 0, 0) 52%); mask-image: radial-gradient(circle, #000 0%, rgba(0, 0, 0, .55) 16%, rgba(0, 0, 0, 0) 52%);
+  animation: wh-spin 120s linear infinite; }
+.home-hero-flare { width: calc(560 * var(--hu)); height: calc(3 * var(--hu)); border-radius: 50%; background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 246, 225, .85) 50%, rgba(255, 255, 255, 0)); animation: wh-flare 7s ease-in-out infinite; }
+/* 위로 천천히 떠오르는 빛 알갱이 (오른쪽 지구 위) */
+.home-hero-motes { position: absolute; z-index: 1; inset: 0; }
+.home-hero-motes i { position: absolute; top: 100%; width: 5px; height: 5px; border-radius: 50%; background: radial-gradient(circle, #fff 0%, rgba(255, 244, 214, .85) 40%, rgba(255, 244, 214, 0) 70%); --rise: calc(-470 * var(--hu)); animation: wh-mote 16s linear infinite; opacity: 0; }
+.home-hero-motes i:nth-child(1) { left: 48%; animation-duration: 15s; animation-delay: -2s; --dx: 24px; }
+.home-hero-motes i:nth-child(2) { left: 55%; width: 3px; height: 3px; animation-duration: 19s; animation-delay: -9s; --dx: -16px; --o: .55; }
+.home-hero-motes i:nth-child(3) { left: 61%; animation-duration: 13s; animation-delay: -5s; --dx: 12px; }
+.home-hero-motes i:nth-child(4) { left: 66%; width: 4px; height: 4px; animation-duration: 17s; animation-delay: -12s; --dx: -22px; --o: .6; }
+.home-hero-motes i:nth-child(5) { left: 71%; width: 6px; height: 6px; animation-duration: 21s; animation-delay: -3s; --dx: 30px; --o: .5; }
+.home-hero-motes i:nth-child(6) { left: 75%; animation-duration: 14s; animation-delay: -7s; --dx: -10px; }
+.home-hero-motes i:nth-child(7) { left: 79%; width: 3px; height: 3px; animation-duration: 18s; animation-delay: -15s; --dx: 18px; --o: .65; }
+.home-hero-motes i:nth-child(8) { left: 83%; animation-duration: 16s; animation-delay: -1s; --dx: -26px; }
+.home-hero-motes i:nth-child(9) { left: 87%; width: 4px; height: 4px; animation-duration: 20s; animation-delay: -11s; --dx: 14px; --o: .55; }
+.home-hero-motes i:nth-child(10) { left: 91%; animation-duration: 15s; animation-delay: -6s; --dx: -14px; }
+.home-hero-motes i:nth-child(11) { left: 58%; width: 6px; height: 6px; animation-duration: 23s; animation-delay: -17s; --dx: 20px; --o: .45; }
+.home-hero-motes i:nth-child(12) { left: 95%; width: 3px; height: 3px; animation-duration: 17s; animation-delay: -4s; --dx: -18px; --o: .6; }
+/* 제목에 가끔 빛이 지나감 (멈춘 상태의 색은 시안과 같음)
+   · 글자 칸(인라인 span)에만 적용 — 배경 폭 300% 안에서만 움직여 글자가 비는 순간이 없음
+   · 위로 올린 ™ 는 칸 밖이라 원래 색으로 고정 */
+.home-hero-title > .ko, .home-hero-title > .en { background: linear-gradient(105deg, #0f2447 0%, #0f2447 44%, #6a8cc4 50%, #0f2447 56%, #0f2447 100%) 100% 0 / 300% 100% no-repeat; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: wh-shine 9s ease-in-out 2.6s infinite; }
+.home-hero-title sup { -webkit-text-fill-color: currentColor; }
+/* 오른쪽 세로 문구 옆 선을 따라 빛이 흘러내림 */
+.home-hero-vertical::after { content: ""; position: absolute; right: -1px; top: 0; width: 1px; height: 30%; background: linear-gradient(180deg, rgba(255, 255, 255, 0), #fff, rgba(255, 255, 255, 0)); box-shadow: 0 0 6px rgba(255, 255, 255, .9); animation: wh-line 5s ease-in-out 1.8s infinite; opacity: 0; }
+/* 통계 아이콘이 살짝 떠 있음 */
+.home-stat-icon svg { animation: wh-bob 6s ease-in-out infinite; }
+.home-stat:nth-child(2) .home-stat-icon svg { animation-delay: -1.5s; }
+.home-stat:nth-child(3) .home-stat-icon svg { animation-delay: -3s; }
+.home-stat:nth-child(4) .home-stat-icon svg { animation-delay: -4.5s; }
+/* 5대 원칙: 안개 낀 산 사진이 천천히 흐르고 안개가 지나감 */
+.home-principles { overflow: hidden; isolation: isolate; }
+.home-principles::before { content: ""; position: absolute; z-index: -2; top: 0; bottom: 0; left: -4%; right: -4%; background: inherit; animation: wh-pan 36s ease-in-out infinite alternate; pointer-events: none; }
+.home-principles::after { content: ""; position: absolute; z-index: -1; top: 0; bottom: 0; left: -15%; right: -15%; pointer-events: none;
+  background: radial-gradient(38% 55% at 28% 72%, rgba(255, 255, 255, .5), rgba(255, 255, 255, 0) 70%), radial-gradient(30% 45% at 72% 62%, rgba(255, 255, 255, .42), rgba(255, 255, 255, 0) 70%);
+  animation: wh-fog 24s ease-in-out infinite alternate; }
+/* 사진 타일: 사진이 천천히 다가오고, 가끔 빛이 스쳐 지나감 */
+.home-tile picture { animation: wh-kb 18s ease-in-out infinite alternate; }
+.home-tiles > :nth-child(1) .home-tile picture, .home-tiles > .home-tile:nth-child(1) picture { transform-origin: 30% 40%; }
+.home-tiles > :nth-child(2) .home-tile picture, .home-tiles > .home-tile:nth-child(2) picture { transform-origin: 70% 50%; animation-delay: -5s; }
+.home-tiles > :nth-child(3) .home-tile picture, .home-tiles > .home-tile:nth-child(3) picture { transform-origin: 50% 60%; animation-delay: -10s; }
+.home-tiles > :nth-child(4) .home-tile picture, .home-tiles > .home-tile:nth-child(4) picture { transform-origin: 65% 35%; animation-delay: -14s; }
+.home-tile::after { content: ""; position: absolute; z-index: -1; top: -20%; bottom: -20%; left: 0; width: 34%; background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, .16), rgba(255, 255, 255, 0)); animation: wh-sheen 9s ease-in-out infinite; pointer-events: none; }
+.home-tiles > :nth-child(2) .home-tile::after, .home-tiles > .home-tile:nth-child(2)::after { animation-delay: 1.2s; }
+.home-tiles > :nth-child(3) .home-tile::after, .home-tiles > .home-tile:nth-child(3)::after { animation-delay: 2.4s; }
+.home-tiles > :nth-child(4) .home-tile::after, .home-tiles > .home-tile:nth-child(4)::after { animation-delay: 3.6s; }
+/* 다른 페이지: 머리말 뒤 새벽빛·안개가 천천히 숨 쉼 */
+.page-hero::before { animation: wh-breathe 9s ease-in-out infinite alternate; }
+.principles-band::after { animation: wh-fog 24s ease-in-out infinite alternate; }
+.about-purpose::before { animation: wh-breathe 10s ease-in-out infinite alternate; }
+@media (max-width: 760px) {
+  .home-hero-media { --sun-x: calc(50% - 3px); --sun-y: 309px; }
+  .home-hero-media .home-hero-bg { transform-origin: calc(50% - 3px) 309px; }
+  .home-hero-sun { width: 220px; height: 220px; }
+  .home-hero-rays { width: 640px; height: 640px; opacity: .35; }
+  .home-hero-flare { width: 360px; height: 2px; }
+  .home-hero-motes i { --rise: -540px; }
+  .home-principles::before, .home-principles::after { display: none; }
+}
+
 /* ==========================================================================
    모션 줄이기 · 인쇄
    ========================================================================== */
@@ -1485,6 +1570,7 @@ html[data-lang="en"] .ministry-body blockquote { font-family: var(--f-serif-en);
   .reveal { opacity: 1; transform: none; }
   .purpose-letter p strong, .about-purpose-text p strong { background-size: 100% 100%; }
   .purpose-call::after { transform: none; }
+  .home-hero-motes, .home-hero-flare, .home-hero-vertical::after, .home-tile::after { display: none; }
 }
 @media print {
   .site-header, .site-footer, .draft-bar, .mobile-nav, .tabbar, .search-overlay, .subnav, .skip-link, .no-print { display: none !important; }

@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Serif:ital,wght@0,500;0,700;1,500&display=swap">
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/style.css?v=20261013">
 <style>
   /* 갤러리 페이지 전용 */
   .gallery-tip { font-size: 14.5px; }
@@ -71,18 +71,18 @@
         <p class="cta-text"><span class="ko">인류와 지구의 더 나은 미래를 위해, 지금, 세계가 함께 희망을 선언합니다.</span><span class="en">Now, the World Declares Hope for a Better Future for All.</span></p>
       </div>
       <div class="cta-actions">
-        <a class="btn btn-primary btn-lg" href="join.html"><span class="ko">선언에 참여하기</span><span class="en">Join the Declaration</span><span data-icon="arrow-right"></span></a>
-        <a class="btn btn-outline btn-lg" href="news.html"><span class="ko">공지·소식 보기</span><span class="en">Read the News</span></a>
+        <a class="btn btn-primary btn-lg" href="join.html#declare"><span class="ko">선언에 참여하기</span><span class="en">Join the Declaration</span><span data-icon="arrow-right"></span></a>
+        <a class="btn btn-outline btn-lg" href="news.html"><span class="ko">공지·소식 보기</span><span class="en">Read the News</span><span data-icon="arrow-right"></span></a>
       </div>
     </div>
   </section>
 </main>
 
 <div id="site-footer"></div>
-<script src="assets/js/config.js"></script>
-<script src="assets/js/data.js"></script>
-<script src="assets/js/main.js"></script>
-<script src="assets/js/gallery.js"></script>
+<script src="assets/js/config.js?v=20261013"></script>
+<script src="assets/js/data.js?v=20261013"></script>
+<script src="assets/js/main.js?v=20261013"></script>
+<script src="assets/js/gallery.js?v=20261013"></script>
 <script>
   // 자리표시(sample) 사진이 하나라도 있으면 '예시' 안내를 보여 줌
   (function () {
@@ -90,7 +90,8 @@
     var note = document.getElementById("gallery-sample-note");
     if (!note || !window.WH || !WH.db) return;
     WH.db.listGallery({}).then(function (rows) {
-      note.hidden = !rows.some(function (g) { return g.sample; });
+      // 모두 예시면 gallery.js 가 안내 한 장으로 바꾸므로, 일부만 예시일 때만 이 안내를 보임
+      note.hidden = !rows.some(function (g) { return g.sample; }) || rows.every(function (g) { return g.sample; });
     }).catch(function () {});
   })();
 </script>

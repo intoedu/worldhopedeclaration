@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>참여하기 | 세계희망연대</title>
+<title>참여하기 — 선언 참여·대표 추천·응원 메시지 | 세계희망연대</title>
 <meta name="description" content="세계희망선언에 함께해 주세요. 세계희망선언 참여 신청, 글로벌 대표 추천, 희망 응원 메시지, 후원·문의 안내. 전국대표전화 1588-2716">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="세계희망연대">
@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Serif:ital,wght@0,500;0,700;1,500&display=swap">
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/style.css?v=20261013">
 <script>(function(){try{var l=new URLSearchParams(location.search).get("lang")||localStorage.getItem("wh-lang");if(l==="en"){var h=document.documentElement;h.setAttribute("data-lang","en");h.lang="en";}}catch(e){}})();</script>
 <style>
   /* ===== 참여하기 페이지 전용 (공통 style.css 의 토큰만 사용) ===== */
@@ -26,28 +26,27 @@
   /* 메뉴로 이동하는 구역: 고정 헤더 + 하위 메뉴 아래에 오도록 */
   .join-anchor { scroll-margin-top: calc(var(--header-h) + 58px); }
 
-  /* ---------- 상단 히어로: 왼쪽 글 + 오른쪽 새싹 사진과 참여 현황 ---------- */
-  .join-hero { padding: 40px 0 72px; }
-  .join-hero .breadcrumb { margin-bottom: 8px; }
-  .join-hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 470px); gap: 40px 72px; align-items: center; }
-  .join-hero-text { min-width: 0; }
-  .page-hero.join-hero p.join-hero-kicker { margin: 0 0 12px; max-width: none; line-height: 1.6; font-family: var(--f-serif); font-size: clamp(16px, 1.55vw, 19px); font-weight: 500; letter-spacing: -0.01em; color: var(--navy-900); }
-  html[data-lang="en"] .page-hero.join-hero p.join-hero-kicker { font-family: var(--f-serif-en); letter-spacing: 0; }
-  .join-hero h1 { font-size: clamp(36px, 4.6vw, 58px); font-weight: 900; letter-spacing: -0.035em; }
-  html[data-lang="en"] .join-hero h1 { font-weight: 700; letter-spacing: -0.02em; }
-  .join-hero .page-hero-en { margin-top: 12px; font-size: clamp(13px, 1.4vw, 17px); font-weight: 600; letter-spacing: .24em; }
-  .page-hero.join-hero p.join-hero-lead { margin-top: 22px; max-width: 580px; }
+  /* ---------- 상단 히어로: 공통 머리말 공식 + 오른쪽 네이비 카드(새싹 선 그림)와 참여 현황 ---------- */
+  .join-hero { padding: 72px 0 80px; }
+  .join-hero-grid { width: 100%; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 470px); gap: 40px 72px; align-items: center; }
+  .join-hero-text { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; }
+  .join-hero h1 { order: -1; }
+  .join-hero .page-hero-en { order: -2; }
+  .page-hero.join-hero p.join-hero-kicker { margin: 12px 0 0; max-width: none; line-height: 1.6; font-family: var(--f-serif); font-size: clamp(17px, 1.55vw, 20px); font-weight: 500; letter-spacing: -0.01em; color: var(--navy-800); }
+  html[data-lang="en"] .page-hero.join-hero p.join-hero-kicker { font-family: var(--f-serif-en); font-style: italic; letter-spacing: 0; }
+  .page-hero.join-hero p.join-hero-lead { margin-top: 18px; max-width: 580px; }
   .page-hero.join-hero p.join-hero-quote { margin-top: 12px; font-family: var(--f-serif-en); font-size: 16px; font-style: italic; font-weight: 500; line-height: 1.6; color: var(--ink-2); }
   .join-hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
   .join-hero-actions .btn { min-width: 210px; }
 
   .join-figure { position: relative; margin: 0 0 0 auto; width: 100%; max-width: 470px; }
   .join-figure::before { content: ""; position: absolute; z-index: -1; inset: -14% -10% 6%; border-radius: 50%; background: radial-gradient(circle at 50% 50%, rgba(255, 236, 200, .55) 0%, rgba(255, 236, 200, 0) 60%); }
-  .join-photo { position: relative; margin: 0; aspect-ratio: 4 / 3; border-radius: var(--radius-lg); overflow: hidden; background: #1c2a1f; box-shadow: 0 34px 64px -38px rgba(12, 28, 54, .6); }
-  .join-photo picture { height: 100%; }
-  .join-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 64% 50%; }
-  .join-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(8, 20, 38, .72) 0%, rgba(8, 20, 38, .34) 48%, rgba(8, 20, 38, 0) 74%), linear-gradient(0deg, rgba(8, 20, 38, .55) 0%, rgba(8, 20, 38, 0) 46%); }
-  .join-photo figcaption { position: absolute; z-index: 1; left: 28px; right: 40%; bottom: 74px; color: #fff; }
+  /* 사진 대신 디자인한 네이비 카드: 깊은 남색 + 고운 입자 + 금빛 새싹 선 그림 (사진 확대로 흐려지는 문제 없음) */
+  .join-photo { position: relative; isolation: isolate; margin: 0; aspect-ratio: 4 / 3; border-radius: var(--radius-lg); overflow: hidden; background: radial-gradient(120% 90% at 80% 0%, #2a5797 0%, #0f2447 55%, #0a1a35 100%); box-shadow: 0 34px 64px -38px rgba(12, 28, 54, .6); }
+  .join-photo::before { content: ""; position: absolute; z-index: -1; inset: 0; background: var(--grain); opacity: .12; mix-blend-mode: overlay; pointer-events: none; }
+  .join-art { position: absolute; z-index: -1; right: 24px; bottom: 24px; display: flex; color: rgba(216, 181, 106, .55); pointer-events: none; }
+  .join-art svg { width: 160px; height: 160px; stroke-width: .7; }
+  .join-photo figcaption { position: absolute; z-index: 1; left: 32px; right: 38%; top: 36px; color: #fff; }
   .join-photo-cap { display: block; margin-bottom: 8px; font-family: var(--f-display); font-size: 12px; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: var(--gold-300); }
   .join-photo-title { display: block; font-family: var(--f-serif); font-size: clamp(20px, 2vw, 25px); font-weight: 700; line-height: 1.4; letter-spacing: -0.02em; }
   html[data-lang="en"] .join-photo-title { font-family: var(--f-serif-en); font-weight: 500; letter-spacing: 0; }
@@ -60,11 +59,11 @@
   .join-now-num b { font-family: var(--f-serif-en); font-size: clamp(28px, 2.6vw, 34px); font-weight: 700; font-variant-numeric: lining-nums; }
   .join-now-num small { font-family: var(--f-serif); font-size: 15px; font-weight: 700; }
   html[data-lang="en"] .join-now-num small { font-family: var(--f-serif-en); font-weight: 500; }
-  .join-now-label { margin: 6px 0 0; font-family: var(--f-serif-en); font-size: 11.5px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-2); line-height: 1.35; }
+  .join-now-label { margin: 6px 0 0; font-family: var(--f-display); font-size: 11.5px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-600); line-height: 1.35; }
   .join-now-desc { margin: 3px 0 0; font-size: 13.5px; color: var(--muted); line-height: 1.5; }
 
   /* ---------- 페이지 안 메뉴 ---------- */
-  .join-subnav ul { width: max-content; max-width: 100%; margin: 0 auto; }
+  .join-subnav ul { width: max-content; max-width: 100%; }
   .join-subnav a b { margin-right: 6px; font-family: var(--f-serif-en); font-weight: 700; color: var(--gold-600); }
   .join-subnav li.is-group { position: relative; margin-left: 14px; }
   .join-subnav li.is-group::before { content: ""; position: absolute; left: -9px; top: 50%; width: 1px; height: 16px; margin-top: -8px; background: var(--line-2); }
@@ -72,27 +71,36 @@
   .join-subnav ul.has-more-left { -webkit-mask-image: linear-gradient(90deg, transparent, #000 44px); mask-image: linear-gradient(90deg, transparent, #000 44px); }
   .join-subnav ul.has-more-left.has-more-right { -webkit-mask-image: linear-gradient(90deg, transparent, #000 44px, #000 calc(100% - 44px), transparent); mask-image: linear-gradient(90deg, transparent, #000 44px, #000 calc(100% - 44px), transparent); }
 
+  /* 휴대폰: 페이지 안 메뉴가 3칸 탭이 되어 신청서를 한 번에 하나만 보여 줌 (스크립트가 .is-tabs 를 붙임) */
+  .join-subnav.is-tabs { padding: 8px 0; }
+  .join-subnav.is-tabs ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; width: auto; padding: 4px; border-radius: 8px; background: #eef2f8; -webkit-mask-image: none !important; mask-image: none !important; }
+  .join-subnav.is-tabs li.is-group { display: none; }
+  .join-subnav.is-tabs a { display: flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 6px; border: 0; border-radius: 6px; font-size: 14px; font-weight: 600; color: var(--ink-2); text-align: center; line-height: 1.25; white-space: normal; transition: background var(--dur-1), color var(--dur-1); }
+  .join-subnav.is-tabs a b { display: none; }
+  .join-subnav.is-tabs a[aria-selected="true"] { background: var(--navy-900); color: #fff; }
+  .join-subnav.is-tabs a:focus-visible { outline-offset: -2px; }
+
   /* ---------- 신청 구역: 왼쪽 안내 + 오른쪽 신청서 ---------- */
   .join-layout { display: grid; grid-template-columns: minmax(0, 380px) minmax(0, 1fr); gap: 40px 64px; align-items: start; }
   .join-intro { min-width: 0; }
   .join-kicker { display: flex; align-items: center; gap: 12px; margin: 0 0 14px; line-height: 1.4; }
   .join-kicker b { font-family: var(--f-serif-en); font-size: 17px; font-weight: 700; color: var(--gold-600); }
-  .join-kicker span { display: inline-flex; align-items: center; gap: 12px; font-family: var(--f-display); font-size: 13px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--blue-700); }
-  .join-kicker span::before { content: ""; width: 28px; height: 1px; background: currentColor; opacity: .55; }
+  .join-kicker span { display: inline-flex; align-items: center; gap: 12px; font-family: var(--f-display); font-size: 12px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--gold-600); }
+  .join-kicker span::before { content: ""; width: 28px; height: 1px; background: var(--gold-500); }
   .join-intro .section-title { font-size: clamp(26px, 2.7vw, 34px); }
   .join-intro .section-lead { margin-top: 14px; font-size: 16.5px; }
 
   .join-steps { list-style: none; margin: 30px 0 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--line); }
   .join-steps li { display: grid; grid-template-columns: 34px 1fr; gap: 14px; padding: 16px 0; border-bottom: 1px solid var(--line); }
-  .join-step-no { width: 30px; height: 30px; margin-top: 1px; border: 1px solid var(--navy-900); border-radius: 50%; display: grid; place-items: center; font-family: var(--f-serif-en); font-size: 14px; font-weight: 700; color: var(--navy-900); }
+  .join-step-no { padding-top: 1px; font-family: var(--f-display); font-size: 18px; font-weight: 600; line-height: 1.3; color: var(--gold-500); }
   .join-steps b { display: block; font-family: var(--f-head); font-size: 16.5px; font-weight: 700; color: var(--navy-900); line-height: 1.45; }
   .join-steps p { margin: 2px 0 0; font-size: 14.5px; color: var(--ink-2); line-height: 1.6; }
 
   .join-aside-links { display: grid; gap: 12px; margin-top: 26px; }
   .join-phone { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; transition: border-color .2s, box-shadow .2s; }
   .join-phone:hover { border-color: var(--blue-200); box-shadow: var(--shadow-sm); }
-  .join-phone > span:first-child { flex-shrink: 0; width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; background: var(--navy-900); color: #fff; }
-  .join-phone > span:first-child svg { width: 20px; height: 20px; }
+  .join-phone > span:first-child { flex-shrink: 0; display: flex; color: var(--navy-700); }
+  .join-phone > span:first-child svg { width: 26px; height: 26px; stroke-width: 1.4; }
   .join-phone small { display: block; font-size: 13px; color: var(--muted); line-height: 1.4; }
   .join-phone b { display: block; font-family: var(--f-serif-en); font-size: 22px; font-weight: 700; color: var(--navy-900); line-height: 1.25; letter-spacing: .01em; }
 
@@ -112,19 +120,17 @@
 
   /* 신청서 */
   .join-form h3 { font-size: 23px; }
-  .join-form .form-card-en { display: block; margin: 0 0 6px; font-family: var(--f-display); font-size: 12px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--blue-700); }
+  .join-form .form-card-en { display: block; margin: 0 0 6px; font-family: var(--f-display); font-size: 12px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--gold-600); }
   .join-fs { min-width: 0; margin: 0; padding: 0; border: 0; }
   .join-fs + .join-fs { margin-top: 8px; padding-top: 22px; border-top: 1px solid var(--line); }
   .join-fs legend { display: flex; align-items: center; gap: 10px; float: left; width: 100%; margin: 0 0 16px; padding: 0; font-family: var(--f-head); font-size: 17px; font-weight: 700; color: var(--navy-900); }
   .join-fs legend + * { clear: both; }
   .join-fs + .form-grid { margin-top: 22px; padding-top: 22px; border-top: 1px solid var(--line); }
   .join-fs legend small { font-family: var(--f-display); font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
-  .join-form .consent-box { max-height: 168px; }
   .join-form .hint { margin-bottom: 0; }
-  .join-form .check + .check { margin-top: 10px; }
 
   /* 응원 메시지 구역 머리 */
-  .join-cheer-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 40px; max-width: none; }
+  .join-cheer-head { display: flex; flex-direction: row; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 40px; max-width: none; }
   .join-cheer-head > div { max-width: 640px; }
 
   /* 응원 메시지: 표어 패널 + 게시된 메시지 */
@@ -156,14 +162,20 @@
   }
   @media (max-width: 860px) {
     .join-hero-grid { grid-template-columns: 1fr; }
-    .join-figure { margin: 8px auto 0; max-width: 560px; }
+    .join-figure { margin: 8px 0 0; max-width: 560px; }
   }
   @media (max-width: 760px) {
-    .join-hero { padding: 28px 0 52px; }
-    .join-hero-actions .btn { flex: 1 1 220px; min-width: 0; }
-    .join-photo { aspect-ratio: 16 / 10; }
-    .join-photo figcaption { left: 20px; right: 30%; bottom: 66px; }
-    .join-now { margin: -40px 12px 0; padding: 14px 0 12px; }
+    /* 휴대폰 머리말: 버튼은 한 줄에 하나, 카드는 버튼 아래에 낮게 (높이 200px 이하) */
+    .join-hero { padding: 28px 0 32px; }
+    .page-hero.join-hero p.join-hero-quote { display: none; }
+    .join-hero-actions { display: grid; gap: 10px; width: 100%; margin-top: 24px; }
+    .join-hero-actions .btn { width: 100%; min-width: 0; min-height: 50px; }
+    .join-figure { margin-top: 4px; }
+    /* 휴대폰: 장식 카드(새싹)는 숨기고 참여 현황만 → 머리말이 짧아져 첫 화면에서 탭 메뉴가 하단 탭바에 붙지 않고 신청서 머리가 보임
+       (글자를 키워도 카드 제목과 현황 카드가 겹칠 일 없음) */
+    .join-photo { display: none; }
+    .join-figure::before { display: none; }
+    .join-now { margin: 0; padding: 14px 0 12px; }
     .join-now-item { padding: 0 14px; }
     .join-now-desc { font-size: 12.5px; }
     .join-steps { margin-top: 24px; }
@@ -172,13 +184,10 @@
   }
   @media (max-width: 560px) {
     .join-hero .page-hero-en { font-size: 12px; letter-spacing: .14em; }
-    .join-subnav a { padding: 14px 10px 13px; font-size: 14.5px; }
     .join-subnav a b { display: none; }
     .join-subnav li.is-group { margin-left: 8px; }
     .join-subnav li.is-group::before { left: -5px; }
-    .join-photo figcaption { right: 16px; }
-    .join-photo-en { display: none; }
-    .join-now-label { font-size: 10px; letter-spacing: .04em; }
+    .join-now-label { font-size: 11.5px; letter-spacing: .04em; }
   }
 
   @media print {
@@ -186,12 +195,12 @@
   }
 </style>
 </head>
-<body data-page="join" data-title-en="Join | World Hope Declaration Network">
+<body data-page="join" data-title-en="Join — Declare, Nominate, Encourage | World Hope Declaration Network">
 <div id="site-header"></div>
 
 <main id="main">
   <!-- ===== 상단: 라이트 히어로 ===== -->
-  <section class="page-hero join-hero" aria-labelledby="page-title">
+  <section class="page-hero no-motif join-hero" aria-labelledby="page-title">
     <div class="container">
       <nav class="breadcrumb" aria-label="breadcrumb"><a href="index.html"><span class="ko">홈</span><span class="en">Home</span></a><span aria-hidden="true">/</span><span><span class="ko">참여하기</span><span class="en">Join</span></span></nav>
       <div class="join-hero-grid">
@@ -202,15 +211,15 @@
           <p class="join-hero-lead"><span class="ko">인류와 지구의 더 나은 미래를 위해, 지금, 세계가 함께 희망을 선언합니다. 선언 참여 신청과 글로벌 대표 추천, 희망 응원 메시지로 이 걸음에 함께해 주세요.</span><span class="en">Now, the world declares hope for a better future for all. Join the Declaration, nominate a Global Representative, or send a message of hope — and walk with us.</span></p>
           <p class="join-hero-quote ko" lang="en">Now, the World Declares Hope for a Better Future for All.</p>
           <div class="join-hero-actions">
-            <a class="btn btn-primary btn-lg" href="#declare"><span class="ko">선언 참여 신청</span><span class="en">Join the Declaration</span><span data-icon="arrow-right"></span></a>
-            <a class="btn btn-outline btn-lg" href="#nominate"><span class="ko">글로벌 대표 추천</span><span class="en">Nominate a Representative</span><span data-icon="arrow-right"></span></a>
+            <a class="btn btn-primary btn-lg" href="#declare"><span class="ko">선언에 참여하기</span><span class="en">Join the Declaration</span><span data-icon="arrow-right"></span></a>
+            <a class="btn btn-outline btn-lg" href="#nominate"><span class="ko">대표 추천하기</span><span class="en">Nominate a Representative</span><span data-icon="arrow-right"></span></a>
           </div>
         </div>
 
-        <!-- 새싹 사진 + 참여 현황 (숫자는 data/stats.json) -->
+        <!-- 네이비 카드(새싹 선 그림) + 참여 현황 (숫자는 data/stats.json) -->
         <div class="join-figure">
           <figure class="join-photo">
-            <picture><source srcset="assets/img/home/tile-join.webp" type="image/webp"><img src="assets/img/home/tile-join.jpg" alt="" width="786" height="372" fetchpriority="high"></picture>
+            <span class="join-art" data-icon="sprout" aria-hidden="true"></span>
             <figcaption>
               <span class="join-photo-cap">Action</span>
               <span class="join-photo-title"><span class="ko">오늘의 선언을<br>내일의 현실로</span><span class="en">From Today’s Declaration to Tomorrow’s Reality</span></span>
@@ -327,22 +336,20 @@
             <div class="hp-field" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
             <div class="field full">
               <span class="label"><span class="ko">개인정보 수집·이용 동의</span><span class="en">Consent to collection and use of personal information</span><span class="req">*</span></span>
-              <div class="consent-box" tabindex="0" role="region" aria-label="개인정보 수집·이용 안내" data-en-aria-label="Privacy notice">
-                <div class="ko">
-                  · 수집 항목: 이름, 국가, 소속·직함(선택), 참여 분야, 연락처, 이메일, 참여 동기<br>
-                  · 수집 목적: 세계희망선언 참여 신청의 확인과 참여 안내·연락<br>
-                  · 전달 방법: 입력하신 내용은 홈페이지에 저장되지 않고, 외부 이메일 전송 서비스 FormSubmit(formsubmit.co, 서버가 국외에 있을 수 있음)을 거쳐 담당자 이메일로 전달됩니다. 전송이 원활하지 않으면 이용자의 메일 앱으로 직접 보내실 수 있습니다.<br>
-                  · 보유 기간: 담당자 메일함에 보관하며 처리(회신) 완료 후 1년 이내에 삭제 (동의 철회 요청 시 지체 없이 파기)<br>
-                  · 동의를 거부하실 수 있으며, 이 경우 온라인 신청이 제한됩니다. 전화(1588-2716)로는 신청·문의하실 수 있습니다.
-                </div>
-                <div class="en">
-                  · Items: name, country, organization and title (optional), field, phone, email, reason for joining<br>
-                  · Purpose: to review your application and contact you about taking part<br>
-                  · Delivery: your submission is not stored on this website. It is sent to our staff by email through a third-party email relay service, FormSubmit (formsubmit.co), whose servers may be located outside Korea. If online delivery fails, you can send it from your own email app instead.<br>
-                  · Retention: kept in the staff mailbox and deleted within 1 year after we have handled it (deleted promptly upon withdrawal of consent)<br>
-                  · You may decline; online application will then be unavailable, but you can still apply or ask by calling 1588-2716.
-                </div>
-              </div>
+              <ul class="consent-list ko">
+                <li><b>수집 항목<span class="sr-only">: </span></b><span>이름, 국가, 소속·직함(선택), 참여 분야, 연락처, 이메일, 참여 동기</span></li>
+                <li><b>수집 목적<span class="sr-only">: </span></b><span>세계희망선언 참여 신청의 확인과 참여 안내·연락</span></li>
+                <li><b>전달 방법<span class="sr-only">: </span></b><span>입력하신 내용은 홈페이지에 저장되지 않고, 외부 이메일 전송 서비스 FormSubmit(formsubmit.co, 서버가 국외에 있을 수 있음)을 거쳐 담당자 이메일로 전달됩니다. 전송이 원활하지 않으면 이용자의 메일 앱으로 직접 보내실 수 있습니다.</span></li>
+                <li><b>보유 기간<span class="sr-only">: </span></b><span>담당자 메일함에 보관하며 처리(회신) 완료 후 1년 이내에 삭제 (동의 철회 요청 시 지체 없이 파기)</span></li>
+                <li class="is-note">동의를 거부하실 수 있으며, 이 경우 온라인 신청이 제한됩니다. 전화(1588-2716)로는 신청·문의하실 수 있습니다.</li>
+              </ul>
+              <ul class="consent-list en">
+                <li><b>Items<span class="sr-only">: </span></b><span>name, country, organization and title (optional), field, phone, email, reason for joining</span></li>
+                <li><b>Purpose<span class="sr-only">: </span></b><span>to review your application and contact you about taking part</span></li>
+                <li><b>Delivery<span class="sr-only">: </span></b><span>your submission is not stored on this website. It is sent to our staff by email through a third-party email relay service, FormSubmit (formsubmit.co), whose servers may be located outside Korea. If online delivery fails, you can send it from your own email app instead.</span></li>
+                <li><b>Retention<span class="sr-only">: </span></b><span>kept in the staff mailbox and deleted within 1 year after we have handled it (deleted promptly upon withdrawal of consent)</span></li>
+                <li class="is-note">You may decline; online application will then be unavailable, but you can still apply or ask by calling 1588-2716.</li>
+              </ul>
               <label class="check"><input type="checkbox" name="consent" required> <span><span class="ko">위 내용을 확인했으며 개인정보 수집·이용에 동의합니다. (<a href="privacy.html">개인정보처리방침</a>)</span><span class="en">I have read the above and agree. (<a href="privacy.html">Privacy Policy</a>)</span></span></label>
             </div>
             <div class="full"><button type="submit" class="btn btn-primary btn-lg btn-block"><span class="ko">참여 신청 보내기</span><span class="en">Send Application</span></button></div>
@@ -372,7 +379,7 @@
           </div>
           <div class="notice-box"><span class="ko">추천하시기 전에 꼭 <b>피추천인 본인</b>에게 추천 사실을 알리고, 이름·연락처 등 정보를 보내는 것에 대한 동의를 받아 주세요.</span><span class="en">Before you nominate someone, please tell <b>the nominee</b> and obtain their permission to share their name, contact details and other information with us.</span></div>
           <p class="join-note"><span class="ko">보내 주신 추천은 담당자가 확인합니다. 추천이 곧 선정을 뜻하지는 않습니다.</span><span class="en">Our staff will review every nomination. A nomination does not guarantee selection.</span></p>
-          <a class="btn btn-primary" style="margin-top:18px" href="korea33.html"><span class="ko">대한민국 대표 33인 추천 안내</span><span class="en">Nominate Korea’s 33</span><span data-icon="arrow-right"></span></a>
+          <a class="btn btn-primary" style="margin-top:18px" href="korea33.html#form"><span class="ko">대한민국 대표 33인 추천 안내</span><span class="en">Nominate Korea’s 33</span><span data-icon="arrow-right"></span></a>
           <a class="link-arrow" href="global33.html#fields"><span class="ko">11개 분야 자세히 보기</span><span class="en">About the 11 fields</span></a>
         </div>
 
@@ -451,24 +458,41 @@
             <div class="hp-field" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
             <div class="field full">
               <span class="label"><span class="ko">개인정보 수집·이용 동의</span><span class="en">Consent to collection and use of personal information</span><span class="req">*</span></span>
-              <div class="consent-box" tabindex="0" role="region" aria-label="개인정보 수집·이용 안내" data-en-aria-label="Privacy notice">
-                <div class="ko">
-                  · 수집 항목: (추천인) 이름, 연락처, 이메일 / (피추천인) 이름, 국가, 추천 분야, 소개 및 추천 사유, 연락처(선택)<br>
-                  · 수집 목적: 글로벌 대표 추천의 접수·검토와 추천인·피추천인 연락<br>
-                  · 피추천인 정보: 다른 사람의 개인정보를 적으실 때에는 미리 피추천인 본인에게 추천 사실을 알리고 정보 제공에 대한 동의를 받아야 합니다. 피추천인이 요청하면 정보를 받은 경로(추천인)와 이용 목적을 알려 드리며, 피추천인이 원하지 않으면 지체 없이 삭제합니다.<br>
-                  · 전달 방법: 입력하신 내용은 홈페이지에 저장되지 않고, 외부 이메일 전송 서비스 FormSubmit(formsubmit.co, 서버가 국외에 있을 수 있음)을 거쳐 담당자 이메일로 전달됩니다. 전송이 원활하지 않으면 이용자의 메일 앱으로 직접 보내실 수 있습니다.<br>
-                  · 보유 기간: 담당자 메일함에 보관하며 검토(회신) 완료 후 1년 이내에 삭제 (동의 철회 또는 피추천인의 삭제 요청 시 지체 없이 파기)<br>
-                  · 동의를 거부하실 수 있으며, 이 경우 온라인 추천이 제한됩니다. 전화(1588-2716)로는 문의하실 수 있습니다.
+              <ul class="consent-list ko">
+                <li><b>수집 항목<span class="sr-only">: </span></b><span>(추천인) 이름, 연락처, 이메일 / (피추천인) 이름, 국가, 추천 분야, 소개 및 추천 사유, 연락처(선택)</span></li>
+                <li><b>수집 목적<span class="sr-only">: </span></b><span>글로벌 대표 추천의 접수·검토와 추천인·피추천인 연락</span></li>
+                <li><b>전달 방법<span class="sr-only">: </span></b><span>입력하신 내용은 홈페이지에 저장되지 않고, 외부 이메일 전송 서비스 FormSubmit(formsubmit.co, 서버가 국외에 있을 수 있음)을 거쳐 담당자 이메일로 전달됩니다. 전송이 원활하지 않으면 이용자의 메일 앱으로 직접 보내실 수 있습니다.</span></li>
+                <li><b>보유 기간<span class="sr-only">: </span></b><span>담당자 메일함에 보관하며 검토(회신) 완료 후 1년 이내에 삭제 (동의 철회 또는 피추천인의 삭제 요청 시 지체 없이 파기)</span></li>
+                <li class="is-note">동의를 거부하실 수 있으며, 이 경우 온라인 추천이 제한됩니다. 전화(1588-2716)로는 문의하실 수 있습니다.</li>
+              </ul>
+              <ul class="consent-list en">
+                <li><b>Items<span class="sr-only">: </span></b><span>(you) name, phone, email / (nominee) name, country, field, introduction and reason for nomination, phone or email (optional)</span></li>
+                <li><b>Purpose<span class="sr-only">: </span></b><span>to receive and review nominations and to contact you and the nominee</span></li>
+                <li><b>Delivery<span class="sr-only">: </span></b><span>your submission is not stored on this website. It is sent to our staff by email through a third-party email relay service, FormSubmit (formsubmit.co), whose servers may be located outside Korea. If online delivery fails, you can send it from your own email app instead.</span></li>
+                <li><b>Retention<span class="sr-only">: </span></b><span>kept in the staff mailbox and deleted within 1 year after the review is completed (deleted promptly upon withdrawal of consent or at the nominee’s request)</span></li>
+                <li class="is-note">You may decline; online nomination will then be unavailable, but you can still contact us at 1588-2716.</li>
+              </ul>
+              <details class="consent-more">
+                <summary><span class="ko">개인정보 수집·이용 안내 전문 보기 (필수)</span><span class="en">Read the full privacy notice (required)</span></summary>
+                <div class="consent-box is-full" role="region" aria-label="개인정보 수집·이용 안내" data-en-aria-label="Privacy notice">
+                  <div class="ko">
+                    · 수집 항목: (추천인) 이름, 연락처, 이메일 / (피추천인) 이름, 국가, 추천 분야, 소개 및 추천 사유, 연락처(선택)<br>
+                    · 수집 목적: 글로벌 대표 추천의 접수·검토와 추천인·피추천인 연락<br>
+                    · 피추천인 정보: 다른 사람의 개인정보를 적으실 때에는 미리 피추천인 본인에게 추천 사실을 알리고 정보 제공에 대한 동의를 받아야 합니다. 피추천인이 요청하면 정보를 받은 경로(추천인)와 이용 목적을 알려 드리며, 피추천인이 원하지 않으면 지체 없이 삭제합니다.<br>
+                    · 전달 방법: 입력하신 내용은 홈페이지에 저장되지 않고, 외부 이메일 전송 서비스 FormSubmit(formsubmit.co, 서버가 국외에 있을 수 있음)을 거쳐 담당자 이메일로 전달됩니다. 전송이 원활하지 않으면 이용자의 메일 앱으로 직접 보내실 수 있습니다.<br>
+                    · 보유 기간: 담당자 메일함에 보관하며 검토(회신) 완료 후 1년 이내에 삭제 (동의 철회 또는 피추천인의 삭제 요청 시 지체 없이 파기)<br>
+                    · 동의를 거부하실 수 있으며, 이 경우 온라인 추천이 제한됩니다. 전화(1588-2716)로는 문의하실 수 있습니다.
+                  </div>
+                  <div class="en">
+                    · Items: (you) name, phone, email / (nominee) name, country, field, introduction and reason for nomination, phone or email (optional)<br>
+                    · Purpose: to receive and review nominations and to contact you and the nominee<br>
+                    · About the nominee: before you share another person’s information, you must tell them about the nomination and obtain their permission. If the nominee asks, we will tell them where we received their information (you) and why we use it, and we will delete it promptly if they do not wish us to keep it.<br>
+                    · Delivery: your submission is not stored on this website. It is sent to our staff by email through a third-party email relay service, FormSubmit (formsubmit.co), whose servers may be located outside Korea. If online delivery fails, you can send it from your own email app instead.<br>
+                    · Retention: kept in the staff mailbox and deleted within 1 year after the review is completed (deleted promptly upon withdrawal of consent or at the nominee’s request)<br>
+                    · You may decline; online nomination will then be unavailable, but you can still contact us at 1588-2716.
+                  </div>
                 </div>
-                <div class="en">
-                  · Items: (you) name, phone, email / (nominee) name, country, field, introduction and reason for nomination, phone or email (optional)<br>
-                  · Purpose: to receive and review nominations and to contact you and the nominee<br>
-                  · About the nominee: before you share another person’s information, you must tell them about the nomination and obtain their permission. If the nominee asks, we will tell them where we received their information (you) and why we use it, and we will delete it promptly if they do not wish us to keep it.<br>
-                  · Delivery: your submission is not stored on this website. It is sent to our staff by email through a third-party email relay service, FormSubmit (formsubmit.co), whose servers may be located outside Korea. If online delivery fails, you can send it from your own email app instead.<br>
-                  · Retention: kept in the staff mailbox and deleted within 1 year after the review is completed (deleted promptly upon withdrawal of consent or at the nominee’s request)<br>
-                  · You may decline; online nomination will then be unavailable, but you can still contact us at 1588-2716.
-                </div>
-              </div>
+              </details>
               <label class="check"><input type="checkbox" name="consent" required data-label="개인정보 수집·이용 동의 (추천인·피추천인 정보)"> <span><span class="ko">위 내용을 확인했으며 개인정보 수집·이용에 동의합니다. (<a href="privacy.html">개인정보처리방침</a>)</span><span class="en">I have read the above and agree. (<a href="privacy.html">Privacy Policy</a>)</span></span></label>
               <label class="check"><input type="checkbox" name="nominee_consent" value="yes" required data-label="피추천인 본인 동의 확인" data-msg-ko="피추천인 본인의 동의를 받으셨는지 확인해 주세요." data-msg-en="Please confirm that the nominee has agreed to share their information."> <span><span class="ko">피추천인 본인에게 추천 사실을 알리고, 위 정보를 보내는 것에 대한 동의를 받았습니다.</span><span class="en">I have told the nominee about this nomination and they have agreed to share the information above.</span></span></label>
             </div>
@@ -521,10 +545,22 @@
             </div>
             <div class="hp-field" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
             <div class="field full">
-              <div class="consent-box" tabindex="0" role="region" aria-label="개인정보 수집·이용 안내" data-en-aria-label="Privacy notice">
-                <div class="ko">· 수집 항목: 이름(닉네임), 지역, 메시지<br>· 수집 목적: 응원 메시지 확인 및 홈페이지 게시<br>· 전달 방법: 입력하신 내용은 외부 이메일 전송 서비스 FormSubmit(formsubmit.co, 서버가 국외에 있을 수 있음)을 거쳐 담당자 이메일로 전달되며, 담당자가 확인한 메시지만 홈페이지에 게시됩니다.<br>· 게시 방법: 게시된 메시지(이름(닉네임)·지역·메시지)는 홈페이지 파일을 보관하는 공개 저장소(GitHub, Inc., 미국)에 저장되며, 이 저장소의 파일과 변경 이력은 누구나 볼 수 있습니다.<br>· 보유 기간: 접수 메일은 게시 여부 결정 후 1년 이내에 삭제, 게시된 메시지는 게시 철회 요청 시까지 (요청 시 홈페이지와 게시 파일에서 지체 없이 삭제하고, 변경 이력에 남은 이전 기록도 삭제 조치)<br>· 동의를 거부하실 수 있으며, 이 경우 응원 메시지를 남기실 수 없습니다.</div>
-                <div class="en">· Items: name (nickname), region, message<br>· Purpose: to review your message and post it on this website<br>· Delivery: your message is sent to our staff by email through a third-party email relay service, FormSubmit (formsubmit.co), whose servers may be located outside Korea. Only messages approved by our staff are posted.<br>· Publication: posted messages (name/nickname, region, message) are stored in the public repository that holds this website's files (GitHub, Inc., USA); those files and their change history can be viewed by anyone.<br>· Retention: the email we receive is deleted within 1 year after we decide whether to post it; a posted message is kept until you ask us to remove it (we then remove it promptly from the website and the data file, and also purge earlier copies from the change history)<br>· You may decline; you will then be unable to leave a message.</div>
-              </div>
+              <ul class="consent-list ko">
+                <li><b>수집 항목<span class="sr-only">: </span></b><span>이름(닉네임), 지역, 메시지</span></li>
+                <li><b>수집 목적<span class="sr-only">: </span></b><span>응원 메시지 확인 및 홈페이지 게시</span></li>
+                <li><b>전달 방법<span class="sr-only">: </span></b><span>입력하신 내용은 외부 이메일 전송 서비스 FormSubmit(formsubmit.co, 서버가 국외에 있을 수 있음)을 거쳐 담당자 이메일로 전달되며, 담당자가 확인한 메시지만 홈페이지에 게시됩니다.</span></li>
+                <li><b>게시 방법<span class="sr-only">: </span></b><span>게시된 메시지(이름(닉네임)·지역·메시지)는 홈페이지 파일을 보관하는 공개 저장소(GitHub, Inc., 미국)에 저장되며, 이 저장소의 파일과 변경 이력은 누구나 볼 수 있습니다.</span></li>
+                <li><b>보유 기간<span class="sr-only">: </span></b><span>접수 메일은 게시 여부 결정 후 1년 이내에 삭제, 게시된 메시지는 게시 철회 요청 시까지 (요청 시 홈페이지와 게시 파일에서 지체 없이 삭제하고, 변경 이력에 남은 이전 기록도 삭제 조치)</span></li>
+                <li class="is-note">동의를 거부하실 수 있으며, 이 경우 응원 메시지를 남기실 수 없습니다.</li>
+              </ul>
+              <ul class="consent-list en">
+                <li><b>Items<span class="sr-only">: </span></b><span>name (nickname), region, message</span></li>
+                <li><b>Purpose<span class="sr-only">: </span></b><span>to review your message and post it on this website</span></li>
+                <li><b>Delivery<span class="sr-only">: </span></b><span>your message is sent to our staff by email through a third-party email relay service, FormSubmit (formsubmit.co), whose servers may be located outside Korea. Only messages approved by our staff are posted.</span></li>
+                <li><b>Publication<span class="sr-only">: </span></b><span>posted messages (name/nickname, region, message) are stored in the public repository that holds this website's files (GitHub, Inc., USA); those files and their change history can be viewed by anyone.</span></li>
+                <li><b>Retention<span class="sr-only">: </span></b><span>the email we receive is deleted within 1 year after we decide whether to post it; a posted message is kept until you ask us to remove it (we then remove it promptly from the website and the data file, and also purge earlier copies from the change history)</span></li>
+                <li class="is-note">You may decline; you will then be unable to leave a message.</li>
+              </ul>
               <label class="check"><input type="checkbox" name="consent" required data-label="개인정보 수집·이용 및 홈페이지 게시 동의"> <span><span class="ko">위 내용을 확인했으며, 개인정보 수집·이용과 입력한 이름(닉네임)·지역·메시지가 홈페이지에 게시되는 것에 동의합니다. (<a href="privacy.html">개인정보처리방침</a>)</span><span class="en">I have read the above and agree to the collection and use of this information and to my name (nickname), region and message being published on this website. (<a href="privacy.html">Privacy Policy</a>)</span></span></label>
             </div>
             <div class="full"><button type="submit" class="btn btn-primary btn-block"><span class="ko">응원 보내기</span><span class="en">Send</span></button></div>
@@ -569,10 +605,10 @@
 </main>
 
 <div id="site-footer"></div>
-<script src="assets/js/config.js"></script>
-<script src="assets/js/data.js"></script>
-<script src="assets/js/main.js"></script>
-<script src="assets/js/forms.js"></script>
+<script src="assets/js/config.js?v=20261013"></script>
+<script src="assets/js/data.js?v=20261013"></script>
+<script src="assets/js/main.js?v=20261013"></script>
+<script src="assets/js/forms.js?v=20261013"></script>
 <script>
   // 참여하기 페이지: 하위 메뉴 현재 위치 강조 · 바로가기 위치 보정 · ?field= 로 분야 미리 선택
   (function () {
@@ -581,13 +617,13 @@
     var list = nav ? nav.querySelector("ul") : null;
     var links = nav ? Array.prototype.slice.call(nav.querySelectorAll("a")) : [];
     var targets = links.map(function (a) { return document.getElementById(a.getAttribute("href").slice(1)); });
-    var current = -2, ticking = false;
+    var current = -2, ticking = false, tabMode = false;
 
     // 현재 보이는 구역의 메뉴를 강조하고, 좁은 화면에서는 그 메뉴가 보이도록 가로 스크롤
     function update() {
       ticking = false;
-      var line = (nav ? nav.getBoundingClientRect().bottom : 0) + 40, cur = -1;
-      targets.forEach(function (el, i) { if (el && el.getBoundingClientRect().top <= line) cur = i; });
+      if (tabMode) return;   // 휴대폰 탭 모드에서는 고른 탭이 곧 현재 위치
+      var cur = WH.spyIndex(nav, targets);   // 기준선: 메뉴 아래 40px · 도착 자리(scroll-margin-top) 아래 (main.js)
       // 페이지 맨 끝에 닿으면 마지막 구역을 강조 (마지막 구역이 짧아 기준선에 닿지 못할 때)
       if (window.innerHeight + window.pageYOffset >= document.documentElement.scrollHeight - 4 && cur >= 0) cur = targets.length - 1;
       if (cur === current) return;
@@ -638,6 +674,102 @@
       Promise.all([fontsReady, pageLoaded]).then(function () {
         window.setTimeout(function () { if (!userMoved) hashTarget.scrollIntoView({ block: "start" }); }, 80);
       });
+    }
+
+    /* ---- 휴대폰(760px 이하): 메뉴를 3칸 탭으로, 신청서는 한 번에 하나만 (주소의 #declare · #nominate · #cheer 와 연동) ---- */
+    var TABS = ["declare", "nominate", "cheer"];
+    var mq = window.matchMedia ? window.matchMedia("(max-width: 760px)") : null;
+    var tabLinks = links.filter(function (a) { return TABS.indexOf(a.getAttribute("href").slice(1)) !== -1; });
+    var selected = "declare";
+    function hashTab() {
+      var h = (location.hash || "").slice(1);
+      return TABS.indexOf(h) !== -1 ? h : null;
+    }
+    function showTab(id) {
+      selected = id;
+      tabLinks.forEach(function (a) {
+        var on = a.getAttribute("href").slice(1) === id;
+        a.setAttribute("aria-selected", on ? "true" : "false");
+        a.setAttribute("tabindex", on ? "0" : "-1");
+        a.classList.toggle("is-active", on);
+        if (on) a.setAttribute("aria-current", "location"); else a.removeAttribute("aria-current");
+      });
+      TABS.forEach(function (t) { var sec = document.getElementById(t); if (sec) sec.hidden = t !== id; });
+    }
+    function setMode() {
+      var on = !!(mq && mq.matches);
+      if (on === tabMode) return;
+      tabMode = on;
+      nav.classList.toggle("is-tabs", on);
+      if (on) {
+        list.setAttribute("role", "tablist");
+        tabLinks.forEach(function (a) {
+          var id = a.getAttribute("href").slice(1);
+          a.setAttribute("role", "tab");
+          a.setAttribute("aria-controls", id);
+          a.id = a.id || "tab-" + id;
+          var sec = document.getElementById(id);
+          if (sec) { sec.setAttribute("role", "tabpanel"); sec.setAttribute("aria-labelledby", a.id); }
+        });
+        tabLinks.forEach(function (a) { a.parentNode.setAttribute("role", "presentation"); });
+        showTab(hashTab() || selected);
+      } else {
+        list.removeAttribute("role");
+        tabLinks.forEach(function (a) {
+          a.removeAttribute("role"); a.removeAttribute("aria-controls"); a.removeAttribute("aria-selected"); a.removeAttribute("tabindex");
+          a.parentNode.removeAttribute("role");
+          var sec = document.getElementById(a.getAttribute("href").slice(1));
+          if (sec) { sec.removeAttribute("role"); sec.removeAttribute("aria-labelledby"); sec.hidden = false; }
+        });
+        current = -2; update();
+      }
+    }
+    // 탭으로 바꾼 뒤, 신청서 머리가 고정 메뉴 바로 아래에 오도록 이동.
+    // 메뉴가 붙을 자리는 지금 위치가 아니라 이동한 뒤의 자리: 아래로 가면 헤더가 숨으므로(휴대폰 · '동작 줄이기'가 아닐 때) 맨 위(0),
+    // 위로 가면 헤더 바로 아래 → 헤더 상태(body.chrome-down)를 먼저 정하고 그 자리를 기준으로 계산
+    function revealPanel(id) {
+      var sec = document.getElementById(id);
+      if (!sec) return;
+      var header = document.querySelector(".site-header");
+      var headH = header ? header.offsetHeight : 0;
+      var navH = nav.offsetHeight;
+      var still = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var top = sec.getBoundingClientRect().top;
+      var downNow = document.body.classList.contains("chrome-down");
+      if (Math.abs(top - ((downNow ? 0 : headH) + navH)) <= 2) return;   // 이미 메뉴 바로 아래
+      var goingDown = top > (downNow ? 0 : headH) + navH + 2;
+      var hide = goingDown && !still && window.pageYOffset + top - navH >= 120;
+      if (hide !== downNow) document.body.classList.toggle("chrome-down", hide);
+      var stickTop = hide ? 0 : headH;
+      if (Math.abs(top - (stickTop + navH)) > 2) {
+        window.scrollTo({ top: Math.max(0, window.pageYOffset + top - (stickTop + navH)), behavior: "auto" });
+      }
+    }
+    if (mq && tabLinks.length) {
+      document.addEventListener("click", function (e) {
+        if (!tabMode) return;
+        var a = e.target.closest("a[href^='#']");
+        if (!a) return;
+        var id = a.getAttribute("href").slice(1);
+        if (TABS.indexOf(id) === -1) return;
+        e.preventDefault();
+        showTab(id);
+        if (history.replaceState) history.replaceState(null, "", "#" + id);
+        revealPanel(id);
+        if (a.closest(".join-subnav")) a.focus({ preventScroll: true });
+      });
+      list.addEventListener("keydown", function (e) {
+        if (!tabMode || (e.key !== "ArrowRight" && e.key !== "ArrowLeft" && e.key !== "Home" && e.key !== "End")) return;
+        var i = TABS.indexOf(selected);
+        i = e.key === "Home" ? 0 : e.key === "End" ? TABS.length - 1 : (i + (e.key === "ArrowRight" ? 1 : -1) + TABS.length) % TABS.length;
+        e.preventDefault();
+        showTab(TABS[i]);
+        if (history.replaceState) history.replaceState(null, "", "#" + TABS[i]);
+        tabLinks[i].focus();
+      });
+      window.addEventListener("hashchange", function () { var h = hashTab(); if (tabMode && h) { showTab(h); revealPanel(h); } });
+      if (mq.addEventListener) mq.addEventListener("change", setMode); else if (mq.addListener) mq.addListener(setMode);
+      setMode();
     }
 
     // ?field=5 (1~11) 로 들어오면 두 신청서의 분야를 미리 선택 (예: 글로벌 33 분야 카드에서 추천하기)

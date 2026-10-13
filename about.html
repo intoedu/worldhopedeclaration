@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>연대소개 | 세계희망연대</title>
+<title>연대소개 — 위원장 인사말·조직·오시는 길 | 세계희망연대</title>
 <meta name="description" content="세계희망선언위원회 위원장 인사말과 세계희망연대의 취지, 조직 구성(세계희망선언위원회·세계희망연대), 오시는 길과 연락처를 안내합니다.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="세계희망연대">
@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Serif:ital,wght@0,500;0,700;1,500&display=swap">
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/style.css?v=20261013">
 <script>(function(){try{var l=new URLSearchParams(location.search).get("lang")||localStorage.getItem("wh-lang");if(l==="en"){var h=document.documentElement;h.setAttribute("data-lang","en");h.lang="en";}}catch(e){}})();</script>
 <style>
   /* ===== 연대소개 페이지 전용 (공통 style.css 의 토큰만 사용) ===== */
@@ -33,7 +33,7 @@
   .about-subnav ul.has-more-left.has-more-right { -webkit-mask-image: linear-gradient(90deg, transparent, #000 44px, #000 calc(100% - 44px), transparent); mask-image: linear-gradient(90deg, transparent, #000 44px, #000 calc(100% - 44px), transparent); }
 
   /* ---------- 1. 인사말 ---------- */
-  .about-greeting { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 80px; align-items: start; max-width: 1080px; margin: 0 auto; }
+  .about-greeting { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 80px; align-items: start; max-width: 1080px; margin: 0; }
   .about-portrait { position: sticky; top: calc(var(--header-h) + 82px); margin: 0; }
   .about-portrait-frame { position: relative; overflow: hidden; isolation: isolate; display: grid; place-items: center; aspect-ratio: 4 / 5; border: 1px solid var(--line); border-radius: var(--radius-lg); background: linear-gradient(180deg, #e7eff8 0%, #f3f7fb 58%, #fbfdff 100%); box-shadow: 0 36px 70px -50px rgba(19, 41, 75, .45); }
   .about-portrait-frame::before { content: ""; position: absolute; z-index: -1; left: 50%; top: 18%; width: 150%; aspect-ratio: 1; transform: translateX(-50%); border-radius: 50%; background: radial-gradient(circle at 50% 22%, rgba(255, 233, 196, .7) 0%, rgba(255, 233, 196, 0) 34%); }
@@ -63,8 +63,7 @@
   /* ---------- 2. 취지 (새벽빛 지평선) ---------- */
   .about-purpose { position: relative; overflow: hidden; isolation: isolate; padding: var(--space-section) 0; background: linear-gradient(180deg, #edf3f9 0%, #f4f8fb 55%, #fbfdfe 100%); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   .about-purpose::before { content: ""; position: absolute; z-index: -1; left: 8%; top: -28%; width: 560px; height: 560px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 233, 196, .55) 0%, rgba(255, 233, 196, 0) 62%); pointer-events: none; }
-  .about-purpose::after { content: ""; position: absolute; z-index: -1; left: -30%; top: 66%; width: 160%; aspect-ratio: 1; border-radius: 50%; border-top: 1px solid rgba(43, 87, 151, .18); background: linear-gradient(180deg, rgba(229, 237, 248, .55), rgba(255, 255, 255, 0) 12%); pointer-events: none; }
-  .about-purpose-grid { display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, 1.5fr); gap: 80px; align-items: start; max-width: 1080px; margin: 0 auto; }
+  .about-purpose-grid { display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, 1.5fr); gap: 80px; align-items: start; max-width: 1080px; margin: 0; }
   .about-purpose-head .section-title { margin: 0; }
   .about-purpose-note { margin: 18px 0 26px; font-size: 16px; line-height: 1.8; color: var(--ink-2); }
   .about-purpose-text { position: relative; margin: 0; padding: 6px 0 0 44px; border-left: 1px solid var(--line-2); }
@@ -73,20 +72,20 @@
   html[data-lang="en"] .about-purpose-text p { font-family: var(--f-serif-en); font-size: 18px; line-height: 1.95; letter-spacing: 0; }
   .about-purpose-text .about-purpose-close { position: relative; margin: 30px 0 0; padding-top: 26px; border-top: 1px solid var(--line-2); font-weight: 600; color: var(--navy-900); }
   .about-purpose-text .purpose-lead { margin-bottom: 1.4em; font-size: 21px; font-weight: 700; line-height: 1.8; color: var(--navy-900); }
-  .about-purpose-text .purpose-lead strong, .about-purpose-text p strong { color: var(--gold-600); font-weight: 700; }
+  .about-purpose-text .purpose-lead strong, .about-purpose-text p strong { font-weight: 700; }
   .about-purpose-text .purpose-call { font-weight: 700; color: var(--navy-800); }
   .about-purpose-close::before { content: ""; position: absolute; left: 0; top: -1px; width: 44px; height: 1px; background: var(--gold-500); }
 
   /* ---------- 3. 조직 ---------- */
-  .about-org { display: grid; grid-template-columns: minmax(0, 1fr) 220px minmax(0, 1fr); align-items: center; max-width: 1180px; margin: 0 auto; }
+  .about-org { display: grid; grid-template-columns: minmax(0, 1fr) 220px minmax(0, 1fr); align-items: center; }
   .about-org-box { position: relative; display: flex; flex-direction: column; height: 100%; padding: 36px 36px 30px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 30px 60px -48px rgba(19, 41, 75, .4); }
   .about-org-box::before { content: ""; position: absolute; left: -1px; right: -1px; top: -1px; height: 2px; border-radius: var(--radius) var(--radius) 0 0; background: var(--navy-900); }
   .about-org-box.is-network::before { background: var(--blue-600); }
   .about-org-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 22px; }
   .about-org-tag { display: inline-flex; align-items: center; gap: 10px; font-family: var(--f-display); font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--gold-600); }
   .about-org-tag b { font-family: var(--f-serif); font-size: 13px; font-weight: 700; letter-spacing: .04em; color: var(--navy-900); padding-left: 10px; border-left: 1px solid var(--line-2); }
-  .about-org-icon { display: grid; place-items: center; width: 52px; height: 52px; flex-shrink: 0; border-radius: 50%; border: 1px solid var(--blue-200); background: var(--blue-50); color: var(--navy-800); }
-  .about-org-icon svg { width: 24px; height: 24px; stroke-width: 1.5; }
+  .about-org-icon { display: flex; flex-shrink: 0; color: var(--navy-700); }
+  .about-org-icon svg { width: 28px; height: 28px; stroke-width: 1.25; }
   .about-org-box h3 { margin: 0; font-family: var(--f-serif); font-size: clamp(23px, 2.1vw, 27px); font-weight: 700; letter-spacing: -0.025em; }
   html[data-lang="en"] .about-org-box h3 { font-family: var(--f-serif-en); letter-spacing: -0.01em; }
   .about-org-en { margin: 6px 0 0; font-family: var(--f-display); font-size: 12.5px; font-weight: 400; letter-spacing: .14em; text-transform: uppercase; color: var(--blue-700); line-height: 1.5; }
@@ -126,8 +125,8 @@
   /* ---------- 5. 연락처 ---------- */
   .about-contact { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; max-width: 1180px; margin: 0 auto; }
   .about-contact-card { display: flex; flex-direction: column; padding: 34px 32px 30px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); }
-  .about-contact-card .about-org-icon { margin-bottom: 22px; }
-  .about-contact-label { margin: 0 0 6px; font-family: var(--f-display); font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--blue-700); }
+  .about-contact-card .about-org-icon { margin-bottom: 20px; }
+  .about-contact-label { margin: 0 0 6px; font-family: var(--f-display); font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--gold-600); }
   .about-contact-card h3 { margin: 0 0 10px; font-size: 21px; }
   .about-contact-card p { margin: 0; font-size: 15.5px; line-height: 1.75; color: var(--ink-2); }
   .about-contact-card .btn { margin-top: auto; align-self: flex-start; }
@@ -141,12 +140,12 @@
   .about-contact-addr { display: flex; gap: 10px; align-items: flex-start; margin-top: auto; padding-top: 18px; border-top: 1px solid rgba(255, 255, 255, .14); font-size: 14.5px; color: #c9d6ea; line-height: 1.6; }
   .about-contact-addr [data-icon] { display: inline-flex; flex-shrink: 0; margin-top: 2px; color: var(--gold-300); }
   .about-contact-addr svg { width: 17px; height: 17px; }
-  .about-contact-addr a { color: #fff; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(255, 255, 255, .4); }
+  .about-contact-addr a { display: inline-flex; align-items: center; min-height: 44px; color: #fff; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(255, 255, 255, .4); }
   .about-contact-addr a:hover { text-decoration-color: #fff; }
   .about-contact-card.is-navy h3 { color: #fff; }
   .about-contact-card.is-navy p { color: #b9c8de; }
-  .about-contact-card.is-navy .about-org-icon { border-color: rgba(255, 255, 255, .22); background: rgba(255, 255, 255, .06); color: #fff; }
-  .about-phone { display: inline-block; margin: 2px 0 10px; font-family: var(--f-serif-en); font-size: clamp(32px, 3vw, 38px); font-weight: 700; line-height: 1.2; letter-spacing: .01em; color: #fff; font-variant-numeric: tabular-nums; }
+  .about-contact-card.is-navy .about-org-icon { color: var(--gold-300); }
+  .about-phone { display: inline-flex; align-items: center; min-height: 44px; margin: 2px 0 10px; font-family: var(--f-serif-en); font-size: clamp(32px, 3vw, 38px); font-weight: 700; line-height: 1.2; letter-spacing: .01em; color: #fff; font-variant-numeric: tabular-nums; }
   .about-phone:hover { text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px; }
   .about-contact-extra { max-width: 1180px; margin: 22px auto 0; text-align: center; font-size: 15px; color: var(--ink-2); }
   .about-contact-extra b { color: var(--navy-900); font-weight: 600; margin-right: 6px; }
@@ -184,7 +183,7 @@
     .about-org-cap { margin-top: 12px; }
     .about-org-seal { width: 92px; height: 92px; }
     .about-org-seal img { width: 60px; height: 60px; }
-    .about-org-cap small { font-size: 10.5px; }
+    .about-org-cap small { font-size: 11px; }
   }
   @media (max-width: 760px) {
     .about-letter-q { font-size: 23px; }
@@ -205,13 +204,14 @@
     .about-contact { grid-template-columns: 1fr; gap: 16px; }
     .about-contact-card { padding: 28px 24px 26px; }
     .about-contact-card .btn { align-self: stretch; }
-    .map-links .btn { flex: 1 1 auto; }
     .about-contact-extra span { display: block; }
     .about-contact-extra span + span::before { display: none; }
+    /* 휴대폰: 따로 서 있는 링크는 누르기 쉬운 높이(44px) */
+    .about-contact-card .about-contact-more a, .about-contact-extra a { display: inline-flex; align-items: center; min-height: 44px; }
   }
 </style>
 </head>
-<body data-page="about" data-title-en="About | World Hope Declaration Network">
+<body data-page="about" data-title-en="About — Chairman’s Message, Organization, Location | World Hope Declaration Network">
 <div id="site-header"></div>
 
 <main id="main">
@@ -239,7 +239,7 @@
   <!-- ===== 1. 위원장 인사말 (한국어 원문 그대로) ===== -->
   <section class="section about-anchor" id="greeting" aria-labelledby="greeting-title">
     <div class="container">
-      <div class="section-head center reveal">
+      <div class="section-head split reveal">
         <h2 class="section-title" id="greeting-title"><span class="ko">위원장 인사말</span><span class="en">Chairman’s Greeting</span></h2>
         <p class="section-sub">Greeting</p>
       </div>
@@ -295,24 +295,24 @@
           <a class="link-arrow" href="vision.html"><span class="ko">비전과 미션 보기</span><span class="en">See our Vision &amp; Mission</span></a>
         </div>
         <blockquote class="about-purpose-text reveal">
-          <p class="purpose-lead ko reveal">큰 틀에서는 <strong>[인간의 영성회복을 위한 대장정]</strong>이 시작되는 것입니다.</p>
-          <p class="purpose-lead en reveal">In the broadest sense, what begins here is <strong>[a great journey to restore the spirituality of humankind]</strong>.</p>
-          <p class="ko reveal">언제인가부터 우리 인간은 엄청난 속도의 연산(계산)에 의해 생성되는 지식구조를 삶에 적용하며 빠르게 성장해 왔습니다.</p>
-          <p class="en reveal">At some point, we humans began applying to our lives the structures of knowledge produced by calculation at tremendous speed, and we have grown rapidly.</p>
-          <p class="ko reveal">인간의 머리를 본떠서 고안한 컴퓨터에서 오늘날의 슈퍼급 AI에 이르기까지 동일하게 사용되는 두 가지 언어(0과 1, 활성과 비활성)를 아십니까? 이중성, 상대성이 만드는 지식개념... 이것을 삶의 언어로 표현해서 “선악적 지식(Knowledge of good and evil)”이라고 말합니다. 그 선악적 지식개념을 머리에 장착하고 사는 사람들은 그 지식으로 인해 지금과 같은 유토피아도 만들었지만, 다툼과 반목과 이기로 가득한 전쟁터로 만든 현실도 부정할 수는 없습니다.</p>
-          <p class="en reveal">Do you know the two languages — 0 and 1, on and off — used alike from the computer, designed after the human mind, to today’s super-scale AI? A concept of knowledge made by duality and relativity… Put in the language of life, we call it “the knowledge of good and evil.” People who live with that concept of the knowledge of good and evil installed in their minds have used it to build a utopia like the one we have today — yet no one can deny that they have also turned the world into a battlefield full of strife, hostility and selfishness.</p>
-          <p class="ko reveal">그런 이중성에 종속되어 누군가에게 지배되어 존재하면서도 그것도 자유라고 활개치고 사는 사람들... 그리고 누군가는 이 시스템에 눌려 신음하고 있는 현실 이야기들... 인정하십니까?</p>
-          <p class="en reveal">People who live in subjection to that duality, ruled by someone, and yet strut about calling it freedom… and the real stories of others who groan, crushed under this system… Do you acknowledge them?</p>
-          <p class="purpose-call ko reveal">이제 분열은 더 이상 그만! 이제 이 땅에 하나의 희망을 선포합시다.</p>
-          <p class="purpose-call en reveal">Enough division! Now let us proclaim one hope over this land.</p>
-          <p class="ko reveal">둘의 세계로는 답이 없습니다. 우리는 인류의 희망 대안으로 수평논리를 제안합니다. 이것은 자연의 법칙입니다. 물이 기어이 낮은 곳으로 내려와 평평한 바다를 이루듯... 그리고 모든 것은 중심을 두고 돌아갑니다. 태양을 중심으로 우리의 우주가 돌고, 작은 꽃 하나도 중심에서부터 피어나듯... 그 중심이 공의이며 기준이요 질서인 것을 누가 모른다고 부인할 것입니까? 공의가 잔잔하게 이루어지면 평화는 자연적으로 오고 평화가 이루어지면 화합은 당연히 이루어지는 순리를 누가 부정할 것입니까?</p>
-          <p class="en reveal">A world of two holds no answer. As humanity’s alternative of hope, we propose horizontal logic. This is the law of nature — just as water at last flows down to the lowest places and forms a level sea… And everything turns around a center. Just as our world turns around the sun, and even a small flower blooms from its center… Who would deny knowing that this center is righteousness, the standard and the order? Who would deny the natural course in which, when righteousness is quietly established, peace comes of itself, and when peace is established, harmony surely follows?</p>
-          <p class="ko reveal">이 세 요소가 합하여진 것이 <strong>[본질적인 사랑의 속성]</strong>이라는 것을 누가 모른다고 하겠습니까?</p>
-          <p class="en reveal">Who would say they do not know that these three, joined together, are <strong>[the essential nature of love]</strong>?</p>
-          <p class="ko reveal">이미 우리는 다 알고 있습니다. 다만, 두 가지 상반된 개념이 그동안 우리의 생각을 마비시켰고, 내적 시야를 막아 놓고 있었던 것입니다.</p>
-          <p class="en reveal">We already know all this. It is only that two opposing concepts have long paralyzed our thinking and blocked our inner sight.</p>
-          <p class="about-purpose-close ko reveal">우리에겐 용기가 필요합니다. 6,000년간 사람의 두뇌를 길들여 온 상대성 지식체계가, 안주하던 세상의 품을 떠나지 않으려 할 수도 있습니다. 그러나 그것은 진짜 인류의 희망이 무엇인지를 아직 모르기 때문입니다.</p>
-          <p class="about-purpose-close en reveal">We need courage. The relative system of knowledge that has tamed the human mind for 6,000 years may refuse to leave the embrace of the world it has grown comfortable in. But that is only because it does not yet know what humanity’s true hope is.</p>
+          <p class="purpose-lead ko">큰 틀에서는 <strong>[인간의 영성회복을 위한 대장정]</strong>이 시작되는 것입니다.</p>
+          <p class="purpose-lead en">In the broadest sense, what begins here is <strong>[a great journey to restore the spirituality of humankind]</strong>.</p>
+          <p class="ko">언제인가부터 우리 인간은 엄청난 속도의 연산(계산)에 의해 생성되는 지식구조를 삶에 적용하며 빠르게 성장해 왔습니다.</p>
+          <p class="en">At some point, we humans began applying to our lives the structures of knowledge produced by calculation at tremendous speed, and we have grown rapidly.</p>
+          <p class="ko">인간의 머리를 본떠서 고안한 컴퓨터에서 오늘날의 슈퍼급 AI에 이르기까지 동일하게 사용되는 두 가지 언어(0과 1, 활성과 비활성)를 아십니까? 이중성, 상대성이 만드는 지식개념... 이것을 삶의 언어로 표현해서 “선악적 지식(Knowledge of good and evil)”이라고 말합니다. 그 선악적 지식개념을 머리에 장착하고 사는 사람들은 그 지식으로 인해 지금과 같은 유토피아도 만들었지만, 다툼과 반목과 이기로 가득한 전쟁터로 만든 현실도 부정할 수는 없습니다.</p>
+          <p class="en">Do you know the two languages — 0 and 1, on and off — used alike from the computer, designed after the human mind, to today’s super-scale AI? A concept of knowledge made by duality and relativity… Put in the language of life, we call it “the knowledge of good and evil.” People who live with that concept of the knowledge of good and evil installed in their minds have used it to build a utopia like the one we have today — yet no one can deny that they have also turned the world into a battlefield full of strife, hostility and selfishness.</p>
+          <p class="ko">그런 이중성에 종속되어 누군가에게 지배되어 존재하면서도 그것도 자유라고 활개치고 사는 사람들... 그리고 누군가는 이 시스템에 눌려 신음하고 있는 현실 이야기들... 인정하십니까?</p>
+          <p class="en">People who live in subjection to that duality, ruled by someone, and yet strut about calling it freedom… and the real stories of others who groan, crushed under this system… Do you acknowledge them?</p>
+          <p class="purpose-call ko">이제 분열은 더 이상 그만! 이제 이 땅에 하나의 희망을 선포합시다.</p>
+          <p class="purpose-call en">Enough division! Now let us proclaim one hope over this land.</p>
+          <p class="ko">둘의 세계로는 답이 없습니다. 우리는 인류의 희망 대안으로 수평논리를 제안합니다. 이것은 자연의 법칙입니다. 물이 기어이 낮은 곳으로 내려와 평평한 바다를 이루듯... 그리고 모든 것은 중심을 두고 돌아갑니다. 태양을 중심으로 우리의 우주가 돌고, 작은 꽃 하나도 중심에서부터 피어나듯... 그 중심이 공의이며 기준이요 질서인 것을 누가 모른다고 부인할 것입니까? 공의가 잔잔하게 이루어지면 평화는 자연적으로 오고 평화가 이루어지면 화합은 당연히 이루어지는 순리를 누가 부정할 것입니까?</p>
+          <p class="en">A world of two holds no answer. As humanity’s alternative of hope, we propose horizontal logic. This is the law of nature — just as water at last flows down to the lowest places and forms a level sea… And everything turns around a center. Just as our world turns around the sun, and even a small flower blooms from its center… Who would deny knowing that this center is righteousness, the standard and the order? Who would deny the natural course in which, when righteousness is quietly established, peace comes of itself, and when peace is established, harmony surely follows?</p>
+          <p class="ko">이 세 요소가 합하여진 것이 <strong>[본질적인 사랑의 속성]</strong>이라는 것을 누가 모른다고 하겠습니까?</p>
+          <p class="en">Who would say they do not know that these three, joined together, are <strong>[the essential nature of love]</strong>?</p>
+          <p class="ko">이미 우리는 다 알고 있습니다. 다만, 두 가지 상반된 개념이 그동안 우리의 생각을 마비시켰고, 내적 시야를 막아 놓고 있었던 것입니다.</p>
+          <p class="en">We already know all this. It is only that two opposing concepts have long paralyzed our thinking and blocked our inner sight.</p>
+          <p class="about-purpose-close ko">우리에겐 용기가 필요합니다. 6,000년간 사람의 두뇌를 길들여 온 상대성 지식체계가, 안주하던 세상의 품을 떠나지 않으려 할 수도 있습니다. 그러나 그것은 진짜 인류의 희망이 무엇인지를 아직 모르기 때문입니다.</p>
+          <p class="about-purpose-close en">We need courage. The relative system of knowledge that has tamed the human mind for 6,000 years may refuse to leave the embrace of the world it has grown comfortable in. But that is only because it does not yet know what humanity’s true hope is.</p>
         </blockquote>
       </div>
     </div>
@@ -321,7 +321,7 @@
   <!-- ===== 3. 조직 ===== -->
   <section class="section about-anchor" id="organization" aria-labelledby="org-title">
     <div class="container">
-      <div class="section-head center reveal">
+      <div class="section-head reveal">
         <h2 class="section-title" id="org-title"><span class="ko">선언하는 위원회, 실천하는 연대</span><span class="en">A Council that Declares, a Network that Acts</span></h2>
         <p class="section-sub">Organization</p>
         <p class="section-lead"><span class="ko">세계희망선언위원회와 세계희망연대가 함께 희망의 선교행진을 이끌어 갑니다.</span><span class="en">The World Hope Declaration Council and the World Hope Declaration Network lead the mission march of hope together.</span></p>
@@ -358,7 +358,7 @@
           <div class="about-org-seal"><img src="assets/img/brand/logo-mark-160.png" alt="" width="78" height="78" loading="lazy"></div>
           <p class="about-org-cap">
             <b><span class="ko">세계희망선언</span><span class="en">World Hope Declaration</span><sup>™</sup></b>
-            <small><span class="ko">WORLD HOPE DECLARATION™</span><span class="en" lang="ko">세계희망선언™</span></small>
+            <small><span class="ko">WORLD HOPE DECLARATION</span><span class="en" lang="ko">세계희망선언</span></small>
             <span><span class="ko">선언에서 실천으로</span><span class="en">From declaration to practice</span></span>
           </p>
           <span class="about-org-line is-end" aria-hidden="true"></span>
@@ -385,7 +385,7 @@
             <dl class="about-org-lead"><dt><span class="ko">대표</span><span class="en">Representative</span></dt><dd><span class="ko">원치현</span><span class="en">Chi-hyun Won</span></dd></dl>
             <div class="about-org-links">
               <a class="link-arrow" href="vision.html#ministries"><span class="ko">다섯 갈래의 사역</span><span class="en">Five ministries</span></a>
-              <a class="link-arrow" href="join.html"><span class="ko">참여하기</span><span class="en">Join</span></a>
+              <a class="link-arrow" href="join.html#declare"><span class="ko">참여하기</span><span class="en">Join</span></a>
             </div>
           </div>
         </article>
@@ -396,7 +396,7 @@
   <!-- ===== 4. 오시는 길 ===== -->
   <section class="section section-alt about-anchor" id="location" aria-labelledby="location-title">
     <div class="container">
-      <div class="section-head center reveal">
+      <div class="section-head reveal">
         <h2 class="section-title" id="location-title"><span class="ko">오시는 길</span><span class="en">How to Find Us</span></h2>
         <p class="section-sub">Location</p>
       </div>
@@ -415,8 +415,8 @@
             <div><small><span class="ko">전국대표전화</span><span class="en">Main line</span></small><a href="tel:15882716"><b>1588-2716</b></a></div>
           </div>
           <div class="map-links">
-            <a class="btn btn-outline btn-sm" href="https://map.naver.com/p/search/%EC%84%B8%EC%A2%85%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EC%8B%9C%20%EB%B3%B4%EB%9E%8C%EB%8F%99%20732" target="_blank" rel="noopener"><span class="ko">네이버 지도</span><span class="en">Naver Map</span><span class="sr-only"><span class="ko"> (새 창)</span><span class="en"> (opens in a new tab)</span></span></a>
-            <a class="btn btn-outline btn-sm" href="https://map.kakao.com/?q=%EC%84%B8%EC%A2%85%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EC%8B%9C%20%EB%B3%B4%EB%9E%8C%EB%8F%99%20732" target="_blank" rel="noopener"><span class="ko">카카오맵</span><span class="en">Kakao Map</span><span class="sr-only"><span class="ko"> (새 창)</span><span class="en"> (opens in a new tab)</span></span></a>
+            <a class="btn btn-outline btn-sm" href="https://map.naver.com/p/search/%EC%84%B8%EC%A2%85%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EC%8B%9C%20%EB%B3%B4%EB%9E%8C%EB%8F%99%20732" target="_blank" rel="noopener"><span data-icon="pin"></span><span class="ko">네이버 지도</span><span class="en">Naver Map</span><span class="sr-only"><span class="ko"> (새 창)</span><span class="en"> (opens in a new tab)</span></span></a>
+            <a class="btn btn-outline btn-sm" href="https://map.kakao.com/?q=%EC%84%B8%EC%A2%85%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EC%8B%9C%20%EB%B3%B4%EB%9E%8C%EB%8F%99%20732" target="_blank" rel="noopener"><span data-icon="pin"></span><span class="ko">카카오맵</span><span class="en">Kakao Map</span><span class="sr-only"><span class="ko"> (새 창)</span><span class="en"> (opens in a new tab)</span></span></a>
             <button type="button" class="btn btn-outline btn-sm ko" data-copy="세종특별자치시 보람동 732"><span class="about-copy" data-icon="copy"></span>주소 복사</button>
             <button type="button" class="btn btn-outline btn-sm en" data-copy="732 Boram-dong, Sejong-si, Republic of Korea"><span class="about-copy" data-icon="copy"></span>Copy address</button>
           </div>
@@ -457,7 +457,7 @@
           <p class="about-contact-label">Join Us</p>
           <h3><span class="ko">선언에 참여하기</span><span class="en">Join the Declaration</span></h3>
           <p><span class="ko">세계희망선언에 함께하고, 희망 응원 메시지로 희망의 선교행진에 마음을 더해 주세요.</span><span class="en">Join the World Hope Declaration and add your voice to the mission march of hope with a message of hope.</span></p>
-          <a class="btn btn-outline" href="join.html"><span class="ko">참여하기</span><span class="en">Join</span><span data-icon="arrow-right"></span></a>
+          <a class="btn btn-outline" href="join.html#declare"><span class="ko">선언에 참여하기</span><span class="en">Join the Declaration</span><span data-icon="arrow-right"></span></a>
         </div>
       </div>
       <!-- 공개 이메일·운영시간: config.js 의 publicEmail / businessHours 가 입력되면 자동 표시 -->
@@ -467,9 +467,9 @@
 </main>
 
 <div id="site-footer"></div>
-<script src="assets/js/config.js"></script>
-<script src="assets/js/data.js"></script>
-<script src="assets/js/main.js"></script>
+<script src="assets/js/config.js?v=20261013"></script>
+<script src="assets/js/data.js?v=20261013"></script>
+<script src="assets/js/main.js?v=20261013"></script>
 <script>
   // 연대소개: 하위 메뉴 현재 구역 강조 + 공개 연락처(설정값) 표시
   (function () {
@@ -494,10 +494,8 @@
 
       var update = function () {
         ticking = false;
-        // 고정 헤더 + 하위 메뉴 바로 아래를 기준선으로 사용
-        var line = nav.getBoundingClientRect().bottom + 40;
-        var idx = -1;
-        secs.forEach(function (s, i) { if (s && s.getBoundingClientRect().top <= line) idx = i; });
+        // 기준선: 고정 메뉴 아래 40px · 도착 자리(scroll-margin-top) 아래 (main.js)
+        var idx = WH.spyIndex(nav, secs);
         // 페이지 맨 아래에 닿으면 마지막 구역(연락처)을 강조
         var doc = document.documentElement;
         if (idx >= 0 && window.innerHeight + window.scrollY >= doc.scrollHeight - 4) idx = links.length - 1;

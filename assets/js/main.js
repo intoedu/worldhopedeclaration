@@ -185,6 +185,8 @@
     heart: '<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/>',
     hands: '<path d="M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16"/><path d="m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.8-2.9l-4.2 3.9"/><path d="m2 15 6 6"/>',
     message: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/>',
+    // 사람 + 더하기: 참여자 수 (연대 가치의 hands 와 겹치지 않게 · 다른 사람 아이콘과 같은 크기로 그림)
+    "person-plus": '<circle cx="9.4" cy="7.7" r="3.9"/><path d="M2 21v-1.5a6.6 6.6 0 0 1 6.6-6.6h1.6a6.6 6.6 0 0 1 6.6 6.6V21"/><path d="M19.3 6.6v7M15.8 10.1h7"/>',
     users: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/>',
     group: '<circle cx="12" cy="8.1" r="3.3"/><path d="M5.6 21v-3a6.4 6.4 0 0 1 12.8 0v3z"/><path d="M6.1 7.9a2.3 2.3 0 1 0 0 3.6M17.9 7.9a2.3 2.3 0 1 1 0 3.6"/><path d="M5.6 21H1.3v-2.4c0-2.8 2-5 4.8-5.4M18.4 21h4.3v-2.4c0-2.8-2-5-4.8-5.4"/>',
     people: '<circle cx="12" cy="7.5" r="3"/><circle cx="5" cy="9.5" r="2.2"/><circle cx="19" cy="9.5" r="2.2"/><path d="M6.5 20v-1.5a5.5 5.5 0 0 1 11 0V20"/><path d="M1.5 19.5v-.8A3.3 3.3 0 0 1 6 15.6M22.5 19.5v-.8a3.3 3.3 0 0 0-4.5-3.1"/>',
@@ -258,17 +260,60 @@
   }
   WH.fillIcons = fillIcons;
 
+  /* ---------------- 후원 준비 상태 ----------------
+     계좌(config.bank.account) 또는 온라인 결제(config.portone.storeId + channelKey)가 있어야 '준비됨' (donate.js 와 같은 기준).
+     [data-giving-ready] 는 준비됐을 때만, [data-giving-pending] 은 준비 전에만 보임 (모든 페이지 · init 에서 적용) */
+  var GIVING_READY = !!((C.bank || {}).account || ((C.portone || {}).storeId && (C.portone || {}).channelKey));
+  WH.givingReady = GIVING_READY;
+  function applyGiving() {
+    document.querySelectorAll("[data-giving-ready]").forEach(function (el) { el.hidden = !GIVING_READY; });
+    document.querySelectorAll("[data-giving-pending]").forEach(function (el) { el.hidden = GIVING_READY; });
+  }
+
   /* ---------------- 메뉴 정의 ---------------- */
-  // 주 메뉴 (데스크톱 가로 메뉴 · 모바일 전체 메뉴)
+  // 주 메뉴 (데스크톱 가로 메뉴 · 모바일 전체 메뉴). 8개 항목과 순서는 시안 그대로
+  // sub: 데스크톱 하위 메뉴 판과 푸터 사이트맵에 쓰는 하위 메뉴 (각 페이지의 구역 id 로 바로 이동)
+  //      cls: "js-gallery-link" → 갤러리에 실제 사진이 있을 때만 보임 (html[data-gallery-ready])
   var NAV = [
     { id: "home", href: "index.html", ko: "홈", en: "Home", cap: "Home" },
-    { id: "declaration", href: "declaration.html", ko: "세계희망선언", en: "Declaration", cap: "Declaration" },
-    { id: "vision", href: "vision.html", ko: "비전과 미션", en: "Vision & Mission", cap: "Vision" },
-    { id: "global33", href: "global33.html", ko: "글로벌 33", en: "Global 33", cap: "Global 33" },
-    { id: "worldmap", href: "worldmap.html", ko: "세계지도", en: "World Map", cap: "World Map" },
-    { id: "news", href: "news.html", ko: "소식", en: "News", cap: "News" },
-    { id: "join", href: "join.html", ko: "참여하기", en: "Join", cap: "Join Us" },
-    { id: "about", href: "about.html", ko: "연대소개", en: "About", cap: "About" }
+    { id: "declaration", href: "declaration.html", ko: "세계희망선언", en: "Declaration", cap: "Declaration", sub: [
+      { href: "declaration.html#principles", ko: "선언문·5대 원칙", en: "Declaration & Principles" },
+      { href: "declaration.html#values", ko: "5대 가치", en: "Five Values" },
+      { href: "declaration.html#together", ko: "공동의 선언", en: "Declare Together" }
+    ] },
+    { id: "vision", href: "vision.html", ko: "비전과 미션", en: "Vision & Mission", cap: "Vision", sub: [
+      { href: "vision.html#vision", ko: "비전", en: "Vision" },
+      { href: "vision.html#purpose", ko: "취지문", en: "Statement of Purpose" },
+      { href: "vision.html#mission", ko: "미션", en: "Mission" },
+      { href: "vision.html#ministries", ko: "다섯 갈래의 사역", en: "Five Ministries" }
+    ] },
+    { id: "global33", href: "global33.html", ko: "글로벌 33", en: "Global 33", cap: "Global 33", sub: [
+      { href: "global33.html#fields", ko: "11개 분야", en: "11 Fields" },
+      { href: "global33.html#structure", ko: "글로벌 확장 구조", en: "Global Structure" },
+      { href: "global33.html#plaque", ko: "글로벌 대표 패", en: "Representative Plaque" },
+      { href: "korea33.html", ko: "대한민국 대표 33인 추천", en: "Nominate Korea’s 33" }
+    ] },
+    { id: "worldmap", href: "worldmap.html", ko: "세계지도", en: "World Map", cap: "World Map", sub: [
+      { href: "worldmap.html", ko: "세계지도 보기", en: "Explore the Map" }
+    ] },
+    { id: "news", href: "news.html", ko: "소식", en: "News", cap: "News", sub: [
+      { href: "news.html", ko: "공지·소식", en: "News & Notices" },
+      { href: "gallery.html", ko: "갤러리", en: "Gallery", cls: "js-gallery-link" }
+    ] },
+    { id: "join", href: "join.html", ko: "참여하기", en: "Join", cap: "Join Us", sub: [
+      { href: "join.html#declare", ko: "선언 참여 신청", en: "Join the Declaration" },
+      { href: "join.html#nominate", ko: "글로벌 대표 추천", en: "Nominate a Global Representative" },
+      { href: "join.html#cheer", ko: "희망 응원 메시지", en: "Messages of Hope" },
+      { href: "donate.html", ko: "후원·헌금", en: "Give" },
+      { href: "contact.html", ko: "문의하기", en: "Contact" }
+    ] },
+    { id: "about", href: "about.html", ko: "연대소개", en: "About", cap: "About", sub: [
+      { href: "about.html#greeting", ko: "위원장 인사말", en: "Chairman’s Greeting" },
+      { href: "about.html#purpose", ko: "취지", en: "Purpose" },
+      { href: "about.html#organization", ko: "조직", en: "Organization" },
+      { href: "about.html#location", ko: "오시는 길", en: "Location" },
+      { href: "faq.html", ko: "자주 묻는 질문", en: "FAQ" }
+    ] }
   ];
   // 메뉴에 없는 페이지 → 어느 메뉴를 강조할지 (body[data-nav] 가 있으면 그것을 우선)
   var NAV_ALIAS = {
@@ -287,20 +332,30 @@
     { id: "worldmap", href: "worldmap.html", icon: "world", ko: "세계지도", en: "World Map" },
     { id: "join", href: "join.html", icon: "sprout", ko: "참여하기", en: "Join" }
   ];
-  // 모바일 전체 메뉴 아래쪽 바로가기
+  // 모바일 전체 메뉴 아래쪽 바로가기 (2칸 × 3줄). '이 페이지 QR' 은 맨 아래 줄의 아이콘 버튼으로
+  // 갤러리는 맨 끝: 숨겨지면 남은 5칸 중 마지막 칸이 한 줄 전체를 차지 (CSS)
   var MORE = [
-    { id: "korea33", href: "korea33.html", icon: "group", ko: "대한민국 대표 33인 추천", en: "Nominate Korea’s 33" },
+    { id: "korea33", href: "korea33.html", icon: "group", ko: "대표 33인 추천", en: "Nominate Korea 33" },
     { id: "donate", href: "donate.html", icon: "heart", ko: "후원·헌금", en: "Give" },
     { id: "contact", href: "contact.html", icon: "mail", ko: "문의하기", en: "Contact" },
     { id: "faq", href: "faq.html", icon: "message", ko: "자주 묻는 질문", en: "FAQ" },
-    { id: "gallery", href: "gallery.html", icon: "image", ko: "갤러리", en: "Gallery" },
-    { id: "qr", href: "qr.html", icon: "qr", ko: "QR코드 만들기", en: "QR Maker" }
+    { id: "qr", href: "qr.html", icon: "qr", ko: "QR코드 만들기", en: "QR Maker" },
+    { id: "gallery", href: "gallery.html", icon: "image", ko: "갤러리", en: "Gallery", cls: "js-gallery-link" }
   ];
   WH.nav = NAV;
+  function navById(id) {
+    for (var i = 0; i < NAV.length; i++) if (NAV[i].id === id) return NAV[i];
+    return null;
+  }
 
   function bi(ko, en) { return '<span class="ko">' + ko + '</span><span class="en">' + en + "</span>"; }
   WH.bi = bi;
   function telHref() { return "tel:" + String(C.phone || "").replace(/[^0-9+]/g, ""); }
+  /* 하위 메뉴 한 줄 (데스크톱 하위 메뉴 판 · 푸터 사이트맵 공용) */
+  // 가운뎃점 앞에서는 줄을 바꾸지 않음(U+2060, 보이지 않는 글자) → 좁은 하위 목록에서 '선언문·' / '5대 원칙' 으로 나뉨
+  function subItem(s) {
+    return "<li" + (s.cls ? ' class="' + s.cls + '"' : "") + '><a href="' + ROOT + s.href + '">' + bi(WH.esc(s.ko).replace(/·/g, "\u2060·"), WH.esc(s.en)) + "</a></li>";
+  }
   function pageId() { return (document.body && document.body.getAttribute("data-page")) || ""; }
   function navId() {
     var b = document.body;
@@ -321,7 +376,7 @@
     var name = C.name || {};
     return '<a class="brand" href="' + ROOT + 'index.html" aria-label="' + WH.esc((name.ko || "") + " 홈") + '" data-en-aria-label="' + WH.esc((name.en || "") + " — Home") + '">' +
       logoImg(72) +
-      '<span class="brand-text" aria-hidden="true"><strong>' + WH.esc(name.ko || "") + "</strong><small>" + WH.esc(name.en || "") + "<sup>™</sup></small></span></a>";
+      '<span class="brand-text" aria-hidden="true"><strong>' + WH.esc(name.ko || "") + "</strong><small>" + WH.esc(name.en || "") + "</small></span></a>";
   }
   function langButtons() {
     return '<button type="button" data-set-lang="ko" aria-pressed="false" lang="ko" aria-label="한국어">KOR</button>' +
@@ -335,21 +390,27 @@
 
     // <base> 가 있는 페이지(404)에서는 "#main" 이 사이트 최상위 기준이 되므로 현재 주소를 붙임
     var skipHref = document.querySelector("base[href]") ? location.pathname + location.search + "#main" : "#main";
-    mount.innerHTML =
-      '<a class="skip-link" href="' + WH.esc(skipHref) + '">' + bi("본문 바로가기", "Skip to content") + "</a>" +
-      (C.draftBar ? '<div class="draft-bar">' + bi("<b>시안 미리보기</b> · 사진과 일부 문구는 단체 자료를 받은 뒤 교체됩니다.", "<b>Draft preview</b> · Photos and some text will be replaced with final materials.") + "</div>" : "");
 
+    // 주 메뉴: 항목마다 하위 목록(.gnb-sub)을 함께 넣음 → 데스크톱에서 하위 메뉴 판으로 펼쳐짐 (Tab 순서: 메뉴 → 그 하위 메뉴)
+    // 하위 메뉴 판 왼쪽(로고 아래)에는 지금 가리킨 메뉴 이름을 크게 (.gnb-intro, 화면 낭독기에는 위 메뉴와 겹치므로 숨김)
+    var col = 0;
     var navItems = NAV.map(function (n) {
-      return '<li><a href="' + ROOT + n.href + '"' + current(n.id) + ">" + bi(n.ko, n.en) + "</a></li>";
+      var sub = n.sub && n.sub.length ?
+        '<div class="gnb-intro" aria-hidden="true"><span class="ko">' + n.cap + "</span><strong>" + bi(n.ko, n.en) + "</strong></div>" +
+        '<ul class="gnb-sub" style="--c:' + (col++) + '">' + n.sub.map(subItem).join("") + "</ul>" : "";
+      return "<li><a class=\"gnb-top\" href=\"" + ROOT + n.href + '"' + current(n.id) + ">" + bi(n.ko, n.en) + "</a>" + sub + "</li>";
     }).join("");
 
-    var header = document.createElement("header");
-    header.className = "site-header";
-    header.innerHTML =
+    // 헤더 전체를 문자열로 만든 뒤 한 번에 넣음 (자리 #site-header 는 CSS 로 헤더 높이만큼 비워 둠 → 화면 밀림 없음)
+    // 넣은 뒤에야 위치·크기를 읽음
+    mount.outerHTML =
+      '<a class="skip-link" href="' + WH.esc(skipHref) + '">' + bi("본문 바로가기", "Skip to content") + "</a>" +
+      (C.draftBar ? '<div class="draft-bar">' + bi("<b>시안 미리보기</b> · 사진과 일부 문구는 단체 자료를 받은 뒤 교체됩니다.", "<b>Draft preview</b> · Photos and some text will be replaced with final materials.") + "</div>" : "") +
+      '<header class="site-header" id="site-header-bar">' +
       '<div class="header-inner">' +
       '<button type="button" class="icon-btn menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="전체 메뉴 열기" data-en-aria-label="Open menu">' + WH.icon("menu") + "</button>" +
       brandHtml() +
-      '<nav class="gnb" aria-label="주 메뉴" data-en-aria-label="Main menu"><ul>' + navItems + "</ul></nav>" +
+      '<nav class="gnb" aria-label="주 메뉴" data-en-aria-label="Main menu"><ul>' + navItems + '</ul><div class="gnb-panel" aria-hidden="true"></div></nav>' +
       '<div class="header-utils">' +
       '<span class="util-sep util-sep-faint" aria-hidden="true"></span>' +
       '<div class="lang-switch" role="group" aria-label="언어 선택" data-en-aria-label="Language">' + langButtons() + "</div>" +
@@ -362,8 +423,8 @@
       '<button type="button" data-set-lang="ko" aria-pressed="false" lang="ko">한국어 <small>KOR</small></button>' +
       '<button type="button" data-set-lang="en" aria-pressed="false" lang="en">English <small>ENG</small></button>' +
       "</div></div>" +
-      "</div>";
-    mount.after(header);
+      "</div></header>";
+    var header = document.getElementById("site-header-bar");
 
     // 모바일 전체 메뉴
     var mnav = document.createElement("div");
@@ -382,12 +443,12 @@
       "</ul></nav>" +
       '<ul class="mnav-more">' +
       MORE.map(function (m) {
-        return '<li><a href="' + ROOT + m.href + '"' + (m.id === pageId() ? ' aria-current="page"' : "") + ">" + WH.icon(m.icon) + bi(m.ko, m.en) + "</a></li>";
+        return "<li" + (m.cls ? ' class="' + m.cls + '"' : "") + '><a href="' + ROOT + m.href + '"' + (m.id === pageId() ? ' aria-current="page"' : "") + ">" + WH.icon(m.icon) + "<span>" + bi(m.ko, m.en) + "</span></a></li>";
       }).join("") +
-      '<li><button type="button" data-qr-open>' + WH.icon("qr") + bi("이 페이지 QR", "This page’s QR") + "</button></li>" +
       "</ul>" +
       '<div class="mnav-foot">' +
-      (C.phone ? '<div class="mnav-phone">' + bi("전국대표전화", "Main line (Korea)") + '<a href="' + telHref() + '">' + WH.esc(C.phone) + "</a></div>" : "<div></div>") +
+      (C.phone ? '<div class="mnav-phone">' + bi("전국대표전화", "Main line (Korea)") + '<a href="' + telHref() + '">' + WH.esc(C.phone) + "</a></div>" : '<div class="mnav-phone"></div>') +
+      '<button type="button" class="icon-btn mnav-qr" data-qr-open aria-label="이 페이지 QR코드" data-en-aria-label="QR code for this page" title="이 페이지 QR코드" data-en-title="QR code for this page">' + WH.icon("qr") + "</button>" +
       '<div class="lang-switch" role="group" aria-label="언어 선택" data-en-aria-label="Language">' + langButtons() + "</div>" +
       "</div></div>";
     document.body.appendChild(mnav);
@@ -462,58 +523,346 @@
     document.body.appendChild(bar);
     document.body.classList.add("has-tabbar");
 
-    var onScroll = function () { header.classList.toggle("is-scrolled", window.scrollY > 8); };
+    setupMega(header);
+    setupChromeScroll(header, bar);
+  }
+
+  /* ---------------- 데스크톱 하위 메뉴 판 (1081px 이상) ----------------
+     · 주 메뉴에 마우스를 올리면 0.12초 뒤, 키보드(Tab)로 들어가면 바로 펼침 → 모든 하위 메뉴가 한 판에, 각 메뉴 바로 아래
+     · 마우스가 메뉴·판 밖으로 나가거나, 포커스가 메뉴 밖으로 나가거나, Esc 를 누르면 닫힘
+     · 하위 목록의 위치·폭은 펼칠 때 계산(layout): 위 메뉴 글자 시작점에 그대로 맞추고, 긴 이름은 두 줄로 (겹칠 때만 조금 비켜 놓음)
+     · 마지막으로 가리킨 메뉴(.is-hot)는 목록 위 금빛 선 + 진한 글자, 판 왼쪽에 메뉴 이름 */
+  function setupMega(header) {
+    var gnb = header.querySelector(".gnb");
+    var panel = gnb && gnb.querySelector(".gnb-panel");
+    if (!panel) return;
+    var mq = window.matchMedia ? window.matchMedia("(min-width: 1081px)") : null;
+    var openTimer = 0, hovering = false, dismissed = false, raf = 0;
+    var GAP = 12, PAD_TOP = 22, PAD_BOTTOM = 28;
+
+    function desktop() { return !mq || mq.matches; }
+    function isOpen() { return header.classList.contains("is-menu"); }
+    function keyFocus(el) {
+      try { return el.matches(":focus-visible"); } catch (e) { return true; }
+    }
+    /* 하위 목록 놓기: 각 목록의 글자 시작을 위 메뉴의 글자 시작에 정확히 맞춤(금빛 선이 위 메뉴 밑줄 바로 아래).
+       목록 폭은 다음 메뉴 글자 시작 - 12px 까지로 줄이고, 긴 이름은 두 줄로 나눔(어절 단위, text-wrap: balance).
+       어절 하나가 그 폭보다 길어 옆 목록과 겹칠 때만 겹치는 목록끼리 묶어 '어긋난 거리'의 제곱 합이 가장 작은 곳에 놓음.
+       마지막 목록이 검색 버튼 오른쪽 끝을 넘으면 그 목록만 왼쪽으로 당김 */
+    function layout() {
+      var hb = header.getBoundingClientRect();
+      var inner = header.querySelector(".header-inner");
+      var ib = inner.getBoundingClientRect(), ics = getComputedStyle(inner);
+      var brand = inner.querySelector(".brand").getBoundingClientRect();
+      var lo = brand.right - hb.left + 32;
+      var hi = ib.right - parseFloat(ics.paddingRight) - hb.left;
+      var cols = [];
+      Array.prototype.forEach.call(gnb.querySelectorAll(".gnb-sub"), function (sub) {
+        var top = sub.parentNode.querySelector(".gnb-top");
+        var tb = top.getBoundingClientRect();
+        var linkPad = parseFloat(getComputedStyle(sub.querySelector("a") || sub).paddingLeft) || 0;
+        sub.style.left = "0px";
+        sub.style.width = "max-content";
+        var nat = Math.ceil(sub.getBoundingClientRect().width);
+        sub.style.width = "min-content";
+        var min = Math.ceil(sub.getBoundingClientRect().width);
+        cols.push({ sub: sub, x: tb.left - hb.left + (parseFloat(getComputedStyle(top).paddingLeft) || 0) - linkPad, w: nat, min: min });
+      });
+      // 폭: 다음 목록 시작 - 간격까지 (마지막은 검색 버튼 끝까지). 단, 가장 긴 어절보다 좁게는 줄이지 않음
+      cols.forEach(function (c, i) {
+        var cap = (i < cols.length - 1 ? cols[i + 1].x - GAP : hi) - c.x;
+        c.w = Math.max(c.min, Math.min(c.w, cap));
+      });
+      // 겹치는 목록만 묶어 놓기 (순서 유지, 사이 간격 GAP). 겹침이 없으면 모두 제자리
+      var groups = [];
+      function pos(g) { return Math.min(Math.max(g.sum / g.n, lo), hi - g.w); }
+      cols.forEach(function (c, i) {
+        groups.push({ first: i, last: i, w: c.w, sum: c.x, n: 1 });
+        while (groups.length > 1) {
+          var b = groups[groups.length - 1], a = groups[groups.length - 2];
+          if (pos(a) + a.w + GAP <= pos(b) + 0.5) break;
+          a.sum += b.sum - (a.w + GAP) * b.n;
+          a.n += b.n; a.w += GAP + b.w; a.last = b.last;
+          groups.pop();
+        }
+      });
+      groups.forEach(function (g) {
+        var left = pos(g);
+        for (var i = g.first; i <= g.last; i++) {
+          cols[i].sub.style.left = Math.round(left) + "px";
+          cols[i].sub.style.width = Math.ceil(cols[i].w) + "px";
+          left += cols[i].w + GAP;
+        }
+      });
+      var h = 0;
+      cols.forEach(function (c) { h = Math.max(h, c.sub.offsetHeight); });
+      header.style.setProperty("--mega-h", Math.ceil(h + PAD_TOP + PAD_BOTTOM) + "px");
+    }
+    function open() {
+      clearTimeout(openTimer);
+      if (isOpen() || !desktop()) return;
+      layout();
+      header.classList.add("is-menu");
+    }
+    function close() {
+      clearTimeout(openTimer);
+      header.classList.remove("is-menu");
+      setHot(null);
+    }
+    function focusInside() {
+      var a = document.activeElement;
+      return a && gnb.contains(a) && keyFocus(a);
+    }
+    // 지금 가리키는 메뉴 묶음(.is-hot): 마지막으로 마우스·포커스가 들어간 메뉴를 기억
+    // (메뉴에서 하위 목록으로 내려가는 동안 판의 빈 곳을 지나도 강조가 깜빡이지 않게)
+    var hot = null;
+    function setHot(li) {
+      if (li === hot) return;
+      if (hot) hot.classList.remove("is-hot");
+      hot = li;
+      if (hot) hot.classList.add("is-hot");
+    }
+    function topLi(el) {
+      var li = el && el.closest ? el.closest(".gnb > ul > li") : null;
+      return li && gnb.contains(li) ? li : null;
+    }
+    gnb.addEventListener("mouseover", function (e) {
+      var li = topLi(e.target);
+      if (li) setHot(li);
+    });
+    gnb.addEventListener("focusin", function (e) { setHot(topLi(e.target)); });
+
+    gnb.addEventListener("mouseenter", function () {
+      hovering = true;
+      dismissed = false;
+      clearTimeout(openTimer);
+      if (!isOpen()) openTimer = setTimeout(open, 120);
+    });
+    gnb.addEventListener("mouseleave", function () {
+      hovering = false;
+      clearTimeout(openTimer);
+      if (!focusInside()) close();
+    });
+    gnb.addEventListener("focusin", function (e) {
+      // 메뉴 밖에서 새로 들어오면(예: 마우스로 Esc 를 누른 뒤 나중에 Tab 으로 들어옴) 다시 펼칠 수 있게
+      // (창을 다시 볼 때처럼 이전 포커스가 없는 경우는 닫힌 채로 둠)
+      if (e.relatedTarget && !gnb.contains(e.relatedTarget)) dismissed = false;
+      if (!dismissed && keyFocus(e.target)) open();
+    });
+    gnb.addEventListener("focusout", function (e) {
+      if (e.relatedTarget && gnb.contains(e.relatedTarget)) return;
+      dismissed = false;
+      if (!hovering) close();
+    });
+    // Esc: 판을 닫고, 하위 메뉴에 있던 포커스는 그 위 메뉴로 (다시 Tab 하거나 마우스를 올리기 전까지 닫힌 채)
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "Escape" || !isOpen()) return;
+      dismissed = true;
+      var a = document.activeElement;
+      var sub = a && a.closest ? a.closest(".gnb-sub") : null;
+      if (sub) sub.parentNode.querySelector(".gnb-top").focus();
+      close();
+    });
+    // 같은 페이지 안의 구역으로 가는 하위 메뉴를 누르면 판을 닫음
+    gnb.addEventListener("click", function (e) {
+      if (e.target.closest(".gnb-sub a")) { dismissed = true; close(); }
+    });
+    var relayout = function () {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(function () {
+        if (!isOpen()) return;
+        if (desktop()) layout(); else close();
+      });
+    };
+    window.addEventListener("resize", relayout);
+    document.addEventListener("wh:lang", relayout);
+  }
+
+  /* ---------------- 스크롤에 따른 헤더·탭바 ----------------
+     · 조금이라도 내려가면 헤더 아래 가는 선(.is-scrolled)
+     · 휴대폰(760px 이하): 120px 아래에서 내리면 헤더·하단 탭바를 숨기고(body.chrome-down), 6px 이상 올리면 다시 보임.
+       메뉴·검색·QR 창이 열려 있는 동안은 그대로. 헤더·탭바 안으로 포커스가 가면 바로 보임 */
+  function setupChromeScroll(header, bar) {
+    var body = document.body;
+    var mobile = window.matchMedia ? window.matchMedia("(max-width: 760px)") : null;
+    // '동작 줄이기' 설정이면 헤더·탭바를 늘 그 자리에 둠
+    var still = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
+    var lastY = window.scrollY || 0;
+    // 손가락·휠·키보드로 움직인 스크롤만 헤더를 숨기거나 보이게 함 (주소의 #구역 이동, 늦게 불러온 내용 때문에 위치를 다시 맞추는 이동 등은 그대로 둠)
+    var lastInput = 0;
+    ["touchstart", "touchmove", "wheel", "keydown"].forEach(function (type) {
+      window.addEventListener(type, function () { lastInput = Date.now(); }, { passive: true });
+    });
+    function setDown(on) {
+      if (body.classList.contains("chrome-down") !== on) body.classList.toggle("chrome-down", on);
+    }
+    function onScroll() {
+      var y = window.scrollY || window.pageYOffset || 0;
+      var scrolled = y > 8;
+      if (header.classList.contains("is-scrolled") !== scrolled) header.classList.toggle("is-scrolled", scrolled);
+      if (!mobile || !mobile.matches || (still && still.matches)) { setDown(false); lastY = y; return; }
+      if (scrollLocks) { lastY = y; return; }
+      var dy = y - lastY;
+      if (y < 120) { setDown(false); lastY = y; }
+      // 사용자가 움직이지 않은 스크롤, 또는 한 번에 화면 높이보다 크게 바뀐 경우(주소의 #구역으로 바로 이동 등): 상태는 그대로 두고 기준만 옮김
+      else if (Date.now() - lastInput > 1500 || Math.abs(dy) > window.innerHeight) lastY = y;
+      else if (dy > 6) { setDown(true); lastY = y; }
+      else if (dy < -6) { setDown(false); lastY = y; }
+    }
     window.addEventListener("scroll", onScroll, { passive: true });
+    [header, bar].forEach(function (el) {
+      if (el) el.addEventListener("focusin", function () { setDown(false); });
+    });
+    // 페이지 안 바로가기(#구역)를 누르면 이동 방향에 맞춰 헤더 상태를 먼저 정함:
+    // 아래로 가면 헤더가 숨을 것이므로 미리 숨기고, 위로 가면 미리 보이게 → 도착 자리(scroll-margin-top)가 실제 메뉴 바로 아래
+    // (style.css 의 body.chrome-down … scroll-margin-top · 휴대폰 탭(.is-tabs)은 join.html 이 따로 처리)
+    // WH.prepareJump(el): 화면 안 버튼이 직접 스크롤할 때도 같은 준비 (예: korea33 분야 고르기 → 추천서)
+    function prepareJump(t) {
+      if (!mobile || !mobile.matches || (still && still.matches) || scrollLocks) return;
+      if (!t || !t.getClientRects().length) return;
+      var dist = t.getBoundingClientRect().top - (parseFloat(getComputedStyle(t).scrollMarginTop) || 0);
+      if (Math.abs(dist) > 6 && (window.pageYOffset || 0) + dist >= 120) setDown(dist > 0);
+    }
+    WH.prepareJump = prepareJump;
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest ? e.target.closest('a[href^="#"]') : null;
+      if (!a || a.closest(".is-tabs")) return;
+      var t = null;
+      try { t = document.getElementById(decodeURIComponent(a.getAttribute("href").slice(1))); } catch (err) { t = null; }
+      prepareJump(t);
+    });
     onScroll();
   }
 
-  /* ---------------- 푸터 ----------------
-     시안 그대로 한 줄: 세계희망연대 World Hope Declaration Network | 세계희망선언 World Hope Declaration
-     ……… 개인정보처리방침 · 이용약관 · 문의하기 · YouTube · Instagram · Facebook
-     SNS 주소(config.social)가 비어 있으면 세 아이콘은 장식으로만 표시(링크 아님, 화면 낭독기에서 숨김).
-     블로그·카카오 채널은 주소가 있을 때만 표시. 누적 방문자(.visit-counter)는 값이 있을 때만 나타남. */
+  /* ---------------- 페이지 안 메뉴(.subnav): 지금 보고 있는 구역 ----------------
+     WH.spyIndex(nav, targets) → 지금 구역 번호(-1: 첫 구역 전). 기준선은 메뉴 아래 40px 이되,
+     그 구역의 바로가기 도착 자리(scroll-margin-top) + 12px 보다 위로는 올리지 않음 → 메뉴를 눌러 도착한 구역이 언제나 강조됨
+     WH.subnavSpy(nav) → 강조(.is-active · aria-current) + 좁은 화면에서 강조된 메뉴가 보이도록 가로 스크롤 (korea33 · global33) */
+  WH.spyIndex = function (nav, targets) {
+    var nb = nav ? nav.getBoundingClientRect().bottom : 0, cur = -1;
+    (targets || []).forEach(function (el, i) {
+      if (!el) return;
+      var line = Math.max(nb + 40, (parseFloat(getComputedStyle(el).scrollMarginTop) || 0) + 12);
+      if (el.getBoundingClientRect().top <= line) cur = i;
+    });
+    return cur;
+  };
+  WH.subnavSpy = function (nav) {
+    var list = nav ? nav.querySelector("ul") : null;
+    var links = nav ? Array.prototype.slice.call(nav.querySelectorAll('a[href^="#"]')) : [];
+    if (!links.length) return;
+    var targets = links.map(function (a) { return document.getElementById(a.getAttribute("href").slice(1)); });
+    var current = -2, ticking = false;
+    function update() {
+      ticking = false;
+      var nr = nav.getBoundingClientRect();
+      // 메뉴가 화면 위쪽에 닿기 전(페이지 맨 위, 머리말이 보이는 동안)에는 강조하지 않음
+      var stuck = nr.top <= (parseFloat(getComputedStyle(nav).top) || 0) + 1 || nr.top < window.innerHeight * .2;
+      var cur = stuck ? WH.spyIndex(nav, targets) : -1;
+      // 맨 아래까지 내리면 마지막 메뉴
+      if (stuck && cur >= 0 && window.innerHeight + window.pageYOffset >= document.documentElement.scrollHeight - 4) cur = targets.length - 1;
+      if (cur === current) return;
+      current = cur;
+      links.forEach(function (a, i) {
+        a.classList.toggle("is-active", i === cur);
+        if (i === cur) a.setAttribute("aria-current", "location"); else a.removeAttribute("aria-current");
+      });
+      if (cur >= 0 && list && list.scrollWidth > list.clientWidth) {
+        var ar = links[cur].getBoundingClientRect(), lr = list.getBoundingClientRect();
+        var left = ar.left - lr.left + list.scrollLeft;
+        if (left < list.scrollLeft || left + ar.width > list.scrollLeft + list.clientWidth) list.scrollLeft = Math.max(0, left - 24);
+      }
+    }
+    function onScroll() {
+      if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    document.addEventListener("wh:lang", function () { current = -2; onScroll(); });
+    update();
+  };
+
+  /* ---------------- 푸터 (두 단) ----------------
+     위 단(.footer-main): 단체 소개(로고·단체명·위원회·문구) | 사이트맵(세계희망선언·글로벌 33·참여하기·연대소개의 하위 메뉴) | 전국대표전화·주소·이메일
+     아래 단(.footer-inner): 시안 그대로 한 줄 — 세계희망연대 World Hope Declaration Network | 세계희망선언 World Hope Declaration
+       ……… 개인정보처리방침 · 이용약관 · 문의하기 · (SNS)
+     맨 아래(.footer-copy): 대표 연락처(의뢰인 요청 2026-10-12) · 고유번호(config.registrationNo 가 있을 때만) · ©
+     SNS 아이콘은 주소(config.social)가 있을 때만 표시 (주소 없는 아이콘은 눌러도 아무 일이 없고 상표만 노출되므로 숨김).
+     누적 방문자(.visit-counter)는 값이 있을 때만 나타남. */
   var SOCIAL = [
-    { key: "youtube", icon: "youtube-fill", label: "YouTube", always: true },
-    { key: "instagram", icon: "instagram", label: "Instagram", always: true },
-    { key: "facebook", icon: "facebook-fill", label: "Facebook", always: true },
+    { key: "youtube", icon: "youtube-fill", label: "YouTube" },
+    { key: "instagram", icon: "instagram", label: "Instagram" },
+    { key: "facebook", icon: "facebook-fill", label: "Facebook" },
     { key: "blog", icon: "blog", label: "Blog" },
     { key: "kakao", icon: "kakao", label: "KakaoTalk Channel" }
   ];
+  var FOOTER_MAP = ["declaration", "global33", "join", "about"];
   function safeUrl(u) {
     u = String(u || "").trim();
     return /^https?:\/\//i.test(u) ? u : "";
+  }
+  function safeMail(m) {
+    return /^[^\s@<>"]+@[^\s@<>"]+\.[^\s@<>"]+$/.test(m || "") ? m : "";
   }
 
   function renderFooter() {
     var mount = document.getElementById("site-footer");
     if (!mount) return;
     var esc = WH.esc;
-    var name = C.name || {}, decl = C.declaration || {};
+    var name = C.name || {}, decl = C.declaration || {}, com = C.committee || {}, addr = C.address || {};
     var social = C.social || {};
 
     var socialHtml = SOCIAL.map(function (s) {
       var url = safeUrl(social[s.key]);
-      if (url) {
-        return '<a href="' + esc(url) + '" target="_blank" rel="noopener" aria-label="' + s.label + ' (새 창)" data-en-aria-label="' + s.label + ' (opens in a new tab)" title="' + s.label + '">' + WH.icon(s.icon) + "</a>";
-      }
-      return s.always ? '<span aria-hidden="true">' + WH.icon(s.icon) + "</span>" : "";
+      return url ? '<a href="' + esc(url) + '" target="_blank" rel="noopener" aria-label="' + s.label + ' (새 창)" data-en-aria-label="' + s.label + ' (opens in a new tab)" title="' + s.label + '">' + WH.icon(s.icon) + "</a>" : "";
     }).join("");
 
-    // 카피라이트 줄: 대표 연락처 + ©
+    // 위 단 ① 단체 소개
+    var aboutHtml = '<div class="footer-about">' +
+      '<a class="footer-logo" href="' + ROOT + 'index.html">' + logoImg(48) +
+      "<b>" + esc(name.ko || "") + '</b><span lang="en">' + esc(name.en || "") + "</span></a>" +
+      (com.ko ? '<p class="footer-committee">' + bi(esc(com.ko), esc(com.en || com.ko)) + "</p>" : "") +
+      '<p class="footer-quote" lang="en">From Division to Hope,<br>Together for a Better World.</p>' +
+      "</div>";
+    // 위 단 ② 사이트맵 (주 메뉴의 하위 메뉴 그대로)
+    var mapHtml = '<nav class="footer-sitemap" aria-label="사이트맵" data-en-aria-label="Sitemap">' +
+      FOOTER_MAP.map(function (id) {
+        var n = navById(id);
+        if (!n || !n.sub) return "";
+        return '<div class="footer-col"><p class="footer-col-title"><a href="' + ROOT + n.href + '">' + bi(n.ko, n.en) + "</a></p>" +
+          "<ul>" + n.sub.map(subItem).join("") + "</ul></div>";
+      }).join("") + "</nav>";
+    // 위 단 ③ 연락처
+    var pub = safeMail(C.publicEmail);
+    var reachList = (addr.ko ? "<li>" + WH.icon("pin") + "<span>" + bi(esc(addr.ko), esc(addr.en || addr.ko)) + "</span></li>" : "") +
+      (pub ? "<li>" + WH.icon("mail") + '<a href="mailto:' + esc(pub) + '">' + esc(pub) + "</a></li>" : "");
+    var reachHtml = '<div class="footer-reach">' +
+      (C.phone ? '<p class="footer-tel-label">' + bi("전국대표전화", "Main line") + "</p>" +
+        '<a class="footer-tel" href="' + telHref() + '">' + esc(C.phone) + "</a>" +
+        // 휴대폰: 누르기 쉬운 전체 폭 버튼
+        '<a class="btn btn-ghost-light footer-tel-btn" href="' + telHref() + '">' + WH.icon("phone") + bi("전국대표전화 " + esc(C.phone), "Main line " + esc(C.phone)) + "</a>" : "") +
+      (reachList ? '<ul class="footer-reach-list">' + reachList + "</ul>" : "") +
+      "</div>";
+
+    // 맨 아래 줄: 대표 연락처 · 고유번호 · ©
     var fc = C.footerContact || {};
     var tel = String(fc.phone || "").replace(/[^0-9+]/g, "");
-    var mail = /^[^\s@<>"]+@[^\s@<>"]+\.[^\s@<>"]+$/.test(fc.email || "") ? fc.email : "";
+    var mail = safeMail(fc.email);
     var contactBits = [];
     if (fc.name) contactBits.push("<span>" + bi("대표 ", "Representative ") + bi(esc(fc.name.ko || ""), esc(fc.name.en || fc.name.ko || "")) + "</span>");
     if (tel) contactBits.push('<a href="tel:' + esc(tel) + '">' + esc(fc.phone) + "</a>");
     if (mail) contactBits.push('<a href="mailto:' + esc(mail) + '">' + esc(mail) + "</a>");
+    var regNo = String(C.registrationNo || "").trim();
+    if (regNo) contactBits.push("<span>" + bi("고유번호 ", "Registration No. ") + esc(regNo) + "</span>");
     var copyHtml = '<div class="footer-copy"><div class="footer-copy-inner">' +
       (contactBits.length ? '<p class="footer-contact">' + contactBits.join('<i aria-hidden="true">·</i>') + "</p>" : "") +
       '<p class="footer-rights">© ' + new Date().getFullYear() + " " + bi(esc(name.ko || ""), esc(name.en || "")) + ". All rights reserved.</p>" +
       "</div></div>";
 
     mount.outerHTML =
-      '<footer class="site-footer"><div class="footer-inner">' +
+      '<footer class="site-footer">' +
+      '<div class="footer-main"><div class="footer-main-inner">' + aboutHtml + mapHtml + reachHtml + "</div></div>" +
+      '<div class="footer-bar"><div class="footer-inner">' +
       '<div class="footer-brands">' +
       '<a class="footer-brand" href="' + ROOT + 'index.html"><b>' + esc(name.ko || "") + '</b><span lang="en">' + esc(name.en || "") + "</span></a>" +
       '<span class="footer-sep" aria-hidden="true"></span>' +
@@ -522,12 +871,12 @@
       '<div class="footer-right">' +
       '<span class="visit-counter" hidden></span>' +
       '<nav class="footer-links" aria-label="정책 및 문의" data-en-aria-label="Policies and contact">' +
-      '<a href="' + ROOT + 'privacy.html">' + bi("개인정보처리방침", "Privacy Policy") + "</a>" +
+      '<a class="footer-privacy" href="' + ROOT + 'privacy.html">' + bi("개인정보처리방침", "Privacy Policy") + "</a>" +
       '<a href="' + ROOT + 'terms.html">' + bi("이용약관", "Terms of Use") + "</a>" +
       '<a href="' + ROOT + 'contact.html">' + bi("문의하기", "Contact") + "</a>" +
       "</nav>" +
-      '<div class="footer-social">' + socialHtml + "</div>" +
-      "</div></div>" + copyHtml + "</footer>";
+      (socialHtml ? '<div class="footer-social">' + socialHtml + "</div>" : "") +
+      "</div></div></div>" + copyHtml + "</footer>";
   }
 
   /* ---------------- 사이트 검색 ---------------- */
@@ -544,7 +893,10 @@
     { href: "about.html", ko: "연대소개", en: "About", dko: "취지문 · 위원장 인사말 · 조직 구성 · 오시는 길", den: "Purpose, chairman's greeting, organization and location", k: "소개 about 취지 purpose 인사말 greeting 위원장 chairman 원치현 조직 organization 위원회 council 오시는 길 location 주소 address 세종" },
     { href: "ministry.html", ko: "사역 안내", en: "Ministries", dko: "연구·채택 → 33인 선언 → 실천 → 보호·인도 → 선교행진", den: "Research & adoption, declaration by 33, practice, protection & guidance, mission march", k: "사역 ministry ministries 선교행진 mission march 연구 채택 실천 보호 인도" },
     { href: "gallery.html", ko: "갤러리", en: "Gallery", dko: "행사와 사역 현장 사진", den: "Photos of events and ministry", k: "갤러리 gallery 사진 photo 앨범 album" },
-    { href: "donate.html", ko: "후원·헌금", en: "Give", dko: "계좌 후원 · 정기 후원 신청 · 온라인 후원", den: "Bank transfer, monthly giving and online giving", k: "후원 헌금 give donate donation 계좌 정기 기부금 영수증 receipt" },
+    // 후원: 계좌·결제가 준비되기 전에는 donate.html 의 '준비 중' 안내 문구 그대로 (없는 방법·영수증을 검색 결과에 내세우지 않음)
+    GIVING_READY ?
+      { href: "donate.html", ko: "후원·헌금", en: "Give", dko: "계좌 후원 · 정기 후원 신청 · 온라인 후원", den: "Bank transfer, monthly giving and online giving", k: "후원 헌금 give donate donation 계좌 정기" } :
+      { href: "donate.html", ko: "후원·헌금", en: "Give", dko: "계좌 안내 준비 중", den: "Coming soon", k: "후원 헌금 give donate donation" },
     { href: "contact.html", ko: "문의하기", en: "Contact", dko: "문의 및 참여·동역 신청 · 전국대표전화 " + (C.phone || ""), den: "Inquiries and applications · " + (C.phone || ""), k: "문의 contact 전화 phone call 연락처 " + (C.phone || "") },
     { href: "faq.html", ko: "자주 묻는 질문", en: "FAQ", dko: "세계희망연대와 참여·후원에 관한 질문과 답변", den: "Frequently asked questions", k: "faq 질문 question 답변 answer" },
     { href: "qr.html", ko: "QR코드 만들기", en: "QR Code Maker", dko: "홈페이지와 각 메뉴의 QR코드 만들기·저장·인쇄", den: "Create, save and print QR codes", k: "qr 큐알 코드 code 인쇄 print" },
@@ -558,7 +910,10 @@
   function searchPages(q) {
     var toks = tokens(q);
     if (!toks.length) return [];
+    // 갤러리에 실제 사진이 없는 동안(data.js 가 <html data-gallery-ready> 를 붙이기 전)에는 메뉴처럼 검색 결과에서도 뺌
+    var noGallery = !document.documentElement.hasAttribute("data-gallery-ready");
     return PAGES.map(function (p) {
+      if (noGallery && p.href === "gallery.html") return null;
       var title = norm(p.ko + " " + p.en);
       var hay = norm([p.ko, p.en, p.dko, p.den, p.k].join(" "));
       for (var i = 0; i < toks.length; i++) if (hay.indexOf(toks[i]) === -1) return null;
@@ -764,8 +1119,8 @@
     requestAnimationFrame(step);
   }
   function setupStats() {
-    // 큰 숫자 표시만 대상 (문장 속 숫자는 그대로, 홈 통계 띠는 home.js 가 담당)
-    var els = Array.prototype.slice.call(document.querySelectorAll(".join-now-num b[data-stat], .stat-num b[data-stat], .g33-step-num b[data-stat], .g33-live-num b[data-stat]"));
+    // 큰 숫자 표시 가운데 '현재 참여자 수'만 0에서 올라감 (33·195·6,435 같은 정의·목표 숫자는 처음부터 그대로 · 홈 통계 띠는 home.js 가 담당)
+    var els = Array.prototype.slice.call(document.querySelectorAll(".join-now-num b[data-stat=participants], .stat-num b[data-stat=participants], .g33-live-num b[data-stat=participants]"));
     var animate = els.length && WH.motionOK() && "IntersectionObserver" in window && "requestAnimationFrame" in window;
     // 지금 보이는 숫자만 0에서 시작 (다른 언어로 가려진 숫자는 그대로 둠)
     var live = animate ? els.filter(function (el) { return el.getClientRects().length && /^[\d,]+$/.test(el.textContent.trim()); }) : [];
@@ -902,24 +1257,55 @@
     });
   }
 
-  /* ---------------- 스크롤 등장 효과 ---------------- */
+  /* ---------------- 스크롤 등장 효과 ----------------
+     섹션 단위로 등장: 각 섹션(main > section)의 .container 바로 아래 요소 앞 4개에 .reveal 을 자동으로 붙이고
+     --i(0~3)로 순서를 줘서 0.07초 간격으로 차례로 떠오르게 함 (CSS: .reveal / .reveal.is-in)
+     · 제외: 첫 섹션·페이지 머리말(.page-hero), 입력 양식(form)과 그 안쪽, 이미 .reveal 을 가진 요소
+     · HTML 에 직접 단 .reveal(카드 묶음 등)은 같은 부모 안에서의 순서로 --i 를 줌 */
   function setupReveal() {
+    var main = document.getElementById("main") || document.querySelector("main");
+    if (main) {
+      Array.prototype.forEach.call(main.children, function (sec, idx) {
+        if (sec.tagName !== "SECTION" || idx === 0 || sec.classList.contains("page-hero") || sec.hasAttribute("data-no-reveal")) return;
+        sec.querySelectorAll(".container").forEach(function (box) {
+          if (box.closest("form")) return;
+          var n = 0;
+          Array.prototype.forEach.call(box.children, function (el) {
+            if (n >= 4) return;
+            if (el.tagName === "FORM" || el.querySelector("form, .reveal") || el.classList.contains("reveal") || el.closest(".reveal")) return;
+            el.classList.add("reveal");
+            el.style.setProperty("--i", n++);
+          });
+        });
+      });
+    }
     var els = document.querySelectorAll(".reveal");
+    els.forEach(function (el) {
+      if (el.style.getPropertyValue("--i")) return;
+      var sibs = Array.prototype.filter.call(el.parentNode.children, function (c) { return c.classList.contains("reveal"); });
+      el.style.setProperty("--i", Math.min(sibs.indexOf(el), 6));
+    });
     if (!("IntersectionObserver" in window)) { els.forEach(function (el) { el.classList.add("is-in"); }); return; }
+    var seen = typeof WeakSet === "function" ? new WeakSet() : null;
     var io = new IntersectionObserver(function (entries) {
-      // 한꺼번에 화면에 들어온 요소(카드 줄 등)는 0.08초 간격으로 차례로 등장
-      var n = 0;
       entries.forEach(function (en) {
-        if (!en.isIntersecting) return;
-        var el = en.target, d = Math.min(n++, 6) * 80;
-        if (d) {
-          el.style.transitionDelay = d + "ms";
-          setTimeout(function () { el.style.transitionDelay = ""; }, d + 900);
+        var el = en.target;
+        // 페이지를 열 때 이미 화면에 보이는 요소는 바로 등장 (화면 아래 끝에 살짝 걸친 것도)
+        var first = seen && !seen.has(el);
+        if (seen) seen.add(el);
+        var r = en.boundingClientRect;
+        if (!(first && r.top < window.innerHeight && r.bottom > 0)) {
+          if (!en.isIntersecting) return;
+          // 보통 요소는 12% 이상 보일 때, 화면보다 긴 요소(긴 글 등)는 들어오자마자 (12%가 화면보다 클 수 있으므로)
+          var rh = en.rootBounds ? en.rootBounds.height : window.innerHeight;
+          if (en.intersectionRatio < 0.12 && r.height < rh * 0.6) return;
         }
         el.classList.add("is-in");
         io.unobserve(el);
+        // 등장이 끝나면 .reveal 을 떼어 요소 본래의 전환 효과(마우스 올림 등)가 늦게 반응하지 않게 함 (.is-in 은 남김)
+        setTimeout(function () { el.classList.remove("reveal"); }, 1000 + (parseFloat(el.style.getPropertyValue("--i")) || 0) * 70);
       });
-    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+    }, { rootMargin: "0px 0px -10% 0px", threshold: [0, 0.12] });
     els.forEach(function (el) { io.observe(el); });
   }
 
@@ -965,6 +1351,7 @@
     if (!C.draft) document.querySelectorAll("[data-draft-only]").forEach(function (el) { el.remove(); });
     renderHeader();
     renderFooter();
+    applyGiving();
     fillIcons();
     applyLang(storedLang());
     document.addEventListener("click", function (e) {

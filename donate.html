@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Serif:ital,wght@0,500;0,700;1,500&display=swap">
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/style.css?v=20261013">
 <style>
   /* 후원 페이지 전용 */
   .verse .verse-copy { display: block; margin-top: 6px; font-size: 12.5px; color: var(--muted); }
@@ -30,8 +30,8 @@
   @media (max-width: 560px) {
     .verse br { display: none; }
     .use-list { grid-template-columns: 1fr; gap: 12px; }
-    a.use-item { display: grid; grid-template-columns: 54px 1fr; gap: 2px 16px; align-items: center; padding: 18px 20px; text-align: left; }
-    a.use-item .card-icon { grid-row: span 2; margin: 0; }
+    a.use-item { display: grid; grid-template-columns: 28px 1fr; gap: 2px 16px; align-items: center; padding: 18px 20px; text-align: left; }
+    a.use-item .card-icon { grid-row: span 2; justify-content: flex-start; margin: 0; }
     a.use-item b { margin: 0; }
   }
 </style>
@@ -63,8 +63,25 @@
     </div>
   </section>
 
+  <!-- 후원 안내 준비 중: 계좌(config.bank.account)와 온라인 결제(config.portone)가 모두 비어 있는 동안 보이는 안내 한 장
+       (설정이 입력되면 donate.js 가 이 안내를 숨기고 아래 '후원 방법'과 신청서를 보여 줌) -->
+  <section class="section section-line" id="giving-pending" data-giving-pending aria-labelledby="pending-title">
+    <div class="container">
+      <div class="empty-panel">
+        <span class="empty-panel-icon" data-icon="bank" aria-hidden="true"></span>
+        <h2 class="empty-panel-title" id="pending-title"><span class="ko">계좌 안내 준비 중</span><span class="en">Coming soon</span></h2>
+        <p class="empty-panel-text"><span class="ko">계좌 확정 후 안내됩니다.</span><span class="en">Details to be announced.</span></p>
+        <p class="empty-panel-text"><span class="ko">온라인 결제는 결제대행사(PG) 가맹 절차가 끝나면 열립니다.</span><span class="en">Online payment will open once our payment provider setup is complete.</span></p>
+        <div class="empty-panel-actions">
+          <a class="btn btn-primary" href="contact.html"><span class="ko">문의하기</span><span class="en">Contact Us</span><span data-icon="arrow-right"></span></a>
+          <a class="btn btn-outline" href="tel:15882716"><span data-icon="phone"></span><span class="ko">전국대표전화 1588-2716</span><span class="en">Main line 1588-2716</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- 후원 방법 -->
-  <section class="section section-line" aria-labelledby="ways-title">
+  <section class="section section-line" data-giving-ready hidden aria-labelledby="ways-title">
     <div class="container">
       <div class="section-head center reveal">
         <h2 class="section-title" id="ways-title"><span class="ko">세 가지 방법으로 함께하실 수 있습니다</span><span class="en">Three Ways to Take Part</span></h2>
@@ -110,7 +127,7 @@
   </section>
 
   <!-- 정기 후원 신청 + 온라인 후원 -->
-  <section class="section" aria-labelledby="forms-title">
+  <section class="section" data-giving-ready hidden aria-labelledby="forms-title">
     <div class="container">
       <div class="section-head center reveal">
         <h2 class="section-title" id="forms-title"><span class="ko">후원 신청하기</span><span class="en">Apply or Give Online</span></h2>
@@ -231,10 +248,10 @@
 </main>
 
 <div id="site-footer"></div>
-<script src="assets/js/config.js"></script>
-<script src="assets/js/data.js"></script>
-<script src="assets/js/main.js"></script>
-<script src="assets/js/forms.js"></script>
-<script src="assets/js/donate.js"></script>
+<script src="assets/js/config.js?v=20261013"></script>
+<script src="assets/js/data.js?v=20261013"></script>
+<script src="assets/js/main.js?v=20261013"></script>
+<script src="assets/js/forms.js?v=20261013"></script>
+<script src="assets/js/donate.js?v=20261013"></script>
 </body>
 </html>

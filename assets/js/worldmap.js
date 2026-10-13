@@ -22,7 +22,6 @@
   var pop = document.getElementById("wm-pop");
   var listEl = document.getElementById("wm-list");
   var zoomBtn = document.getElementById("wm-zoom");
-  var barEl = document.getElementById("wm-bar");
 
   var W = 1000;      // 지도 가로 길이 (SVG 좌표 단위)
   var PAD = 8;       // 지도 가장자리 여백
@@ -294,10 +293,8 @@
       var unit = "<small>" + bi("인", "people") + "</small>";
       var count = "";
       if (c.selected != null && c.target) {
-        var pct = Math.max(0, Math.min(100, c.selected / c.target * 100));
         count = '<p class="wm-row-count"><span>' + bi("선정", "Selected") + "</span>" +
-          "<b>" + esc(WH.fmtNum(c.selected)) + " <small>/ " + esc(WH.fmtNum(c.target)) + "</small></b>" +
-          '<span class="wm-row-bar" aria-hidden="true"><span style="width:' + pct.toFixed(1) + '%"></span></span></p>';
+          "<b>" + esc(WH.fmtNum(c.selected)) + " <small>/ " + esc(WH.fmtNum(c.target)) + "</small></b></p>";
       } else if (c.target != null) {
         count = '<p class="wm-row-count"><span>' + bi("목표", "Target") + "</span><b>" + esc(WH.fmtNum(c.target)) + unit + "</b></p>";
       } else if (c.selected != null) {
@@ -323,15 +320,6 @@
   function renderCount() {
     var n = state.list.length;
     document.querySelectorAll('[data-wm="count"]').forEach(function (el) { el.textContent = WH.fmtNum(n); });
-    if (!barEl) return;
-    var total = state.total || Number(barEl.getAttribute("aria-valuemax")) || 0;
-    barEl.setAttribute("aria-valuenow", String(n));
-    if (total > 0) {
-      barEl.setAttribute("aria-valuemax", String(total));
-      barEl.setAttribute("aria-valuetext", WH.t(WH.fmtNum(total) + "개국 중 " + WH.fmtNum(n) + "개국", WH.fmtNum(n) + " of " + WH.fmtNum(total) + " nations"));
-      var fill = barEl.firstElementChild;
-      if (fill) fill.style.width = n ? "max(4px, " + Math.min(100, n / total * 100).toFixed(2) + "%)" : "0";
-    }
   }
 
   /* ---------------- 확대 보기 (좁은 화면) ---------------- */

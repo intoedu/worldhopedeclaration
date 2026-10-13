@@ -78,13 +78,23 @@
     chips.forEach(function (c) {
       c.addEventListener("click", function () { state.category = c.getAttribute("data-cat"); state.page = 1; load(); });
     });
+    // 글이 하나도 없는 분류(예: 언론보도)는 칩을 숨김 — 눌러도 빈 목록만 보이므로 (지금 고른 분류는 그대로 둠)
+    WH.db.listPosts({ size: 1000 }).then(function (res) {
+      var used = {};
+      res.items.forEach(function (p) { used[p.category] = true; });
+      chips.forEach(function (c) {
+        var cat = c.getAttribute("data-cat");
+        if (cat && !used[cat] && cat !== state.category) c.hidden = true;
+      });
+    }).catch(function () {});
     if (form) form.addEventListener("submit", function (e) { e.preventDefault(); state.q = input.value.trim(); state.page = 1; load(); });
     if (pager) pager.addEventListener("click", function (e) {
       var b = e.target.closest("[data-page]");
       if (!b || b.disabled) return;
       state.page = parseInt(b.getAttribute("data-page"), 10);
       load();
-      list.scrollIntoView({ behavior: "smooth", block: "start" });
+      // '동작 줄이기' 설정이면 바로 이동
+      list.scrollIntoView({ behavior: WH.motionOK && !WH.motionOK() ? "auto" : "smooth", block: "start" });
     });
     document.addEventListener("wh:lang", load);
     load();

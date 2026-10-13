@@ -376,7 +376,7 @@
     var name = C.name || {};
     return '<a class="brand" href="' + ROOT + 'index.html" aria-label="' + WH.esc((name.ko || "") + " 홈") + '" data-en-aria-label="' + WH.esc((name.en || "") + " — Home") + '">' +
       logoImg(72) +
-      '<span class="brand-text" aria-hidden="true"><strong>' + WH.esc(name.ko || "") + "</strong><small>" + WH.esc(name.en || "") + "<sup>™</sup></small></span></a>";
+      '<span class="brand-text" aria-hidden="true"><strong>' + WH.esc(name.ko || "") + "</strong><small>" + WH.esc(name.en || "") + "</small></span></a>";
   }
   function langButtons() {
     return '<button type="button" data-set-lang="ko" aria-pressed="false" lang="ko" aria-label="한국어">KOR</button>' +

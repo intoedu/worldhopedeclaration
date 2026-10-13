@@ -37,6 +37,9 @@
   .about-portrait-frame::before { content: ""; position: absolute; z-index: -1; left: 50%; top: 18%; width: 150%; aspect-ratio: 1; transform: translateX(-50%); border-radius: 50%; background: radial-gradient(circle at 50% 22%, rgba(255, 233, 196, .7) 0%, rgba(255, 233, 196, 0) 34%); }
   .about-portrait-frame::after { content: ""; position: absolute; z-index: -1; left: 50%; top: 62%; width: 190%; aspect-ratio: 1; transform: translateX(-50%); border-radius: 50%; border-top: 1px solid rgba(43, 87, 151, .22); background: linear-gradient(180deg, rgba(205, 219, 239, .42), rgba(255, 255, 255, 0) 30%); }
   .about-portrait-frame > img { width: 96px; height: 96px; margin-top: -12%; }
+  .about-portrait-frame.has-photo { display: block; background: #6b8db3; }
+  .about-portrait-frame.has-photo picture, .about-portrait-frame.has-photo img { display: block; width: 100%; height: 100%; margin: 0; object-fit: cover; object-position: 50% 30%; }
+  .about-portrait-frame.has-photo::before, .about-portrait-frame.has-photo::after { display: none; }
   .about-portrait-frame .placeholder-note { position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); }
   .about-portrait figcaption { margin-top: 20px; text-align: center; }
   .about-portrait figcaption small { display: block; font-size: 14px; color: var(--muted); line-height: 1.5; }
@@ -161,7 +164,7 @@
   }
   @media (max-width: 900px) {
     .about-greeting { grid-template-columns: 1fr; gap: 36px; }
-    .about-portrait { position: static; display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 20px; align-items: center; }
+    .about-portrait { position: static; display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 20px; align-items: center; }
     .about-portrait-frame { border-radius: var(--radius); box-shadow: none; }
     .about-portrait-frame > img { width: 52px; height: 52px; margin-top: -10%; }
     .about-portrait-frame .placeholder-note { bottom: 6px; font-size: 10.5px; padding: 1px 5px; white-space: nowrap; }
@@ -236,11 +239,11 @@
       </div>
       <div class="about-greeting">
         <figure class="about-portrait reveal">
-          <div class="about-portrait-frame">
-            <!-- 위원장 사진이 준비되면(의뢰인 제공·본인 동의) 이 상자 안을
-                 <img src="assets/img/..." alt="원치현 위원장" data-en-alt="Chairman Chi-hyun Won" width="400" height="500" style="width:100%;height:100%;object-fit:cover;margin:0"> 로 바꿉니다. -->
-            <img src="assets/img/brand/logo-mark-160.png" alt="" width="96" height="96" loading="lazy">
-            <span class="placeholder-note" data-draft-only><span class="ko">사진 준비 중</span><span class="en">Photo coming soon</span></span>
+          <div class="about-portrait-frame has-photo">
+            <picture>
+              <source srcset="assets/img/people/chairman-won.webp" type="image/webp">
+              <img src="assets/img/people/chairman-won.jpg" alt="원치현 세계희망선언위원회 위원장" data-en-alt="Chi-hyun Won, Chairman of the World Hope Declaration Council" width="800" height="1000" loading="lazy">
+            </picture>
           </div>
           <figcaption>
             <small><span class="ko">세계희망선언위원회 위원장</span><span class="en">Chairman, World Hope Declaration Council</span></small>

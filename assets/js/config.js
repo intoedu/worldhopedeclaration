@@ -4,7 +4,7 @@
    ========================================================================== */
 window.WH_CONFIG = {
   /* ---- 기본 정보 ---- */
-  siteUrl: "", // 도메인 연결 후 입력. 예: "https://www.example.org" (QR코드·공유 링크 기준 주소, 비우면 현재 접속 주소)
+  siteUrl: "https://www.worldhopedeclaration.com", // 도메인 연결 후 입력. 예: "https://www.example.org" (QR코드·공유 링크 기준 주소, 비우면 현재 접속 주소)
   name: { ko: "세계희망연대", en: "World Hope Declaration Network" },
   declaration: { ko: "세계희망선언", en: "World Hope Declaration" }, // 대표 브랜드(™)
   committee: { ko: "세계희망선언위원회", en: "World Hope Declaration Council" },

@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Serif:ital,wght@0,500;0,700;1,500&display=swap">
-<link rel="stylesheet" href="assets/css/style.css?v=20261013d">
+<link rel="stylesheet" href="assets/css/style.css?v=20261013e">
 <script>(function(){try{var l=new URLSearchParams(location.search).get("lang")||localStorage.getItem("wh-lang");if(l==="en"){var h=document.documentElement;h.setAttribute("data-lang","en");h.lang="en";}}catch(e){}})();</script>
 <style>
   /* ===== 세계지도 페이지 전용 (공통 style.css 의 토큰만 사용) ===== */
@@ -120,9 +120,9 @@
   .wm-fields-sub { margin: 0; font-family: var(--f-serif); font-size: 15px; font-weight: 500; color: var(--gold-600); }
   html[data-lang="en"] .wm-fields-sub { font-family: var(--f-serif-en); }
   .wm-field-list { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 0 0 20px; padding: 0; }
-  .wm-field-list li { display: flex; align-items: center; gap: 10px; min-width: 0; min-height: 58px; padding: 10px 12px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius-sm); }
+  .wm-field-list li { display: flex; align-items: center; gap: 10px; min-width: 0; min-height: 58px; padding: 10px 12px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); }
   .wm-field-icon { display: flex; flex-shrink: 0; color: var(--navy-700); }
-  .wm-field-icon svg { width: 22px; height: 22px; stroke-width: 1.4; }
+  .wm-field-icon svg { width: 24px; height: 24px; stroke-width: 1.5; }
   .wm-field-no { flex-shrink: 0; font-family: var(--f-serif-en); font-size: 12.5px; font-weight: 700; color: var(--gold-600); }
   .wm-field-name { min-width: 0; font-size: 14.5px; font-weight: 600; line-height: 1.35; color: var(--navy-900); }
   html[data-lang="en"] .wm-field-name { font-size: 13.5px; }
@@ -187,7 +187,6 @@
     .wm-fields-title { font-size: 19px; }
     .wm-field-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
     .wm-field-list li { gap: 8px; padding: 9px 10px; min-height: 54px; }
-    .wm-field-icon svg { width: 20px; height: 20px; }
     .wm-field-no { display: none; }
     .wm-field-name { font-size: 14px; }
     html[data-lang="en"] .wm-field-name { font-size: 12.5px; }
@@ -296,14 +295,14 @@
               <li><span class="wm-field-icon" data-icon="landmark"></span><span class="wm-field-no">11</span><span class="wm-field-name"><span class="ko">정치계(전·현직)</span><span class="en">Political Leaders (Current &amp; Former)</span></span></li>
               <li class="is-total" aria-hidden="true"><span class="wm-field-total"><b data-stat="per_country">33</b><small><span class="ko">인 / 나라별</span><span class="en">per nation</span></small></span></li>
             </ol>
-            <a class="link-arrow" href="global33.html"><span class="ko">글로벌 33 자세히 보기</span><span class="en">Learn more about Global 33</span></a>
+            <a class="link-arrow" href="global33.html"><span class="ko">글로벌 33 자세히 보기</span><span class="en">About Global 33</span></a>
           </div>
         </div>
 
         <aside class="wm-side" aria-labelledby="wm-join-title">
           <span class="eyebrow">Join Us</span>
-          <h3 class="wm-side-title" id="wm-join-title"><span class="ko">우리나라도 함께하세요</span><span class="en">Bring the Declaration to Your Nation</span></h3>
-          <p class="wm-side-text"><span class="ko">세계희망선언은 나라마다 <span data-stat="per_country">33</span>인의 글로벌 대표와 함께 이어집니다. 우리나라의 참여를 신청해 주세요.</span><span class="en">The World Hope Declaration grows nation by nation, with <span data-stat="per_country">33</span> Global Representatives in each. Apply for your nation to join.</span></p>
+          <h3 class="wm-side-title" id="wm-join-title"><span class="ko">여러분의 나라도 함께하세요</span><span class="en">Bring the Declaration to Your Nation</span></h3>
+          <p class="wm-side-text"><span class="ko">세계희망선언은 나라마다 <span data-stat="per_country">33</span>인의 글로벌 대표와 함께 이어집니다. 여러분 나라의 참여를 신청해 주세요.</span><span class="en">The World Hope Declaration grows nation by nation, with <span data-stat="per_country">33</span> Global Representatives in each. Apply for your nation to join.</span></p>
           <div class="wm-progress">
             <p class="wm-progress-top"><span><span class="ko">참여 국가</span><span class="en">Participating nations</span></span><span><b data-wm="count">1</b> <em>/ <span data-stat="countries">195</span></em></span></p>
             <p class="wm-progress-asof"><span class="ko">기준일</span><span class="en">As of</span> <span data-stat="updated">2026-10-12</span></p>
@@ -327,7 +326,7 @@
 <div id="site-footer"></div>
 <script src="assets/js/config.js?v=20261013"></script>
 <script src="assets/js/data.js?v=20261013"></script>
-<script src="assets/js/main.js?v=20261013"></script>
+<script src="assets/js/main.js?v=20261013e"></script>
 <script src="assets/js/worldmap.js?v=20261013"></script>
 </body>
 </html>

@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Serif:ital,wght@0,500;0,700;1,500&display=swap">
-<link rel="stylesheet" href="assets/css/style.css?v=20261013d">
+<link rel="stylesheet" href="assets/css/style.css?v=20261013e">
 <script>(function(){try{var l=new URLSearchParams(location.search).get("lang")||localStorage.getItem("wh-lang");if(l==="en"){var h=document.documentElement;h.setAttribute("data-lang","en");h.lang="en";}}catch(e){}})();</script>
 <style>
   /* ===== 비전과 미션 페이지 전용 (공통 style.css 의 토큰만 사용) ===== */
@@ -47,10 +47,12 @@
   .vision-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
 
   /* 2. 취지문: 안개 낀 산 위의 편지 */
-  .purpose-band { position: relative; overflow: hidden; isolation: isolate; padding: 92px 0 100px; background: linear-gradient(180deg, #e9f0f7 0%, #f2f6fa 32%, #f8fafc 72%, #fff 100%); }
+  .purpose-band { position: relative; overflow: hidden; isolation: isolate; padding: 92px 0 44px; background: linear-gradient(180deg, #e9f0f7 0%, #f2f6fa 32%, #f8fafc 72%, #fff 100%); }
   .purpose-band .mountains { height: 340px; }
+  /* 취지문 띠와 미션은 둘 다 밝은 바탕이라, 사이를 줄여 빈 띠처럼 보이지 않게 (취지문 아래 44px + 미션 위 80px) */
+  .purpose-band + #mission { padding-top: 80px; }
   /* 편지: 흰 종이 한 장 (이중 테두리·형광펜 없이) */
-  .purpose-letter { position: relative; padding: 72px 88px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 46px 90px -60px rgba(19, 41, 75, .38); }
+  .purpose-letter { position: relative; padding: 72px 88px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow-art); }
   .purpose-mark { width: 52px; height: 52px; margin: 0 auto 28px; }
   .purpose-letter p { position: relative; max-width: 36em; margin: 0 auto 1.15em; font-family: var(--f-serif); font-size: 18px; font-weight: 400; line-height: 1.95; letter-spacing: -0.01em; color: var(--ink); }
   html[data-lang="en"] .purpose-letter p { font-family: var(--f-serif-en); font-size: 17.5px; letter-spacing: 0; line-height: 1.9; }
@@ -99,7 +101,8 @@
     .vision-statement-body { padding: 0; border-left: 0; }
   }
   @media (max-width: 760px) {
-    .purpose-band { padding: 60px 0 68px; }
+    .purpose-band { padding: 60px 0 32px; }
+    .purpose-band + #mission { padding-top: 52px; }
     .purpose-band .mountains { height: 220px; }
     /* 편지를 화면 끝까지 넓혀 본문 폭 확보 */
     .purpose-letter { margin-inline: calc(-1 * var(--gutter)); padding: 36px 22px 32px; border-inline: 0; border-radius: 0; }
@@ -110,7 +113,7 @@
     html[data-lang="en"] .purpose-letter p { font-size: 16px; line-height: 1.9; }
     .purpose-letter .purpose-close { margin-top: 26px; padding-top: 24px; }
     .vision-actions { display: grid; gap: 10px; margin-top: 26px; }
-    .vision-actions .btn { width: 100%; min-height: 50px; }
+    .vision-actions .btn { width: 100%; }
     .flow-step .flow-by { grid-column: 2; margin-top: 10px; }
     .mission-links { flex-direction: column; align-items: flex-start; gap: 10px; margin-top: 20px; }
     .values-foot .btn { width: 100%; max-width: 360px; }
@@ -120,7 +123,7 @@
   }
 </style>
 </head>
-<body data-page="vision" data-title-en="Vision &amp; Mission | World Hope Declaration Network">
+<body data-page="vision" data-title-en="Vision &amp; Mission — A Great Journey to Restore Human Spirituality | World Hope Declaration Network">
 <div id="site-header"></div>
 
 <main id="main">
@@ -195,7 +198,7 @@
         <p class="purpose-close ko">우리에겐 용기가 필요합니다. 6,000년간 사람의 두뇌를 길들여 온 상대성 지식체계가, 안주하던 세상의 품을 떠나지 않으려 할 수도 있습니다. 그러나 그것은 진짜 인류의 희망이 무엇인지를 아직 모르기 때문입니다.</p>
         <p class="purpose-close en">We need courage. The relative system of knowledge that has tamed the human mind for 6,000 years may refuse to leave the embrace of the world it has grown comfortable in. But that is only because it does not yet know what humanity’s true hope is.</p>
       </article>
-      <p class="purpose-foot reveal"><a class="link-arrow" href="about.html#greeting"><span class="ko">위원장 인사말 읽기</span><span class="en">Read the Chairman’s greeting</span></a></p>
+      <p class="purpose-foot reveal"><a class="link-arrow" href="about.html#greeting"><span class="ko">위원장 인사말 읽기</span><span class="en">Read the Chairman’s Greeting</span></a></p>
     </div>
   </section>
 
@@ -213,14 +216,14 @@
           <span class="flow-no">STEP 01 · RESEARCH</span>
           <h3 class="flow-title"><span class="ko">연구</span><span class="en">Research</span></h3>
           <p class="flow-text"><span class="ko">인류 모두가 공감할 <br class="hide-mobile">희망선언문을 연구합니다.</span><span class="en">We research a Declaration of Hope that all humanity can embrace.</span></p>
-          <span class="flow-by"><span class="ko">세계희망선언위원회</span><span class="en">Declaration Council</span></span>
+          <span class="flow-by"><span class="ko">세계희망선언위원회</span><span class="en">The Council</span></span>
         </li>
         <li class="flow-step reveal">
           <span class="flow-icon" data-icon="filecheck"></span>
           <span class="flow-no">STEP 02 · ADOPTION</span>
           <h3 class="flow-title"><span class="ko">채택</span><span class="en">Adoption</span></h3>
           <p class="flow-text"><span class="ko">연구한 희망선언문을 <br class="hide-mobile">채택합니다.</span><span class="en">We adopt the Declaration of Hope.</span></p>
-          <span class="flow-by"><span class="ko">세계희망선언위원회</span><span class="en">Declaration Council</span></span>
+          <span class="flow-by"><span class="ko">세계희망선언위원회</span><span class="en">The Council</span></span>
         </li>
         <li class="flow-step reveal">
           <span class="flow-icon" data-icon="megaphone"></span>
@@ -234,13 +237,13 @@
           <span class="flow-no">STEP 04 · PRACTICE</span>
           <h3 class="flow-title"><span class="ko">실천</span><span class="en">Practice</span></h3>
           <p class="flow-text"><span class="ko">세계희망연대를 통해 실천 사항을 <br class="hide-mobile">입체적으로 전개합니다.</span><span class="en">Through the Network, its commitments are lived out in every dimension.</span></p>
-          <span class="flow-by"><span class="ko">세계희망연대</span><span class="en">Declaration Network</span></span>
+          <span class="flow-by"><span class="ko">세계희망연대</span><span class="en">The Network</span></span>
         </li>
       </ol>
       <ul class="mission-links reveal">
         <li><a class="link-arrow" href="declaration.html"><span class="ko">세계희망선언문 보기</span><span class="en">Read the Declaration</span></a></li>
         <li><a class="link-arrow" href="global33.html"><span class="ko">글로벌 33 알아보기</span><span class="en">About Global 33</span></a></li>
-        <li><a class="link-arrow" href="about.html#organization"><span class="ko">조직 구성 보기</span><span class="en">Our organization</span></a></li>
+        <li><a class="link-arrow" href="about.html#organization"><span class="ko">조직 구성 보기</span><span class="en">Our Organization</span></a></li>
       </ul>
     </div>
   </section>
@@ -289,7 +292,7 @@
             <span class="sub"><span class="ko">세계희망연대</span><span class="en">World Hope Declaration Network</span></span>
             <p><span class="ko">선언은 실천으로 완성됩니다. 세계희망연대는 희망선언의 실천 사항들을 삶의 여러 영역에서 입체적으로 전개합니다.</span><span class="en">A declaration is completed by practice. The World Hope Declaration Network carries out the commitments of the Declaration across every area of life.</span></p>
             <blockquote><span class="ko">“…또한 세계희망연대를 통하여 실천 사항들을 입체적으로 전개하면서…”</span><span class="en">“…and through the World Hope Declaration Network, it will carry out its practical commitments in every dimension…”</span><cite><span class="ko">— 위원장 인사말 중</span><span class="en">— from the Chairman’s greeting</span></cite></blockquote>
-            <a class="link-arrow" href="join.html#declare"><span class="ko">참여하기</span><span class="en">Join us</span></a>
+            <a class="link-arrow" href="join.html#declare"><span class="ko">참여하기</span><span class="en">Join Us</span></a>
           </div>
         </article>
 
@@ -309,9 +312,9 @@
             <span class="ministry-cap">Mission March</span>
             <h3><span class="ko">대중과 함께하는 선교행진</span><span class="en">A Mission March with the Public</span></h3>
             <span class="sub"><span class="ko">인간의 영성회복을 위한 대장정</span><span class="en">A great journey to restore human spirituality</span></span>
-            <p><span class="ko">선악적 지식의 이중성에 종속되어 다툼과 반목 속에 살아가는 인간이 수평논리와 중심의 질서를 받아들여, 공의·평화·화합이 하나 된 본질적인 사랑의 속성을 되찾는 길. 세계희망연대는 이 인간의 영성회복을 위한 대장정을 세상 속에서 구체적으로 펼쳐 가며 대중과 함께 이어갑니다.</span><span class="en">A path on which people bound to the duality of the knowledge of good and evil, living amid strife and hostility, embrace horizontal logic and the order of the center, and recover the essential nature of love in which righteousness, peace and harmony are one. The World Hope Declaration Network unfolds this great journey to restore human spirituality concretely in the world and carries it forward together with the public.</span></p>
+            <p><span class="ko">선악적 지식의 이중성에 종속되어 다툼과 반목 속에 살아가는 인간이 수평논리와 중심의 질서를 받아들여, 공의·평화·화합이 하나 된 본질적인 사랑의 속성을 되찾는 길. 세계희망연대는 이 인간의 영성회복을 위한 대장정을 세상 속에서 구체적으로 펼쳐 가며 대중과 함께 이어 갑니다.</span><span class="en">A path on which people bound to the duality of the knowledge of good and evil, living amid strife and hostility, embrace horizontal logic and the order of the center, and recover the essential nature of love in which righteousness, peace and harmony are one. The World Hope Declaration Network unfolds this great journey to restore human spirituality concretely in the world and carries it forward together with the public.</span></p>
             <blockquote><span class="ko">“이제 분열은 더 이상 그만! 이제 이 땅에 하나의 희망을 선포합시다.”</span><span class="en">“Enough division! Now let us proclaim one hope over this land.”</span><cite><span class="ko">— 취지문 중</span><span class="en">— from our statement of purpose</span></cite></blockquote>
-            <a class="link-arrow" href="#purpose"><span class="ko">취지문 읽기</span><span class="en">Read our statement of purpose</span></a>
+            <a class="link-arrow" href="#purpose"><span class="ko">취지문 읽기</span><span class="en">Read the Statement of Purpose</span></a>
           </div>
         </article>
 
@@ -328,7 +331,7 @@
   <section class="section vision-anchor" id="values" aria-labelledby="values-title">
     <div class="container">
       <div class="section-head split reveal">
-        <h2 class="section-title" id="values-title"><span class="ko">세계희망선언 5대 가치</span><span class="en">The Five Values</span></h2>
+        <h2 class="section-title" id="values-title"><span class="ko">세계희망선언<sup class="tm">™</sup> 5대 가치</span><span class="en">The Five Values</span></h2>
         <p class="section-sub">Five Values</p>
         <p class="section-lead"><span class="ko">평화 · 지구환경 · 사람 · 연대 · 실천 — 오늘의 선언을 내일의 현실로 만들어 갈 다섯 가지 가치입니다.</span><span class="en">Peace · Planet · People · Partnership · Action — five values that turn today’s declaration into tomorrow’s reality.</span></p>
       </div>
@@ -388,7 +391,9 @@
       <div>
         <span class="eyebrow">Join Us</span>
         <h2 class="cta-title" id="vision-cta-title"><span class="ko">희망의 선교행진에 함께해 주세요</span><span class="en">Walk with Us in the March of Hope</span></h2>
-        <p class="cta-text"><span class="ko">선언에 참여하고, 후원으로 마음을 보태 주세요. 보내 주시는 귀한 정성은 희망의 선교행진을 위해 소중히 쓰입니다.</span><span class="en">Join the Declaration, or give to support it. Your gift will be used faithfully for the mission march of hope.</span></p>
+        <!-- 후원이 준비되기 전에는 후원 문장 대신 참여·추천 문장 (아래 버튼과 같은 기준: main.js applyGiving) -->
+        <p class="cta-text" data-giving-pending><span class="ko">선언에 참여하고, 글로벌 대표를 추천해 주세요.</span><span class="en">Join the Declaration and nominate a Global Representative.</span></p>
+        <p class="cta-text" data-giving-ready hidden><span class="ko">선언에 참여하고, 후원으로 마음을 보태 주세요. 보내 주시는 귀한 정성은 희망의 선교행진을 위해 소중히 쓰입니다.</span><span class="en">Join the Declaration, or give to support it. Your gift will be used faithfully for the mission march of hope.</span></p>
       </div>
       <div class="cta-actions">
         <a class="btn btn-light btn-lg" href="join.html#declare"><span class="ko">선언에 참여하기</span><span class="en">Join the Declaration</span><span data-icon="arrow-right"></span></a>
@@ -403,7 +408,7 @@
 <div id="site-footer"></div>
 <script src="assets/js/config.js?v=20261013"></script>
 <script src="assets/js/data.js?v=20261013"></script>
-<script src="assets/js/main.js?v=20261013"></script>
+<script src="assets/js/main.js?v=20261013e"></script>
 <script>
   // 비전과 미션: 하위 메뉴에서 현재 구역 강조 (좁은 화면에서는 강조된 메뉴가 보이도록 가로 스크롤)
   (function () {

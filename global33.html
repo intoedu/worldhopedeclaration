@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>글로벌 33 — 나라마다 대표 33인 | 세계희망연대</title>
-<meta name="description" content="세계희망선언 글로벌 대표 — 각국 33인(11개 분야 × 각 3인). 11개 분야와 글로벌 확장 구조, 글로벌 대표 패·ID 카드 예시를 소개합니다.">
+<meta name="description" content="세계희망선언 글로벌 대표 — 각국 33인(11개 분야 × 각 3인). 11개 분야와 글로벌 확장 구조, 글로벌 대표 선정패·ID 카드 예시를 소개합니다.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="세계희망연대">
 <meta property="og:title" content="글로벌 33 | 세계희망연대">
@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Serif:ital,wght@0,500;0,700;1,500&display=swap">
-<link rel="stylesheet" href="assets/css/style.css?v=20261013d">
+<link rel="stylesheet" href="assets/css/style.css?v=20261013e">
 <script>(function(){try{var l=new URLSearchParams(location.search).get("lang")||localStorage.getItem("wh-lang");if(l==="en"){var h=document.documentElement;h.setAttribute("data-lang","en");h.lang="en";}}catch(e){}})();</script>
 <style>
   /* ===== 글로벌 33 페이지 전용 (공통 style.css 의 토큰만 사용) ===== */
@@ -28,8 +28,9 @@
 
   /* ---------- 상단 히어로: 왼쪽 글 + 오른쪽 "33 = 11 × 3" 문장(紋章) ---------- */
   /* 공통 머리말 공식(금색 눈썹글 → 제목 → 부제 → 설명) + 오른쪽 문장(紋章) */
-  .g33-hero { padding: 72px 0 72px; }
-  .g33-hero-grid { width: 100%; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px); gap: 32px 64px; align-items: center; }
+  .g33-hero { padding: 88px 0 72px; }
+  /* 글은 위에 맞춤 (경로와 눈썹글 사이가 다른 머리말과 같도록) */
+  .g33-hero-grid { width: 100%; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px); gap: 32px 64px; align-items: start; }
   .g33-hero-text { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; }
   .g33-hero h1 { order: -1; }
   .g33-hero .page-hero-en { order: -2; }
@@ -131,11 +132,7 @@
 
   .g33-legend { justify-content: center; margin-top: 26px; }
   .g33-legend .legend-dot.is-gold { box-shadow: 0 0 0 2px #fff, 0 0 0 3px var(--gold-300); }
-  .g33-formula-line { margin: 44px 0 0; text-align: center; font-family: var(--f-serif); font-size: clamp(20px, 2.3vw, 28px); font-weight: 700; letter-spacing: -0.02em; color: var(--navy-900); text-wrap: balance; }
-  html[data-lang="en"] .g33-formula-line { font-family: var(--f-serif-en); letter-spacing: 0; }
-  .g33-formula-line b { font-family: var(--f-serif-en); font-weight: 700; color: var(--blue-700); }
-  .g33-formula-line-en { margin: 6px 0 0; text-align: center; font-family: var(--f-serif-en); font-size: 15px; font-style: italic; color: var(--ink-2); }
-  .g33-live { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 10px; margin: 22px 0 0; font-size: 14.5px; color: var(--ink-2); }
+  .g33-live { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 10px; margin: 36px 0 0; font-size: 14.5px; color: var(--ink-2); }
   .g33-live-chip { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border: 1px solid var(--line-2); border-radius: var(--radius-xs); background: #fff; }
   .g33-live-chip svg { width: 18px; height: 18px; color: var(--blue-700); }
   .g33-live-chip b { font-family: var(--f-serif-en); font-size: 17px; color: var(--navy-900); }
@@ -145,7 +142,7 @@
   html[data-lang="en"] .g33-one-ko { font-family: var(--f-serif-en); }
   .g33-one-en { display: block; margin-top: 4px; font-family: var(--f-display); font-size: 12.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--blue-700); }
 
-  /* ---------- 글로벌 대표 패 (어두운 띠 · 크리스털 패) ---------- */
+  /* ---------- 글로벌 대표 선정패 (어두운 띠 · 크리스털 패) ---------- */
   .g33-award { position: relative; overflow: hidden; isolation: isolate; padding: 100px 0; background: radial-gradient(70% 95% at 76% 46%, #234a80 0%, var(--navy-900) 46%, var(--navy-950) 100%); color: #c9d6ea; }
   .g33-award::before { content: ""; position: absolute; z-index: -1; right: 4%; top: 6%; width: 640px; max-width: 70%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(220, 196, 140, .2) 0%, rgba(220, 196, 140, 0) 62%); pointer-events: none; }
   /* 옅은 점 세계지도 (지평선 곡선 대신) */
@@ -251,7 +248,7 @@
     .page-hero.g33-hero p.g33-hero-kicker { display: none; }   /* 같은 표어가 페이지 곳곳에 있어 휴대폰 머리말에서는 생략 */
     .g33-eq { margin-top: 16px; }
     .g33-hero-actions { display: grid; gap: 10px; width: 100%; margin-top: 18px; }
-    .g33-hero-actions .btn { width: 100%; min-height: 50px; }
+    .g33-hero-actions .btn { width: 100%; }
     .g33-eq-term { padding: 8px 12px 8px 10px; gap: 7px; }
     .g33-eq-term b { font-size: 25px; }
     .g33-eq-term small { font-size: 12.5px; }
@@ -331,7 +328,7 @@
       <div class="g33-hero-grid">
       <div class="g33-hero-text">
         <p class="g33-hero-kicker"><span class="ko">분열을 넘어, 하나의 희망으로</span><span class="en">From Division to Hope, Together for a Better World</span></p>
-        <h1 id="page-title"><span class="ko">세계희망선언 <br class="show-mobile">글로벌 대표</span><span class="en">Global Representatives</span></h1>
+        <h1 id="page-title"><span class="ko">세계희망선언<sup class="tm">™</sup> <br class="show-mobile">글로벌 대표</span><span class="en">Global Representatives</span></h1>
         <p class="page-hero-en">Global 33</p>
         <p class="g33-hero-lead"><span class="ko">세계희망선언의 정신에 동의하고 지구와 인류의 더 나은 미래를 위해 헌신하는 사람들 — 나라마다 11개 분야에서 각 3인씩, 33인의 글로벌 대표를 선정합니다.</span><span class="en">People who share the spirit of the World Hope Declaration and devote themselves to a better future for humanity and the Earth — in every nation, 33 Global Representatives: 3 in each of 11 fields.</span></p>
         <div class="g33-eq" role="group" aria-label="각국 33인 = 11개 분야 × 각 3인" data-en-aria-label="33 per nation = 11 fields × 3 persons each">
@@ -395,7 +392,7 @@
       <ul>
         <li><a href="#fields"><span class="ko">11개 분야</span><span class="en">11 Fields</span></a></li>
         <li><a href="#structure"><span class="ko">글로벌 확장 구조</span><span class="en">Global Structure</span></a></li>
-        <li><a href="#plaque"><span class="ko">글로벌 대표 패</span><span class="en">Plaque</span></a></li>
+        <li><a href="#plaque"><span class="ko">글로벌 대표 선정패</span><span class="en">Plaque</span></a></li>
         <li><a href="#idcard"><span class="ko">ID 카드</span><span class="en">ID Card</span></a></li>
         <li><a href="#nominate"><span class="ko">추천하기</span><span class="en">Nominate</span></a></li>
       </ul>
@@ -414,7 +411,7 @@
         <aside class="g33-formula-box" aria-label="글로벌 대표 목표" data-en-aria-label="Global target">
           <span class="g33-fb-label">Global Formula</span>
           <p class="g33-fb-main"><span class="ko">세계 각국 <b data-stat="per_country">33</b>인 × <b data-stat="countries">195</b>개국 = <b data-stat="target">6,435</b>인</span><span class="en"><b data-stat="per_country">33</b> per nation × <b data-stat="countries">195</b> nations = <b data-stat="target">6,435</b></span></p>
-          <p class="g33-fb-en"><span class="ko" lang="en"><span data-stat="per_country">33</span> Representatives per Nation × <span data-stat="countries">195</span> Countries = <span data-stat="target">6,435</span> Global Representatives</span><span class="en">Global Representatives (target)</span></p>
+          <p class="g33-fb-en"><span class="ko" lang="en"><span data-stat="per_country">33</span> Representatives per Nation × <span data-stat="countries">195</span> Nations = <span data-stat="target">6,435</span> Global Representatives</span><span class="en">Global Representatives (target)</span></p>
         </aside>
       </div>
 
@@ -422,77 +419,77 @@
         <li class="field-card">
           <div class="field-card-top"><span class="field-no"><span class="field-dot" aria-hidden="true"></span><span class="field-word">Field&nbsp;</span>01</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
           <span class="field-icon" data-icon="megaphone"></span>
-          <h3 class="field-name"><span class="ko">사회영향력</span><span class="en">Social Influence</span></h3>
+          <h3 class="field-name"><a class="field-card-link" href="korea33.html#field-01"><span class="ko">사회영향력</span><span class="en">Social Influence</span></a></h3>
           <p class="field-en"><span class="ko" lang="en">Social Influence</span><span class="en" lang="ko">사회영향력</span></p>
           <p class="field-desc"><span class="ko">사회에 긍정적 영향을 미치는 인물</span><span class="en">People who have a positive influence on society</span></p>
         </li>
         <li class="field-card">
           <div class="field-card-top"><span class="field-no"><span class="field-dot" aria-hidden="true"></span><span class="field-word">Field&nbsp;</span>02</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
           <span class="field-icon" data-icon="trophy"></span>
-          <h3 class="field-name"><span class="ko">국위선양</span><span class="en">National Prestige</span></h3>
+          <h3 class="field-name"><a class="field-card-link" href="korea33.html#field-02"><span class="ko">국위선양</span><span class="en">National Prestige</span></a></h3>
           <p class="field-en"><span class="ko" lang="en">National Prestige</span><span class="en" lang="ko">국위선양</span></p>
           <p class="field-desc"><span class="ko">국가의 위상을 높이는 인물</span><span class="en">People who raise the standing of their nation</span></p>
         </li>
         <li class="field-card">
           <div class="field-card-top"><span class="field-no"><span class="field-dot" aria-hidden="true"></span><span class="field-word">Field&nbsp;</span>03</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
           <span class="field-icon" data-icon="book"></span>
-          <h3 class="field-name"><span class="ko">교육계</span><span class="en">Academia &amp; Education</span></h3>
+          <h3 class="field-name"><a class="field-card-link" href="korea33.html#field-03"><span class="ko">교육계</span><span class="en">Academia &amp; Education</span></a></h3>
           <p class="field-en"><span class="ko" lang="en">Academia &amp; Education</span><span class="en" lang="ko">교육계</span></p>
           <p class="field-desc"><span class="ko">교육과 지식으로 세대를 세우는 인물</span><span class="en">People who build up generations through education and knowledge</span></p>
         </li>
         <li class="field-card">
           <div class="field-card-top"><span class="field-no"><span class="field-dot" aria-hidden="true"></span><span class="field-word">Field&nbsp;</span>04</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
           <span class="field-icon" data-icon="palette"></span>
-          <h3 class="field-name"><span class="ko">문화예술계</span><span class="en">Culture &amp; Arts</span></h3>
+          <h3 class="field-name"><a class="field-card-link" href="korea33.html#field-04"><span class="ko">문화예술계</span><span class="en">Culture &amp; Arts</span></a></h3>
           <p class="field-en"><span class="ko" lang="en">Culture &amp; Arts</span><span class="en" lang="ko">문화예술계</span></p>
           <p class="field-desc"><span class="ko">문화를 통해 세상을 풍요롭게 하는 인물</span><span class="en">People who enrich the world through culture</span></p>
         </li>
         <li class="field-card">
           <div class="field-card-top"><span class="field-no"><span class="field-dot" aria-hidden="true"></span><span class="field-word">Field&nbsp;</span>05</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
           <span class="field-icon" data-icon="cross"></span>
-          <h3 class="field-name"><span class="ko">종교계</span><span class="en">Religious Leaders</span></h3>
+          <h3 class="field-name"><a class="field-card-link" href="korea33.html#field-05"><span class="ko">종교계</span><span class="en">Religious Leaders</span></a></h3>
           <p class="field-en"><span class="ko" lang="en">Religious Leaders</span><span class="en" lang="ko">종교계</span></p>
           <p class="field-desc"><span class="ko">영적 가치와 사랑을 실천하는 인물</span><span class="en">People who live out spiritual values and love</span></p>
         </li>
         <li class="field-card">
           <div class="field-card-top"><span class="field-no"><span class="field-dot" aria-hidden="true"></span><span class="field-word">Field&nbsp;</span>06</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
           <span class="field-icon" data-icon="chart"></span>
-          <h3 class="field-name"><span class="ko">산업계</span><span class="en">Industry &amp; Business</span></h3>
+          <h3 class="field-name"><a class="field-card-link" href="korea33.html#field-06"><span class="ko">산업계</span><span class="en">Industry &amp; Business</span></a></h3>
           <p class="field-en"><span class="ko" lang="en">Industry &amp; Business</span><span class="en" lang="ko">산업계</span></p>
           <p class="field-desc"><span class="ko">경제와 산업 발전으로 사회를 이끄는 인물</span><span class="en">People who lead society through economic and industrial growth</span></p>
         </li>
         <li class="field-card">
           <div class="field-card-top"><span class="field-no"><span class="field-dot" aria-hidden="true"></span><span class="field-word">Field&nbsp;</span>07</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
           <span class="field-icon" data-icon="shield"></span>
-          <h3 class="field-name"><span class="ko">국방사회안전</span><span class="en">Defense, Safety &amp; Public Security</span></h3>
+          <h3 class="field-name"><a class="field-card-link" href="korea33.html#field-07"><span class="ko">국방사회안전</span><span class="en">Defense, Safety &amp; Public Security</span></a></h3>
           <p class="field-en"><span class="ko" lang="en">Defense, Safety &amp; Public Security</span><span class="en" lang="ko">국방사회안전</span></p>
           <p class="field-desc"><span class="ko">국가와 국민의 안전을 지키는 인물</span><span class="en">People who protect the safety of the nation and its people</span></p>
         </li>
         <li class="field-card">
           <div class="field-card-top"><span class="field-no"><span class="field-dot" aria-hidden="true"></span><span class="field-word">Field&nbsp;</span>08</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
           <span class="field-icon" data-icon="medical"></span>
-          <h3 class="field-name"><span class="ko">의료계</span><span class="en">Medical &amp; Health</span></h3>
+          <h3 class="field-name"><a class="field-card-link" href="korea33.html#field-08"><span class="ko">의료계</span><span class="en">Medical &amp; Health</span></a></h3>
           <p class="field-en"><span class="ko" lang="en">Medical &amp; Health</span><span class="en" lang="ko">의료계</span></p>
           <p class="field-desc"><span class="ko">생명과 건강을 지키는 인물</span><span class="en">People who protect life and health</span></p>
         </li>
         <li class="field-card">
           <div class="field-card-top"><span class="field-no"><span class="field-dot" aria-hidden="true"></span><span class="field-word">Field&nbsp;</span>09</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
           <span class="field-icon" data-icon="tool"></span>
-          <h3 class="field-name"><span class="ko">생업종사자</span><span class="en">Workers &amp; Livelihood</span></h3>
+          <h3 class="field-name"><a class="field-card-link" href="korea33.html#field-09"><span class="ko">생업종사자</span><span class="en">Workers &amp; Livelihood</span></a></h3>
           <p class="field-en"><span class="ko" lang="en">Workers &amp; Livelihood</span><span class="en" lang="ko">생업종사자</span></p>
           <p class="field-desc"><span class="ko">현장에서 땀 흘리는 모든 생업 종사자</span><span class="en">All who work hard on the ground to earn their living</span></p>
         </li>
         <li class="field-card">
           <div class="field-card-top"><span class="field-no"><span class="field-dot" aria-hidden="true"></span><span class="field-word">Field&nbsp;</span>10</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
           <span class="field-icon" data-icon="users"></span>
-          <h3 class="field-name"><span class="ko">시민</span><span class="en">Citizens</span></h3>
+          <h3 class="field-name"><a class="field-card-link" href="korea33.html#field-10"><span class="ko">시민</span><span class="en">Citizens</span></a></h3>
           <p class="field-en"><span class="ko" lang="en">Citizens</span><span class="en" lang="ko">시민</span></p>
           <p class="field-desc"><span class="ko">선한 영향력을 실천하는 일반 시민 대표</span><span class="en">Representatives of ordinary citizens who spread good influence</span></p>
         </li>
         <li class="field-card">
           <div class="field-card-top"><span class="field-no"><span class="field-dot" aria-hidden="true"></span><span class="field-word">Field&nbsp;</span>11</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
           <span class="field-icon" data-icon="landmark"></span>
-          <h3 class="field-name"><span class="ko">정치계(전·현직)</span><span class="en">Political Leaders (Current &amp; Former)</span></h3>
+          <h3 class="field-name"><a class="field-card-link" href="korea33.html#field-11"><span class="ko">정치계(전·현직)</span><span class="en">Political Leaders (Current &amp; Former)</span></a></h3>
           <p class="field-en"><span class="ko" lang="en">Political Leaders (Current &amp; Former)</span><span class="en" lang="ko">정치계(전·현직)</span></p>
           <p class="field-desc"><span class="ko">공공의 미래를 위해 헌신하는 정치인</span><span class="en">Politicians dedicated to the future of the public</span></p>
         </li>
@@ -501,7 +498,7 @@
           <h3><span class="ko">한 나라, 33인</span><span class="en">One Nation, 33 People</span></h3>
           <p class="g33-sum-eq"><span data-stat="fields">11</span> × <span data-stat="per_field">3</span> = <span data-stat="per_country">33</span></p>
           <p class="g33-sum-text"><span class="ko">11개 분야에서 분야마다 3인씩, 세계희망선언의 정신으로 헌신하는 글로벌 대표를 세웁니다.</span><span class="en">Three in each of the 11 fields — Global Representatives devoted to the spirit of the World Hope Declaration.</span></p>
-          <a class="link-arrow" href="korea33.html#form"><span class="ko">글로벌 대표 추천하기</span><span class="en">Nominate a representative</span></a>
+          <a class="link-arrow" href="korea33.html#form"><span class="ko">글로벌 대표 추천하기</span><span class="en">Nominate a Representative</span></a>
         </li>
       </ol>
     </div>
@@ -539,7 +536,7 @@
             <span class="g33-step-icon" data-icon="target"></span>
             <p class="g33-step-num"><b data-stat="target">6,435</b><small><span class="ko">인</span><span class="en">people</span></small></p>
             <p class="g33-step-label">Global Target</p>
-            <p class="g33-step-desc"><span class="ko">글로벌 대표 네트워크 (목표)</span><span class="en">Global Representatives network (target)</span></p>
+            <p class="g33-step-desc"><span class="ko">글로벌 대표 네트워크 (목표치)</span><span class="en">Global Representatives network (target)</span></p>
           </div>
         </div>
 
@@ -548,8 +545,7 @@
         </ul>
       </div>
 
-      <p class="g33-formula-line"><span class="ko">세계 각국 <b data-stat="per_country">33</b>인 × <b data-stat="countries">195</b>개국 = <b data-stat="target">6,435</b>인</span><span class="en"><b data-stat="per_country">33</b> per nation × <b data-stat="countries">195</b> nations = <b data-stat="target">6,435</b> representatives</span></p>
-      <p class="g33-formula-line-en ko" lang="en"><span data-stat="per_country">33</span> Representatives per Nation × <span data-stat="countries">195</span> Countries = <span data-stat="target">6,435</span> Global Representatives</p>
+      <!-- 공식(33 × 195 = 6,435)은 위 세 칸이 보여 주므로 같은 문장을 다시 쓰지 않음 -->
       <p class="g33-live">
         <span class="g33-live-chip"><span data-icon="users"></span><span class="ko">현재 참여자 수</span><span class="en">Current participants</span><span class="g33-live-num"><b data-stat="participants">21</b><span class="ko">명</span></span></span>
         <span class="g33-live-chip"><span data-icon="calendar"></span><span class="ko">기준일</span><span class="en">As of</span> <span data-stat="updated">2026-10-12</span></span>
@@ -558,13 +554,13 @@
     </div>
   </section>
 
-  <!-- ===== 3. 글로벌 대표 패 (어두운 띠) ===== -->
+  <!-- ===== 3. 글로벌 대표 선정패 (어두운 띠) ===== -->
   <section class="g33-award g33-anchor" id="plaque" aria-labelledby="plaque-title">
     <div class="container g33-award-grid">
       <div class="g33-award-text">
         <div class="section-head">
           <span class="eyebrow">Global Representative Plaque</span>
-          <h2 class="section-title" id="plaque-title"><span class="ko">글로벌 대표 패</span><span class="en">The Global Representative Plaque</span></h2>
+          <h2 class="section-title" id="plaque-title"><span class="ko">글로벌 대표 선정패</span><span class="en">The Global Representative Plaque</span></h2>
           <p class="section-lead"><span class="ko">세계희망선언의 정신에 동의하고 지구와 인류의 더 나은 미래를 위해 헌신하는 글로벌 대표에게 드리는 패입니다. 패에는 세계희망선언의 다섯 가지 가치가 함께 새겨집니다.</span><span class="en">A plaque for Global Representatives who share the spirit of the World Hope Declaration and devote themselves to a better future for humanity and the Earth. It carries the five values of the Declaration.</span></p>
         </div>
         <ul class="g33-award-values">
@@ -596,7 +592,7 @@
                 <picture><source srcset="assets/img/brand/logo-mark-160.webp" type="image/webp"><img src="assets/img/brand/logo-mark-160.png" alt="" width="58" height="58" loading="lazy"></picture>
               </div>
               <p class="g33-cr-title" lang="ko">세계희망선언</p>
-              <p class="g33-cr-sub" lang="en">WORLD HOPE DECLARATION™</p>
+              <p class="g33-cr-sub" lang="en">WORLD HOPE DECLARATION</p>
               <p class="g33-cr-role"><span lang="ko">글로벌 대표</span><small lang="en">Global Representative</small></p>
               <span class="g33-cr-rule" aria-hidden="true"></span>
               <p class="g33-cr-text" lang="ko">당신은 세계희망선언의 정신에 동의하고 지구와 인류의 더 나은 미래를 위해 헌신하는 글로벌 대표로 선정되었기에 이 패를 드립니다.</p>
@@ -610,7 +606,7 @@
           <p class="keywords mb-0" lang="ko"><span>평화</span><span>지구환경</span><span>사람</span><span>연대</span><span>실천</span></p>
           <p class="keywords g33-kw-en mb-0" lang="en"><span>PEACE</span><span>PLANET</span><span>PEOPLE</span><span>PARTNERSHIP</span><span>ACTION</span></p>
         </div>
-        <figcaption class="sr-only"><span class="ko">글로벌 대표 패 디자인 예시</span><span class="en">Sample design of the Global Representative plaque</span></figcaption>
+        <figcaption class="sr-only"><span class="ko">글로벌 대표 선정패 디자인 예시</span><span class="en">Sample design of the Global Representative plaque</span></figcaption>
       </figure>
     </div>
   </section>
@@ -670,7 +666,7 @@
           <li class="g33-idno-dash" aria-hidden="true">–</li>
           <li class="g33-idno-part"><code>001</code><span class="ko">일련번호</span><span class="en">Serial No.</span><small><span class="ko">분야 안의 순번</span><span class="en">within the field</span></small></li>
         </ol>
-        <p class="g33-idno-note"><span class="ko">QR코드는 이 페이지 주소로 연결되는 예시입니다.</span><span class="en">The QR code is a sample linking to this page.</span></p>
+        <p class="g33-idno-note"><span class="ko">QR코드는 이 페이지 주소로 연결되는 예시입니다. QR코드는 (주)덴소웨이브의 등록상표입니다.</span><span class="en">The QR code is a sample linking to this page. QR Code is a registered trademark of DENSO WAVE INCORPORATED.</span></p>
       </div>
     </div>
   </section>
@@ -694,7 +690,7 @@
 <div id="site-footer"></div>
 <script src="assets/js/config.js?v=20261013"></script>
 <script src="assets/js/data.js?v=20261013"></script>
-<script src="assets/js/main.js?v=20261013"></script>
+<script src="assets/js/main.js?v=20261013e"></script>
 <script src="assets/js/global33.js?v=20261013"></script>
 </body>
 </html>

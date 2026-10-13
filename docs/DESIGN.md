@@ -125,15 +125,19 @@
 |  | `--f-display` | Cinzel — 영문 대문자 장식(WORLD HOPE DECLARATION) |
 |  | `--f-sans` | Pretendard — 본문 |
 |  | `--f-head` | 제목용(한국어 모드 = serif KR, 영어 모드 = Noto Serif 자동 전환) |
-| 모서리 | `--radius-xs` 3px(버튼·입력) · `--radius-sm` 6px · `--radius` 8px(카드) · `--radius-lg` 10px(모달) |
+| 모서리 | `--radius-btn` 4px(모든 버튼) · `--radius-xs` 3px(입력칸) · `--radius-sm` 6px · `--radius` 8px(카드) · `--radius-lg` 10px(모달) |
 | 그림자 | `--shadow-sm` · `--shadow`(hover) · `--shadow-lg`(모달) |
-| 레이아웃 | `--container` 1240px · `--gutter` 24px(560px 이하 16px) · `--header-h` 72px(1080px 이하 60px) |
+| 레이아웃 | `--container` 1240px · `--gutter` clamp(20px, 4vw, 48px) · `--header-h` 72px(1080px 이하 60px) — 헤더·본문·홈 블록·푸터가 같은 왼쪽 끝(1440px 화면 x=100, 1920px x=340) |
+| 움직임 | `--ease-out` · `--ease-in-out` · `--dur-1` 160ms(색) · `--dur-2` 280ms(버튼·화살표) · `--dur-3` 700ms(스크롤 등장) |
+| 질감 | `--grain` — 사진 위 고운 입자(`mix-blend-mode: overlay`, 투명도 .14–.16) |
 
 글꼴 도우미 클래스: `.serif` `.serif-en` `.caps`(Cinzel 대문자) `.lead`(18px 보조 문단).
 
 ## 4. 여백 규칙
 
-- 섹션: `.section`(위아래 104px, 760px 이하 72px) · `.section-sm`(64px) — 섹션 안에서 따로 padding 주지 않기.
+- 섹션: `.section`(위아래 112px, 760px 이하 72px) · `.section-sm`(64px) — 섹션 안에서 따로 padding 주지 않기.
+- 스크롤 등장: 각 섹션(`main > section`, 첫 섹션 제외)의 `.container` 바로 아래 요소 앞 4개가 자동으로 차례로 떠오름(main.js).
+  문단 하나하나에 `.reveal` 을 달지 않음 — 제목 묶음·카드 묶음 단위로만. 끄려면 섹션에 `data-no-reveal`.
 - 섹션 제목 묶음 아래 52px(모바일 34px) 자동. 카드 그리드 간격 24px(`.grid`), 촘촘한 목록 16px.
 - 배경 교차: 흰 섹션 → `.section-alt`(연회색) 또는 `.section-sky`(연하늘 그라데이션) → 흰 섹션. 어두운 띠는
   페이지당 최대 1개(`.cta-band` 또는 `.section-navy`).
@@ -148,7 +152,8 @@
 <a class="btn btn-light">…</a>        <!-- 어두운 배경 위 흰 버튼 -->
 <a class="btn btn-ghost-light">…</a>  <!-- 어두운 배경 위 흰 외곽선 -->
 ```
-크기 `.btn-sm` `.btn-lg`, 가득 `.btn-block`. `.btn-navy`=`.btn-primary`. `.btn-gold` 는 후원 버튼에만.
+높이 52px · 모서리 4px · 그라데이션·그림자 없이 평평하게(마우스를 올리면 1px 떠오름). 크기 `.btn-sm`(40px, 모바일 44px) `.btn-lg`(56px), 가득 `.btn-block`.
+`.btn-navy`=`.btn-primary`. `.btn-gold` 는 후원 버튼에만. 한 쌍의 버튼은 화살표 아이콘을 둘 다 넣거나 둘 다 빼기.
 글 링크: `<a class="link-arrow" href="…">자세히 보기</a>` (→ 자동).
 
 ## 6. 하위 페이지 상단 (라이트 히어로)

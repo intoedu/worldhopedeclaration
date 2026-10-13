@@ -206,6 +206,7 @@ data/posts.json            공지·소식
 data/gallery.json          갤러리
 data/cheers.json           게시된 희망 응원 메시지
 scripts/set-domain.mjs     공식 주소 일괄 반영 (+ 연결 도메인용 CNAME)
+scripts/build-dotmap.mjs   세계지도 점 그림(SVG 3개) 생성 — 점 데이터가 바뀔 때만 한 번 실행 후 커밋
 robots.txt                 검색엔진 안내 (sitemap.xml 은 set-domain 실행 시 생성)
 CNAME                      연결 도메인 사용 시에만 set-domain 이 생성
 docs/CONTENT_TODO.md       단체 자료·확인 사항 체크리스트

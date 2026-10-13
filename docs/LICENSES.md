@@ -21,6 +21,9 @@
 | `assets/img/people/chairman-won.*` (위원장 사진) | 의뢰인 제공 사진(2026-10-13, 전도사님 전달: “대표사진 이걸로 해줘”) | 본인(위원장) 사진을 의뢰인이 직접 제공·게재 요청. 촬영자(사진관 등)가 따로 있으면 홈페이지 게재 허락 여부 확인 권장. 메타데이터(EXIF) 제거 후 사용 |
 | `assets/img/og-image.png`, `apple-touch-icon.png` | 위 이미지와 OFL 글꼴로 제작 | 위 항목에 따름 |
 | `assets/img/gallery/photo-*.svg`, `portrait-placeholder.svg`, `logo.svg` | 직접 제작한 자리표시 이미지 | 문제 없음 |
+| `assets/img/home/tile-worldmap.svg` (홈 ‘세계지도’ 타일의 점 지도) | `scripts/build-dotmap.mjs` 로 `data/worldmap-dots.json` 에서 직접 생성 | 아래 ‘세계지도 점 데이터’와 같은 출처: Natural Earth(퍼블릭 도메인) → world-atlas(ISC, Mike Bostock). 파일 안에 출처 주석 포함 |
+| `assets/img/brand/dotmap.svg` (밝은 바탕용 점 지도) | 위와 같음 | 위와 같음 |
+| `assets/img/brand/dotmap-light.svg` (어두운 바탕용 점 지도) | 위와 같음 | 위와 같음 |
 
 의뢰인 자료 중 사람 얼굴 예시 이미지(33인 선정 기준표의 ‘예시 이미지’)와 유엔 엠블럼이 들어간 이미지는 사용하지 않습니다. 실존 인물로 오인될 수 있고, 유엔 엠블럼은 허가 없이 사용할 수 없기 때문입니다. 대신 분야별 선 아이콘을 씁니다.
 

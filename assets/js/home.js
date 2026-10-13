@@ -1,118 +1,163 @@
 /* ==========================================================================
    홈 화면 전용 스크립트 (index.html)
-   - 통계(195개국 · 33인 · 6,435명 · 참여자)의 숫자는 data/stats.json 값입니다.
-     · 값 채우기: main.js 가 [data-stat] 요소를 자동으로 채움 (천 단위 쉼표,
-       target 이 없으면 countries × per_country 로 계산). 실패하면 HTML 기본값 유지.
-     · 이 파일: 통계 띠가 화면에 들어오는 순간(데스크톱은 첫 화면에서 바로)
-       0 → 실제 값으로 숫자가 올라가는 효과만 더합니다.
-       '동작 줄이기' 설정·구형 브라우저에서는 아무것도 하지 않습니다.
+   1) 참여자 수 올라가기: 통계 띠의 숫자는 data/stats.json 값입니다 (main.js 가 [data-stat] 을 채움).
+      195개국 · 33인 · 6,435명은 정해진 기준·목표라 처음부터 그대로 보여 주고,
+      바뀌는 숫자인 ‘현재 참여자 수’만 0 → 실제 값으로 올라갑니다.
+      (페이지가 다 열리고 0.9초 뒤 + 통계 띠가 절반 이상 보일 때 시작, 1.2초)
+   2) 배경 움직임 멈춤: 히어로 사진·원칙 띠·사진 타일이 화면 밖에 있거나 다른 탭을 보는 동안
+      .is-paused 를 붙여 움직임을 멈춤 (style.css ‘모션’)
+   3) 휴대폰 5대 원칙 카드: 아래 점 5개로 지금 몇 번째 카드인지 표시
+   '동작 줄이기' 설정이면 1)은 하지 않음(처음부터 최종 값). 구형 브라우저에서는 아무것도 하지 않음.
    ========================================================================== */
 (function () {
   "use strict";
   var WH = window.WH;
-  var band = document.querySelector(".home-stats");
-  if (!WH || !band) return;
+  if (!WH) return;
 
   var reduce = false;
   try { reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
-  if (reduce || !("IntersectionObserver" in window) || !window.requestAnimationFrame) return;
+  var hasIO = "IntersectionObserver" in window;
 
-  // 이미 지나간 위치(새로 고침으로 아래쪽에서 다시 연 경우)면 효과 없이 그대로 둠
-  if (band.getBoundingClientRect().bottom < 0) return;
+  /* ---------------- 2) 화면 밖·다른 탭에서는 배경 움직임 멈춤 ---------------- */
+  (function () {
+    if (!hasIO) return;
+    var targets = Array.prototype.slice.call(document.querySelectorAll(".home-hero, .home-principles, .home-tiles"));
+    if (!targets.length) return;
+    var inView = new Map();
+    function apply(el) { el.classList.toggle("is-paused", document.hidden || !inView.get(el)); }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { inView.set(en.target, en.isIntersecting); apply(en.target); });
+    }, { threshold: 0 });
+    targets.forEach(function (el) { inView.set(el, true); io.observe(el); });
+    document.addEventListener("visibilitychange", function () { targets.forEach(apply); });
+  })();
+
+  /* ---------------- 3) 휴대폰 5대 원칙 카드: 점 표시 ---------------- */
+  (function () {
+    var list = document.querySelector(".home-pr-list");
+    if (!list || !hasIO) return;
+    var cards = Array.prototype.slice.call(list.children);
+    if (cards.length < 2) return;
+    var dots = document.createElement("div");
+    dots.className = "home-pr-dots";
+    dots.setAttribute("aria-hidden", "true");
+    dots.innerHTML = cards.map(function () { return "<i></i>"; }).join("");
+    var live = document.createElement("p");
+    live.className = "sr-only";
+    live.setAttribute("aria-live", "polite");
+    list.parentNode.insertBefore(dots, list.nextSibling);
+    list.parentNode.insertBefore(live, dots.nextSibling);
+    var marks = Array.prototype.slice.call(dots.children);
+    var cur = -1;
+    function show(i) {
+      if (i === cur) return;
+      var first = cur === -1;
+      cur = i;
+      marks.forEach(function (m, k) { m.classList.toggle("is-on", k === i); });
+      // 처음 표시할 때는 읽지 않음 (넘길 때만 알림)
+      if (!first) live.innerHTML = WH.bi(cards.length + "개 중 " + (i + 1) + "번째", (i + 1) + " of " + cards.length);
+    }
+    show(0);
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting && en.intersectionRatio >= 0.6) show(cards.indexOf(en.target));
+      });
+    }, { root: list, threshold: 0.6 });
+    cards.forEach(function (c) { io.observe(c); });
+  })();
+
+  /* ---------------- 1) 참여자 수 올라가기 ---------------- */
+  var band = document.querySelector(".home-stats");
+  if (!band || reduce || !hasIO || !window.requestAnimationFrame) return;
+  var el = band.querySelector('.home-stat-num b[data-stat="participants"]');
+  if (!el) return;
 
   var fmt = typeof WH.fmtNum === "function" ? WH.fmtNum : function (n) { return String(n); };
   function parse(text) {
     var n = parseInt(String(text).replace(/[^\d]/g, ""), 10);
     return isNaN(n) ? null : n;
   }
+  var value = parse(el.textContent);
+  if (value == null) return;
+  var state = "idle"; // idle(대기) → running(진행) → done(끝)
 
-  /* 숫자 요소마다 상태 보관: idle(대기) → running(진행) → done(끝) */
-  var items = [];
-  band.querySelectorAll(".home-stat-num b[data-stat]").forEach(function (el) {
-    var value = parse(el.textContent);
-    if (value == null) return;
-    // 화면 낭독기는 움직이는 숫자 대신 이 실제 값을 읽음
-    var sr = document.createElement("span");
-    sr.className = "sr-only";
-    sr.textContent = fmt(value);
-    el.parentNode.insertBefore(sr, el);
-    el.setAttribute("aria-hidden", "true");
-    items.push({ el: el, sr: sr, key: el.getAttribute("data-stat"), value: value, state: "idle" });
-  });
-  if (!items.length) return;
+  // 화면 낭독기는 움직이는 숫자 대신 이 실제 값을 읽음
+  var sr = document.createElement("span");
+  sr.className = "sr-only";
+  sr.textContent = fmt(value);
+  el.parentNode.insertBefore(sr, el);
+  el.setAttribute("aria-hidden", "true");
 
-  // 숫자 폭을 최종 값 기준으로 고정 → 올라가는 동안 옆 글자(개국·명)가 흔들리지 않음
-  function lockWidth(it) {
-    var shown = it.el.textContent;
-    it.el.style.minWidth = "";
-    it.el.textContent = fmt(it.value);
-    var w = it.el.getBoundingClientRect().width;
-    it.el.textContent = shown;
-    if (w) it.el.style.minWidth = Math.ceil(w) + "px";
+  // 숫자 폭을 최종 값 기준으로 고정 → 올라가는 동안 옆 글자(명)가 흔들리지 않음
+  // 지금은 글자 수(ch)로 대강 잡고, 글꼴이 다 받아진 뒤 한 번만 실제 폭을 잼(그 전에는 레이아웃을 읽지 않음)
+  function roughWidth() { el.style.minWidth = fmt(value).length + "ch"; }
+  function lockWidth() {
+    if (state === "done") return;
+    var shown = el.textContent;
+    el.style.minWidth = "";
+    el.textContent = fmt(value);
+    var w = el.getBoundingClientRect().width;
+    el.textContent = shown;
+    if (w) el.style.minWidth = Math.ceil(w) + "px";
   }
-  function finish(it) {
-    it.state = "done";
-    it.el.textContent = fmt(it.value);
-    it.el.style.minWidth = "";
-    it.el.removeAttribute("aria-hidden");
-    if (it.sr.parentNode) it.sr.parentNode.removeChild(it.sr);
+  function finish() {
+    state = "done";
+    el.textContent = fmt(value);
+    el.style.minWidth = "";
+    el.removeAttribute("aria-hidden");
+    if (sr.parentNode) sr.parentNode.removeChild(sr);
   }
-
-  items.forEach(function (it) {
-    lockWidth(it);
-    it.el.textContent = "0";
-  });
+  roughWidth();
+  el.textContent = "0";
   if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(function () {
-      items.forEach(function (it) { if (it.state !== "done") lockWidth(it); });
-    });
+    document.fonts.ready.then(function () { window.requestAnimationFrame(lockWidth); });
   }
 
   // main.js 가 data/stats.json 값을 채운 직후(같은 순간) 호출됨 → 아직 시작 전이면 다시 0 으로
   document.addEventListener("wh:stats", function (e) {
-    var s = e.detail || {};
-    items.forEach(function (it) {
-      var v = s[it.key];
-      if (typeof v !== "number" || !isFinite(v)) return;
-      it.value = Math.max(0, Math.round(v));
-      it.sr.textContent = fmt(it.value);
-      if (it.state === "idle") { lockWidth(it); it.el.textContent = "0"; }
-      else if (it.state === "done") it.el.textContent = fmt(it.value);
-    });
+    var v = (e.detail || {}).participants;
+    if (typeof v !== "number" || !isFinite(v)) return;
+    value = Math.max(0, Math.round(v));
+    sr.textContent = fmt(value);
+    if (state === "idle") { roughWidth(); el.textContent = "0"; window.requestAnimationFrame(lockWidth); }
+    else if (state === "done") el.textContent = fmt(value);
   });
 
-  var DURATION = 1400;
+  var DURATION = 1200;
   function run() {
+    if (state !== "idle") return;
+    state = "running";
     var start = null;
-    items.forEach(function (it) { if (it.state === "idle") it.state = "running"; });
     function step(now) {
+      if (state !== "running") return;
       if (start === null) start = now;
       var p = Math.min(1, (now - start) / DURATION);
-      var eased = 1 - Math.pow(1 - p, 3);
-      var pending = false;
-      items.forEach(function (it) {
-        if (it.state !== "running") return;
-        if (p >= 1) { finish(it); return; }
-        it.el.textContent = fmt(Math.round(it.value * eased));
-        pending = true;
-      });
-      if (pending) window.requestAnimationFrame(step);
+      if (p >= 1) { finish(); return; }
+      var eased = 1 - Math.pow(2, -10 * p); // 빠르게 시작해 부드럽게 멈춤
+      el.textContent = fmt(Math.round(value * eased));
+      window.requestAnimationFrame(step);
     }
     window.requestAnimationFrame(step);
   }
 
+  // 시작 조건: 페이지가 다 열리고 0.9초 지남 + 통계 띠가 절반 이상 보임 (둘 다 만족할 때)
+  var ready = false, seen = false;
+  function maybeRun() { if (ready && seen) run(); }
+  function onLoad() { setTimeout(function () { ready = true; maybeRun(); }, 900); }
+  if (document.readyState === "complete") onLoad(); else window.addEventListener("load", onLoad);
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (en) {
       if (!en.isIntersecting) return;
       io.disconnect();
-      run();
+      seen = true;
+      maybeRun();
     });
-  }, { threshold: 0.35 });
+  }, { threshold: 0.5 });
   io.observe(band);
 
   // 인쇄할 때는 바로 최종 값으로
   window.addEventListener("beforeprint", function () {
     io.disconnect();
-    items.forEach(function (it) { if (it.state !== "done") finish(it); });
+    if (state !== "done") finish();
   });
 })();

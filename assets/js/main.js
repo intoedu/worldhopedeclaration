@@ -335,17 +335,17 @@
 
     // <base> 가 있는 페이지(404)에서는 "#main" 이 사이트 최상위 기준이 되므로 현재 주소를 붙임
     var skipHref = document.querySelector("base[href]") ? location.pathname + location.search + "#main" : "#main";
-    mount.innerHTML =
-      '<a class="skip-link" href="' + WH.esc(skipHref) + '">' + bi("본문 바로가기", "Skip to content") + "</a>" +
-      (C.draftBar ? '<div class="draft-bar">' + bi("<b>시안 미리보기</b> · 사진과 일부 문구는 단체 자료를 받은 뒤 교체됩니다.", "<b>Draft preview</b> · Photos and some text will be replaced with final materials.") + "</div>" : "");
 
     var navItems = NAV.map(function (n) {
       return '<li><a href="' + ROOT + n.href + '"' + current(n.id) + ">" + bi(n.ko, n.en) + "</a></li>";
     }).join("");
 
-    var header = document.createElement("header");
-    header.className = "site-header";
-    header.innerHTML =
+    // 헤더 전체를 문자열로 만든 뒤 한 번에 넣음 (자리 #site-header 는 CSS 로 헤더 높이만큼 비워 둠 → 화면 밀림 없음)
+    // 넣은 뒤에야 위치·크기를 읽음
+    mount.outerHTML =
+      '<a class="skip-link" href="' + WH.esc(skipHref) + '">' + bi("본문 바로가기", "Skip to content") + "</a>" +
+      (C.draftBar ? '<div class="draft-bar">' + bi("<b>시안 미리보기</b> · 사진과 일부 문구는 단체 자료를 받은 뒤 교체됩니다.", "<b>Draft preview</b> · Photos and some text will be replaced with final materials.") + "</div>" : "") +
+      '<header class="site-header" id="site-header-bar">' +
       '<div class="header-inner">' +
       '<button type="button" class="icon-btn menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="전체 메뉴 열기" data-en-aria-label="Open menu">' + WH.icon("menu") + "</button>" +
       brandHtml() +
@@ -362,8 +362,8 @@
       '<button type="button" data-set-lang="ko" aria-pressed="false" lang="ko">한국어 <small>KOR</small></button>' +
       '<button type="button" data-set-lang="en" aria-pressed="false" lang="en">English <small>ENG</small></button>' +
       "</div></div>" +
-      "</div>";
-    mount.after(header);
+      "</div></header>";
+    var header = document.getElementById("site-header-bar");
 
     // 모바일 전체 메뉴
     var mnav = document.createElement("div");
@@ -902,24 +902,55 @@
     });
   }
 
-  /* ---------------- 스크롤 등장 효과 ---------------- */
+  /* ---------------- 스크롤 등장 효과 ----------------
+     섹션 단위로 등장: 각 섹션(main > section)의 .container 바로 아래 요소 앞 4개에 .reveal 을 자동으로 붙이고
+     --i(0~3)로 순서를 줘서 0.07초 간격으로 차례로 떠오르게 함 (CSS: .reveal / .reveal.is-in)
+     · 제외: 첫 섹션·페이지 머리말(.page-hero), 입력 양식(form)과 그 안쪽, 이미 .reveal 을 가진 요소
+     · HTML 에 직접 단 .reveal(카드 묶음 등)은 같은 부모 안에서의 순서로 --i 를 줌 */
   function setupReveal() {
+    var main = document.getElementById("main") || document.querySelector("main");
+    if (main) {
+      Array.prototype.forEach.call(main.children, function (sec, idx) {
+        if (sec.tagName !== "SECTION" || idx === 0 || sec.classList.contains("page-hero") || sec.hasAttribute("data-no-reveal")) return;
+        sec.querySelectorAll(".container").forEach(function (box) {
+          if (box.closest("form")) return;
+          var n = 0;
+          Array.prototype.forEach.call(box.children, function (el) {
+            if (n >= 4) return;
+            if (el.tagName === "FORM" || el.querySelector("form, .reveal") || el.classList.contains("reveal") || el.closest(".reveal")) return;
+            el.classList.add("reveal");
+            el.style.setProperty("--i", n++);
+          });
+        });
+      });
+    }
     var els = document.querySelectorAll(".reveal");
+    els.forEach(function (el) {
+      if (el.style.getPropertyValue("--i")) return;
+      var sibs = Array.prototype.filter.call(el.parentNode.children, function (c) { return c.classList.contains("reveal"); });
+      el.style.setProperty("--i", Math.min(sibs.indexOf(el), 6));
+    });
     if (!("IntersectionObserver" in window)) { els.forEach(function (el) { el.classList.add("is-in"); }); return; }
+    var seen = typeof WeakSet === "function" ? new WeakSet() : null;
     var io = new IntersectionObserver(function (entries) {
-      // 한꺼번에 화면에 들어온 요소(카드 줄 등)는 0.08초 간격으로 차례로 등장
-      var n = 0;
       entries.forEach(function (en) {
-        if (!en.isIntersecting) return;
-        var el = en.target, d = Math.min(n++, 6) * 80;
-        if (d) {
-          el.style.transitionDelay = d + "ms";
-          setTimeout(function () { el.style.transitionDelay = ""; }, d + 900);
+        var el = en.target;
+        // 페이지를 열 때 이미 화면에 보이는 요소는 바로 등장 (화면 아래 끝에 살짝 걸친 것도)
+        var first = seen && !seen.has(el);
+        if (seen) seen.add(el);
+        var r = en.boundingClientRect;
+        if (!(first && r.top < window.innerHeight && r.bottom > 0)) {
+          if (!en.isIntersecting) return;
+          // 보통 요소는 12% 이상 보일 때, 화면보다 긴 요소(긴 글 등)는 들어오자마자 (12%가 화면보다 클 수 있으므로)
+          var rh = en.rootBounds ? en.rootBounds.height : window.innerHeight;
+          if (en.intersectionRatio < 0.12 && r.height < rh * 0.6) return;
         }
         el.classList.add("is-in");
         io.unobserve(el);
+        // 등장이 끝나면 .reveal 을 떼어 요소 본래의 전환 효과(마우스 올림 등)가 늦게 반응하지 않게 함 (.is-in 은 남김)
+        setTimeout(function () { el.classList.remove("reveal"); }, 1000 + (parseFloat(el.style.getPropertyValue("--i")) || 0) * 70);
       });
-    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+    }, { rootMargin: "0px 0px -10% 0px", threshold: [0, 0.12] });
     els.forEach(function (el) { io.observe(el); });
   }
 

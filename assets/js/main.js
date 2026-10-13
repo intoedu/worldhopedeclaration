@@ -747,10 +747,50 @@
       return s;
     });
   };
+  WH.motionOK = function () {
+    return !(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  };
+  /* 숫자가 화면에 들어오면 0부터 올라가며 세기 (최종 표시는 fillStats 와 같음) */
+  function countUp(el, finalText) {
+    var target = parseFloat(String(finalText).replace(/,/g, ""));
+    if (!isFinite(target) || target <= 0 || !/^[\d,]+$/.test(String(finalText).trim())) { el.textContent = finalText; return; }
+    var t0 = null, dur = target > 999 ? 1800 : 1300;
+    function step(ts) {
+      if (t0 === null) t0 = ts;
+      var p = Math.min(1, (ts - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+      el.textContent = p < 1 ? WH.fmtNum(Math.round(target * e)) : finalText;
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
   function setupStats() {
+    // 큰 숫자 표시만 대상 (문장 속 숫자는 그대로, 홈 통계 띠는 home.js 가 담당)
+    var els = Array.prototype.slice.call(document.querySelectorAll(".join-now-num b[data-stat], .stat-num b[data-stat], .g33-step-num b[data-stat], .g33-live-num b[data-stat]"));
+    var animate = els.length && WH.motionOK() && "IntersectionObserver" in window && "requestAnimationFrame" in window;
+    // 지금 보이는 숫자만 0에서 시작 (다른 언어로 가려진 숫자는 그대로 둠)
+    var live = animate ? els.filter(function (el) { return el.getClientRects().length && /^[\d,]+$/.test(el.textContent.trim()); }) : [];
+    var defaults = live.map(function (el) { return el.textContent; });
+    live.forEach(function (el) { el.textContent = "0"; });
+    function run(s) {
+      if (!live.length) return;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (!en.isIntersecting) return;
+          io.unobserve(en.target);
+          countUp(en.target, en.target.getAttribute("data-count-to"));
+        });
+      }, { threshold: 0.4 });
+      live.forEach(function (el, i) {
+        var v = s ? s[el.getAttribute("data-stat")] : null;
+        el.setAttribute("data-count-to", v == null || v === "" ? defaults[i] : (typeof v === "number" ? WH.fmtNum(v) : String(v)));
+        el.textContent = "0";
+        io.observe(el);
+      });
+    }
     WH.fillStats().then(function (s) {
+      run(s);
       if (s) document.dispatchEvent(new CustomEvent("wh:stats", { detail: s }));
-    });
+    }, function () { run(null); });
   }
 
   /* ---------------- QR 모달 ---------------- */
@@ -867,7 +907,18 @@
     var els = document.querySelectorAll(".reveal");
     if (!("IntersectionObserver" in window)) { els.forEach(function (el) { el.classList.add("is-in"); }); return; }
     var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("is-in"); io.unobserve(en.target); } });
+      // 한꺼번에 화면에 들어온 요소(카드 줄 등)는 0.08초 간격으로 차례로 등장
+      var n = 0;
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var el = en.target, d = Math.min(n++, 6) * 80;
+        if (d) {
+          el.style.transitionDelay = d + "ms";
+          setTimeout(function () { el.style.transitionDelay = ""; }, d + 900);
+        }
+        el.classList.add("is-in");
+        io.unobserve(el);
+      });
     }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
     els.forEach(function (el) { io.observe(el); });
   }

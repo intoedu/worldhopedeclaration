@@ -3,9 +3,9 @@
    - 통계(195개국 · 33인 · 6,435명 · 참여자)의 숫자는 data/stats.json 값입니다.
      · 값 채우기: main.js 가 [data-stat] 요소를 자동으로 채움 (천 단위 쉼표,
        target 이 없으면 countries × per_country 로 계산). 실패하면 HTML 기본값 유지.
-     · 이 파일: 통계 띠가 처음에 화면 아래쪽에 있을 때(주로 휴대폰), 화면에 들어오는
-       순간 0 → 실제 값으로 숫자가 올라가는 효과만 더합니다.
-       처음부터 보이는 경우·'동작 줄이기' 설정·구형 브라우저에서는 아무것도 하지 않습니다.
+     · 이 파일: 통계 띠가 화면에 들어오는 순간(데스크톱은 첫 화면에서 바로)
+       0 → 실제 값으로 숫자가 올라가는 효과만 더합니다.
+       '동작 줄이기' 설정·구형 브라우저에서는 아무것도 하지 않습니다.
    ========================================================================== */
 (function () {
   "use strict";
@@ -17,9 +17,8 @@
   try { reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
   if (reduce || !("IntersectionObserver" in window) || !window.requestAnimationFrame) return;
 
-  // 이미 화면에 보이거나(데스크톱 첫 화면) 지나간 위치면 효과 없이 그대로 둠
-  var vh = window.innerHeight || document.documentElement.clientHeight;
-  if (band.getBoundingClientRect().top < vh) return;
+  // 이미 지나간 위치(새로 고침으로 아래쪽에서 다시 연 경우)면 효과 없이 그대로 둠
+  if (band.getBoundingClientRect().bottom < 0) return;
 
   var fmt = typeof WH.fmtNum === "function" ? WH.fmtNum : function (n) { return String(n); };
   function parse(text) {

@@ -99,10 +99,33 @@
 `contact·faq → about`, `qr·privacy·terms·404 → 없음`.
 정확히 그 페이지면 `aria-current="page"`, 같은 묶음이면 `aria-current="true"`.
 
-- 모바일 하단 탭바(760px 이하): 세계희망선언문 · 글로벌 33 · 세계지도 · 참여하기 (아이콘 doc/people/world/sprout).
+**하위 메뉴(`NAV[i].sub`)** — 데스크톱 하위 메뉴 판과 푸터 사이트맵이 함께 씁니다. 페이지 구역 id 를 바꾸면 여기도 고쳐 주세요.
+
+| 메뉴 | 하위 메뉴 → 주소 |
+|---|---|
+| 세계희망선언 | 선언문·5대 원칙 `declaration.html#principles` · 5대 가치 `#values` · 공동의 선언 `#together` |
+| 비전과 미션 | 비전 `vision.html#vision` · 취지문 `#purpose` · 미션 `#mission` · 다섯 갈래의 사역 `#ministries` |
+| 글로벌 33 | 11개 분야 `global33.html#fields` · 글로벌 확장 구조 `#structure` · 글로벌 대표 패 `#plaque` · 대한민국 대표 33인 추천 `korea33.html` |
+| 세계지도 | 세계지도 보기 `worldmap.html` |
+| 소식 | 공지·소식 `news.html` · 갤러리 `gallery.html` (`js-gallery-link`: 견본 사진뿐인 동안 숨김) |
+| 참여하기 | 선언 참여 신청 `join.html#declare` · 글로벌 대표 추천 `#nominate` · 희망 응원 메시지 `#cheer` · 후원·헌금 `donate.html` · 문의하기 `contact.html` |
+| 연대소개 | 위원장 인사말 `about.html#greeting` · 취지 `#purpose` · 조직 `#organization` · 오시는 길 `#location` · 자주 묻는 질문 `faq.html` |
+
+- 헤더(1081px 이상): 로고 56px · 단체명, 주 메뉴 8개, KOR | ENG, 검색. 높이 72px(1081–1279px) / 76px(1280px 이상).
+  위에서는 흰 바탕, 내려가면 아래 가는 선(`.is-scrolled`)과 뒤 흐림. 후원 버튼 등 별도 버튼은 두지 않음(시안 유지).
+- 하위 메뉴 판(1081px 이상, `.site-header.is-menu`): 주 메뉴에 마우스를 0.12초 올리거나 Tab 으로 들어가면 펼쳐짐.
+  모든 하위 목록이 한 판에, 각 메뉴 아래에(위치는 main.js `setupMega` 가 계산), 왼쪽엔 가리킨 메뉴 이름. Esc·밖으로 나가면 닫힘.
+- 모바일 하단 탭바(760px 이하, 높이 58px): 세계희망선언문 · 글로벌 33 · 세계지도 · 참여하기 (아이콘 doc/group/world/sprout).
+  지금 페이지는 아이콘 뒤 연하늘 알약 + 굵은 글자. 글을 입력하는 동안은 내려가 숨음.
   `body.has-tabbar` 에 하단 여백이 자동으로 들어갑니다. 페이지에서 `position: fixed; bottom: 0` 요소를 만들지 마세요.
-- 모바일 전체 메뉴: 주 메뉴 8개 + 후원·헌금 · 문의하기 · 자주 묻는 질문 · 갤러리 · QR코드 + 전화 + KOR/ENG.
-- 푸터: 세계희망연대 / 세계희망선언, 개인정보처리방침 · 이용약관(terms.html) · 문의하기, SNS(설정된 것만), 대표·주소·전화.
+- 휴대폰에서 내리면 헤더·탭바가 비켜 나고(`body.chrome-down`), 조금이라도 올리면 다시 나타남. 페이지 안 메뉴(`.subnav`)는 맨 위에 붙어 계속 보임.
+  ‘동작 줄이기’ 설정이면 늘 제자리.
+- 모바일 전체 메뉴: 주 메뉴 8개(지금 페이지는 연하늘 줄) + 바로가기 6칸(대표 33인 추천 · 후원·헌금 · 문의하기 · 자주 묻는 질문 ·
+  QR코드 만들기 · 갤러리) + 아래 줄(전국대표전화 · 이 페이지 QR 아이콘 · KOR/ENG 두 칸 버튼).
+- 푸터 두 단: 위 단 = 단체 소개(로고·단체명·위원회·문구) | 사이트맵(세계희망선언·글로벌 33·참여하기·연대소개의 하위 메뉴) |
+  전국대표전화·주소·이메일 (760px 이하는 사이트맵을 숨기고 전국대표전화를 전체 폭 버튼으로).
+  아래 단 = 시안의 한 줄(세계희망연대 / 세계희망선언, **개인정보처리방침** · 이용약관 · 문의하기, SNS 는 `config.social` 주소가 있을 때만).
+  맨 아래 = 대표 연락처(`config.footerContact`, 의뢰인 요청) · 고유번호(`config.registrationNo` 가 있을 때만) · ©.
 - 사이트 검색: 헤더 돋보기(또는 `/` 키). 페이지 색인은 main.js 의 `PAGES` 배열 (새 페이지 제목·설명이 바뀌면
   통합 담당에게 알려 주세요). 소식 글은 `data/posts.json` 에서 함께 검색.
 
@@ -127,7 +150,7 @@
 |  | `--f-head` | 제목용(한국어 모드 = serif KR, 영어 모드 = Noto Serif 자동 전환) |
 | 모서리 | `--radius-btn` 4px(모든 버튼) · `--radius-xs` 3px(입력칸) · `--radius-sm` 6px · `--radius` 8px(카드) · `--radius-lg` 10px(모달) |
 | 그림자 | `--shadow-sm` · `--shadow`(hover) · `--shadow-lg`(모달) |
-| 레이아웃 | `--container` 1240px · `--gutter` clamp(20px, 4vw, 48px) · `--header-h` 72px(1080px 이하 60px) — 헤더·본문·홈 블록·푸터가 같은 왼쪽 끝(1440px 화면 x=100, 1920px x=340) |
+| 레이아웃 | `--container` 1240px · `--gutter` clamp(20px, 4vw, 48px) · `--header-h` 76px(1280px 이상) · 72px(1081–1279px) · 60px(1080px 이하) · 53px(760px 이하) · `--tabbar-h` 58px — 헤더·본문·홈 블록·푸터가 같은 왼쪽 끝(1440px 화면 x=100, 1920px x=340) |
 | 움직임 | `--ease-out` · `--ease-in-out` · `--dur-1` 160ms(색) · `--dur-2` 280ms(버튼·화살표) · `--dur-3` 700ms(스크롤 등장) |
 | 질감 | `--grain` — 사진 위 고운 입자(`mix-blend-mode: overlay`, 투명도 .14–.16) |
 
@@ -518,10 +541,10 @@ arrow-right youtube instagram facebook blog kakao
 
 | 폭 | 변화 |
 |---|---|
-| ≤1240 / ≤1160 | 주 메뉴 간격 축소 |
-| ≤1080 | 모바일 헤더(햄버거 · 가운데 로고 · KOR▾), 전체 메뉴 |
+| ≤1279 | 헤더 72px, 주 메뉴 간격이 화면 폭에 따라 줄어듦(1081px 20px ~ 1280px 40px); 1240px 이하에서 푸터 위 단 2칸 |
+| ≤1080 | 모바일 헤더(햄버거 · 가운데 로고 · KOR▾, 영문 단체명 숨김), 전체 메뉴, 하위 메뉴 판 없음 |
 | ≤960 | 3·4칸 그리드 → 2칸, 타일 2×2 |
-| ≤760 | 하단 탭바, 섹션 여백 72px, 홈 히어로 가운데 정렬, `.hide-mobile` 숨김 |
+| ≤760 | 하단 탭바, 내리면 헤더·탭바 숨김, 섹션 여백 72px, 홈 히어로 가운데 정렬, 푸터 사이트맵 숨김, `.hide-mobile` 숨김 |
 | ≤560 | 거터 16px, 원칙 목록 한 줄 |
 
 `.hide-mobile`(760px 이하 숨김) · `.show-mobile`(761px 이상 숨김).

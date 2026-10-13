@@ -1,4 +1,4 @@
-# 임시 점검용 — HTTPS 인증서가 안 켜지는 원인 확인 (Pages 설정·DNS·인증서 상태를 기록만 함). 확인 후 삭제합니다.
+# 임시 점검용 — Pages 설정·DNS·인증서 상태 기록, 인증서가 발급됐으면 HTTPS 강제 켜기. 확인 후 삭제합니다.
 name: Pages diagnose (temporary)
 on:
   push:
@@ -6,7 +6,7 @@ on:
     paths: ['.github/workflows/pages-diagnose.yml']
 permissions:
   contents: read
-  pages: read
+  pages: write
 jobs:
   diagnose:
     runs-on: ubuntu-latest
@@ -17,6 +17,17 @@ jobs:
         run: |
           gh api repos/${{ github.repository }}/pages | jq '{url,status,cname,html_url,build_type,source,https_certificate,https_enforced,protected_domain_state,pending_domain_unverified_at}' || true
           gh api repos/${{ github.repository }}/pages/health || echo "health endpoint: not permitted for GITHUB_TOKEN"
+      - name: Enforce HTTPS (인증서 발급 완료 확인 후 켜기)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          state=$(gh api repos/${{ github.repository }}/pages --jq '.https_certificate.state')
+          echo "certificate state: $state"
+          if [ "$state" = "approved" ]; then
+            gh api -X PUT repos/${{ github.repository }}/pages -f cname=www.worldhopedeclaration.com -F https_enforced=true && echo "PUT ok" || echo "PUT failed"
+            sleep 5
+            gh api repos/${{ github.repository }}/pages | jq '{cname,html_url,build_type,https_enforced,https_certificate:.https_certificate.state}'
+          fi
       - name: DNS
         run: |
           for t in A AAAA CAA NS; do echo "== worldhopedeclaration.com $t"; dig +noall +answer worldhopedeclaration.com $t; done

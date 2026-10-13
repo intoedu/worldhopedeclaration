@@ -67,9 +67,12 @@
   .about-purpose-note { margin: 18px 0 26px; font-size: 16px; line-height: 1.8; color: var(--ink-2); }
   .about-purpose-text { position: relative; margin: 0; padding: 6px 0 0 44px; border-left: 1px solid var(--line-2); }
   .about-purpose-text::before { content: "“"; position: absolute; left: 14px; top: -22px; font-family: var(--f-serif-en); font-size: 76px; line-height: 1; color: var(--gold-300); }
-  .about-purpose-text p { margin: 0; font-family: var(--f-serif); font-size: 19px; font-weight: 500; line-height: 2.1; letter-spacing: -0.015em; color: var(--ink); }
+  .about-purpose-text p { margin: 0 0 1.1em; font-family: var(--f-serif); font-size: 19px; font-weight: 500; line-height: 2.1; letter-spacing: -0.015em; color: var(--ink); }
   html[data-lang="en"] .about-purpose-text p { font-family: var(--f-serif-en); font-size: 18px; line-height: 1.95; letter-spacing: 0; }
-  .about-purpose-text .about-purpose-close { position: relative; margin-top: 30px; padding-top: 26px; border-top: 1px solid var(--line-2); font-weight: 700; color: var(--navy-900); }
+  .about-purpose-text .about-purpose-close { position: relative; margin: 30px 0 0; padding-top: 26px; border-top: 1px solid var(--line-2); font-weight: 600; color: var(--navy-900); }
+  .about-purpose-text .purpose-lead { margin-bottom: 1.4em; font-size: 21px; font-weight: 700; line-height: 1.8; color: var(--navy-900); }
+  .about-purpose-text .purpose-lead strong, .about-purpose-text p strong { color: var(--gold-600); font-weight: 700; }
+  .about-purpose-text .purpose-call { font-weight: 700; color: var(--navy-800); }
   .about-purpose-close::before { content: ""; position: absolute; left: 0; top: -1px; width: 44px; height: 1px; background: var(--gold-500); }
 
   /* ---------- 3. 조직 ---------- */
@@ -191,6 +194,7 @@
     .about-purpose-text { padding-left: 24px; }
     .about-purpose-text::before { left: 4px; top: -18px; font-size: 56px; }
     .about-purpose-text p { font-size: 16.5px; line-height: 2; }
+    .about-purpose-text .purpose-lead { font-size: 18px; line-height: 1.8; }
     html[data-lang="en"] .about-purpose-text p { font-size: 16px; line-height: 1.9; }
     .about-org-box { padding: 28px 22px 24px; }
     .about-org-keys li { font-size: 15px; }
@@ -278,21 +282,35 @@
     </div>
   </section>
 
-  <!-- ===== 2. 취지 (한국어 원문 그대로 — vision.html #purpose 와 같은 글) ===== -->
+  <!-- ===== 2. 취지 (의뢰인 수정안 2026-10-13 전문 — vision.html #purpose 와 같은 글. 고칠 때 두 곳 함께) ===== -->
   <section class="about-purpose about-anchor" id="purpose" aria-labelledby="purpose-title">
     <div class="container">
       <div class="about-purpose-grid">
         <div class="about-purpose-head reveal">
           <span class="eyebrow">Statement of Purpose</span>
-          <h2 class="section-title" id="purpose-title"><span class="ko">대장정의 선교행진을 시작합니다</span><span class="en">A Long Mission March Begins</span></h2>
-          <p class="about-purpose-note"><span class="ko">세계희망연대가 이 홈사이트를 여는 취지입니다. 이 선교행진이 바라보는 비전과 미션, 다섯 갈래의 사역은 ‘비전과 미션’에서 이어집니다.</span><span class="en">This is why we open this website. The vision, mission and five ministries of this mission march continue on the Vision &amp; Mission page.</span></p>
+          <h2 class="section-title" id="purpose-title"><span class="ko">인간의 영성회복을 위한 대장정</span><span class="en">A Great Journey to Restore Human Spirituality</span></h2>
+          <p class="about-purpose-note"><span class="ko">세계희망연대가 이 홈사이트를 여는 취지입니다. 이 대장정이 바라보는 비전과 미션, 다섯 갈래의 사역은 ‘비전과 미션’에서 이어집니다.</span><span class="en">This is why we open this website. The vision, mission and five ministries of this journey continue on the Vision &amp; Mission page.</span></p>
           <a class="link-arrow" href="vision.html"><span class="ko">비전과 미션 보기</span><span class="en">See our Vision &amp; Mission</span></a>
         </div>
         <blockquote class="about-purpose-text reveal">
-          <p class="ko">선악을 아는 지식을 미혹으로 받아 머리에 장착하고 사는 사람들은 그 지식으로 인해 지금 같은 유토피아도 만들었지만, 다툼과 반목과 이기로 가득한 전쟁터를 만든 현실의 이중성을 꼬집으며, 그 속에 종속된 인간을 수평의 사상과 중심진리인 사랑의 속성을 되찾아 하나님 나라로 귀화하는 인생 시나리오를 세상에 구체적으로 펼쳐가는 대장정의 선교행진이랍니다.</p>
-          <p class="en">Humanity, having received the knowledge of good and evil through deception and carrying it in their minds, has used that knowledge to build today’s near-utopia — and yet has also made the world a battlefield full of strife, hostility and selfishness. Pointing to this duality of our reality, this is a long mission march that unfolds before the world, in concrete ways, a life scenario in which people bound within it recover a horizontal way of thinking and the nature of love — the central truth — and become naturalized citizens of the Kingdom of God.</p>
-          <p class="about-purpose-close ko">그 시작을 대중 속에서 함께 이어가기 위해 오늘 이 홈사이트를 엽니다.</p>
-          <p class="about-purpose-close en">Today we open this website to carry that beginning forward together with the public.</p>
+          <p class="purpose-lead ko reveal">큰 틀에서는 <strong>[인간의 영성회복을 위한 대장정]</strong>이 시작되는 것입니다.</p>
+          <p class="purpose-lead en reveal">In the broadest sense, what begins here is <strong>[a great journey to restore the spirituality of humankind]</strong>.</p>
+          <p class="ko reveal">언제인가부터 우리 인간은 엄청난 속도의 연산(계산)에 의해 생성되는 지식구조를 삶에 적용하며 빠르게 성장해 왔습니다.</p>
+          <p class="en reveal">At some point, we humans began applying to our lives the structures of knowledge produced by calculation at tremendous speed, and we have grown rapidly.</p>
+          <p class="ko reveal">인간의 머리를 본떠서 고안한 컴퓨터에서 오늘날의 슈퍼급 AI에 이르기까지 동일하게 사용되는 두 가지 언어(0과 1, 활성과 비활성)를 아십니까? 이중성, 상대성이 만드는 지식개념... 이것을 삶의 언어로 표현해서 “선악적 지식(Knowledge of good and evil)”이라고 말합니다. 그 선악적 지식개념을 머리에 장착하고 사는 사람들은 그 지식으로 인해 지금과 같은 유토피아도 만들었지만, 다툼과 반목과 이기로 가득한 전쟁터로 만든 현실도 부정할 수는 없습니다.</p>
+          <p class="en reveal">Do you know the two languages — 0 and 1, on and off — used alike from the computer, designed after the human mind, to today’s super-scale AI? A concept of knowledge made by duality and relativity… Put in the language of life, we call it “the knowledge of good and evil.” People who live with that concept of the knowledge of good and evil installed in their minds have used it to build a utopia like the one we have today — yet no one can deny that they have also turned the world into a battlefield full of strife, hostility and selfishness.</p>
+          <p class="ko reveal">그런 이중성에 종속되어 누군가에게 지배되어 존재하면서도 그것도 자유라고 활개치고 사는 사람들... 그리고 누군가는 이 시스템에 눌려 신음하고 있는 현실 이야기들... 인정하십니까?</p>
+          <p class="en reveal">People who live in subjection to that duality, ruled by someone, and yet strut about calling it freedom… and the real stories of others who groan, crushed under this system… Do you acknowledge them?</p>
+          <p class="purpose-call ko reveal">이제 분열은 더 이상 그만! 이제 이 땅에 하나의 희망을 선포합시다.</p>
+          <p class="purpose-call en reveal">Enough division! Now let us proclaim one hope over this land.</p>
+          <p class="ko reveal">둘의 세계로는 답이 없습니다. 우리는 인류의 희망 대안으로 수평논리를 제안합니다. 이것은 자연의 법칙입니다. 물이 기어이 낮은 곳으로 내려와 평평한 바다를 이루듯... 그리고 모든 것은 중심을 두고 돌아갑니다. 태양을 중심으로 우리의 우주가 돌고, 작은 꽃 하나도 중심에서부터 피어나듯... 그 중심이 공의이며 기준이요 질서인 것을 누가 모른다고 부인할 것입니까? 공의가 잔잔하게 이루어지면 평화는 자연적으로 오고 평화가 이루어지면 화합은 당연히 이루어지는 순리를 누가 부정할 것입니까?</p>
+          <p class="en reveal">A world of two holds no answer. As humanity’s alternative of hope, we propose horizontal logic. This is the law of nature — just as water at last flows down to the lowest places and forms a level sea… And everything turns around a center. Just as our world turns around the sun, and even a small flower blooms from its center… Who would deny knowing that this center is righteousness, the standard and the order? Who would deny the natural course in which, when righteousness is quietly established, peace comes of itself, and when peace is established, harmony surely follows?</p>
+          <p class="ko reveal">이 세 요소가 합하여진 것이 <strong>[본질적인 사랑의 속성]</strong>이라는 것을 누가 모른다고 하겠습니까?</p>
+          <p class="en reveal">Who would say they do not know that these three, joined together, are <strong>[the essential nature of love]</strong>?</p>
+          <p class="ko reveal">이미 우리는 다 알고 있습니다. 다만, 두 가지 상반된 개념이 그동안 우리의 생각을 마비시켰고, 내적 시야를 막아 놓고 있었던 것입니다.</p>
+          <p class="en reveal">We already know all this. It is only that two opposing concepts have long paralyzed our thinking and blocked our inner sight.</p>
+          <p class="about-purpose-close ko reveal">우리에겐 용기가 필요합니다. 6,000년간 사람의 두뇌를 길들여 온 상대성 지식체계가, 안주하던 세상의 품을 떠나지 않으려 할 수도 있습니다. 그러나 그것은 진짜 인류의 희망이 무엇인지를 아직 모르기 때문입니다.</p>
+          <p class="about-purpose-close en reveal">We need courage. The relative system of knowledge that has tamed the human mind for 6,000 years may refuse to leave the embrace of the world it has grown comfortable in. But that is only because it does not yet know what humanity’s true hope is.</p>
         </blockquote>
       </div>
     </div>

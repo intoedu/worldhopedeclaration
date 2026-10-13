@@ -1437,11 +1437,54 @@ html[data-lang="en"] .ministry-body blockquote { font-family: var(--f-serif-en);
 @media (min-width: 761px) { .show-mobile { display: none !important; } }
 
 /* ==========================================================================
+   모션 (의뢰인 요청 2026-10-13 “애니메이션도 좀 넣고”)
+   — 움직임이 끝난 뒤의 모습은 시안과 같습니다. ‘동작 줄이기’ 설정이면 아래 규칙으로 모두 꺼집니다.
+   ========================================================================== */
+@keyframes wh-rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes wh-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes wh-settle { from { transform: scale(1.07); } to { transform: none; } }
+@keyframes wh-glow { 0%, 100% { filter: drop-shadow(0 0 0 rgba(184, 145, 63, 0)); } 50% { filter: drop-shadow(0 0 10px rgba(184, 145, 63, .45)); } }
+
+/* 홈 첫 화면: 지구 이미지가 천천히 자리 잡고, 문구가 차례로 떠오름 */
+.home-hero-bg img { transform-origin: 72% 50%; animation: wh-settle 2.8s var(--ease) both; }
+.home-hero-text > * { animation: wh-rise .9s var(--ease) both; }
+.home-hero-text > :nth-child(1) { animation-delay: .15s; }
+.home-hero-text > :nth-child(2) { animation-delay: .3s; }
+.home-hero-text > :nth-child(3) { animation-delay: .45s; }
+.home-hero-text > :nth-child(4) { animation-delay: .6s; }
+.home-hero-text > :nth-child(5) { animation-delay: .75s; }
+.home-hero-text > :nth-child(6) { animation-delay: .9s; }
+.home-hero-vertical span { animation: wh-fade .7s ease both; }
+.home-hero-vertical span:nth-child(1) { animation-delay: 1s; }
+.home-hero-vertical span:nth-child(2) { animation-delay: 1.12s; }
+.home-hero-vertical span:nth-child(3) { animation-delay: 1.24s; }
+.home-hero-vertical span:nth-child(4) { animation-delay: 1.36s; }
+.home-hero-vertical span:nth-child(5) { animation-delay: 1.48s; }
+.home-hero-vertical span:nth-child(6) { animation-delay: 1.6s; }
+
+/* 하위 페이지 머리말: 제목·설명이 차례로 떠오름 */
+.page-hero .container > * { animation: wh-rise .8s var(--ease) both; }
+.page-hero .container > :nth-child(2) { animation-delay: .08s; }
+.page-hero .container > :nth-child(3) { animation-delay: .16s; }
+.page-hero .container > :nth-child(4) { animation-delay: .24s; }
+.page-hero .container > :nth-child(n+5) { animation-delay: .32s; }
+
+/* 취지문: 문단이 스크롤에 따라 차례로 떠오르고, 핵심 구절에 금빛 밑줄이 그어짐 */
+.purpose-mark { animation: wh-glow 4.5s ease-in-out infinite; }
+.purpose-letter p strong, .about-purpose-text p strong { background-image: linear-gradient(transparent 62%, rgba(220, 196, 140, .55) 62%); background-repeat: no-repeat; background-size: 0% 100%; transition: background-size 1.4s var(--ease) .5s; }
+.purpose-letter p.is-in strong, .about-purpose-text p.is-in strong, .no-js .purpose-letter p strong, .no-js .about-purpose-text p strong { background-size: 100% 100%; }
+.purpose-call::after { content: ""; display: block; width: 56px; height: 2px; margin: .55em auto 0; background: var(--gold-500); transform: scaleX(0); transition: transform 1s var(--ease) .45s; }
+.about-purpose-text .purpose-call::after { margin-left: 0; transform-origin: left center; }
+.purpose-call.is-in::after, .no-js .purpose-call::after { transform: scaleX(1); }
+
+/* ==========================================================================
    모션 줄이기 · 인쇄
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
   .reveal { opacity: 1; transform: none; }
+  .purpose-letter p strong, .about-purpose-text p strong { background-size: 100% 100%; }
+  .purpose-call::after { transform: none; }
 }
 @media print {
   .site-header, .site-footer, .draft-bar, .mobile-nav, .tabbar, .search-overlay, .subnav, .skip-link, .no-print { display: none !important; }

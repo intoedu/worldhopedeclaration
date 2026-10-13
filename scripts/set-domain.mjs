@@ -7,7 +7,7 @@
 // - 연결 도메인이면 저장소 최상위에 CNAME 파일(호스트 이름 한 줄) 생성,
 //   *.github.io 주소면 CNAME 을 만들지 않고 기존 CNAME 은 삭제
 // 여러 번 실행해도 안전합니다(주소를 바꾸면 그 값으로 다시 반영).
-import { readFileSync, writeFileSync, existsSync, unlinkSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync, unlinkSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
@@ -37,8 +37,12 @@ const ghBlock = (cfg.match(/github:\s*\{([\s\S]*?)\}/) || [])[1] || "";
 const ghOwner = (ghBlock.match(/owner:\s*"([^"]*)"/) || [])[1] || "intoedu";
 const ghRepo = (ghBlock.match(/repo:\s*"([^"]*)"/) || [])[1] || "worldhopedeclaration";
 
-const pages = ["index.html", "about.html", "ministry.html", "news.html", "gallery.html", "donate.html", "contact.html", "faq.html", "qr.html", "post.html", "privacy.html"];
-const indexable = pages.filter((p) => !["post.html", "privacy.html"].includes(p));
+// 최상위의 모든 페이지(404.html 제외)를 자동으로 찾습니다 — 페이지를 새로 만들어도 목록을 고칠 필요 없음
+const pages = readdirSync(root).filter((f) => /\.html$/i.test(f) && f !== "404.html").sort();
+// sitemap 에는 검색 허용 페이지만 (noindex 페이지·글 보기 틀(post.html) 제외)
+const isNoindex = (f) => /<meta name="robots" content="[^"]*noindex/i.test(readFileSync(join(root, f), "utf8"));
+const indexable = pages.filter((p) => p !== "post.html" && !isNoindex(p));
+if (indexable.includes("index.html")) indexable.splice(indexable.indexOf("index.html"), 1), indexable.unshift("index.html");
 
 // config.js
 cfg = cfg.replace(/siteUrl: "[^"]*"/, `siteUrl: "${base}"`);

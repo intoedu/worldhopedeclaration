@@ -18,7 +18,7 @@
 | `assets/img/brand/*` (로고) | 의뢰인이 AI로 제작한 시안 이미지에서 잘라냄 | 의뢰인 측 사용 승인(2026-10-12, 전도사님 확인: “AI로 만든 홈페이지 구도, 로고도 따와서 사용”) — 고해상도 원본 확보 시 교체 |
 | `assets/img/home/hero-earth.*`, `tile-*.*`, `principle-card.*` | 의뢰인이 AI로 제작한 시안 이미지에서 잘라냄 | 의뢰인 측 사용 승인(2026-10-12). 참고: 시안을 만든 AI 서비스의 이용약관상 상업적 이용이 허용되는지는 의뢰인 확인 사항 |
 | `assets/img/award/plaque.*`, `pin.*` (선정패·배지) | 의뢰인이 AI로 제작한 자료 이미지에서 잘라냄 | 의뢰인 측 사용 승인(2026-10-12). 얼굴 사진이 든 ID 카드, 유엔 엠블럼과 비슷한 문양의 목걸이 줄 이미지는 쓰지 않음 |
-| `assets/img/people/chairman-won.*` (위원장 사진) | 의뢰인 제공 사진(2026-10-13, 전도사님 전달: “대표사진 이걸로 해줘”) | 본인(위원장) 사진을 의뢰인이 직접 제공·게재 요청. 촬영자(사진관 등)가 따로 있으면 홈페이지 게재 허락 여부 확인 권장. 메타데이터(EXIF) 제거 후 사용 |
+| `assets/img/people/chairman-won.*` (위원장 사진) | 의뢰인 제공 사진(2026-10-13, 전도사님 전달: “대표사진 이걸로 해줘”) | 본인(위원장) 사진을 의뢰인이 직접 제공·게재 요청. 촬영자(사진관 등)가 따로 있으면 홈페이지 게재 허락 여부 확인 권장. 메타데이터(EXIF) 제거 후 사용. 홈 ‘위원장 인사말’ 구역(index.html)에도 크게 쓰고 있음 — 이 용도는 의뢰인 확인 대기(확인되면 날짜 기록) |
 | `assets/img/og-image.png`, `apple-touch-icon.png` | 위 이미지와 OFL 글꼴로 제작 | 위 항목에 따름 |
 | `assets/img/gallery/photo-*.svg`, `portrait-placeholder.svg`, `logo.svg` | 직접 제작한 자리표시 이미지 | 문제 없음 |
 | `assets/img/home/tile-worldmap.svg` (홈 ‘세계지도’ 타일의 점 지도) | `scripts/build-dotmap.mjs` 로 `data/worldmap-dots.json` 에서 직접 생성 | 아래 ‘세계지도 점 데이터’와 같은 출처: Natural Earth(퍼블릭 도메인) → world-atlas(ISC, Mike Bostock). 파일 안에 출처 주석 포함 |
@@ -32,6 +32,7 @@
 |---|---|---|
 | qrcode-generator (Kazuhiko Arase) `assets/vendor/qrcode/` | MIT | 파일 머리말의 저작권 고지 유지. “QR Code”는 (주)덴소웨이브(DENSO WAVE INCORPORATED)의 등록상표 |
 | 세계지도 점 데이터 `data/worldmap-dots.json` | Natural Earth(퍼블릭 도메인)를 world-atlas(ISC, Mike Bostock)로 가공 | `data/worldmap-dots.LICENSE.txt` 동봉 |
+| 선 아이콘 (`assets/js/main.js` 의 아이콘 목록 — 예: 홈 통계 ‘현재 참여자 수’의 사람+ 아이콘 `person-plus`) | 이 저장소에서 직접 그린 SVG 경로 | 다른 아이콘 세트에서 가져오지 않음 |
 | 그 외 사이트 코드 | 이 저장소 제작물 | — |
 
 ## 인용문

@@ -7,7 +7,7 @@
 <meta name="description" content="세계희망선언 세계지도 — 세계희망선언에 함께하는 나라와 나라별 글로벌 대표 33인 선정 현황을 점 지도로 한눈에 봅니다.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="세계희망연대">
-<meta property="og:title" content="세계지도 — 참여 국가 현황 | 세계희망연대">
+<meta property="og:title" content="세계지도 | 세계희망연대">
 <meta property="og:description" content="세계희망선언에 함께하는 나라와 나라별 글로벌 대표 33인 선정 현황">
 <meta property="og:image" content="https://www.worldhopedeclaration.com/assets/img/og-image.png">
 <meta property="og:url" content="https://www.worldhopedeclaration.com/worldmap.html">
@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Serif:ital,wght@0,500;0,700;1,500&display=swap">
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/style.css?v=20261013">
 <script>(function(){try{var l=new URLSearchParams(location.search).get("lang")||localStorage.getItem("wh-lang");if(l==="en"){var h=document.documentElement;h.setAttribute("data-lang","en");h.lang="en";}}catch(e){}})();</script>
 <style>
   /* ===== 세계지도 페이지 전용 (공통 style.css 의 토큰만 사용) ===== */
@@ -55,7 +55,7 @@
 
   /* 참여 국가 표시 (HTML 버튼 — 화면 크기와 관계없이 같은 크기, 키보드로 이동 가능) */
   .wm-markers { position: absolute; inset: 0; }
-  .wm-marker { position: absolute; width: 40px; height: 40px; margin: -20px 0 0 -20px; padding: 0; border: 0; border-radius: 50%; background: none; color: #f0d595; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .wm-marker { position: absolute; width: 44px; height: 44px; margin: -22px 0 0 -22px; padding: 0; border: 0; border-radius: 50%; background: none; color: #f0d595; cursor: pointer; -webkit-tap-highlight-color: transparent; }
   .wm-marker-dot { position: absolute; left: 50%; top: 50%; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: #f0d595; box-shadow: 0 0 0 2px rgba(12, 28, 54, .85), 0 0 0 3.5px rgba(240, 213, 149, .85), 0 0 16px 5px rgba(240, 213, 149, .45); transition: background .2s, transform .2s var(--ease); }
   /* 퍼지는 고리: 기본 상태(움직임 줄이기 설정 시 그대로 보임) = 정지된 고리 */
   .wm-marker::before, .wm-marker::after { content: ""; position: absolute; left: 50%; top: 50%; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; border: 1.5px solid rgba(240, 213, 149, .9); pointer-events: none; transform: scale(2.1); opacity: .5; }
@@ -108,8 +108,6 @@
   .wm-row-count { margin: 0; text-align: right; font-size: 13px; color: var(--muted); line-height: 1.35; white-space: nowrap; }
   .wm-row-count b { display: block; font-family: var(--f-serif-en); font-size: 24px; font-weight: 700; color: var(--navy-900); letter-spacing: -0.01em; }
   .wm-row-count b small { font-family: var(--f-serif); font-size: 13px; margin-left: 2px; }
-  .wm-row-bar { display: block; width: 100%; min-width: 96px; height: 4px; margin-top: 6px; border-radius: 2px; background: var(--blue-100); overflow: hidden; }
-  .wm-row-bar span { display: block; height: 100%; background: var(--gold-500); }
   .wm-row-btn { grid-column: 4; }
   .wm-row-btn svg { width: 16px; height: 16px; }
   .wm-empty { margin: 0; padding: 28px 22px; border: 1px dashed var(--line-2); border-radius: var(--radius); background: #fff; color: var(--muted); text-align: center; }
@@ -142,8 +140,8 @@
   .wm-progress-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; font-size: 14px; color: var(--ink-2); }
   .wm-progress-top b { font-family: var(--f-serif-en); font-size: 22px; font-weight: 700; color: var(--navy-900); }
   .wm-progress-top em { font-style: normal; font-family: var(--f-serif-en); font-size: 15px; color: var(--muted); }
-  .wm-bar { height: 6px; margin-top: 8px; border-radius: 3px; background: var(--blue-100); overflow: hidden; }
-  .wm-bar span { display: block; width: 4px; height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--gold-500), var(--gold-300)); transition: width .8s var(--ease); }
+  /* 막대 없이 숫자와 기준일만 (1/195 처럼 거의 빈 막대는 '실패'처럼 보임) */
+  .wm-progress-asof { margin: 6px 0 0; font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
   .wm-formula { margin: 14px 0 0; padding: 12px 14px; border-radius: var(--radius-sm); background: var(--sky-50); border: 1px solid var(--line); font-size: 14px; color: var(--ink-2); text-align: center; line-height: 1.6; }
   .wm-formula b { font-family: var(--f-serif-en); font-weight: 700; color: var(--navy-900); }
   .wm-side-actions { display: grid; gap: 10px; margin-top: 22px; }
@@ -182,7 +180,6 @@
     .wm-row-name { font-size: 18px; }
     .wm-row-count { grid-column: 2; text-align: left; display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
     .wm-row-count b { display: inline; font-size: 20px; }
-    .wm-row-bar { flex-basis: 100%; }
     .wm-row-btn { grid-column: 2; margin-top: 8px; }
     .wm-side { padding: 26px 20px 22px; }
     .wm-footnote { margin-top: 40px; }
@@ -309,7 +306,7 @@
           <p class="wm-side-text"><span class="ko">세계희망선언은 나라마다 <span data-stat="per_country">33</span>인의 글로벌 대표와 함께 이어집니다. 우리나라의 참여를 신청해 주세요.</span><span class="en">The World Hope Declaration grows nation by nation, with <span data-stat="per_country">33</span> Global Representatives in each. Apply for your nation to join.</span></p>
           <div class="wm-progress">
             <p class="wm-progress-top"><span><span class="ko">참여 국가</span><span class="en">Participating nations</span></span><span><b data-wm="count">1</b> <em>/ <span data-stat="countries">195</span></em></span></p>
-            <div class="wm-bar" role="progressbar" aria-label="참여 국가 비율" data-en-aria-label="Share of participating nations" aria-valuemin="0" aria-valuemax="195" aria-valuenow="1" id="wm-bar"><span></span></div>
+            <p class="wm-progress-asof"><span class="ko">기준일</span><span class="en">As of</span> <span data-stat="updated">2026-10-12</span></p>
           </div>
           <p class="wm-formula"><span class="ko">세계 각국 <b data-stat="per_country">33</b>인 × <b data-stat="countries">195</b>개국 = <b data-stat="target">6,435</b>인</span><span class="en"><b data-stat="per_country">33</b> per nation × <b data-stat="countries">195</b> nations = <b data-stat="target">6,435</b></span></p>
           <div class="wm-side-actions">
@@ -328,9 +325,9 @@
 </main>
 
 <div id="site-footer"></div>
-<script src="assets/js/config.js"></script>
-<script src="assets/js/data.js"></script>
-<script src="assets/js/main.js"></script>
-<script src="assets/js/worldmap.js"></script>
+<script src="assets/js/config.js?v=20261013"></script>
+<script src="assets/js/data.js?v=20261013"></script>
+<script src="assets/js/main.js?v=20261013"></script>
+<script src="assets/js/worldmap.js?v=20261013"></script>
 </body>
 </html>

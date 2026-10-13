@@ -7,7 +7,7 @@
 <meta name="description" content="세계희망선언에 함께해 주세요. 세계희망선언 참여 신청, 글로벌 대표 추천, 희망 응원 메시지, 후원·문의 안내. 전국대표전화 1588-2716">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="세계희망연대">
-<meta property="og:title" content="참여하기 — 선언 참여·대표 추천·응원 메시지 | 세계희망연대">
+<meta property="og:title" content="참여하기 | 세계희망연대">
 <meta property="og:description" content="인류와 지구의 더 나은 미래를 위해, 지금, 세계가 함께 희망을 선언합니다. 선언 참여 신청 · 글로벌 대표 추천 · 희망 응원 메시지">
 <meta property="og:image" content="https://www.worldhopedeclaration.com/assets/img/og-image.png">
 <meta property="og:url" content="https://www.worldhopedeclaration.com/join.html">
@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Serif:ital,wght@0,500;0,700;1,500&display=swap">
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/style.css?v=20261013">
 <script>(function(){try{var l=new URLSearchParams(location.search).get("lang")||localStorage.getItem("wh-lang");if(l==="en"){var h=document.documentElement;h.setAttribute("data-lang","en");h.lang="en";}}catch(e){}})();</script>
 <style>
   /* ===== 참여하기 페이지 전용 (공통 style.css 의 토큰만 사용) ===== */
@@ -30,9 +30,8 @@
   .join-hero { padding: 72px 0 80px; }
   .join-hero-grid { width: 100%; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 470px); gap: 40px 72px; align-items: center; }
   .join-hero-text { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; }
-  .join-hero h1 { order: -1; font-size: clamp(36px, 4vw, 48px); font-weight: 900; letter-spacing: -0.035em; }
+  .join-hero h1 { order: -1; }
   .join-hero .page-hero-en { order: -2; }
-  html[data-lang="en"] .join-hero h1 { font-weight: 700; letter-spacing: -0.02em; }
   .page-hero.join-hero p.join-hero-kicker { margin: 12px 0 0; max-width: none; line-height: 1.6; font-family: var(--f-serif); font-size: clamp(17px, 1.55vw, 20px); font-weight: 500; letter-spacing: -0.01em; color: var(--navy-800); }
   html[data-lang="en"] .page-hero.join-hero p.join-hero-kicker { font-family: var(--f-serif-en); font-style: italic; letter-spacing: 0; }
   .page-hero.join-hero p.join-hero-lead { margin-top: 18px; max-width: 580px; }
@@ -64,7 +63,7 @@
   .join-now-desc { margin: 3px 0 0; font-size: 13.5px; color: var(--muted); line-height: 1.5; }
 
   /* ---------- 페이지 안 메뉴 ---------- */
-  .join-subnav ul { width: max-content; max-width: 100%; margin: 0 auto; }
+  .join-subnav ul { width: max-content; max-width: 100%; }
   .join-subnav a b { margin-right: 6px; font-family: var(--f-serif-en); font-weight: 700; color: var(--gold-600); }
   .join-subnav li.is-group { position: relative; margin-left: 14px; }
   .join-subnav li.is-group::before { content: ""; position: absolute; left: -9px; top: 50%; width: 1px; height: 16px; margin-top: -8px; background: var(--line-2); }
@@ -172,13 +171,11 @@
     .join-hero-actions { display: grid; gap: 10px; width: 100%; margin-top: 24px; }
     .join-hero-actions .btn { width: 100%; min-width: 0; min-height: 50px; }
     .join-figure { margin-top: 4px; }
-    .join-photo { aspect-ratio: auto; height: 132px; }
-    .join-photo figcaption { left: 20px; right: 34%; top: 22px; }
-    .join-art { right: 14px; bottom: 50%; transform: translateY(50%); }
-    .join-art svg { width: 96px; height: 96px; stroke-width: .9; }
-    .join-photo-cap { margin-bottom: 4px; font-size: 11.5px; }
-    .join-photo-title { font-size: 18px; }
-    .join-now { margin: -34px 12px 0; padding: 14px 0 12px; }
+    /* 휴대폰: 장식 카드(새싹)는 숨기고 참여 현황만 → 머리말이 짧아져 첫 화면에서 탭 메뉴가 하단 탭바에 붙지 않고 신청서 머리가 보임
+       (글자를 키워도 카드 제목과 현황 카드가 겹칠 일 없음) */
+    .join-photo { display: none; }
+    .join-figure::before { display: none; }
+    .join-now { margin: 0; padding: 14px 0 12px; }
     .join-now-item { padding: 0 14px; }
     .join-now-desc { font-size: 12.5px; }
     .join-steps { margin-top: 24px; }
@@ -190,8 +187,6 @@
     .join-subnav a b { display: none; }
     .join-subnav li.is-group { margin-left: 8px; }
     .join-subnav li.is-group::before { left: -5px; }
-    .join-photo figcaption { right: 16px; }
-    .join-photo-en { display: none; }
     .join-now-label { font-size: 11.5px; letter-spacing: .04em; }
   }
 
@@ -342,17 +337,17 @@
             <div class="field full">
               <span class="label"><span class="ko">개인정보 수집·이용 동의</span><span class="en">Consent to collection and use of personal information</span><span class="req">*</span></span>
               <ul class="consent-list ko">
-                <li><b>수집 항목</b><span>이름, 국가, 소속·직함(선택), 참여 분야, 연락처, 이메일, 참여 동기</span></li>
-                <li><b>수집 목적</b><span>세계희망선언 참여 신청의 확인과 참여 안내·연락</span></li>
-                <li><b>전달 방법</b><span>입력하신 내용은 홈페이지에 저장되지 않고, 외부 이메일 전송 서비스 FormSubmit(formsubmit.co, 서버가 국외에 있을 수 있음)을 거쳐 담당자 이메일로 전달됩니다. 전송이 원활하지 않으면 이용자의 메일 앱으로 직접 보내실 수 있습니다.</span></li>
-                <li><b>보유 기간</b><span>담당자 메일함에 보관하며 처리(회신) 완료 후 1년 이내에 삭제 (동의 철회 요청 시 지체 없이 파기)</span></li>
+                <li><b>수집 항목<span class="sr-only">: </span></b><span>이름, 국가, 소속·직함(선택), 참여 분야, 연락처, 이메일, 참여 동기</span></li>
+                <li><b>수집 목적<span class="sr-only">: </span></b><span>세계희망선언 참여 신청의 확인과 참여 안내·연락</span></li>
+                <li><b>전달 방법<span class="sr-only">: </span></b><span>입력하신 내용은 홈페이지에 저장되지 않고, 외부 이메일 전송 서비스 FormSubmit(formsubmit.co, 서버가 국외에 있을 수 있음)을 거쳐 담당자 이메일로 전달됩니다. 전송이 원활하지 않으면 이용자의 메일 앱으로 직접 보내실 수 있습니다.</span></li>
+                <li><b>보유 기간<span class="sr-only">: </span></b><span>담당자 메일함에 보관하며 처리(회신) 완료 후 1년 이내에 삭제 (동의 철회 요청 시 지체 없이 파기)</span></li>
                 <li class="is-note">동의를 거부하실 수 있으며, 이 경우 온라인 신청이 제한됩니다. 전화(1588-2716)로는 신청·문의하실 수 있습니다.</li>
               </ul>
               <ul class="consent-list en">
-                <li><b>Items</b><span>name, country, organization and title (optional), field, phone, email, reason for joining</span></li>
-                <li><b>Purpose</b><span>to review your application and contact you about taking part</span></li>
-                <li><b>Delivery</b><span>your submission is not stored on this website. It is sent to our staff by email through a third-party email relay service, FormSubmit (formsubmit.co), whose servers may be located outside Korea. If online delivery fails, you can send it from your own email app instead.</span></li>
-                <li><b>Retention</b><span>kept in the staff mailbox and deleted within 1 year after we have handled it (deleted promptly upon withdrawal of consent)</span></li>
+                <li><b>Items<span class="sr-only">: </span></b><span>name, country, organization and title (optional), field, phone, email, reason for joining</span></li>
+                <li><b>Purpose<span class="sr-only">: </span></b><span>to review your application and contact you about taking part</span></li>
+                <li><b>Delivery<span class="sr-only">: </span></b><span>your submission is not stored on this website. It is sent to our staff by email through a third-party email relay service, FormSubmit (formsubmit.co), whose servers may be located outside Korea. If online delivery fails, you can send it from your own email app instead.</span></li>
+                <li><b>Retention<span class="sr-only">: </span></b><span>kept in the staff mailbox and deleted within 1 year after we have handled it (deleted promptly upon withdrawal of consent)</span></li>
                 <li class="is-note">You may decline; online application will then be unavailable, but you can still apply or ask by calling 1588-2716.</li>
               </ul>
               <label class="check"><input type="checkbox" name="consent" required> <span><span class="ko">위 내용을 확인했으며 개인정보 수집·이용에 동의합니다. (<a href="privacy.html">개인정보처리방침</a>)</span><span class="en">I have read the above and agree. (<a href="privacy.html">Privacy Policy</a>)</span></span></label>
@@ -464,17 +459,17 @@
             <div class="field full">
               <span class="label"><span class="ko">개인정보 수집·이용 동의</span><span class="en">Consent to collection and use of personal information</span><span class="req">*</span></span>
               <ul class="consent-list ko">
-                <li><b>수집 항목</b><span>(추천인) 이름, 연락처, 이메일 / (피추천인) 이름, 국가, 추천 분야, 소개 및 추천 사유, 연락처(선택)</span></li>
-                <li><b>수집 목적</b><span>글로벌 대표 추천의 접수·검토와 추천인·피추천인 연락</span></li>
-                <li><b>전달 방법</b><span>입력하신 내용은 홈페이지에 저장되지 않고, 외부 이메일 전송 서비스 FormSubmit(formsubmit.co, 서버가 국외에 있을 수 있음)을 거쳐 담당자 이메일로 전달됩니다. 전송이 원활하지 않으면 이용자의 메일 앱으로 직접 보내실 수 있습니다.</span></li>
-                <li><b>보유 기간</b><span>담당자 메일함에 보관하며 검토(회신) 완료 후 1년 이내에 삭제 (동의 철회 또는 피추천인의 삭제 요청 시 지체 없이 파기)</span></li>
+                <li><b>수집 항목<span class="sr-only">: </span></b><span>(추천인) 이름, 연락처, 이메일 / (피추천인) 이름, 국가, 추천 분야, 소개 및 추천 사유, 연락처(선택)</span></li>
+                <li><b>수집 목적<span class="sr-only">: </span></b><span>글로벌 대표 추천의 접수·검토와 추천인·피추천인 연락</span></li>
+                <li><b>전달 방법<span class="sr-only">: </span></b><span>입력하신 내용은 홈페이지에 저장되지 않고, 외부 이메일 전송 서비스 FormSubmit(formsubmit.co, 서버가 국외에 있을 수 있음)을 거쳐 담당자 이메일로 전달됩니다. 전송이 원활하지 않으면 이용자의 메일 앱으로 직접 보내실 수 있습니다.</span></li>
+                <li><b>보유 기간<span class="sr-only">: </span></b><span>담당자 메일함에 보관하며 검토(회신) 완료 후 1년 이내에 삭제 (동의 철회 또는 피추천인의 삭제 요청 시 지체 없이 파기)</span></li>
                 <li class="is-note">동의를 거부하실 수 있으며, 이 경우 온라인 추천이 제한됩니다. 전화(1588-2716)로는 문의하실 수 있습니다.</li>
               </ul>
               <ul class="consent-list en">
-                <li><b>Items</b><span>(you) name, phone, email / (nominee) name, country, field, introduction and reason for nomination, phone or email (optional)</span></li>
-                <li><b>Purpose</b><span>to receive and review nominations and to contact you and the nominee</span></li>
-                <li><b>Delivery</b><span>your submission is not stored on this website. It is sent to our staff by email through a third-party email relay service, FormSubmit (formsubmit.co), whose servers may be located outside Korea. If online delivery fails, you can send it from your own email app instead.</span></li>
-                <li><b>Retention</b><span>kept in the staff mailbox and deleted within 1 year after the review is completed (deleted promptly upon withdrawal of consent or at the nominee’s request)</span></li>
+                <li><b>Items<span class="sr-only">: </span></b><span>(you) name, phone, email / (nominee) name, country, field, introduction and reason for nomination, phone or email (optional)</span></li>
+                <li><b>Purpose<span class="sr-only">: </span></b><span>to receive and review nominations and to contact you and the nominee</span></li>
+                <li><b>Delivery<span class="sr-only">: </span></b><span>your submission is not stored on this website. It is sent to our staff by email through a third-party email relay service, FormSubmit (formsubmit.co), whose servers may be located outside Korea. If online delivery fails, you can send it from your own email app instead.</span></li>
+                <li><b>Retention<span class="sr-only">: </span></b><span>kept in the staff mailbox and deleted within 1 year after the review is completed (deleted promptly upon withdrawal of consent or at the nominee’s request)</span></li>
                 <li class="is-note">You may decline; online nomination will then be unavailable, but you can still contact us at 1588-2716.</li>
               </ul>
               <details class="consent-more">
@@ -551,19 +546,19 @@
             <div class="hp-field" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
             <div class="field full">
               <ul class="consent-list ko">
-                <li><b>수집 항목</b><span>이름(닉네임), 지역, 메시지</span></li>
-                <li><b>수집 목적</b><span>응원 메시지 확인 및 홈페이지 게시</span></li>
-                <li><b>전달 방법</b><span>입력하신 내용은 외부 이메일 전송 서비스 FormSubmit(formsubmit.co, 서버가 국외에 있을 수 있음)을 거쳐 담당자 이메일로 전달되며, 담당자가 확인한 메시지만 홈페이지에 게시됩니다.</span></li>
-                <li><b>게시 방법</b><span>게시된 메시지(이름(닉네임)·지역·메시지)는 홈페이지 파일을 보관하는 공개 저장소(GitHub, Inc., 미국)에 저장되며, 이 저장소의 파일과 변경 이력은 누구나 볼 수 있습니다.</span></li>
-                <li><b>보유 기간</b><span>접수 메일은 게시 여부 결정 후 1년 이내에 삭제, 게시된 메시지는 게시 철회 요청 시까지 (요청 시 홈페이지와 게시 파일에서 지체 없이 삭제하고, 변경 이력에 남은 이전 기록도 삭제 조치)</span></li>
+                <li><b>수집 항목<span class="sr-only">: </span></b><span>이름(닉네임), 지역, 메시지</span></li>
+                <li><b>수집 목적<span class="sr-only">: </span></b><span>응원 메시지 확인 및 홈페이지 게시</span></li>
+                <li><b>전달 방법<span class="sr-only">: </span></b><span>입력하신 내용은 외부 이메일 전송 서비스 FormSubmit(formsubmit.co, 서버가 국외에 있을 수 있음)을 거쳐 담당자 이메일로 전달되며, 담당자가 확인한 메시지만 홈페이지에 게시됩니다.</span></li>
+                <li><b>게시 방법<span class="sr-only">: </span></b><span>게시된 메시지(이름(닉네임)·지역·메시지)는 홈페이지 파일을 보관하는 공개 저장소(GitHub, Inc., 미국)에 저장되며, 이 저장소의 파일과 변경 이력은 누구나 볼 수 있습니다.</span></li>
+                <li><b>보유 기간<span class="sr-only">: </span></b><span>접수 메일은 게시 여부 결정 후 1년 이내에 삭제, 게시된 메시지는 게시 철회 요청 시까지 (요청 시 홈페이지와 게시 파일에서 지체 없이 삭제하고, 변경 이력에 남은 이전 기록도 삭제 조치)</span></li>
                 <li class="is-note">동의를 거부하실 수 있으며, 이 경우 응원 메시지를 남기실 수 없습니다.</li>
               </ul>
               <ul class="consent-list en">
-                <li><b>Items</b><span>name (nickname), region, message</span></li>
-                <li><b>Purpose</b><span>to review your message and post it on this website</span></li>
-                <li><b>Delivery</b><span>your message is sent to our staff by email through a third-party email relay service, FormSubmit (formsubmit.co), whose servers may be located outside Korea. Only messages approved by our staff are posted.</span></li>
-                <li><b>Publication</b><span>posted messages (name/nickname, region, message) are stored in the public repository that holds this website's files (GitHub, Inc., USA); those files and their change history can be viewed by anyone.</span></li>
-                <li><b>Retention</b><span>the email we receive is deleted within 1 year after we decide whether to post it; a posted message is kept until you ask us to remove it (we then remove it promptly from the website and the data file, and also purge earlier copies from the change history)</span></li>
+                <li><b>Items<span class="sr-only">: </span></b><span>name (nickname), region, message</span></li>
+                <li><b>Purpose<span class="sr-only">: </span></b><span>to review your message and post it on this website</span></li>
+                <li><b>Delivery<span class="sr-only">: </span></b><span>your message is sent to our staff by email through a third-party email relay service, FormSubmit (formsubmit.co), whose servers may be located outside Korea. Only messages approved by our staff are posted.</span></li>
+                <li><b>Publication<span class="sr-only">: </span></b><span>posted messages (name/nickname, region, message) are stored in the public repository that holds this website's files (GitHub, Inc., USA); those files and their change history can be viewed by anyone.</span></li>
+                <li><b>Retention<span class="sr-only">: </span></b><span>the email we receive is deleted within 1 year after we decide whether to post it; a posted message is kept until you ask us to remove it (we then remove it promptly from the website and the data file, and also purge earlier copies from the change history)</span></li>
                 <li class="is-note">You may decline; you will then be unable to leave a message.</li>
               </ul>
               <label class="check"><input type="checkbox" name="consent" required data-label="개인정보 수집·이용 및 홈페이지 게시 동의"> <span><span class="ko">위 내용을 확인했으며, 개인정보 수집·이용과 입력한 이름(닉네임)·지역·메시지가 홈페이지에 게시되는 것에 동의합니다. (<a href="privacy.html">개인정보처리방침</a>)</span><span class="en">I have read the above and agree to the collection and use of this information and to my name (nickname), region and message being published on this website. (<a href="privacy.html">Privacy Policy</a>)</span></span></label>
@@ -610,10 +605,10 @@
 </main>
 
 <div id="site-footer"></div>
-<script src="assets/js/config.js"></script>
-<script src="assets/js/data.js"></script>
-<script src="assets/js/main.js"></script>
-<script src="assets/js/forms.js"></script>
+<script src="assets/js/config.js?v=20261013"></script>
+<script src="assets/js/data.js?v=20261013"></script>
+<script src="assets/js/main.js?v=20261013"></script>
+<script src="assets/js/forms.js?v=20261013"></script>
 <script>
   // 참여하기 페이지: 하위 메뉴 현재 위치 강조 · 바로가기 위치 보정 · ?field= 로 분야 미리 선택
   (function () {
@@ -628,8 +623,7 @@
     function update() {
       ticking = false;
       if (tabMode) return;   // 휴대폰 탭 모드에서는 고른 탭이 곧 현재 위치
-      var line = (nav ? nav.getBoundingClientRect().bottom : 0) + 40, cur = -1;
-      targets.forEach(function (el, i) { if (el && el.getBoundingClientRect().top <= line) cur = i; });
+      var cur = WH.spyIndex(nav, targets);   // 기준선: 메뉴 아래 40px · 도착 자리(scroll-margin-top) 아래 (main.js)
       // 페이지 맨 끝에 닿으면 마지막 구역을 강조 (마지막 구역이 짧아 기준선에 닿지 못할 때)
       if (window.innerHeight + window.pageYOffset >= document.documentElement.scrollHeight - 4 && cur >= 0) cur = targets.length - 1;
       if (cur === current) return;
@@ -730,14 +724,25 @@
         current = -2; update();
       }
     }
-    // 탭으로 바꾼 뒤, 신청서 머리가 고정 메뉴 바로 아래에 보이도록 (이미 위쪽이면 그대로)
+    // 탭으로 바꾼 뒤, 신청서 머리가 고정 메뉴 바로 아래에 오도록 이동.
+    // 메뉴가 붙을 자리는 지금 위치가 아니라 이동한 뒤의 자리: 아래로 가면 헤더가 숨으므로(휴대폰 · '동작 줄이기'가 아닐 때) 맨 위(0),
+    // 위로 가면 헤더 바로 아래 → 헤더 상태(body.chrome-down)를 먼저 정하고 그 자리를 기준으로 계산
     function revealPanel(id) {
       var sec = document.getElementById(id);
       if (!sec) return;
+      var header = document.querySelector(".site-header");
+      var headH = header ? header.offsetHeight : 0;
+      var navH = nav.offsetHeight;
+      var still = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       var top = sec.getBoundingClientRect().top;
-      var navBottom = nav.getBoundingClientRect().bottom;
-      if (top < navBottom || top > window.innerHeight * .6) {
-        window.scrollTo({ top: window.pageYOffset + top - navBottom + 1, behavior: "auto" });
+      var downNow = document.body.classList.contains("chrome-down");
+      if (Math.abs(top - ((downNow ? 0 : headH) + navH)) <= 2) return;   // 이미 메뉴 바로 아래
+      var goingDown = top > (downNow ? 0 : headH) + navH + 2;
+      var hide = goingDown && !still && window.pageYOffset + top - navH >= 120;
+      if (hide !== downNow) document.body.classList.toggle("chrome-down", hide);
+      var stickTop = hide ? 0 : headH;
+      if (Math.abs(top - (stickTop + navH)) > 2) {
+        window.scrollTo({ top: Math.max(0, window.pageYOffset + top - (stickTop + navH)), behavior: "auto" });
       }
     }
     if (mq && tabLinks.length) {

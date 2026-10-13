@@ -84,14 +84,14 @@
     }
   };
 
-  /* 갤러리에 실제 사진이 없고 '준비 중' 예시(sample)뿐이면 <html data-gallery-empty> 를 붙임
-     → 메뉴·버튼의 갤러리 링크(.js-gallery-link)를 숨김 (style.css). 실제 사진을 올리면 자동으로 다시 보임 */
+  /* 갤러리에 실제 사진(견본 sample 이 아닌 것)이 있으면 <html data-gallery-ready> 를 붙임
+     → 그때만 메뉴·버튼의 갤러리 링크(.js-gallery-link)가 보임 (style.css). 견본뿐이면 처음부터 숨긴 채 그대로 */
   if (!/\/admin\//.test(location.pathname)) {
     json("gallery").then(function (rows) {
       var list = published(Array.isArray(rows) ? rows : []);
       var empty = !list.length || list.every(function (g) { return g.sample === true; });
-      if (empty) document.documentElement.setAttribute("data-gallery-empty", "");
-      else document.documentElement.removeAttribute("data-gallery-empty");
+      if (empty) document.documentElement.removeAttribute("data-gallery-ready");
+      else document.documentElement.setAttribute("data-gallery-ready", "");
     });
   }
 

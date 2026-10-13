@@ -132,42 +132,9 @@
     }
   }
 
-  /* ---------------- 하위 메뉴: 현재 위치 강조 ---------------- */
+  /* ---------------- 하위 메뉴: 현재 위치 강조 (main.js WH.subnavSpy 공통) ---------------- */
   function setupSubnav() {
-    var nav = document.querySelector(".g33-subnav");
-    var list = nav ? nav.querySelector("ul") : null;
-    var links = nav ? Array.prototype.slice.call(nav.querySelectorAll('a[href^="#"]')) : [];
-    if (!links.length) return;
-    var targets = links.map(function (a) { return document.getElementById(a.getAttribute("href").slice(1)); });
-    var current = -2, ticking = false;
-
-    function update() {
-      ticking = false;
-      var nr = nav.getBoundingClientRect(), line = nr.bottom + 40, cur = -1;
-      // 하위 메뉴가 헤더 아래에 붙기 전(페이지 맨 위)에는 강조하지 않음
-      var stuck = nr.top <= (parseFloat(getComputedStyle(nav).top) || 0) + 1;
-      if (stuck) targets.forEach(function (el, i) { if (el && el.getBoundingClientRect().top <= line) cur = i; });
-      // 맨 아래까지 내리면 마지막 메뉴
-      if (stuck && window.innerHeight + window.pageYOffset >= document.documentElement.scrollHeight - 4) cur = targets.length - 1;
-      if (cur === current) return;
-      current = cur;
-      links.forEach(function (a, i) {
-        a.classList.toggle("is-active", i === cur);
-        if (i === cur) a.setAttribute("aria-current", "location"); else a.removeAttribute("aria-current");
-      });
-      // 좁은 화면: 강조된 메뉴가 보이도록 가로 스크롤
-      if (cur >= 0 && list && list.scrollWidth > list.clientWidth) {
-        var ar = links[cur].getBoundingClientRect(), lr = list.getBoundingClientRect();
-        var left = ar.left - lr.left + list.scrollLeft;
-        if (left < list.scrollLeft || left + ar.width > list.scrollLeft + list.clientWidth) list.scrollLeft = Math.max(0, left - 24);
-      }
-    }
-    function onScroll() {
-      if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
-    }
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    update();
+    if (WH.subnavSpy) WH.subnavSpy(document.querySelector(".g33-subnav"));
   }
 
   function init() {

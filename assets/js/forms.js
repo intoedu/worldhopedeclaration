@@ -126,37 +126,111 @@
     return { subject: base + (name ? " - " + name : ""), rows: rows, replyTo: replyTo };
   }
 
+  /* ---------- 항목별 오류 표시 ----------
+     입력칸 바로 아래 <p class="field-error"> (aria-describedby 로 연결, aria-invalid) + 신청서 맨 위 요약(.form-alert, role=alert).
+     고치면(입력·선택) 그 항목의 표시는 바로 사라짐. 문구는 두 언어를 함께 넣어 언어를 바꿔도 맞게 보임 */
+  var errSeq = 0;
+  // [한국어, 영어] — 입력칸의 data-msg-* 가 있으면 그것, 없으면 종류별 기본 문구
+  function errorPair(el, missing) {
+    var ko = el.getAttribute("data-msg-ko"), en = el.getAttribute("data-msg-en");
+    if (ko || en) return [ko || en, en || ko];
+    if (el.type === "checkbox" && el.name === "consent") return ["개인정보 수집·이용에 동의해 주세요.", "Please agree to the collection and use of personal information."];
+    if (!missing && el.type === "email") return ["이메일 주소 형식을 확인해 주세요.", "Please check the email address."];
+    if (!missing && el.type === "tel") return ["연락처를 정확히 입력해 주세요. (숫자 9자리 이상)", "Please enter a valid phone number (at least 9 digits)."];
+    return missing ? ["필수 항목입니다", "Required"] : ["형식을 확인해 주세요", "Please check the format"];
+  }
+  function biText(pair) { return WH.bi(WH.esc(pair[0]), WH.esc(pair[1])); }
+  function errHost(el) { return el.closest(".field") || el.closest("label") || el; }
+  function markInvalid(el, id) {
+    if (!el.hasAttribute("data-wh-desc")) el.setAttribute("data-wh-desc", el.getAttribute("aria-describedby") || "");
+    var base = el.getAttribute("data-wh-desc");
+    el.setAttribute("aria-describedby", (base ? base + " " : "") + id);
+    el.setAttribute("aria-invalid", "true");
+  }
+  function clearHost(host) {
+    if (!host) return;
+    if (host.classList) host.classList.remove("has-error");
+    var p = host.__whErr;
+    if (p && p.parentNode) p.parentNode.removeChild(p);
+    host.__whErr = null;
+    var ctrls = host.matches && host.matches("input, select, textarea") ? [host] : Array.prototype.slice.call(host.querySelectorAll ? host.querySelectorAll("[aria-invalid]") : []);
+    ctrls.forEach(function (c) {
+      c.removeAttribute("aria-invalid");
+      if (c.hasAttribute("data-wh-desc")) {
+        var base = c.getAttribute("data-wh-desc");
+        if (base) c.setAttribute("aria-describedby", base); else c.removeAttribute("aria-describedby");
+        c.removeAttribute("data-wh-desc");
+      }
+    });
+  }
+  function showFieldError(el, pair) {
+    var host = errHost(el);
+    var p = host.__whErr;
+    if (!p) {
+      p = document.createElement("p");
+      p.className = "field-error";
+      p.id = "wh-err-" + (++errSeq);
+      host.__whErr = p;
+      // .field 안이면 그 끝에, 체크박스 줄(label)·단독 입력칸이면 바로 뒤에
+      if (host.classList && host.classList.contains("field")) host.appendChild(p);
+      else host.parentNode.insertBefore(p, host.nextSibling);
+    }
+    p.innerHTML = biText(pair);
+    markInvalid(el, p.id);
+  }
+  // 신청서 맨 위 요약: 첫 입력 묶음(fieldset · .form-grid) 바로 앞
+  function showSummary(form, pair) {
+    var box = form.querySelector(".form-alert");
+    if (!box) {
+      box = document.createElement("p");
+      box.className = "form-alert";
+      box.setAttribute("role", "alert");
+      var first = null;
+      Array.prototype.some.call(form.children, function (c) {
+        if (c.matches("fieldset, .form-grid") || c.querySelector("input:not([type=hidden]), select, textarea")) { first = c; return true; }
+        return false;
+      });
+      form.insertBefore(box, first || form.firstChild);
+    }
+    box.innerHTML = biText(pair);
+  }
+  function clearAll(form) {
+    form.querySelectorAll(".field.has-error").forEach(function (f) { f.classList.remove("has-error"); });
+    form.querySelectorAll("[aria-invalid]").forEach(function (el) { clearHost(errHost(el)); });
+    var box = form.querySelector(".form-alert");
+    if (box) box.parentNode.removeChild(box);
+  }
+
   /* 화면 순서대로 확인: 필수 입력, 이메일 형식, 연락처(숫자 9자리 이상) — 선택 항목도 입력했다면 형식 확인 */
   function validate(form) {
-    var firstBad = null;
-    form.querySelectorAll(".field").forEach(function (f) { f.classList.remove("has-error"); });
+    var firstBad = null, firstPair = null;
+    clearAll(form);
     form.querySelectorAll("input, select, textarea").forEach(function (el) {
       if (el.disabled || el.closest(".hp-field") || /^(submit|button|reset|hidden|file)$/.test(el.type)) return;
       var v = String(el.value || "").trim();
-      var bad = false;
+      var bad = false, missing = false;
       if (el.required) {
         if (el.type === "checkbox") bad = !el.checked;
         else if (el.type === "radio") bad = !form.querySelector('[name="' + el.name + '"]:checked');
         else bad = !v;
+        missing = bad;
       }
       if (!bad && v && el.type === "email") bad = !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
       if (!bad && v && el.type === "tel") bad = v.replace(/[^0-9]/g, "").length < 9;
       if (bad) {
         var f = el.closest(".field"); if (f) f.classList.add("has-error");
-        if (!firstBad) firstBad = el;
+        var pair = errorPair(el, missing);
+        showFieldError(el, pair);
+        if (!firstBad) { firstBad = el; firstPair = pair; }
       }
     });
     if (firstBad) {
       firstBad.focus();
-      // 항목별 오류 문구(data-msg-ko / data-msg-en)가 있으면 그것을, 없으면 기본 문구
-      var msg = firstBad.getAttribute("data-msg-" + WH.lang());
-      if (!msg) {
-        if (firstBad.type === "checkbox" && firstBad.name === "consent") msg = WH.t("개인정보 수집·이용에 동의해 주세요.", "Please agree to the collection and use of personal information.");
-        else if (firstBad.type === "email" && firstBad.value) msg = WH.t("이메일 주소 형식을 확인해 주세요.", "Please check the email address.");
-        else if (firstBad.type === "tel" && firstBad.value) msg = WH.t("연락처를 정확히 입력해 주세요. (숫자 9자리 이상)", "Please enter a valid phone number (at least 9 digits).");
-        else msg = WH.t("필수 항목을 확인해 주세요.", "Please check the required fields.");
-      }
-      setStatus(form, "err", msg);
+      // 요약·아래 상태 줄: 첫 항목의 문구(data-msg-* · 동의 · 이메일 · 연락처), 그 밖에는 기본 문구
+      var sum = firstPair[0] === "필수 항목입니다" || firstPair[0] === "형식을 확인해 주세요" ?
+        ["필수 항목을 확인해 주세요.", "Please check the required fields."] : firstPair;
+      showSummary(form, sum);
+      setStatus(form, "err", WH.t(sum[0], sum[1]));
       return false;
     }
     return true;
@@ -238,11 +312,20 @@
     form.setAttribute("novalidate", "");
     setupOther(form);
 
-    // 입력을 고치면 오류 표시 해제
-    form.addEventListener("input", function (e) {
-      var f = e.target.closest && e.target.closest(".field.has-error");
-      if (f) f.classList.remove("has-error");
-    });
+    // 입력을 고치면 그 항목의 오류 표시 해제 (모두 고치면 위 요약도)
+    var fix = function (e) {
+      var el = e.target;
+      if (!el || !el.closest || !el.matches("input, select, textarea")) return;
+      var host = errHost(el);
+      if (host.__whErr || (host.classList && host.classList.contains("has-error"))) clearHost(host);
+      if (!form.querySelector("[aria-invalid]")) {
+        var box = form.querySelector(".form-alert");
+        if (box) box.parentNode.removeChild(box);
+      }
+    };
+    form.addEventListener("input", fix);
+    form.addEventListener("change", fix);
+    form.addEventListener("reset", function () { clearAll(form); });
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();

@@ -7,7 +7,7 @@
 <meta name="description" content="세계희망선언문 — 분열을 넘어 화해로, 절망을 넘어 희망으로. 이중개념·종속구조·수평논리·중심기축·공평화합의 5대 원칙과 평화·지구환경·사람·연대·실천의 5대 가치를 소개합니다.">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="세계희망연대">
-<meta property="og:title" content="세계희망선언문 — 5대 원칙과 5대 가치 | 세계희망연대">
+<meta property="og:title" content="세계희망선언문 | 세계희망연대">
 <meta property="og:description" content="분열을 넘어 화해로, 절망을 넘어 희망으로 — 인류와 지구의 더 나은 미래를 위해, 지금, 세계가 함께 희망을 선언합니다.">
 <meta property="og:image" content="https://www.worldhopedeclaration.com/assets/img/og-image.png">
 <meta property="og:url" content="https://www.worldhopedeclaration.com/declaration.html">
@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Serif:ital,wght@0,500;0,700;1,500&display=swap">
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/style.css?v=20261013">
 <script>(function(){try{var l=new URLSearchParams(location.search).get("lang")||localStorage.getItem("wh-lang");if(l==="en"){var h=document.documentElement;h.setAttribute("data-lang","en");h.lang="en";}}catch(e){}})();</script>
 <style>
   /* ===== 세계희망선언문 페이지 전용 (공통 style.css 의 토큰만 사용) ===== */
@@ -31,9 +31,7 @@
   /* 로고 → 금색 눈썹글 → 제목 순서 (눈썹글은 공통 규칙으로 제목 위에 올라감) */
   .decl-hero picture { order: -1; }
   .decl-hero .decl-hero-mark { width: 60px; height: 60px; margin: 0 auto 18px; }
-  .decl-hero h1 { font-size: clamp(34px, 4.6vw, 54px); font-weight: 900; letter-spacing: -0.035em; }
-  html[data-lang="en"] .decl-hero h1 { font-weight: 700; letter-spacing: -0.02em; }
-  .decl-hero .page-hero-en sup, .decl-doc-mark sup, .decl-closing-en sup { font-size: .7em; letter-spacing: 0; margin-left: .1em; }
+  .decl-hero .page-hero-en sup, .decl-doc-mark sup, .decl-closing-en sup { font-size: max(9px, .7em); letter-spacing: 0; margin-left: .1em; }
   .page-hero.decl-hero p.decl-hero-line { margin: 18px auto 0; max-width: none; font-family: var(--f-serif); font-size: clamp(19px, 2.3vw, 27px); font-weight: 700; line-height: 1.55; letter-spacing: -0.02em; color: var(--navy-900); }
   html[data-lang="en"] .page-hero.decl-hero p.decl-hero-line { font-family: var(--f-serif-en); font-weight: 500; letter-spacing: 0; }
   .page-hero.decl-hero p.decl-hero-line, .page-hero.decl-hero p.decl-hero-sub, .decl-preamble p, .decl-closing .cta-text { text-wrap: balance; }
@@ -419,9 +417,9 @@
 </main>
 
 <div id="site-footer"></div>
-<script src="assets/js/config.js"></script>
-<script src="assets/js/data.js"></script>
-<script src="assets/js/main.js"></script>
+<script src="assets/js/config.js?v=20261013"></script>
+<script src="assets/js/data.js?v=20261013"></script>
+<script src="assets/js/main.js?v=20261013"></script>
 <script>
   // 세계희망선언문 페이지: 하위 메뉴 현재 위치 강조 · 인쇄 버튼
   (function () {
@@ -435,8 +433,7 @@
     // 현재 보이는 구역의 메뉴를 강조하고, 좁은 화면에서는 그 메뉴가 보이도록 가로 스크롤
     function update() {
       ticking = false;
-      var line = (nav ? nav.getBoundingClientRect().bottom : 0) + 40, cur = -1;
-      targets.forEach(function (el, i) { if (el && el.getBoundingClientRect().top <= line) cur = i; });
+      var cur = WH.spyIndex(nav, targets);   // 기준선: 메뉴 아래 40px · 도착 자리(scroll-margin-top) 아래 (main.js)
       if (cur === current) return;
       current = cur;
       links.forEach(function (a, i) { a.classList.toggle("is-active", i === cur); });

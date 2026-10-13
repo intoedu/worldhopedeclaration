@@ -93,7 +93,8 @@
       if (!b || b.disabled) return;
       state.page = parseInt(b.getAttribute("data-page"), 10);
       load();
-      list.scrollIntoView({ behavior: "smooth", block: "start" });
+      // '동작 줄이기' 설정이면 바로 이동
+      list.scrollIntoView({ behavior: WH.motionOK && !WH.motionOK() ? "auto" : "smooth", block: "start" });
     });
     document.addEventListener("wh:lang", load);
     load();

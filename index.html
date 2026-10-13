@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Serif:ital,wght@0,400;0,500;0,700;1,500&display=swap">
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/style.css?v=20261013">
 <!-- 첫 화면 배경: 데스크톱은 시안 히어로, 휴대폰은 지구 사진 -->
 <link rel="preload" as="image" href="assets/img/home/hero-desktop.webp" type="image/webp" media="(min-width: 761px)" fetchpriority="high">
 <link rel="preload" as="image" href="assets/img/home/hero-earth.webp" type="image/webp" media="(max-width: 760px)" fetchpriority="high">
@@ -57,7 +57,7 @@
     <div class="home-frame home-hero-inner">
       <div class="home-hero-text">
         <p class="home-hero-kicker"><span class="ko">분열을 넘어, 함께 만드는 더 나은 세상</span><span class="en">Beyond division, a better world together</span></p>
-        <h1 class="home-hero-title" id="hero-title"><span class="ko">세계희망선언<sup>™</sup></span><span class="en">World Hope<span class="sr-only"> Declaration™</span></span></h1>
+        <h1 class="home-hero-title" id="hero-title"><span class="ko">세계희망<wbr>선<span class="nb">언<sup>™</sup></span></span><span class="en">World Hope<span class="sr-only"> Declaration™</span></span></h1>
         <p class="home-hero-en"><span class="ko">WORLD HOPE DECLARATION<sup>™</sup></span><span class="en" aria-hidden="true">DECLARATION<sup>™</sup></span></p>
         <p class="home-hero-lead"><span class="ko">국가<span class="dot">·</span>인종<span class="dot">·</span>종교<span class="dot">·</span>이념을 넘어<br class="hm-d"> 인류가 함께 살아갈<br class="hm-m"> 새로운 세계의 기준을 선언합니다.</span><span class="en">Beyond nation, race, religion and ideology,<br class="hm-d"> we declare a new standard for the world we share.</span></p>
         <p class="home-hero-quote" lang="en">From Division to Hope,<br>Together for a Better World.</p>
@@ -99,16 +99,16 @@
         </div>
       </li>
       <li class="home-stat reveal" style="--i:3">
-        <span class="home-stat-icon" data-icon="hands"></span>
+        <span class="home-stat-icon" data-icon="person-plus"></span>
         <div class="home-stat-body">
           <p class="home-stat-num"><b data-stat="participants">21</b><small><span class="ko">명</span><span class="en">people</span></small></p>
           <p class="home-stat-label">Current<span class="hm-d"> participants</span></p>
-          <p class="home-stat-desc"><span class="ko">현재 참여자 수</span><span class="en">Participants so far</span></p>
+          <p class="home-stat-desc"><span class="ko">현재 참여자 수</span><span class="en">Participants so far</span> · <span class="home-stat-asof"><span class="ko">기준일</span><span class="en">As of</span> <span data-stat="updated">2026-10-12</span></span></p>
         </div>
       </li>
     </ul>
-    <!-- 기준일: data/stats.json 의 updated -->
-    <p class="home-frame home-stats-note reveal" style="--i:4"><span class="ko">기준일</span><span class="en">As of</span> <span data-stat="updated">2026-10-12</span></p>
+    <!-- 기준일: data/stats.json 의 updated (데스크톱은 참여자 수 칸 설명 안에, 휴대폰은 이 줄) -->
+    <p class="home-frame home-stats-note"><span class="ko">기준일</span><span class="en">As of</span> <span data-stat="updated">2026-10-12</span></p>
   </section>
 
   <!-- ===== 세계희망선언 5대 원칙 (데스크톱: 안개 낀 산 위 5칸 / 휴대폰: 넘겨 보는 카드 + 아래 점 표시) ===== -->
@@ -297,7 +297,10 @@
 
       <!-- 5대 가치 (아이콘은 declaration.html #values 와 같음 · 휴대폰에서는 옆으로 넘겨 봄) -->
       <div class="hs-values">
-        <h3 class="hs-values-title reveal" style="--i:0"><span class="ko">세계희망선언 5대 가치</span><span class="en">The Five Values</span></h3>
+        <div class="hs-values-head reveal" style="--i:0">
+          <p class="hs-eyebrow">Five Values</p>
+          <h3 class="hs-values-title"><span class="ko">세계희망선언 5대 가치</span><span class="en">The Five Values</span></h3>
+        </div>
         <ul class="hs-values-list">
           <li class="hs-value reveal" style="--i:1">
             <span class="hs-value-icon" data-icon="leaf"></span>
@@ -380,8 +383,8 @@
           <p class="hs-lead reveal" style="--i:2"><span class="ko">한 나라의 33인에서 세계 각국으로 — 함께 하나의 글로벌 대표 네트워크를 이룹니다.</span><span class="en">From 33 people in one nation to every nation of the world — together forming one global network of representatives.</span></p>
           <div class="hs-formula-box reveal" style="--i:3">
             <p class="hs-formula" aria-hidden="true"><b data-stat="per_country">33</b><i>×</i><b data-stat="countries">195</b><i>=</i><b data-stat="target">6,435</b></p>
-            <p class="sr-only"><span class="ko">세계 각국 <span data-stat="per_country">33</span>인 × <span data-stat="countries">195</span>개국 = <span data-stat="target">6,435</span>인</span><span class="en"><span data-stat="per_country">33</span> per nation × <span data-stat="countries">195</span> nations = <span data-stat="target">6,435</span> representatives</span></p>
-            <p class="hs-formula-cap" aria-hidden="true"><span class="ko">세계 각국 <span data-stat="per_country">33</span>인 × 대상 국가 수 = 목표 인원</span><span class="en"><span data-stat="per_country">33</span> per nation × number of nations = global target</span></p>
+            <p class="sr-only"><span class="ko">세계 각국 <span data-stat="per_country">33</span>인 × <span data-stat="countries">195</span>개국 = <span data-stat="target">6,435</span>인 (목표치)</span><span class="en"><span data-stat="per_country">33</span> per nation × <span data-stat="countries">195</span> nations = <span data-stat="target">6,435</span> representatives (target)</span></p>
+            <p class="hs-formula-cap" aria-hidden="true"><span class="ko">세계 각국 <span data-stat="per_country">33</span>인 × 대상 국가 = 글로벌 대표 <b class="hs-formula-tag">(목표치)</b></span><span class="en"><span data-stat="per_country">33</span> per nation × nations = global representatives <b class="hs-formula-tag">(target)</b></span></p>
           </div>
           <div class="hs-map-status reveal" style="--i:4">
             <p class="hs-map-count"><span class="hs-map-label"><span class="ko">참여 국가</span><span class="en">Participating nations</span></span><span class="hs-map-num"><b data-hs="count">1</b><em>/ <span data-stat="countries">195</span></em></span></p>
@@ -538,9 +541,9 @@
 </main>
 
 <div id="site-footer"></div>
-<script src="assets/js/config.js"></script>
-<script src="assets/js/data.js"></script>
-<script src="assets/js/main.js"></script>
-<script src="assets/js/home.js"></script>
+<script src="assets/js/config.js?v=20261013"></script>
+<script src="assets/js/data.js?v=20261013"></script>
+<script src="assets/js/main.js?v=20261013"></script>
+<script src="assets/js/home.js?v=20261013"></script>
 </body>
 </html>

@@ -185,6 +185,8 @@
     heart: '<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/>',
     hands: '<path d="M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16"/><path d="m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.8-2.9l-4.2 3.9"/><path d="m2 15 6 6"/>',
     message: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/>',
+    // 사람 + 더하기: 참여자 수 (연대 가치의 hands 와 겹치지 않게 · 다른 사람 아이콘과 같은 크기로 그림)
+    "person-plus": '<circle cx="9.4" cy="7.7" r="3.9"/><path d="M2 21v-1.5a6.6 6.6 0 0 1 6.6-6.6h1.6a6.6 6.6 0 0 1 6.6 6.6V21"/><path d="M19.3 6.6v7M15.8 10.1h7"/>',
     users: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/>',
     group: '<circle cx="12" cy="8.1" r="3.3"/><path d="M5.6 21v-3a6.4 6.4 0 0 1 12.8 0v3z"/><path d="M6.1 7.9a2.3 2.3 0 1 0 0 3.6M17.9 7.9a2.3 2.3 0 1 1 0 3.6"/><path d="M5.6 21H1.3v-2.4c0-2.8 2-5 4.8-5.4M18.4 21h4.3v-2.4c0-2.8-2-5-4.8-5.4"/>',
     people: '<circle cx="12" cy="7.5" r="3"/><circle cx="5" cy="9.5" r="2.2"/><circle cx="19" cy="9.5" r="2.2"/><path d="M6.5 20v-1.5a5.5 5.5 0 0 1 11 0V20"/><path d="M1.5 19.5v-.8A3.3 3.3 0 0 1 6 15.6M22.5 19.5v-.8a3.3 3.3 0 0 0-4.5-3.1"/>',
@@ -258,10 +260,20 @@
   }
   WH.fillIcons = fillIcons;
 
+  /* ---------------- 후원 준비 상태 ----------------
+     계좌(config.bank.account) 또는 온라인 결제(config.portone.storeId + channelKey)가 있어야 '준비됨' (donate.js 와 같은 기준).
+     [data-giving-ready] 는 준비됐을 때만, [data-giving-pending] 은 준비 전에만 보임 (모든 페이지 · init 에서 적용) */
+  var GIVING_READY = !!((C.bank || {}).account || ((C.portone || {}).storeId && (C.portone || {}).channelKey));
+  WH.givingReady = GIVING_READY;
+  function applyGiving() {
+    document.querySelectorAll("[data-giving-ready]").forEach(function (el) { el.hidden = !GIVING_READY; });
+    document.querySelectorAll("[data-giving-pending]").forEach(function (el) { el.hidden = GIVING_READY; });
+  }
+
   /* ---------------- 메뉴 정의 ---------------- */
   // 주 메뉴 (데스크톱 가로 메뉴 · 모바일 전체 메뉴). 8개 항목과 순서는 시안 그대로
   // sub: 데스크톱 하위 메뉴 판과 푸터 사이트맵에 쓰는 하위 메뉴 (각 페이지의 구역 id 로 바로 이동)
-  //      cls: "js-gallery-link" → 갤러리가 견본 사진뿐인 동안 숨김 (html[data-gallery-empty])
+  //      cls: "js-gallery-link" → 갤러리에 실제 사진이 있을 때만 보임 (html[data-gallery-ready])
   var NAV = [
     { id: "home", href: "index.html", ko: "홈", en: "Home", cap: "Home" },
     { id: "declaration", href: "declaration.html", ko: "세계희망선언", en: "Declaration", cap: "Declaration", sub: [
@@ -340,8 +352,9 @@
   WH.bi = bi;
   function telHref() { return "tel:" + String(C.phone || "").replace(/[^0-9+]/g, ""); }
   /* 하위 메뉴 한 줄 (데스크톱 하위 메뉴 판 · 푸터 사이트맵 공용) */
+  // 가운뎃점 앞에서는 줄을 바꾸지 않음(U+2060, 보이지 않는 글자) → 좁은 하위 목록에서 '선언문·' / '5대 원칙' 으로 나뉨
   function subItem(s) {
-    return "<li" + (s.cls ? ' class="' + s.cls + '"' : "") + '><a href="' + ROOT + s.href + '">' + bi(WH.esc(s.ko), WH.esc(s.en)) + "</a></li>";
+    return "<li" + (s.cls ? ' class="' + s.cls + '"' : "") + '><a href="' + ROOT + s.href + '">' + bi(WH.esc(s.ko).replace(/·/g, "\u2060·"), WH.esc(s.en)) + "</a></li>";
   }
   function pageId() { return (document.body && document.body.getAttribute("data-page")) || ""; }
   function navId() {
@@ -517,7 +530,7 @@
   /* ---------------- 데스크톱 하위 메뉴 판 (1081px 이상) ----------------
      · 주 메뉴에 마우스를 올리면 0.12초 뒤, 키보드(Tab)로 들어가면 바로 펼침 → 모든 하위 메뉴가 한 판에, 각 메뉴 바로 아래
      · 마우스가 메뉴·판 밖으로 나가거나, 포커스가 메뉴 밖으로 나가거나, Esc 를 누르면 닫힘
-     · 하위 목록의 위치·폭은 펼칠 때 계산(layout): 위 메뉴 글자 시작점에 맞추되, 옆 목록과 겹치면 어긋남이 가장 작도록 고르게 비켜 놓음
+     · 하위 목록의 위치·폭은 펼칠 때 계산(layout): 위 메뉴 글자 시작점에 그대로 맞추고, 긴 이름은 두 줄로 (겹칠 때만 조금 비켜 놓음)
      · 마지막으로 가리킨 메뉴(.is-hot)는 목록 위 금빛 선 + 진한 글자, 판 왼쪽에 메뉴 이름 */
   function setupMega(header) {
     var gnb = header.querySelector(".gnb");
@@ -532,10 +545,10 @@
     function keyFocus(el) {
       try { return el.matches(":focus-visible"); } catch (e) { return true; }
     }
-    /* 하위 목록 놓기: 각 목록의 글자 시작을 위 메뉴의 글자 시작에 맞추는 것이 목표.
-       하위 메뉴 이름이 위 메뉴보다 길어 그대로 두면 겹치므로, 겹치는 목록끼리 한 묶음으로 보고
-       '위 메뉴와 어긋난 거리'의 제곱 합이 가장 작은 곳에 묶음을 놓음(줄 바꿈 없이 고르게 퍼짐).
-       판의 폭(로고 오른쪽 ~ 검색 버튼 오른쪽 끝)이 모자라면 가장 넓은 목록부터 줄을 바꿔 폭을 줄임 */
+    /* 하위 목록 놓기: 각 목록의 글자 시작을 위 메뉴의 글자 시작에 정확히 맞춤(금빛 선이 위 메뉴 밑줄 바로 아래).
+       목록 폭은 다음 메뉴 글자 시작 - 12px 까지로 줄이고, 긴 이름은 두 줄로 나눔(어절 단위, text-wrap: balance).
+       어절 하나가 그 폭보다 길어 옆 목록과 겹칠 때만 겹치는 목록끼리 묶어 '어긋난 거리'의 제곱 합이 가장 작은 곳에 놓음.
+       마지막 목록이 검색 버튼 오른쪽 끝을 넘으면 그 목록만 왼쪽으로 당김 */
     function layout() {
       var hb = header.getBoundingClientRect();
       var inner = header.querySelector(".header-inner");
@@ -555,26 +568,19 @@
         var min = Math.ceil(sub.getBoundingClientRect().width);
         cols.push({ sub: sub, x: tb.left - hb.left + (parseFloat(getComputedStyle(top).paddingLeft) || 0) - linkPad, w: nat, min: min });
       });
-      // 폭이 모자라면 가장 넓은 목록부터 줄 바꿈 (가장 좁게는 낱말 하나 폭까지)
-      var room = hi - lo - GAP * (cols.length - 1);
-      for (var guard = 0; guard < 40; guard++) {
-        var total = cols.reduce(function (s, c) { return s + c.w; }, 0);
-        if (total <= room) break;
-        var widest = null, next = 0;
-        cols.forEach(function (c) { if (c.w > c.min && (!widest || c.w > widest.w)) widest = c; });
-        if (!widest) break;
-        cols.forEach(function (c) { if (c !== widest && c.w > next) next = c.w; });
-        // 둘째로 넓은 목록 폭까지만 한 번에 줄임 (한 목록만 지나치게 좁아지지 않게)
-        widest.w = Math.max(widest.min, widest.w - Math.max(4, Math.min(total - room, widest.w - next)));
-      }
-      // 겹치는 목록을 묶어 가며 놓기 (순서 유지, 사이 간격 GAP)
+      // 폭: 다음 목록 시작 - 간격까지 (마지막은 검색 버튼 끝까지). 단, 가장 긴 어절보다 좁게는 줄이지 않음
+      cols.forEach(function (c, i) {
+        var cap = (i < cols.length - 1 ? cols[i + 1].x - GAP : hi) - c.x;
+        c.w = Math.max(c.min, Math.min(c.w, cap));
+      });
+      // 겹치는 목록만 묶어 놓기 (순서 유지, 사이 간격 GAP). 겹침이 없으면 모두 제자리
       var groups = [];
       function pos(g) { return Math.min(Math.max(g.sum / g.n, lo), hi - g.w); }
       cols.forEach(function (c, i) {
         groups.push({ first: i, last: i, w: c.w, sum: c.x, n: 1 });
         while (groups.length > 1) {
           var b = groups[groups.length - 1], a = groups[groups.length - 2];
-          if (pos(a) + a.w + GAP <= pos(b)) break;
+          if (pos(a) + a.w + GAP <= pos(b) + 0.5) break;
           a.sum += b.sum - (a.w + GAP) * b.n;
           a.n += b.n; a.w += GAP + b.w; a.last = b.last;
           groups.pop();
@@ -682,6 +688,11 @@
     // '동작 줄이기' 설정이면 헤더·탭바를 늘 그 자리에 둠
     var still = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
     var lastY = window.scrollY || 0;
+    // 손가락·휠·키보드로 움직인 스크롤만 헤더를 숨기거나 보이게 함 (주소의 #구역 이동, 늦게 불러온 내용 때문에 위치를 다시 맞추는 이동 등은 그대로 둠)
+    var lastInput = 0;
+    ["touchstart", "touchmove", "wheel", "keydown"].forEach(function (type) {
+      window.addEventListener(type, function () { lastInput = Date.now(); }, { passive: true });
+    });
     function setDown(on) {
       if (body.classList.contains("chrome-down") !== on) body.classList.toggle("chrome-down", on);
     }
@@ -693,8 +704,8 @@
       if (scrollLocks) { lastY = y; return; }
       var dy = y - lastY;
       if (y < 120) { setDown(false); lastY = y; }
-      // 한 번에 화면 높이보다 크게 바뀌면(주소의 #구역으로 바로 이동 등) 상태는 그대로 두고 기준만 옮김
-      else if (Math.abs(dy) > window.innerHeight) lastY = y;
+      // 사용자가 움직이지 않은 스크롤, 또는 한 번에 화면 높이보다 크게 바뀐 경우(주소의 #구역으로 바로 이동 등): 상태는 그대로 두고 기준만 옮김
+      else if (Date.now() - lastInput > 1500 || Math.abs(dy) > window.innerHeight) lastY = y;
       else if (dy > 6) { setDown(true); lastY = y; }
       else if (dy < -6) { setDown(false); lastY = y; }
     }
@@ -702,8 +713,74 @@
     [header, bar].forEach(function (el) {
       if (el) el.addEventListener("focusin", function () { setDown(false); });
     });
+    // 페이지 안 바로가기(#구역)를 누르면 이동 방향에 맞춰 헤더 상태를 먼저 정함:
+    // 아래로 가면 헤더가 숨을 것이므로 미리 숨기고, 위로 가면 미리 보이게 → 도착 자리(scroll-margin-top)가 실제 메뉴 바로 아래
+    // (style.css 의 body.chrome-down … scroll-margin-top · 휴대폰 탭(.is-tabs)은 join.html 이 따로 처리)
+    // WH.prepareJump(el): 화면 안 버튼이 직접 스크롤할 때도 같은 준비 (예: korea33 분야 고르기 → 추천서)
+    function prepareJump(t) {
+      if (!mobile || !mobile.matches || (still && still.matches) || scrollLocks) return;
+      if (!t || !t.getClientRects().length) return;
+      var dist = t.getBoundingClientRect().top - (parseFloat(getComputedStyle(t).scrollMarginTop) || 0);
+      if (Math.abs(dist) > 6 && (window.pageYOffset || 0) + dist >= 120) setDown(dist > 0);
+    }
+    WH.prepareJump = prepareJump;
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest ? e.target.closest('a[href^="#"]') : null;
+      if (!a || a.closest(".is-tabs")) return;
+      var t = null;
+      try { t = document.getElementById(decodeURIComponent(a.getAttribute("href").slice(1))); } catch (err) { t = null; }
+      prepareJump(t);
+    });
     onScroll();
   }
+
+  /* ---------------- 페이지 안 메뉴(.subnav): 지금 보고 있는 구역 ----------------
+     WH.spyIndex(nav, targets) → 지금 구역 번호(-1: 첫 구역 전). 기준선은 메뉴 아래 40px 이되,
+     그 구역의 바로가기 도착 자리(scroll-margin-top) + 12px 보다 위로는 올리지 않음 → 메뉴를 눌러 도착한 구역이 언제나 강조됨
+     WH.subnavSpy(nav) → 강조(.is-active · aria-current) + 좁은 화면에서 강조된 메뉴가 보이도록 가로 스크롤 (korea33 · global33) */
+  WH.spyIndex = function (nav, targets) {
+    var nb = nav ? nav.getBoundingClientRect().bottom : 0, cur = -1;
+    (targets || []).forEach(function (el, i) {
+      if (!el) return;
+      var line = Math.max(nb + 40, (parseFloat(getComputedStyle(el).scrollMarginTop) || 0) + 12);
+      if (el.getBoundingClientRect().top <= line) cur = i;
+    });
+    return cur;
+  };
+  WH.subnavSpy = function (nav) {
+    var list = nav ? nav.querySelector("ul") : null;
+    var links = nav ? Array.prototype.slice.call(nav.querySelectorAll('a[href^="#"]')) : [];
+    if (!links.length) return;
+    var targets = links.map(function (a) { return document.getElementById(a.getAttribute("href").slice(1)); });
+    var current = -2, ticking = false;
+    function update() {
+      ticking = false;
+      var nr = nav.getBoundingClientRect();
+      // 메뉴가 화면 위쪽에 닿기 전(페이지 맨 위, 머리말이 보이는 동안)에는 강조하지 않음
+      var stuck = nr.top <= (parseFloat(getComputedStyle(nav).top) || 0) + 1 || nr.top < window.innerHeight * .2;
+      var cur = stuck ? WH.spyIndex(nav, targets) : -1;
+      // 맨 아래까지 내리면 마지막 메뉴
+      if (stuck && cur >= 0 && window.innerHeight + window.pageYOffset >= document.documentElement.scrollHeight - 4) cur = targets.length - 1;
+      if (cur === current) return;
+      current = cur;
+      links.forEach(function (a, i) {
+        a.classList.toggle("is-active", i === cur);
+        if (i === cur) a.setAttribute("aria-current", "location"); else a.removeAttribute("aria-current");
+      });
+      if (cur >= 0 && list && list.scrollWidth > list.clientWidth) {
+        var ar = links[cur].getBoundingClientRect(), lr = list.getBoundingClientRect();
+        var left = ar.left - lr.left + list.scrollLeft;
+        if (left < list.scrollLeft || left + ar.width > list.scrollLeft + list.clientWidth) list.scrollLeft = Math.max(0, left - 24);
+      }
+    }
+    function onScroll() {
+      if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    document.addEventListener("wh:lang", function () { current = -2; onScroll(); });
+    update();
+  };
 
   /* ---------------- 푸터 (두 단) ----------------
      위 단(.footer-main): 단체 소개(로고·단체명·위원회·문구) | 사이트맵(세계희망선언·글로벌 33·참여하기·연대소개의 하위 메뉴) | 전국대표전화·주소·이메일
@@ -785,7 +862,7 @@
     mount.outerHTML =
       '<footer class="site-footer">' +
       '<div class="footer-main"><div class="footer-main-inner">' + aboutHtml + mapHtml + reachHtml + "</div></div>" +
-      '<div class="footer-inner">' +
+      '<div class="footer-bar"><div class="footer-inner">' +
       '<div class="footer-brands">' +
       '<a class="footer-brand" href="' + ROOT + 'index.html"><b>' + esc(name.ko || "") + '</b><span lang="en">' + esc(name.en || "") + "</span></a>" +
       '<span class="footer-sep" aria-hidden="true"></span>' +
@@ -799,7 +876,7 @@
       '<a href="' + ROOT + 'contact.html">' + bi("문의하기", "Contact") + "</a>" +
       "</nav>" +
       (socialHtml ? '<div class="footer-social">' + socialHtml + "</div>" : "") +
-      "</div></div>" + copyHtml + "</footer>";
+      "</div></div></div>" + copyHtml + "</footer>";
   }
 
   /* ---------------- 사이트 검색 ---------------- */
@@ -816,7 +893,10 @@
     { href: "about.html", ko: "연대소개", en: "About", dko: "취지문 · 위원장 인사말 · 조직 구성 · 오시는 길", den: "Purpose, chairman's greeting, organization and location", k: "소개 about 취지 purpose 인사말 greeting 위원장 chairman 원치현 조직 organization 위원회 council 오시는 길 location 주소 address 세종" },
     { href: "ministry.html", ko: "사역 안내", en: "Ministries", dko: "연구·채택 → 33인 선언 → 실천 → 보호·인도 → 선교행진", den: "Research & adoption, declaration by 33, practice, protection & guidance, mission march", k: "사역 ministry ministries 선교행진 mission march 연구 채택 실천 보호 인도" },
     { href: "gallery.html", ko: "갤러리", en: "Gallery", dko: "행사와 사역 현장 사진", den: "Photos of events and ministry", k: "갤러리 gallery 사진 photo 앨범 album" },
-    { href: "donate.html", ko: "후원·헌금", en: "Give", dko: "계좌 후원 · 정기 후원 신청 · 온라인 후원", den: "Bank transfer, monthly giving and online giving", k: "후원 헌금 give donate donation 계좌 정기 기부금 영수증 receipt" },
+    // 후원: 계좌·결제가 준비되기 전에는 donate.html 의 '준비 중' 안내 문구 그대로 (없는 방법·영수증을 검색 결과에 내세우지 않음)
+    GIVING_READY ?
+      { href: "donate.html", ko: "후원·헌금", en: "Give", dko: "계좌 후원 · 정기 후원 신청 · 온라인 후원", den: "Bank transfer, monthly giving and online giving", k: "후원 헌금 give donate donation 계좌 정기" } :
+      { href: "donate.html", ko: "후원·헌금", en: "Give", dko: "계좌 안내 준비 중", den: "Coming soon", k: "후원 헌금 give donate donation" },
     { href: "contact.html", ko: "문의하기", en: "Contact", dko: "문의 및 참여·동역 신청 · 전국대표전화 " + (C.phone || ""), den: "Inquiries and applications · " + (C.phone || ""), k: "문의 contact 전화 phone call 연락처 " + (C.phone || "") },
     { href: "faq.html", ko: "자주 묻는 질문", en: "FAQ", dko: "세계희망연대와 참여·후원에 관한 질문과 답변", den: "Frequently asked questions", k: "faq 질문 question 답변 answer" },
     { href: "qr.html", ko: "QR코드 만들기", en: "QR Code Maker", dko: "홈페이지와 각 메뉴의 QR코드 만들기·저장·인쇄", den: "Create, save and print QR codes", k: "qr 큐알 코드 code 인쇄 print" },
@@ -830,8 +910,8 @@
   function searchPages(q) {
     var toks = tokens(q);
     if (!toks.length) return [];
-    // 갤러리가 견본 사진뿐인 동안(data.js 가 <html data-gallery-empty> 표시)에는 메뉴처럼 검색 결과에서도 뺌
-    var noGallery = document.documentElement.hasAttribute("data-gallery-empty");
+    // 갤러리에 실제 사진이 없는 동안(data.js 가 <html data-gallery-ready> 를 붙이기 전)에는 메뉴처럼 검색 결과에서도 뺌
+    var noGallery = !document.documentElement.hasAttribute("data-gallery-ready");
     return PAGES.map(function (p) {
       if (noGallery && p.href === "gallery.html") return null;
       var title = norm(p.ko + " " + p.en);
@@ -1039,8 +1119,8 @@
     requestAnimationFrame(step);
   }
   function setupStats() {
-    // 큰 숫자 표시만 대상 (문장 속 숫자는 그대로, 홈 통계 띠는 home.js 가 담당)
-    var els = Array.prototype.slice.call(document.querySelectorAll(".join-now-num b[data-stat], .stat-num b[data-stat], .g33-step-num b[data-stat], .g33-live-num b[data-stat]"));
+    // 큰 숫자 표시 가운데 '현재 참여자 수'만 0에서 올라감 (33·195·6,435 같은 정의·목표 숫자는 처음부터 그대로 · 홈 통계 띠는 home.js 가 담당)
+    var els = Array.prototype.slice.call(document.querySelectorAll(".join-now-num b[data-stat=participants], .stat-num b[data-stat=participants], .g33-live-num b[data-stat=participants]"));
     var animate = els.length && WH.motionOK() && "IntersectionObserver" in window && "requestAnimationFrame" in window;
     // 지금 보이는 숫자만 0에서 시작 (다른 언어로 가려진 숫자는 그대로 둠)
     var live = animate ? els.filter(function (el) { return el.getClientRects().length && /^[\d,]+$/.test(el.textContent.trim()); }) : [];
@@ -1271,6 +1351,7 @@
     if (!C.draft) document.querySelectorAll("[data-draft-only]").forEach(function (el) { el.remove(); });
     renderHeader();
     renderFooter();
+    applyGiving();
     fillIcons();
     applyLang(storedLang());
     document.addEventListener("click", function (e) {

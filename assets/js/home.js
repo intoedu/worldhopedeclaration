@@ -54,14 +54,15 @@
     list.parentNode.insertBefore(dots, list.nextSibling);
     list.parentNode.insertBefore(live, dots.nextSibling);
     var marks = Array.prototype.slice.call(dots.children);
+    var mobileMQ = window.matchMedia ? window.matchMedia("(max-width: 760px)") : null;
     var cur = -1;
     function show(i) {
       if (i === cur) return;
       var first = cur === -1;
       cur = i;
       marks.forEach(function (m, k) { m.classList.toggle("is-on", k === i); });
-      // 처음 표시할 때는 읽지 않음 (넘길 때만 알림)
-      if (!first) live.innerHTML = WH.bi(cards.length + "개 중 " + (i + 1) + "번째", (i + 1) + " of " + cards.length);
+      // 처음 표시할 때는 읽지 않음 (넘길 때만 알림) · 카드를 넘기는 휴대폰에서만 (데스크톱은 다섯 칸이 한꺼번에 보여 모두 '보임'으로 잡힘)
+      if (!first && (!mobileMQ || mobileMQ.matches)) live.innerHTML = WH.bi(cards.length + "개 중 " + (i + 1) + "번째", (i + 1) + " of " + cards.length);
     }
     show(0);
     var io = new IntersectionObserver(function (entries) {

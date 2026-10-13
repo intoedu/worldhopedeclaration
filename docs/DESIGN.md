@@ -182,28 +182,34 @@
 ## 6. 하위 페이지 상단 (라이트 히어로)
 
 ```html
-<section class="page-hero">              <!-- .center 가운데 정렬, .compact 낮은 높이 -->
+<section class="page-hero">              <!-- .center 가운데 정렬, .compact 낮은 높이, .no-motif 점 지도 빼기 -->
   <div class="container">
     <nav class="breadcrumb" aria-label="breadcrumb"><a href="index.html"><span class="ko">홈</span><span class="en">Home</span></a><span aria-hidden="true">/</span><span><span class="ko">세계희망선언</span><span class="en">Declaration</span></span></nav>
     <h1><span class="ko">세계희망선언문</span><span class="en">The World Hope Declaration</span></h1>
-    <p class="page-hero-en">World Hope Declaration</p>   <!-- Cinzel 영문 부제 (대문자 자동) -->
+    <p class="page-hero-en">World Hope Declaration</p>   <!-- 금색 눈썹글: CSS(order)로 제목 '위'에 표시 -->
     <p><span class="ko">한두 문장 소개</span><span class="en">One or two lines</span></p>
   </div>
 </section>
 ```
+- 한 가지 공식: 경로 → 금색 눈썹글(Cinzel 12px · 28px 선) → 제목(32–48px) → 설명. 높이 340px 이상, 위아래 88/72px.
+- 오른쪽의 옅은 점 세계지도는 `.page-hero::after` (assets/img/brand/dotmap.svg, 왼쪽은 서서히 사라짐). 그림이 따로 있는
+  머리말(글로벌 33 문장·대표 추천 선정패·참여하기 카드·세계지도)은 `.no-motif`.
+- 760px 이하: 경로 숨김, 왼쪽 정렬, 제목 30px, 설명 15.5px, 버튼은 한 줄에 하나(높이 50px). 그림은 버튼 아래(또는 같은 그림이
+  아래 구역에 있으면 숨김) — 머리말이 390px 화면에서 520px 안팎에 끝나도록.
 
 ## 7. 섹션 제목
 
 ```html
-<div class="section-head center">        <!-- center 생략 시 왼쪽 정렬 -->
-  <span class="eyebrow">Five Principles</span>          <!-- 위: Cinzel 영문 (선 장식 자동) -->
+<div class="section-head">               <!-- 기본: 왼쪽 / .center: 가운데 / .split: 왼쪽 제목 | 오른쪽 설명 (5:6) -->
+  <span class="eyebrow">Five Principles</span>          <!-- 금색 눈썹글 (Cinzel 12px · 28px 선) -->
   <h2 class="section-title"><span class="ko">세계희망선언 5대 원칙</span><span class="en">The Five Principles</span></h2>
-  <p class="section-sub">Five Principles</p>             <!-- 또는 아래: Cinzel 영문 부제 -->
+  <p class="section-sub">Five Principles</p>             <!-- 머리말 안의 section-sub 는 CSS 로 제목 '위' 눈썹글이 됨 -->
   <p class="section-lead"><span class="ko">설명</span><span class="en">Lead</span></p>
 </div>
 ```
-`eyebrow` 와 `section-sub` 는 둘 중 하나만(시안 홈은 아래쪽 `section-sub`). 한글을 넣어도 됩니다(자간 자동 축소).
-어두운 띠 안(`.section-navy`)에서는 색이 자동으로 바뀝니다.
+`eyebrow` 와 `section-sub` 는 둘 중 하나만. 한글을 넣어도 됩니다(자간 자동 축소, 영어만 든 `.ko` 는 `lang="en"` 을 붙이면 Cinzel 유지).
+**한 페이지에 가운데 정렬 머리말은 많아야 1개**, 나머지는 `.split` 과 왼쪽을 번갈아 씁니다. 제목(h2) 최대 36px, 머리말과 내용 사이 56px.
+어두운 띠 안(`.section-navy`, 네이비 `.cta-band`)에서는 금색이 밝게 바뀝니다.
 
 ### 페이지 안 메뉴 / 탭
 
@@ -394,20 +400,20 @@ HTML 에 **기본값을 적은 요소**에 `data-stat="키"` 를 달면 main.js 
 ```html
 <ol class="decl-list">
   <li class="decl-item" id="p1">
-    <span class="decl-no">1</span>
-    <span class="decl-icon" data-icon="circles"></span>
+    <span class="decl-no" aria-hidden="true">01</span>          <!-- 금색 Cinzel 숫자 하나 (동그라미·아이콘 없음) -->
     <div class="decl-body">
-      <h3 class="decl-title"><span class="decl-name">이중개념</span> <span class="decl-hanja">二重槪念</span> <span class="decl-key">Dualism</span> 을 인정하라.</h3>
-      <p class="decl-text">우리는 세상에 존재하는 …</p>
-      <p class="decl-en-title">Recognize Dualism.</p>
-      <p class="decl-en-text">Acknowledge the twofold reality …</p>
+      <h3 class="decl-title"><span class="sr-only">1. </span><span class="ko">이중개념을 인정하라.</span><span class="en">Recognize Dualism.</span></h3>
+      <p class="decl-meta"><span class="ko">二重槪念 · Dualism</span><span class="en" lang="ko">이중개념 · 二重槪念</span></p>
+      <p class="decl-text ko">우리는 세상에 존재하는 …</p>
+      <div class="decl-en">                                      <!-- 한국어 화면: 왼쪽 가는 선과 함께 옅게 -->
+        <p class="decl-en-title ko" lang="en">Recognize Dualism.</p>
+        <p class="decl-en-text" lang="en">Acknowledge the twofold reality …</p>
+      </div>
     </div>
   </li>
 </ol>
 ```
-포스터처럼 한·영을 함께 보여 주는 형식(한 언어만 보이게 하려면 ko/en span 사용).
-**span 사이에 반드시 공백**을 두세요(공백이 없으면 좁은 화면에서 영문 낱말이 중간에서 끊깁니다).
-권장 아이콘: 이중개념 `circles`, 종속구조 `layers`, 수평논리 `horizontal`(또는 `balance`), 중심기축 `center`, 공평화합 `unity`.
+120px 숫자 칸 | 본문. 휴대폰에서는 숫자가 제목 위로 올라가고, 선언문 종이가 화면 끝까지 넓어집니다(본문 폭 확보).
 
 ### 5대 가치 `.values`
 ```html
@@ -427,8 +433,8 @@ HTML 에 **기본값을 적은 요소**에 `data-stat="키"` 를 달면 main.js 
 ### 분야 카드 `.field-grid`
 ```html
 <ol class="field-grid">
-  <li class="field-card">
-    <div class="field-card-top"><span class="field-no">1</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
+  <li class="field-card" style="--accent:#b24b34">   <!-- 분야 색은 번호 앞 8px 점에만 -->
+    <div class="field-card-top"><span class="field-no"><span class="field-dot" aria-hidden="true"></span><span class="field-word">Field&nbsp;</span>01</span><span class="field-count"><span data-stat="per_field">3</span><span class="ko">인</span><span class="en"> persons</span></span></div>
     <span class="field-icon" data-icon="megaphone"></span>
     <h3 class="field-name"><span class="ko">사회영향력</span><span class="en">Social Influence</span></h3>
     <p class="field-en">Social Influence</p>
@@ -436,7 +442,7 @@ HTML 에 **기본값을 적은 요소**에 `data-stat="키"` 를 달면 main.js 
   </li>
 </ol>
 ```
-4칸 → 3칸 → 2칸 → (380px 이하) 1칸. 권장 아이콘: 사회영향력 `megaphone`, 국위선양 `trophy`, 교육계 `book`,
+4칸 → 3칸 → 2칸 → (760px 이하) 흰 카드 한 장 안의 목록. 아이콘은 동그라미 없이 28px 선 아이콘. 권장 아이콘: 사회영향력 `megaphone`, 국위선양 `trophy`, 교육계 `book`,
 문화예술계 `palette`, 종교계 `cross`(단순 십자, 개신교), 산업계 `chart`, 국방사회안전 `shield`, 의료계 `medical`,
 생업종사자 `tool`, 시민 `users`, 정치계 `landmark`.
 
@@ -500,7 +506,7 @@ HTML 에 **기본값을 적은 요소**에 `data-stat="키"` 를 달면 main.js 
     <h3 class="flow-title">연구·채택</h3><p class="flow-text">…</p></li>
 </ol>
 
-<section class="cta-band">                 <!-- 네이비 띠. .cta-band.light 는 연하늘 -->
+<section class="cta-band">                 <!-- 네이비 띠(오른쪽 아래 옅은 점 세계지도). .cta-band.light 는 연하늘 -->
   <div class="container cta-inner">
     <div><span class="eyebrow">Join Us</span><h2 class="cta-title">…</h2><p class="cta-text">…</p></div>
     <div class="cta-actions"><a class="btn btn-light btn-lg" href="join.html">…</a><a class="btn btn-ghost-light btn-lg" href="contact.html">…</a></div>
@@ -532,6 +538,26 @@ HTML 에 **기본값을 적은 요소**에 `data-stat="키"` 를 달면 main.js 
 </form>
 ```
 `data-label="…"` 은 이메일에 표시될 한국어 항목명. 상태 문구는 `.form-status` 가 자동 생성.
+
+**개인정보 수집·이용 안내 (안쪽 스크롤 상자 대신 항목별 목록)** — 문구는 원문 그대로, '· 라벨: 내용' 을 나눠 표시합니다.
+```html
+<ul class="consent-list ko">
+  <li><b>수집 항목</b><span>이름, 연락처, …</span></li>
+  <li><b>수집 목적</b><span>…</span></li>
+  <li><b>전달 방법</b><span>… FormSubmit(formsubmit.co, 서버가 국외에 있을 수 있음) …</span></li>
+  <li><b>보유 기간</b><span>…</span></li>
+  <li class="is-note">동의를 거부하실 수 있으며, …</li>
+</ul>
+<ul class="consent-list en">…</ul>
+<!-- 목록에 넣지 않은 줄(예: 추천서의 '피추천인 정보')이 있으면 원문 전체를 접어서 함께 둠 -->
+<details class="consent-more"><summary><span class="ko">개인정보 수집·이용 안내 전문 보기 (필수)</span><span class="en">Read the full privacy notice (required)</span></summary>
+  <div class="consent-box is-full" role="region" aria-label="개인정보 수집·이용 안내">(원문 전체)</div></details>
+```
+동의 체크(`label.check`)는 상자 22px, 줄 높이 44px 이상. 글 속 전화번호는 `<a class="tel-chip" href="tel:15882716"><span data-icon="phone"></span>1588-2716</a>`.
+
+**'준비 중' 안내 한 장** `.empty-panel` (`.empty-panel-icon` · `-title` · `-text` · `-actions`) — 실제 사진이 없는 갤러리(gallery.js),
+계좌·결제 설정 전의 후원 페이지(donate.html, `config.bank.account`·`config.portone` 이 비면 `[data-giving-ready]` 구역을 숨김).
+갤러리가 예시 사진뿐이면 data.js 가 `<html data-gallery-empty>` 를 붙이고, 갤러리로 가는 링크에 `class="js-gallery-link"` 를 달면 숨겨집니다.
 FAQ 아코디언: `<details class="faq-item"><summary><span class="q">Q</span><span>…</span><span class="tg" aria-hidden="true"></span></summary><div class="faq-answer"><span class="a">A</span><div>…</div></div></details>` 를 `.faq-list` 안에.
 
 ## 15. 아이콘

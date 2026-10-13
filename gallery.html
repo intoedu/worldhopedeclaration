@@ -71,8 +71,8 @@
         <p class="cta-text"><span class="ko">인류와 지구의 더 나은 미래를 위해, 지금, 세계가 함께 희망을 선언합니다.</span><span class="en">Now, the World Declares Hope for a Better Future for All.</span></p>
       </div>
       <div class="cta-actions">
-        <a class="btn btn-primary btn-lg" href="join.html"><span class="ko">선언에 참여하기</span><span class="en">Join the Declaration</span><span data-icon="arrow-right"></span></a>
-        <a class="btn btn-outline btn-lg" href="news.html"><span class="ko">공지·소식 보기</span><span class="en">Read the News</span></a>
+        <a class="btn btn-primary btn-lg" href="join.html#declare"><span class="ko">선언에 참여하기</span><span class="en">Join the Declaration</span><span data-icon="arrow-right"></span></a>
+        <a class="btn btn-outline btn-lg" href="news.html"><span class="ko">공지·소식 보기</span><span class="en">Read the News</span><span data-icon="arrow-right"></span></a>
       </div>
     </div>
   </section>
@@ -90,7 +90,8 @@
     var note = document.getElementById("gallery-sample-note");
     if (!note || !window.WH || !WH.db) return;
     WH.db.listGallery({}).then(function (rows) {
-      note.hidden = !rows.some(function (g) { return g.sample; });
+      // 모두 예시면 gallery.js 가 안내 한 장으로 바꾸므로, 일부만 예시일 때만 이 안내를 보임
+      note.hidden = !rows.some(function (g) { return g.sample; }) || rows.every(function (g) { return g.sample; });
     }).catch(function () {});
   })();
 </script>

@@ -14,6 +14,12 @@
   var payReady = !!(po.storeId && po.channelKey);
   var PENDING_KEY = "wh-pay-pending"; // 모바일 리다이렉트 결제용 임시 저장 (sessionStorage)
 
+  /* ---------- 준비 상태: 계좌도 결제도 아직 없으면 '준비 중' 안내 한 장만 (방법·신청서는 숨김) ---------- */
+  var bankReady = !!((C.bank || {}).account);
+  var givingReady = bankReady || payReady;
+  Array.prototype.forEach.call(document.querySelectorAll("[data-giving-ready]"), function (el) { el.hidden = !givingReady; });
+  Array.prototype.forEach.call(document.querySelectorAll("[data-giving-pending]"), function (el) { el.hidden = givingReady; });
+
   /* ---------- 계좌 정보 ---------- */
   function renderBank() {
     var box = document.getElementById("bank-box");

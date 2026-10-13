@@ -91,7 +91,20 @@
       filters.innerHTML = '<button type="button" class="chip" data-album="" aria-pressed="' + (!album) + '">' + WH.t("전체", "All") + "</button>" +
         keys.map(function (k) { return '<button type="button" class="chip" data-album="' + WH.esc(k) + '" aria-pressed="' + (album === k) + '">' + WH.esc(albumName(k)) + "</button>"; }).join("");
     };
+    // 실제 사진이 하나도 없으면(모두 '준비 중' 예시) 사진 벽과 앨범 칩 대신 안내 한 장만 보여 줌
+    var isEmpty = function () { return !all.length || all.every(function (g) { return g.sample === true; }); };
+    var renderEmpty = function () {
+      var bar = filters.closest(".board-toolbar");
+      if (bar) bar.hidden = true;
+      grid.classList.add("is-empty");
+      grid.innerHTML = '<div class="empty-panel">' +
+        '<span class="empty-panel-icon" aria-hidden="true">' + WH.icon("image") + "</span>" +
+        '<p class="empty-panel-title">' + WH.t("사진 준비 중", "Photos coming soon") + "</p>" +
+        '<p class="empty-panel-text">' + WH.t("행사와 사역 현장 사진은 준비되는 대로 올려 드립니다.", "Photos of events and ministry will be posted as they become available.") + "</p>" +
+        '<div class="empty-panel-actions"><a class="btn btn-outline" href="news.html">' + WH.t("공지·소식 보기", "Read the News") + WH.icon("arrow-right") + "</a></div></div>";
+    };
     var renderGrid = function () {
+      if (isEmpty()) { renderEmpty(); return; }
       var list = all.filter(function (g) { return !album || g.album === album; });
       grid.innerHTML = list.length ? list.map(tile).join("") : '<p class="board-empty" style="grid-column:1/-1">' + WH.t("등록된 사진이 없습니다.", "No photos yet.") + "</p>";
       bindGrid(grid, list);

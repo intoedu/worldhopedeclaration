@@ -109,7 +109,11 @@
       if (!current) return;
       var p = current.post;
       if (!p) {
-        view.innerHTML = '<div class="board-empty">' + WH.t("게시글을 찾을 수 없습니다.", "Post not found.") + '<div class="mt-3"><a class="btn btn-outline" href="' + WH.ROOT + 'news.html">' + WH.t("목록으로", "Back to list") + "</a></div></div>";
+        // 글이 없을 때: 다른 빈 화면(갤러리·후원 준비 중)과 같은 상자 모양 (아이콘 · 제목 · 설명 · 버튼)
+        view.innerHTML = '<div class="empty-panel"><span class="empty-panel-icon" aria-hidden="true">' + WH.icon("doc") + "</span>" +
+          '<h1 class="empty-panel-title">' + WH.t("게시글을 찾을 수 없습니다", "Post not found") + "</h1>" +
+          '<p class="empty-panel-text">' + WH.t("주소가 바뀌었거나 삭제된 글일 수 있습니다.", "The address may have changed or the post may have been removed.") + "</p>" +
+          '<div class="empty-panel-actions"><a class="btn btn-primary" href="' + WH.ROOT + 'news.html">' + WH.t("공지·소식 보기", "See News & Notices") + WH.icon("arrow-right") + "</a></div></div>";
         return;
       }
       var title = WH.pick(p, "title");

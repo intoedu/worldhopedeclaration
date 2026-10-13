@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Serif:ital,wght@0,500;0,700;1,500&display=swap">
-<link rel="stylesheet" href="assets/css/style.css?v=20261013">
+<link rel="stylesheet" href="assets/css/style.css?v=20261013e">
 <script>(function(){try{var l=new URLSearchParams(location.search).get("lang")||localStorage.getItem("wh-lang");if(l==="en"){var h=document.documentElement;h.setAttribute("data-lang","en");h.lang="en";}}catch(e){}})();</script>
 <style>
   /* ===== 세계희망선언문 페이지 전용 (공통 style.css 의 토큰만 사용) ===== */
@@ -27,11 +27,13 @@
   .decl-ornament { display: block; width: 136px; height: 14px; margin: 22px auto 0; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 136 14'%3E%3Cpath d='M0 7h54M82 7h54' stroke='%23b8913f' stroke-width='1'/%3E%3Ccircle cx='58.5' cy='7' r='1.2' fill='%23b8913f'/%3E%3Ccircle cx='77.5' cy='7' r='1.2' fill='%23b8913f'/%3E%3Cpath d='M68 1.5 73.5 7 68 12.5 62.5 7z' fill='none' stroke='%23b8913f'/%3E%3Ccircle cx='68' cy='7' r='1.6' fill='%23b8913f'/%3E%3C/svg%3E") center / contain no-repeat; }
 
   /* 상단 히어로 */
-  .decl-hero { padding: 72px 0 64px; }
+  .decl-hero { padding: 88px 0 64px; }
   /* 로고 → 금색 눈썹글 → 제목 순서 (눈썹글은 공통 규칙으로 제목 위에 올라감) */
   .decl-hero picture { order: -1; }
   .decl-hero .decl-hero-mark { width: 60px; height: 60px; margin: 0 auto 18px; }
-  .decl-hero .page-hero-en sup, .decl-doc-mark sup, .decl-closing-en sup { font-size: max(9px, .7em); letter-spacing: 0; margin-left: .1em; }
+  /* 이 페이지의 ™ 는 여기 한 번: 눈썹글 끝에 간격 없이, 읽히는 크기로 (Noto Serif ™ 는 글자 자체가 윗선에 붙어 있어 올리지 않음) */
+  .decl-hero .page-hero-en sup.tm { top: 0; margin-left: .08em; font-size: 1.25em; line-height: 1; }
+  .page-hero.decl-hero .page-hero-en::after { margin-left: 0; }
   .page-hero.decl-hero p.decl-hero-line { margin: 18px auto 0; max-width: none; font-family: var(--f-serif); font-size: clamp(19px, 2.3vw, 27px); font-weight: 700; line-height: 1.55; letter-spacing: -0.02em; color: var(--navy-900); }
   html[data-lang="en"] .page-hero.decl-hero p.decl-hero-line { font-family: var(--f-serif-en); font-weight: 500; letter-spacing: 0; }
   .page-hero.decl-hero p.decl-hero-line, .page-hero.decl-hero p.decl-hero-sub, .decl-preamble p, .decl-closing .cta-text { text-wrap: balance; }
@@ -57,7 +59,7 @@
 
   /* 선언문 한 장 (상아색 종이 + 안쪽 금색 가는 테두리) */
   .decl-scroll { position: relative; max-width: 1000px; margin: 0 auto; }
-  .decl-doc { position: relative; padding: 72px 80px 60px; background: #fffdf8; border: 1px solid #eadfc6; border-radius: 4px; box-shadow: 0 30px 60px -40px rgba(19, 41, 75, .35); color: var(--ink); }
+  .decl-doc { position: relative; padding: 72px 80px 60px; background: #fffdf8; border: 1px solid #eadfc6; border-radius: 4px; box-shadow: var(--shadow-art); color: var(--ink); }
   .decl-doc::before { content: ""; position: absolute; inset: 12px; border: 1px solid rgba(184, 145, 63, .35); border-radius: 2px; pointer-events: none; }
 
   /* 문서 머리 */
@@ -148,7 +150,6 @@
     .decl-values .values { display: block; border-top: 1px solid var(--line); }
     .decl-values .value { display: grid; grid-template-columns: 28px minmax(0, 1fr); column-gap: 18px; padding: 18px 2px; text-align: left; border-bottom: 1px solid var(--line); }
     .decl-values .value-icon { grid-row: 1 / span 4; justify-content: flex-start; margin: 3px 0 0; }
-    .decl-values .value-icon svg { width: 28px; height: 28px; }
     .decl-values .value-ko { font-size: 19px; }
     .decl-values .value-text { min-height: 0; margin-top: 6px; font-size: 14.5px; }
     .decl-values .value-text br { display: none; }
@@ -181,7 +182,7 @@
     .decl-doc-head .section-sub { margin-top: 0; font-size: 7.5pt; }
     .decl-scroll { margin: 0 !important; }
     .decl-item { break-inside: avoid; padding: 5pt 0 !important; grid-template-columns: 30pt minmax(0, 1fr) !important; }
-    .decl-no { margin: 0 !important; padding: 0 !important; font-size: 16pt !important; color: #9c7a2e !important; }
+    .decl-no { margin: 0 !important; padding: 0 !important; font-size: 16pt !important; color: #8a6a24 !important; }
     .decl-title { font-size: 11.5pt; }
     .decl-meta { margin-top: 1pt; font-size: 8.5pt; }
     .decl-text { margin-top: 3pt; font-size: 9.5pt; line-height: 1.55; color: #222; }
@@ -204,7 +205,7 @@
     .value-text-en { font-size: 8.5pt; }
     .decl-closing { padding: 28pt 0 0 !important; background: none !important; color: #13294b; break-inside: avoid; }
     .decl-closing::after { display: none; }
-    .decl-closing-en, .decl-closing .decl-kw-en { color: #9c7a2e !important; }
+    .decl-closing-en, .decl-closing .decl-kw-en { color: #8a6a24 !important; }
     .decl-closing .cta-title, .decl-closing .keywords { color: #13294b !important; }
     .decl-closing .cta-text { color: #333 !important; font-size: 10.5pt; }
     .decl-closing .keywords { margin-top: 12pt; }
@@ -224,7 +225,7 @@
         <img class="decl-hero-mark" src="assets/img/brand/logo-mark-160.png" alt="" width="60" height="60">
       </picture>
       <h1 id="page-title"><span class="ko">세계희망선언문</span><span class="en">The Declaration</span></h1>
-      <p class="page-hero-en">The World Hope Declaration<sup>™</sup></p>
+      <p class="page-hero-en"><span>The World Hope Declaration<sup class="tm">™</sup></span></p>
       <span class="decl-ornament" aria-hidden="true"></span>
       <p class="decl-hero-line"><span class="ko">분열을 넘어 화해로, 절망을 넘어 희망으로</span><span class="en">From Division to Reconciliation, From Despair to Hope</span></p>
       <p class="decl-hero-sub ko" lang="en">From Division to Reconciliation, From Despair to Hope</p>
@@ -325,11 +326,11 @@
               <span class="decl-no" aria-hidden="true">05</span>
               <div class="decl-body">
                 <h3 class="decl-title"><span class="sr-only">5. </span><span class="ko">공평화합을 생활신조화하라.</span><span class="en">Make R.P.U. a Way of Life.</span></h3>
-                <p class="decl-meta"><span class="ko">公平和合 · R.P.U</span><span class="en" lang="ko">공평화합 · 公平和合</span></p>
+                <p class="decl-meta"><span class="ko">公平和合 · R.P.U.</span><span class="en" lang="ko">공평화합 · 公平和合</span></p>
                 <p class="decl-text ko">의(義, righteousness), 평화(peace), 연합(united)을 삶의 원리로 삼아, 개인과 공동체, 인류와 지구가 함께 살아가는 길을 실천한다.</p>
                 <div class="decl-en">
                   <p class="decl-en-title ko" lang="en">Make R.P.U. a Way of Life.</p>
-                  <p class="decl-en-text" lang="en">Live by righteousness, peace, and united, and put them into practice as the path for individuals, communities, humanity, and the Earth to live together.</p>
+                  <p class="decl-en-text" lang="en">Live by righteousness, peace, and unity, and put them into practice as the path for individuals, communities, humanity, and the Earth to live together.</p>
                 </div>
               </div>
             </li>
@@ -401,10 +402,10 @@
       </picture>
       <h2 class="cta-title" id="together-title"><span class="ko">공동의 선언, 하나의 인류</span><span class="en">One Declaration, One Humanity</span></h2>
       <p class="decl-closing-en"><span class="ko">One Declaration, One Humanity</span><span class="en">World Hope Declaration</span></p>
-      <p class="cta-text"><span class="ko">분열을 넘어, 하나의 희망으로.<br>세계희망선언의 정신에 동의하신다면, 지금 선언에 함께해 주세요.</span><span class="en">From Division to Hope, Together for a Better World.<br>If you share the spirit of the World Hope Declaration, join the declaration today.</span></p>
+      <p class="cta-text"><span class="ko">분열을 넘어, 하나의 희망으로.<br>세계희망선언의 정신에 동의하신다면, 지금 선언에 <span class="nowrap">함께해 주세요.</span></span><span class="en">From Division to Hope, Together for a Better World.<br>If you share the spirit of the World Hope Declaration, join the declaration today.</span></p>
       <div class="cta-actions">
         <a class="btn btn-light btn-lg" href="join.html#declare"><span class="ko">선언에 참여하기</span><span class="en">Join the Declaration</span><span data-icon="arrow-right"></span></a>
-        <a class="btn btn-ghost-light btn-lg" href="global33.html"><span class="ko">글로벌 33 알아보기</span><span class="en">Explore Global 33</span><span data-icon="arrow-right"></span></a>
+        <a class="btn btn-ghost-light btn-lg" href="global33.html"><span class="ko">글로벌 33 알아보기</span><span class="en">About Global 33</span><span data-icon="arrow-right"></span></a>
       </div>
       <div class="decl-tools">
         <button type="button" class="decl-tool" data-print><span data-icon="printer"></span><span class="ko">인쇄하기</span><span class="en">Print</span></button>
@@ -419,7 +420,7 @@
 <div id="site-footer"></div>
 <script src="assets/js/config.js?v=20261013"></script>
 <script src="assets/js/data.js?v=20261013"></script>
-<script src="assets/js/main.js?v=20261013"></script>
+<script src="assets/js/main.js?v=20261013e"></script>
 <script>
   // 세계희망선언문 페이지: 하위 메뉴 현재 위치 강조 · 인쇄 버튼
   (function () {

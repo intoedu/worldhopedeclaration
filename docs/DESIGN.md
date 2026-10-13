@@ -105,7 +105,7 @@
 |---|---|
 | 세계희망선언 | 선언문·5대 원칙 `declaration.html#principles` · 5대 가치 `#values` · 공동의 선언 `#together` |
 | 비전과 미션 | 비전 `vision.html#vision` · 취지문 `#purpose` · 미션 `#mission` · 다섯 갈래의 사역 `#ministries` |
-| 글로벌 33 | 11개 분야 `global33.html#fields` · 글로벌 확장 구조 `#structure` · 글로벌 대표 패 `#plaque` · 대한민국 대표 33인 추천 `korea33.html` |
+| 글로벌 33 | 11개 분야 `global33.html#fields` · 글로벌 확장 구조 `#structure` · 글로벌 대표 선정패 `#plaque` · 대한민국 대표 33인 추천 `korea33.html` |
 | 세계지도 | 세계지도 보기 `worldmap.html` |
 | 소식 | 공지·소식 `news.html` · 갤러리 `gallery.html` (`js-gallery-link`: 견본 사진뿐인 동안 숨김) |
 | 참여하기 | 선언 참여 신청 `join.html#declare` · 글로벌 대표 추천 `#nominate` · 희망 응원 메시지 `#cheer` · 후원·헌금 `donate.html` · 문의하기 `contact.html` |
@@ -114,7 +114,9 @@
 - 헤더(1081px 이상): 로고 56px · 단체명, 주 메뉴 8개, KOR | ENG, 검색. 높이 72px(1081–1279px) / 76px(1280px 이상).
   위에서는 흰 바탕, 내려가면 아래 가는 선(`.is-scrolled`)과 뒤 흐림. 후원 버튼 등 별도 버튼은 두지 않음(시안 유지).
 - 하위 메뉴 판(1081px 이상, `.site-header.is-menu`): 주 메뉴에 마우스를 0.12초 올리거나 Tab 으로 들어가면 펼쳐짐.
-  모든 하위 목록이 한 판에, 각 메뉴 아래에(위치는 main.js `setupMega` 가 계산), 왼쪽엔 가리킨 메뉴 이름. Esc·밖으로 나가면 닫힘.
+  **가리킨 메뉴 하나만** 보여 줌: 왼쪽 = 메뉴 이름(금색 영문 머리글 + 큰 이름), 가는 세로선, 오른쪽 = 그 메뉴의 하위 목록
+  (3칸 격자, 줄마다 아래 가는 선 + 오른쪽 작은 화살표, 글자는 한 줄 — 한글은 줄바꿈 없음). 판 높이는 가장 긴 목록에 맞춘 한 가지
+  (메뉴를 옮겨 가리켜도 출렁이지 않음, main.js `setupMega`). 하위 메뉴가 없는 ‘홈’에서는 판을 띄우지 않음(`.mega-empty`). Esc·밖으로 나가면 닫힘.
 - 모바일 하단 탭바(760px 이하, 높이 58px): 세계희망선언문 · 글로벌 33 · 세계지도 · 참여하기 (아이콘 doc/group/world/sprout).
   지금 페이지는 아이콘 뒤 연하늘 알약 + 굵은 글자. 글을 입력하는 동안은 내려가 숨음.
   `body.has-tabbar` 에 하단 여백이 자동으로 들어갑니다. 페이지에서 `position: fixed; bottom: 0` 요소를 만들지 마세요.
@@ -141,8 +143,8 @@
 | 블루 | `--blue-700` | `#2b5797` 링크·영문 소제목 |
 |  | `--blue-500` | 포커스 테두리 |
 |  | `--blue-200` / `--blue-100` / `--blue-50` / `--sky-50` | 얇은 테두리 / 배지 / 연한 바탕 |
-| 금색 | `--gold-500` `--gold-600` `--gold-300` `--gold-100` | 아주 작은 포인트만 |
-| 글자 | `--ink` / `--ink-2` / `--muted` | 본문 / 보조 문단 / 흐린 글 |
+| 금색 | `--gold-500` `--gold-600` `--gold-300` `--gold-100` | 아주 작은 포인트만. **금색 글자(눈썹글·번호·큰 숫자)는 `--gold-600`(#8a6a24, 흰·연한 바탕 4.6:1 이상)**, `--gold-500` 은 선·점에만 |
+| 글자 | `--ink` / `--ink-2` / `--muted` | 본문 / 보조 문단 / 흐린 글(`#5f6c81`, 연한 바탕에서도 4.9:1 이상) |
 | 선·바탕 | `--line` / `--line-2` / `--bg-alt` | 구분선 / 진한 구분선·입력칸 / 회색빛 바탕 |
 | 글꼴 | `--f-serif` | Noto Serif KR — 한글 제목 |
 |  | `--f-serif-en` | Noto Serif — 영문 문장 |
@@ -150,12 +152,27 @@
 |  | `--f-sans` | Pretendard — 본문 |
 |  | `--f-head` | 제목용(한국어 모드 = serif KR, 영어 모드 = Noto Serif 자동 전환) |
 | 모서리 | `--radius-btn` 4px(모든 버튼) · `--radius-xs` 3px(입력칸) · `--radius-sm` 6px · `--radius` 8px(카드) · `--radius-lg` 10px(모달) |
-| 그림자 | `--shadow-sm` · `--shadow`(hover) · `--shadow-lg`(모달) |
+| 그림자 | `--shadow-sm`(쉬는 카드) · `--shadow`(hover·펼친 카드·사진 타일) · `--shadow-lg`(모달) · `--shadow-art`(사진·종이·선정패 같은 큰 그림, 통계 카드) — 이 네 가지만 씀 |
 | 레이아웃 | `--container` 1240px · `--gutter` clamp(20px, 4vw, 48px) · `--header-h` 76px(1280px 이상) · 72px(1081–1279px) · 60px(1080px 이하) · 53px(760px 이하) · `--tabbar-h` 58px — 헤더·본문·홈 블록·푸터가 같은 왼쪽 끝(1440px 화면 x=100, 1920px x=340) |
 | 움직임 | `--ease-out` · `--ease-in-out` · `--dur-1` 160ms(색) · `--dur-2` 280ms(버튼·화살표) · `--dur-3` 700ms(스크롤 등장) |
 | 질감 | `--grain` — 사진 위 고운 입자(`mix-blend-mode: overlay`, 투명도 .14–.16) |
 
-글꼴 도우미 클래스: `.serif` `.serif-en` `.caps`(Cinzel 대문자) `.lead`(18px 보조 문단).
+글꼴 도우미 클래스: `.serif` `.serif-en` `.caps`(Cinzel 대문자) `.lead`(18px 보조 문단) `.nowrap`(한 덩어리로 묶을 짧은 말, 예: `<span class="nowrap">쓸 수 있습니다.</span>`).
+
+- **숫자 글꼴**: Cinzel 의 ‘1’ 은 로마 숫자 I 처럼 보여 ‘11’ 이 ‘II’ 로 읽힘 → 분야 번호(01–11)·날짜·세부 번호는 Noto Serif(`--f-serif-en`).
+  Cinzel 숫자는 01–05 처럼 1이 겹치지 않는 큰 장식 숫자에만.
+- **줄바꿈**: 제목(h1–h3, `.section-title`, `.cta-title`)은 `text-wrap: balance`, 문단·목록은 `text-wrap: pretty`(공통 CSS).
+  그래도 끝에 한 낱말만 남으면 그 말과 앞말을 `.nowrap` 으로 묶음(뜻이 끊기는 ‘쓸 수 / 있습니다’ 같은 곳 우선).
+- **모서리**: 카드처럼 생긴 것(분야 칸·원칙 카드·아코디언)은 `--radius`(8px), 버튼·칩은 `--radius-btn`(4px), 큰 그림·ID 카드·모달은 `--radius-lg`(10px).
+- **선 아이콘 크기는 세 가지**: 24px(선 1.5) · 32px(선 1.25) · 40px(선 1.25). 통계 띠(홈·세계지도)는 40px, 5대 가치는 모든 페이지 32px.
+
+### ™ 규칙 (의뢰인 요청 2026-10-13 “한 화면에 하나”)
+- **한 페이지에 많아야 한 번**, 그 페이지에서 세계희망선언 이름이 **큰 제목·머리 눈썹글로 처음 나오는 곳**에만 `<sup class="tm">™</sup>`
+  (제목 크기의 0.4배, Noto Serif, 글자 윗선에 간격 없이). 지금 위치: 홈 큰 제목 · 선언문 머리 눈썹글(THE WORLD HOPE DECLARATION™) ·
+  글로벌 33 제목 · 비전과 미션 ‘세계희망선언™ 5대 가치’ · 참여하기 ‘세계희망선언™ 참여 신청’(영어 화면은 이름이 제목에 없는 곳은 생략).
+- 문장 속·질문(FAQ)·작은 글씨·그림 속(선정패·ID 카드 모양)·헤더 로고·세로 문구에는 넣지 않음. 대표 33인 추천 페이지는 머리 사진(선정패)에
+  ™ 가 이미 그려져 있어 따로 넣지 않음. 이용약관 제7조(표장 조항)만 예외로 명칭을 ™ 와 함께 적음.
+- QR코드를 보여 주는 곳(QR 창·QR코드 만들기·ID 카드 예시·FAQ QR 답변·이용약관)에는 “QR코드는 (주)덴소웨이브의 등록상표입니다.” 한 줄.
 
 ## 4. 여백 규칙
 
@@ -176,7 +193,8 @@
 <a class="btn btn-light">…</a>        <!-- 어두운 배경 위 흰 버튼 -->
 <a class="btn btn-ghost-light">…</a>  <!-- 어두운 배경 위 흰 외곽선 -->
 ```
-높이 52px · 모서리 4px · 그라데이션·그림자 없이 평평하게(마우스를 올리면 1px 떠오름). 크기 `.btn-sm`(40px, 모바일 44px) `.btn-lg`(56px), 가득 `.btn-block`.
+높이 52px · 모서리 4px · 그라데이션·그림자 없이 평평하게(마우스를 올리면 1px 떠오름). 크기 `.btn-sm`(44px) `.btn-lg`(56px, 760px 이하 52px), 가득 `.btn-block`.
+높이는 크기마다 한 가지 — 페이지에서 `min-height` 를 따로 주지 않음(칩 `.chip` 도 44px).
 `.btn-navy`=`.btn-primary`. `.btn-gold` 는 후원 버튼에만. 한 쌍의 버튼은 화살표 아이콘을 둘 다 넣거나 둘 다 빼기.
 글 링크: `<a class="link-arrow" href="…">자세히 보기</a>` (→ 자동).
 
@@ -193,9 +211,12 @@
 </section>
 ```
 - 한 가지 공식: 경로 → 금색 눈썹글(Cinzel 12px · 28px 선) → 제목(32–48px) → 설명. 높이 340px 이상, 위아래 88/72px.
+  **위 여백 88px 은 모든 머리말이 같음**(`.compact`·선언문·글로벌 33·참여하기·대표 33인 추천 포함) → 경로가 어느 페이지에서나 같은 높이.
+  오른쪽에 그림이 있는 머리말은 경로를 격자 **밖** 한 줄로 두고, 그 아래 격자(글 | 그림)는 위쪽 맞춤(`align-items: start`).
+- 가운데 정렬 머리말(`.center`, 선언문)은 바로 아래 페이지 안 메뉴(`.subnav`)도 가운데 — 의도한 짝. 다른 페이지는 왼쪽.
 - 오른쪽의 옅은 점 세계지도는 `.page-hero::after` (assets/img/brand/dotmap.svg, 왼쪽은 서서히 사라짐). 그림이 따로 있는
   머리말(글로벌 33 문장·대표 추천 선정패·참여하기 카드·세계지도)은 `.no-motif`.
-- 760px 이하: 경로 숨김, 왼쪽 정렬, 제목 30px, 설명 15.5px, 버튼은 한 줄에 하나(높이 50px). 그림은 버튼 아래(또는 같은 그림이
+- 760px 이하: 경로 숨김, 왼쪽 정렬, 제목 30px, 설명 15.5px, 버튼은 한 줄에 하나(높이 52px). 그림은 버튼 아래(또는 같은 그림이
   아래 구역에 있으면 숨김) — 머리말이 390px 화면에서 520px 안팎에 끝나도록.
 
 ## 7. 섹션 제목
@@ -305,7 +326,7 @@ HTML 에 **기본값을 적은 요소**에 `data-stat="키"` 를 달면 main.js 
     <div class="wh-hero-text">
       <p class="wh-hero-kicker"><span class="ko">분열을 넘어, 함께 만드는 더 나은 세상</span><span class="en">…</span></p>
       <h1 class="wh-hero-title" id="hero-title"><span class="ko">세계희망선언</span><span class="en">…</span><sup>™</sup></h1>
-      <p class="wh-hero-en">WORLD HOPE DECLARATION<sup>™</sup></p>
+      <p class="wh-hero-en">WORLD HOPE DECLARATION</p>   <!-- ™ 는 위 큰 제목에만 (한 화면에 하나) -->
       <p class="wh-hero-lead"><span class="ko">국가·인종·종교·이념을 넘어<br>인류가 함께 살아갈 새로운 세계의 기준을 선언합니다.</span><span class="en">…</span></p>
       <p class="wh-hero-quote">From Division to Hope,<br>Together for a Better World.</p>
       <div class="wh-hero-actions">
@@ -375,6 +396,51 @@ HTML 에 **기본값을 적은 요소**에 `data-stat="키"` 를 달면 main.js 
 ```
 화면 폭 전체(컨테이너 밖에 둠), 4칸 → 960px 이하 2×2.
 
+### 홈 첫 화면 (index.html 전용 `.home-*` · style.css ‘홈 (index.html 전용)’)
+위의 공용 부품과 같은 구성을 홈 전용으로 다듬은 것입니다. (2026-10-13 의뢰인: “디테일도 잘 보고 … 디자인도 더 잘할 수 있으면 바꿔도 돼” →
+시안 C(밝은 새벽빛 시안을 살린 고급화)를 바탕으로, 다른 시안의 좋은 점을 더함)
+```html
+<section class="home-hero" aria-labelledby="hero-title">
+  <div class="home-hero-media" aria-hidden="true"><div class="home-hero-bg"><picture>…</picture><span class="home-hero-sun"></span></div></div>
+  <div class="home-frame home-hero-inner">
+    <div class="home-hero-text">
+      <p class="home-hero-kicker">…</p>
+      <h1 class="home-hero-title" id="hero-title"><span class="ko">세계희망<wbr>선<span class="nb">언<sup>™</sup></span></span><span class="en">World Hope <span class="nb">Declaration<sup>™</sup></span></span></h1>
+      <p class="home-hero-en"><span class="ko">WORLD HOPE DECLARATION</span><span class="en" lang="ko">세계희망선언</span></p>
+      <span class="home-hero-rule" aria-hidden="true"></span>   <!-- 가는 선 · 앞쪽 44px 금색 (휴대폰 숨김) -->
+      <p class="home-hero-lead">…</p> <p class="home-hero-quote" lang="en">…</p>
+      <div class="home-hero-actions"><a class="home-btn home-btn-solid" …>…</a><a class="home-btn home-btn-line" …>…</a></div>
+    </div>
+    <p class="home-hero-vertical" aria-hidden="true"><span><i>ONE</i> HUMANITY</span>…</p>   <!-- ™ 넣지 않음 -->
+  </div>
+</section>
+<div class="home-band"><div class="home-band-mist" aria-hidden="true"></div> 통계 카드 · 5대 원칙 · 사진 타일 </div>
+```
+- `.home-hero`: 높이 `--hero-h` = 화면 폭의 44%(520–700px, 화면이 낮으면 줄임 · 영어는 제목이 두 줄이라 +36px, 최대 736px).
+  사진 속 해가 화면 폭 `--sun-x`(76%)에 오도록 사진을 놓고, 글 뒤에는 옅은 새벽빛 막. 사진 확대는 1920px 화면에서도 약 1.13배(1.25배 이하).
+  큰 제목 `세계희망선언™` 과 영문 `WORLD HOPE DECLARATION` 은 같은 폭(글자 사이 간격으로 맞춤). 영어 화면은 이름 전체
+  `World Hope Declaration™`(두 줄) + 아래 한글 `세계희망선언`(넓은 자간). 화면 높이 800px 이하(1280×720 · 1366×768 노트북 등)는 제목·간격을 줄임.
+- **™ 는 한 화면에 한 번만** — 큰 제목에만. 세로 문구(ONE HUMANITY…)·헤더 로고·통계에는 넣지 않습니다(점검: 보이는 글자에서 ™ 개수 = 1).
+- 히어로 아래 끝: 통계 카드가 `--lap`(76px, 휴대폰 30px)만큼 사진 위에 걸치고, 사진은 카드 위쪽 뒤까지 이어지다가 마지막
+  `--feather`(128px) 동안 띠 맨 위 색(#f1f0ec, 안개 사진 윗줄 색)으로 사라짐(`.home-hero::after`). `.home-band` 는 `display: flow-root`
+  (카드의 음수 여백이 띠 밖으로 새어 띠가 사진을 덮지 않게). 안개 사진도 맨 위는 투명에서 시작 → 사진과 띠 사이에 곧은 선이 없음.
+- `.home-stats-card`: 흰 카드 · 모서리 8px · 위쪽 2px 금색 선(처음 열 때 왼쪽부터 그어짐). 데스크톱은 금색 영문 이름 → 숫자 → 설명
+  (읽는 순서는 숫자 먼저, subgrid 로 네 칸 줄 맞춤). 영어는 단위(nations·people)를 숨기고 참여자 칸 설명은 ‘As of 날짜’만(같은 말 반복 없음).
+  휴대폰은 **2×2**: 칸마다 ‘아이콘 · 숫자 단위’ 한 줄 + 금색 영문 이름 전체(REPRESENTATIVES / PER COUNTRY 처럼 두 줄까지, 줄여 쓰지 않음),
+  아래에 기준일 한 줄. 390×844·360×740 에서 카드 전체가 하단 탭바 위, 카카오톡 안 브라우저(390×664)에서도 네 숫자가 모두 보임.
+- 버튼: 데스크톱(밝은 하늘 위)은 네이비 주 버튼 + 네이비 테두리 버튼. 휴대폰(어두운 지구 위)은 **아이보리 주 버튼 + 흰 테두리 유리 버튼**
+  (주 버튼이 가장 또렷하게 · 키보드 표시는 금색).
+- 세로 문구: 모든 낱말 굵게 + 또렷한 그림자 + 글자 뒤에만 옅은 남색 그늘(둥글게 번짐, 모양은 보이지 않음) → 밝은 하늘 위에서도 읽힘(2200px 이상은 네이비 글자·그늘 없음). 스크롤 안내 표시는 두지 않음.
+- 헤더: 맨 위에서도 아래에 아주 옅은 가는 선(모든 페이지) → 흰 헤더와 히어로·머리말의 경계가 또렷함.
+- `.home-pr`: 5대 원칙 카드(마우스를 올리면 떠오르며 위쪽 금색 선 · 표식이 화살표로). 휴대폰은 옆으로 넘기는 카드 + 점 표시.
+  휴대폰 5대 가치(`.hs-values-list`)도 옆으로 넘기는 칸 + 같은 점 표시(넘길 수 있는 자리 수만큼, home.js).
+- 통계 띠 네 칸은 같은 폭 → 칸 사이 세로선이 아래 사진 타일 사이 틈과 같은 자리.
+- `.home-tile-desc`: 타일 설명 줄 = main.js 사이트 검색 색인(`PAGES`)의 페이지 설명 문구 그대로(숫자는 `data-stat`).
+- 움직임: 히어로 사진이 천천히 다가오고 햇빛이 숨 쉬듯, 안개 낀 산이 천천히 좌우로, 타일 사진이 천천히 다가옴(화면 밖·다른 탭에서는 멈춤).
+  처음 열 때 글이 차례로 떠오르고 가는 선·카드 금색 선이 그어지며, 참여자 수가 0에서 올라감. **‘동작 줄이기’면 모두 멈춘 최종 모습**(참여자 수도 처음부터 최종 값).
+- 넣지 않기로 한 것: 휴대폰 히어로의 한 줄 표어(ONE HUMANITY • …) — 바로 위 영문 인용과 겹치고 첫 화면 길이를 늘림. 휴대폰 원칙 목록형 —
+  시안의 넘기는 카드 유지(홈 길이).
+
 ### 첫 화면 아래 이야기 `.hs` (index.html S1–S8 · style.css ‘홈 — 첫 화면 아래 이야기’)
 시안 첫 화면(히어로·통계·5대 원칙·타일) 아래에 8개 섹션이 이어집니다. 문구는 **모두 다른 페이지 문구를 그대로** 가져왔고
 (출처는 index.html 의 섹션 주석), 원래 페이지 문구를 고치면 홈도 함께 고쳐 주세요.
@@ -387,13 +453,18 @@ HTML 에 **기본값을 적은 요소**에 `data-stat="키"` 를 달면 main.js 
 | S4 세계희망지도 | `.hs-map` | 네이비 | `assets/img/brand/dotmap-light.svg` + 참여 국가 `data/countries.json` (금색 표시 위치는 `worldmap-dots.json` 으로 계산) |
 | S5 위원장 인사말 | `.hs-msg` | 흰색 | about.html #greeting (사진·대체 글 포함) |
 | S6 소식·응원 | `.hs-alt.hs-news` | 아이보리 | `data/posts.json` 최근 3개(글이 없으면 섹션 숨김) · `data/cheers.json`(게시된 것이 있을 때만) |
-| S7 함께하기 | `.hs-act` | 네이비 | declaration.html ‘공동의 선언, 하나의 인류’ · join.html 세 갈래 (후원 링크는 후원 방법 확정 뒤) |
-| S8 말씀·연락처 | `.hs-close` | 흰색 | vision.html 로마서 15:13(© 표기 포함) · `config.js` phone/address/publicEmail |
+| S7 함께하기 | `.hs-act` | 네이비(아래쪽 새벽빛) | declaration.html ‘공동의 선언, 하나의 인류’ · join.html 세 갈래 (후원 링크는 후원 방법 확정 뒤) |
+| S8 말씀·연락처 | `.hs-close` | 흰색 | vision.html 로마서 15:13(© 표기 포함) · 아래 한 줄 `.hs-contact` = 전국대표전화(`config.js` phone) + 문의하기·오시는 길·자주 묻는 질문 (주소·이메일은 바로 아래 푸터에만 · 휴대폰은 숨김) |
 
 공통 부품: `.hs-eyebrow`(금색 선 + 대문자 꼬리표, 가운데 정렬은 부모에 `.is-center`) · `.hs-title` · `.hs-lead` · `.hs-link`(화살표 4px 이동) ·
 `.hs-actions`(버튼 줄) · `.hs-rule`(48px 금색 선). 카드·줄 전체를 누르게 하려면 제목 링크에 `.hs-stretch`(읽기 프로그램은 제목만 링크로 읽음).
 등장 효과: 요소에 `.reveal` + `style="--i:n"`(main.js), 칸 묶음은 `.hs-stagger reveal` + 칸마다 `--k`(0.055초 간격).
 처음에 숨겨 두는 모습은 ‘동작 줄이기’가 아닐 때만 적용됩니다. 계속 움직이는 것은 지도 금색 표시의 물결 하나(화면 밖에서는 멈춤).
+
+**바탕 순서(리듬)**: 밝은 첫 화면 → 흰색 S1 → 아이보리 S2 → 흰색 S3 → **네이비 S4** → 흰색 S5 → 아이보리 S6 → **네이비 S7** → 흰색 S8 → 네이비 푸터.
+홈의 어두운 띠는 S4·S7 둘뿐이고 서로 붙지 않습니다(S6 이 숨겨져도 사이에 흰색 S5). 두 띠는 모양을 다르게 둡니다 —
+S4 는 오른쪽이 밝은 네이비 + 점 세계지도, S7 은 점 지도 없이 아래쪽 가운데에서 떠오르는 옅은 새벽빛(첫 화면 햇빛 색) + 아래로 밝아지는 네이비.
+(하위 페이지 맺음 띠 `.cta-band` 는 그대로 점 지도 장식)
 
 ## 11. 세계희망선언문 부품
 
@@ -401,7 +472,7 @@ HTML 에 **기본값을 적은 요소**에 `data-stat="키"` 를 달면 main.js 
 ```html
 <ol class="decl-list">
   <li class="decl-item" id="p1">
-    <span class="decl-no" aria-hidden="true">01</span>          <!-- 금색 Cinzel 숫자 하나 (동그라미·아이콘 없음) -->
+    <span class="decl-no" aria-hidden="true">01</span>          <!-- 금색(--gold-600) Cinzel 숫자 하나 (동그라미·아이콘 없음) -->
     <div class="decl-body">
       <h3 class="decl-title"><span class="sr-only">1. </span><span class="ko">이중개념을 인정하라.</span><span class="en">Recognize Dualism.</span></h3>
       <p class="decl-meta"><span class="ko">二重槪念 · Dualism</span><span class="en" lang="ko">이중개념 · 二重槪念</span></p>
@@ -443,7 +514,8 @@ HTML 에 **기본값을 적은 요소**에 `data-stat="키"` 를 달면 main.js 
   </li>
 </ol>
 ```
-4칸 → 3칸 → 2칸 → (760px 이하) 흰 카드 한 장 안의 목록. 아이콘은 동그라미 없이 28px 선 아이콘. 권장 아이콘: 사회영향력 `megaphone`, 국위선양 `trophy`, 교육계 `book`,
+4칸 → 3칸 → 2칸 → (760px 이하) 흰 카드 한 장 안의 목록. 아이콘은 동그라미 없이 32px 선 아이콘. 칸 전체가 그 분야의 추천 안내
+(`korea33.html#field-NN`, 그 분야가 펼쳐짐)로 가는 링크 — 제목 링크 `.field-card-link` 를 칸 전체로 넓힘. 권장 아이콘: 사회영향력 `megaphone`, 국위선양 `trophy`, 교육계 `book`,
 문화예술계 `palette`, 종교계 `cross`(단순 십자, 개신교), 산업계 `chart`, 국방사회안전 `shield`, 의료계 `medical`,
 생업종사자 `tool`, 시민 `users`, 정치계 `landmark`.
 
@@ -464,7 +536,7 @@ HTML 에 **기본값을 적은 요소**에 `data-stat="키"` 를 달면 main.js 
 <div class="idcard-pair">
   <figure class="idcard">
     <span class="sample-tag"><span class="ko">예시</span><span class="en">Sample</span></span>
-    <div class="idcard-head"><img src="assets/img/brand/logo-mark-160.png" alt="" width="38" height="38"><div><b>세계희망선언</b><small>WORLD HOPE DECLARATION™</small></div></div>
+    <div class="idcard-head"><img src="assets/img/brand/logo-mark-160.png" alt="" width="38" height="38"><div><b>세계희망선언</b><small>WORLD HOPE DECLARATION</small></div></div>
     <p class="idcard-role">글로벌 대표<small>Global Representative</small></p>
     <div class="idcard-main">
       <div class="idcard-photo" aria-hidden="true"></div>     <!-- 실루엣 자리표시 (사진 금지) -->
@@ -481,7 +553,7 @@ HTML 에 **기본값을 적은 요소**에 `data-stat="키"` 를 달면 main.js 
   <figure class="idcard is-back">
     <span class="sample-tag">…</span>
     <img src="assets/img/brand/logo-mark-160.png" alt="" width="72" height="72">
-    <b>세계희망선언</b><small>WORLD HOPE DECLARATION™</small>
+    <b>세계희망선언</b><small>WORLD HOPE DECLARATION</small>
     <p class="keywords"><span>평화</span><span>지구환경</span><span>사람</span><span>연대</span><span>실천</span></p>
   </figure>
 </div>
@@ -492,7 +564,7 @@ HTML 에 **기본값을 적은 요소**에 `data-stat="키"` 를 달면 main.js 
 <figure class="plaque">
   <span class="sample-tag">…</span>
   <img src="assets/img/brand/logo-mark-160.png" alt="" width="64" height="64">
-  <p class="plaque-title">세계희망선언</p><p class="plaque-sub">WORLD HOPE DECLARATION™</p>
+  <p class="plaque-title">세계희망선언</p><p class="plaque-sub">WORLD HOPE DECLARATION</p>
   <p class="plaque-text">당신은 세계희망선언의 정신에 동의하고 …</p>
   <p class="plaque-text-en">In recognition of your commitment …</p>
   <p class="plaque-org">세계희망선언위원회<small>World Hope Declaration Council</small></p>

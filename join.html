@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Serif:ital,wght@0,500;0,700;1,500&display=swap">
-<link rel="stylesheet" href="assets/css/style.css?v=20261013">
+<link rel="stylesheet" href="assets/css/style.css?v=20261013e">
 <script>(function(){try{var l=new URLSearchParams(location.search).get("lang")||localStorage.getItem("wh-lang");if(l==="en"){var h=document.documentElement;h.setAttribute("data-lang","en");h.lang="en";}}catch(e){}})();</script>
 <style>
   /* ===== 참여하기 페이지 전용 (공통 style.css 의 토큰만 사용) ===== */
@@ -27,8 +27,9 @@
   .join-anchor { scroll-margin-top: calc(var(--header-h) + 58px); }
 
   /* ---------- 상단 히어로: 공통 머리말 공식 + 오른쪽 네이비 카드(새싹 선 그림)와 참여 현황 ---------- */
-  .join-hero { padding: 72px 0 80px; }
-  .join-hero-grid { width: 100%; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 470px); gap: 40px 72px; align-items: center; }
+  .join-hero { padding: 88px 0 80px; }
+  /* 글은 위에 맞춤 (경로와 눈썹글 사이가 다른 머리말과 같도록) */
+  .join-hero-grid { width: 100%; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 470px); gap: 40px 72px; align-items: start; }
   .join-hero-text { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; }
   .join-hero h1 { order: -1; }
   .join-hero .page-hero-en { order: -2; }
@@ -42,7 +43,7 @@
   .join-figure { position: relative; margin: 0 0 0 auto; width: 100%; max-width: 470px; }
   .join-figure::before { content: ""; position: absolute; z-index: -1; inset: -14% -10% 6%; border-radius: 50%; background: radial-gradient(circle at 50% 50%, rgba(255, 236, 200, .55) 0%, rgba(255, 236, 200, 0) 60%); }
   /* 사진 대신 디자인한 네이비 카드: 깊은 남색 + 고운 입자 + 금빛 새싹 선 그림 (사진 확대로 흐려지는 문제 없음) */
-  .join-photo { position: relative; isolation: isolate; margin: 0; aspect-ratio: 4 / 3; border-radius: var(--radius-lg); overflow: hidden; background: radial-gradient(120% 90% at 80% 0%, #2a5797 0%, #0f2447 55%, #0a1a35 100%); box-shadow: 0 34px 64px -38px rgba(12, 28, 54, .6); }
+  .join-photo { position: relative; isolation: isolate; margin: 0; aspect-ratio: 4 / 3; border-radius: var(--radius-lg); overflow: hidden; background: radial-gradient(120% 90% at 80% 0%, #2a5797 0%, #0f2447 55%, #0a1a35 100%); box-shadow: var(--shadow-art); }
   .join-photo::before { content: ""; position: absolute; z-index: -1; inset: 0; background: var(--grain); opacity: .12; mix-blend-mode: overlay; pointer-events: none; }
   .join-art { position: absolute; z-index: -1; right: 24px; bottom: 24px; display: flex; color: rgba(216, 181, 106, .55); pointer-events: none; }
   .join-art svg { width: 160px; height: 160px; stroke-width: .7; }
@@ -169,7 +170,7 @@
     .join-hero { padding: 28px 0 32px; }
     .page-hero.join-hero p.join-hero-quote { display: none; }
     .join-hero-actions { display: grid; gap: 10px; width: 100%; margin-top: 24px; }
-    .join-hero-actions .btn { width: 100%; min-width: 0; min-height: 50px; }
+    .join-hero-actions .btn { width: 100%; min-width: 0; }
     .join-figure { margin-top: 4px; }
     /* 휴대폰: 장식 카드(새싹)는 숨기고 참여 현황만 → 머리말이 짧아져 첫 화면에서 탭 메뉴가 하단 탭바에 붙지 않고 신청서 머리가 보임
        (글자를 키워도 카드 제목과 현황 카드가 겹칠 일 없음) */
@@ -261,7 +262,7 @@
       <div class="join-layout">
         <div class="join-intro">
           <p class="join-kicker"><b>01</b><span>Declare</span></p>
-          <h2 class="section-title" id="declare-title"><span class="ko">세계희망선언 참여 신청</span><span class="en">Join the Declaration</span></h2>
+          <h2 class="section-title" id="declare-title"><span class="ko">세계희망선언<sup class="tm">™</sup> 참여 신청</span><span class="en">Join the Declaration</span></h2>
           <p class="section-lead"><span class="ko">국가·인종·종교·이념을 넘어 인류가 함께 살아갈 새로운 세계의 기준 — 세계희망선언에 함께하실 분은 신청서를 남겨 주세요.</span><span class="en">Beyond nation, race, religion and ideology — a new standard for the world we share. If you would like to join the World Hope Declaration, please send us this application.</span></p>
           <ol class="join-steps">
             <li><span class="join-step-no">1</span><div><b><span class="ko">신청서 작성</span><span class="en">Fill in the form</span></b><p><span class="ko">이름·국가·분야·연락처와 참여 동기를 적어 주세요.</span><span class="en">Tell us your name, country, field, contact details and why you would like to join.</span></p></div></li>
@@ -270,7 +271,7 @@
           </ol>
           <div class="join-aside-links">
             <a class="join-phone" href="tel:15882716"><span data-icon="phone"></span><span><small><span class="ko">전화로도 신청·문의하실 수 있습니다</span><span class="en">You can also apply or ask by phone (Korea)</span></small><b>1588-2716</b></span></a>
-            <a class="link-arrow" href="declaration.html"><span class="ko">세계희망선언문 먼저 읽기</span><span class="en">Read the Declaration first</span></a>
+            <a class="link-arrow" href="declaration.html"><span class="ko">세계희망선언문 먼저 읽기</span><span class="en">Read the Declaration First</span></a>
           </div>
         </div>
 
@@ -318,7 +319,7 @@
                 <option value="10" data-en="10. Citizens">10. 시민</option>
                 <option value="11" data-en="11. Political Leaders (Current &amp; Former)">11. 정치계(전·현직)</option>
               </select>
-              <p class="hint"><span class="ko">글로벌 33의 11개 분야 가운데 가장 가까운 분야를 골라 주세요. 일반 시민은 ‘10. 시민’을 고르시면 됩니다.</span><span class="en">Choose the closest of the 11 Global 33 fields. If none fits, choose “10. Citizens”.</span></p>
+              <p class="hint"><span class="ko">글로벌 33의 11개 분야 가운데 가장 가까운 분야를 골라 주세요. 일반 시민은 ‘10. 시민’을 고르시면 됩니다.</span><span class="en">Choose the closest of the 11 Global 33 fields. Members of the public may choose “10. Citizens”.</span></p>
             </div>
             <div class="field">
               <label for="j-phone"><span class="ko">연락처</span><span class="en">Phone</span><span class="req">*</span></label>
@@ -380,7 +381,7 @@
           <div class="notice-box"><span class="ko">추천하시기 전에 꼭 <b>피추천인 본인</b>에게 추천 사실을 알리고, 이름·연락처 등 정보를 보내는 것에 대한 동의를 받아 주세요.</span><span class="en">Before you nominate someone, please tell <b>the nominee</b> and obtain their permission to share their name, contact details and other information with us.</span></div>
           <p class="join-note"><span class="ko">보내 주신 추천은 담당자가 확인합니다. 추천이 곧 선정을 뜻하지는 않습니다.</span><span class="en">Our staff will review every nomination. A nomination does not guarantee selection.</span></p>
           <a class="btn btn-primary" style="margin-top:18px" href="korea33.html#form"><span class="ko">대한민국 대표 33인 추천 안내</span><span class="en">Nominate Korea’s 33</span><span data-icon="arrow-right"></span></a>
-          <a class="link-arrow" href="global33.html#fields"><span class="ko">11개 분야 자세히 보기</span><span class="en">About the 11 fields</span></a>
+          <a class="link-arrow" href="global33.html#fields"><span class="ko">11개 분야 자세히 보기</span><span class="en">About the 11 Fields</span></a>
         </div>
 
         <form class="form-card join-form" id="nominate-form" data-wh-form="nominations" data-subject-ko="[세계희망연대 홈페이지] 글로벌 대표 추천" data-ok-ko="추천이 담당자에게 전달되었습니다. 확인 후 연락드리겠습니다. 감사합니다." data-ok-en="Your nomination has been sent to our staff. We will contact you after review. Thank you.">
@@ -463,14 +464,14 @@
                 <li><b>수집 목적<span class="sr-only">: </span></b><span>글로벌 대표 추천의 접수·검토와 추천인·피추천인 연락</span></li>
                 <li><b>전달 방법<span class="sr-only">: </span></b><span>입력하신 내용은 홈페이지에 저장되지 않고, 외부 이메일 전송 서비스 FormSubmit(formsubmit.co, 서버가 국외에 있을 수 있음)을 거쳐 담당자 이메일로 전달됩니다. 전송이 원활하지 않으면 이용자의 메일 앱으로 직접 보내실 수 있습니다.</span></li>
                 <li><b>보유 기간<span class="sr-only">: </span></b><span>담당자 메일함에 보관하며 검토(회신) 완료 후 1년 이내에 삭제 (동의 철회 또는 피추천인의 삭제 요청 시 지체 없이 파기)</span></li>
-                <li class="is-note">동의를 거부하실 수 있으며, 이 경우 온라인 추천이 제한됩니다. 전화(1588-2716)로는 문의하실 수 있습니다.</li>
+                <li class="is-note">동의를 거부하실 수 있으며, 이 경우 온라인 추천이 제한됩니다. 전화(1588-2716)로는 추천·문의하실 수 있습니다.</li>
               </ul>
               <ul class="consent-list en">
                 <li><b>Items<span class="sr-only">: </span></b><span>(you) name, phone, email / (nominee) name, country, field, introduction and reason for nomination, phone or email (optional)</span></li>
                 <li><b>Purpose<span class="sr-only">: </span></b><span>to receive and review nominations and to contact you and the nominee</span></li>
                 <li><b>Delivery<span class="sr-only">: </span></b><span>your submission is not stored on this website. It is sent to our staff by email through a third-party email relay service, FormSubmit (formsubmit.co), whose servers may be located outside Korea. If online delivery fails, you can send it from your own email app instead.</span></li>
                 <li><b>Retention<span class="sr-only">: </span></b><span>kept in the staff mailbox and deleted within 1 year after the review is completed (deleted promptly upon withdrawal of consent or at the nominee’s request)</span></li>
-                <li class="is-note">You may decline; online nomination will then be unavailable, but you can still contact us at 1588-2716.</li>
+                <li class="is-note">You may decline; online nomination will then be unavailable, but you can still nominate or ask by calling 1588-2716.</li>
               </ul>
               <details class="consent-more">
                 <summary><span class="ko">개인정보 수집·이용 안내 전문 보기 (필수)</span><span class="en">Read the full privacy notice (required)</span></summary>
@@ -481,7 +482,7 @@
                     · 피추천인 정보: 다른 사람의 개인정보를 적으실 때에는 미리 피추천인 본인에게 추천 사실을 알리고 정보 제공에 대한 동의를 받아야 합니다. 피추천인이 요청하면 정보를 받은 경로(추천인)와 이용 목적을 알려 드리며, 피추천인이 원하지 않으면 지체 없이 삭제합니다.<br>
                     · 전달 방법: 입력하신 내용은 홈페이지에 저장되지 않고, 외부 이메일 전송 서비스 FormSubmit(formsubmit.co, 서버가 국외에 있을 수 있음)을 거쳐 담당자 이메일로 전달됩니다. 전송이 원활하지 않으면 이용자의 메일 앱으로 직접 보내실 수 있습니다.<br>
                     · 보유 기간: 담당자 메일함에 보관하며 검토(회신) 완료 후 1년 이내에 삭제 (동의 철회 또는 피추천인의 삭제 요청 시 지체 없이 파기)<br>
-                    · 동의를 거부하실 수 있으며, 이 경우 온라인 추천이 제한됩니다. 전화(1588-2716)로는 문의하실 수 있습니다.
+                    · 동의를 거부하실 수 있으며, 이 경우 온라인 추천이 제한됩니다. 전화(1588-2716)로는 추천·문의하실 수 있습니다.
                   </div>
                   <div class="en">
                     · Items: (you) name, phone, email / (nominee) name, country, field, introduction and reason for nomination, phone or email (optional)<br>
@@ -489,7 +490,7 @@
                     · About the nominee: before you share another person’s information, you must tell them about the nomination and obtain their permission. If the nominee asks, we will tell them where we received their information (you) and why we use it, and we will delete it promptly if they do not wish us to keep it.<br>
                     · Delivery: your submission is not stored on this website. It is sent to our staff by email through a third-party email relay service, FormSubmit (formsubmit.co), whose servers may be located outside Korea. If online delivery fails, you can send it from your own email app instead.<br>
                     · Retention: kept in the staff mailbox and deleted within 1 year after the review is completed (deleted promptly upon withdrawal of consent or at the nominee’s request)<br>
-                    · You may decline; online nomination will then be unavailable, but you can still contact us at 1588-2716.
+                    · You may decline; online nomination will then be unavailable, but you can still nominate or ask by calling 1588-2716.
                   </div>
                 </div>
               </details>
@@ -589,7 +590,7 @@
           <div class="card-icon" data-icon="mail"></div>
           <h3><span class="ko">문의하기</span><span class="en">Contact Us</span></h3>
           <span class="card-en ko" lang="en">Contact Us</span>
-          <p><span class="ko">궁금한 점, 참여·동역 신청, 협력 제안을 남겨 주세요. 확인 후 연락드리겠습니다.</span><span class="en">Send us your questions, applications to join, or partnership proposals. We’ll get back to you.</span></p>
+          <p><span class="ko">궁금한 점, 참여·동역 신청, 협력 제안을 남겨 주세요. 확인 후 연락드리겠습니다.</span><span class="en">Send us your questions, applications to join or serve with us, or collaboration proposals. We’ll get back to you.</span></p>
           <span class="link-arrow"><span class="ko">문의 남기기</span><span class="en">Send a message</span></span>
         </a>
         <a class="card card-link" href="faq.html">
@@ -607,7 +608,7 @@
 <div id="site-footer"></div>
 <script src="assets/js/config.js?v=20261013"></script>
 <script src="assets/js/data.js?v=20261013"></script>
-<script src="assets/js/main.js?v=20261013"></script>
+<script src="assets/js/main.js?v=20261013e"></script>
 <script src="assets/js/forms.js?v=20261013"></script>
 <script>
   // 참여하기 페이지: 하위 메뉴 현재 위치 강조 · 바로가기 위치 보정 · ?field= 로 분야 미리 선택

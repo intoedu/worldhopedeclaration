@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Serif:ital,wght@0,400;0,500;0,700;1,500&display=swap">
-<link rel="stylesheet" href="assets/css/style.css?v=20261013">
+<link rel="stylesheet" href="assets/css/style.css?v=20261013e">
 <!-- 첫 화면 배경: 데스크톱은 시안 히어로, 휴대폰은 지구 사진 -->
 <link rel="preload" as="image" href="assets/img/home/hero-desktop.webp" type="image/webp" media="(min-width: 761px)" fetchpriority="high">
 <link rel="preload" as="image" href="assets/img/home/hero-earth.webp" type="image/webp" media="(max-width: 760px)" fetchpriority="high">
@@ -36,7 +36,10 @@
 <body data-page="home" data-title-en="World Hope Declaration™ | World Hope Declaration Network">
 <div id="site-header"></div>
 
-<!-- 홈 화면은 고객 시안(1.webp)의 구성 그대로: 히어로 · 통계 · 5대 원칙 · 사진 타일
+<!-- 홈 첫 화면: 고객 시안(1.webp)의 구성(히어로 · 통계 · 5대 원칙 · 사진 타일)을 다듬은 모양
+     · 히어로: 왼쪽 글(밝은 새벽빛 위) · 오른쪽 지구. 통계는 히어로 아래 끝에 걸친 흰 카드(사진이 카드 위쪽 뒤로 이어지다 안개로 사라짐)
+     · 통계 카드 아래로 안개 낀 산이 이어지고(.home-band), 그 위에 5대 원칙 카드 · 사진 타일
+     · ™ 는 한 화면에 한 번만 — 큰 제목에만 (의뢰인 요청 2026-10-13). 세로 문구·헤더 로고에는 넣지 않음
      (스타일: style.css '홈 (index.html 전용)' — 모든 블록이 헤더·푸터와 같은 왼쪽 끝을 공유) -->
 <main id="main" class="home">
 
@@ -57,8 +60,10 @@
     <div class="home-frame home-hero-inner">
       <div class="home-hero-text">
         <p class="home-hero-kicker"><span class="ko">분열을 넘어, 함께 만드는 더 나은 세상</span><span class="en">Beyond division, a better world together</span></p>
-        <h1 class="home-hero-title" id="hero-title"><span class="ko">세계희망<wbr>선<span class="nb">언<sup>™</sup></span></span><span class="en">World Hope<span class="sr-only"> Declaration™</span></span></h1>
-        <p class="home-hero-en"><span class="ko">WORLD HOPE DECLARATION</span><span class="en" aria-hidden="true">DECLARATION<sup>™</sup></span></p>
+        <h1 class="home-hero-title" id="hero-title"><span class="ko">세계희망<wbr>선<span class="nb">언<sup>™</sup></span></span><span class="en">World Hope <span class="nb">Declaration<sup>™</sup></span></span></h1>
+        <p class="home-hero-en"><span class="ko">WORLD HOPE DECLARATION</span><span class="en" lang="ko">세계희망선언</span></p>
+        <!-- 가는 선(앞쪽 짧은 금색): 이름과 설명 사이를 나눔 · 휴대폰에서는 숨김 -->
+        <span class="home-hero-rule" aria-hidden="true"></span>
         <p class="home-hero-lead"><span class="ko">국가<span class="dot">·</span>인종<span class="dot">·</span>종교<span class="dot">·</span>이념을 넘어<br class="hm-d"> 인류가 함께 살아갈<br class="hm-m"> 새로운 세계의 기준을 선언합니다.</span><span class="en">Beyond nation, race, religion and ideology,<br class="hm-d"> we declare a new standard for the world we share.</span></p>
         <p class="home-hero-quote" lang="en">From Division to Hope,<br>Together for a Better World.</p>
         <div class="home-hero-actions">
@@ -66,60 +71,68 @@
           <a class="home-btn home-btn-line" href="join.html#declare"><span class="ko">선언에 참여하기</span><span class="en">Join the Declaration</span><span data-icon="arrow-right"></span></a>
         </div>
       </div>
+      <!-- 오른쪽 세로 문구 (시안): 본문 틀의 오른쪽 끝선에 맞춤 · 세 줄 -->
+      <p class="home-hero-vertical" aria-hidden="true"><span><i>ONE</i> HUMANITY</span><span><i>ONE</i> PLANET</span><span><i>ONE</i> HOPE</span></p>
     </div>
-    <!-- 오른쪽 세로 문구: 사진(오른쪽 끝 기준)에 붙어 있어 넓은 화면에서도 해와 겹치지 않음 -->
-    <p class="home-hero-vertical" aria-hidden="true"><span>ONE</span><span>HUMANITY</span><span>ONE</span><span>PLANET</span><span>ONE</span><span>HOPE</span></p>
   </section>
+
+  <!-- 통계 카드 · 5대 원칙 · 사진 타일이 놓이는 띠: 위쪽에 안개 낀 산(천천히 흐름), 아래로 아이보리 바탕 -->
+  <div class="home-band">
+  <div class="home-band-mist" aria-hidden="true"></div>
 
   <!-- ===== 통계: 숫자는 data/stats.json (main.js 가 data-stat 를 채움 · 아래 숫자는 불러오기 전 기본값) ===== -->
   <section class="home-stats" aria-label="세계희망선언 현황" data-en-aria-label="The Declaration at a glance">
-    <ul class="home-frame home-stats-list">
-      <li class="home-stat reveal" style="--i:0">
-        <span class="home-stat-icon" data-icon="world"></span>
-        <div class="home-stat-body">
-          <p class="home-stat-num"><b data-stat="countries">195</b><small><span class="ko">개국</span><span class="en">nations</span></small></p>
-          <p class="home-stat-label">Countries</p>
-          <p class="home-stat-desc"><span class="ko">세계희망선언 대상 국가</span><span class="en">Nations of the Declaration</span></p>
-        </div>
-      </li>
-      <li class="home-stat reveal" style="--i:1">
-        <span class="home-stat-icon" data-icon="group"></span>
-        <div class="home-stat-body">
-          <p class="home-stat-num"><b data-stat="per_country">33</b><small><span class="ko">인/각국</span><span class="en">per nation</span></small></p>
-          <p class="home-stat-label"><span class="hm-d">Representatives </span>per country</p>
-          <p class="home-stat-desc"><span class="ko"><span data-stat="fields">11</span>개 분야 × 분야별 <span data-stat="per_field">3</span>인</span><span class="en"><span data-stat="fields">11</span> fields × <span data-stat="per_field">3</span> persons</span></p>
-        </div>
-      </li>
-      <li class="home-stat reveal" style="--i:2">
-        <span class="home-stat-icon" data-icon="target"></span>
-        <div class="home-stat-body">
-          <p class="home-stat-num"><b data-stat="target">6,435</b><small><span class="ko">명</span><span class="en">people</span></small></p>
-          <p class="home-stat-label">Global target</p>
-          <p class="home-stat-desc"><span class="ko"><span data-stat="countries">195</span>개국 × <span data-stat="per_country">33</span>인 (목표치)</span><span class="en"><span data-stat="countries">195</span> nations × <span data-stat="per_country">33</span> (target)</span></p>
-        </div>
-      </li>
-      <li class="home-stat reveal" style="--i:3">
-        <span class="home-stat-icon" data-icon="person-plus"></span>
-        <div class="home-stat-body">
-          <p class="home-stat-num"><b data-stat="participants">21</b><small><span class="ko">명</span><span class="en">people</span></small></p>
-          <p class="home-stat-label">Current<span class="hm-d"> participants</span></p>
-          <p class="home-stat-desc"><span class="ko">현재 참여자 수</span><span class="en">Participants so far</span> · <span class="home-stat-asof"><span class="ko">기준일</span><span class="en">As of</span> <span data-stat="updated">2026-10-12</span></span></p>
-        </div>
-      </li>
-    </ul>
-    <!-- 기준일: data/stats.json 의 updated (데스크톱은 참여자 수 칸 설명 안에, 휴대폰은 이 줄) -->
-    <p class="home-frame home-stats-note"><span class="ko">기준일</span><span class="en">As of</span> <span data-stat="updated">2026-10-12</span></p>
+    <div class="home-frame">
+      <div class="home-stats-card">
+        <ul class="home-stats-list">
+          <li class="home-stat">
+            <span class="home-stat-icon" data-icon="world"></span>
+            <div class="home-stat-body">
+              <p class="home-stat-num"><b data-stat="countries">195</b><small><span class="ko">개국</span><span class="en">nations</span></small></p>
+              <p class="home-stat-label">Countries</p>
+              <p class="home-stat-desc"><span class="ko">세계희망선언 대상 국가</span><span class="en">Nations of the Declaration</span></p>
+            </div>
+          </li>
+          <li class="home-stat">
+            <span class="home-stat-icon" data-icon="group"></span>
+            <div class="home-stat-body">
+              <p class="home-stat-num"><b data-stat="per_country">33</b><small><span class="ko">인/각국</span><span class="en">per nation</span></small></p>
+              <p class="home-stat-label">Representatives <span class="nowrap">per country</span></p>
+              <p class="home-stat-desc"><span class="ko"><span data-stat="fields">11</span>개 분야 × 분야별 <span data-stat="per_field">3</span>인</span><span class="en"><span data-stat="fields">11</span> fields × <span data-stat="per_field">3</span> persons</span></p>
+            </div>
+          </li>
+          <li class="home-stat">
+            <span class="home-stat-icon" data-icon="target"></span>
+            <div class="home-stat-body">
+              <p class="home-stat-num"><b data-stat="target">6,435</b><small><span class="ko">명</span><span class="en">people</span></small></p>
+              <p class="home-stat-label">Global target</p>
+              <p class="home-stat-desc"><span class="ko"><span data-stat="countries">195</span>개국 × <span data-stat="per_country">33</span>인 (목표치)</span><span class="en"><span data-stat="countries">195</span> nations × <span data-stat="per_country">33</span> (target)</span></p>
+            </div>
+          </li>
+          <li class="home-stat">
+            <span class="home-stat-icon" data-icon="person-plus"></span>
+            <div class="home-stat-body">
+              <p class="home-stat-num"><b data-stat="participants">21</b><small><span class="ko">명</span><span class="en">people</span></small></p>
+              <p class="home-stat-label">Current participants</p>
+              <p class="home-stat-desc"><span class="ko">현재 참여자 수<span class="home-stat-sep"> · </span></span><span class="home-stat-asof"><span class="ko">기준일</span><span class="en">As of</span> <span data-stat="updated">2026-10-12</span></span></p>
+            </div>
+          </li>
+        </ul>
+        <!-- 기준일: data/stats.json 의 updated (데스크톱은 참여자 수 칸 설명 안에, 휴대폰은 카드 아래 이 줄) -->
+        <p class="home-stats-note"><span class="ko">기준일</span><span class="en">As of</span> <span data-stat="updated">2026-10-12</span></p>
+      </div>
+    </div>
   </section>
 
-  <!-- ===== 세계희망선언 5대 원칙 (데스크톱: 안개 낀 산 위 5칸 / 휴대폰: 넘겨 보는 카드 + 아래 점 표시) ===== -->
+  <!-- ===== 세계희망선언 5대 원칙 (데스크톱: 다섯 장의 카드 / 휴대폰: 넘겨 보는 카드 + 아래 점 표시) ===== -->
   <section class="home-principles" aria-labelledby="pr-title">
     <div class="home-frame">
       <div class="home-pr-head reveal" style="--i:0">
         <h2 class="home-pr-title" id="pr-title"><span class="ko"><span class="hm-d">세계희망선언 </span>5대 원칙</span><span class="en">The Five Principles</span></h2>
         <p class="home-pr-sub"><span class="ko">Five Principles</span><span class="en">World Hope Declaration</span></p>
-        <a class="home-pr-more" href="declaration.html#principles" aria-label="5대 원칙 자세히 보기" data-en-aria-label="More about the five principles" data-icon="chevron-right"></a>
+        <a class="home-pr-more" href="declaration.html#principles"><span class="home-pr-more-text"><span class="ko">5대 원칙 자세히 보기</span><span class="en">More about the five principles</span></span><span data-icon="arrow-right" class="home-pr-more-arrow"></span><span data-icon="chevron-right" class="home-pr-more-chev"></span></a>
       </div>
-      <!-- 휴대폰 카드의 둥근 표식: main.js 의 원칙 아이콘(태극 문양 사용 금지) -->
+      <!-- 카드의 표식: main.js 의 원칙 아이콘(태극 문양 사용 금지) -->
       <ol class="home-pr-list">
         <li class="reveal" style="--i:1"><a class="home-pr" href="declaration.html#p1">
           <span class="home-pr-medal" data-icon="circles" aria-hidden="true"></span>
@@ -129,7 +142,7 @@
             <span class="home-pr-en"><span class="ko">Dualism</span><span class="en" lang="ko">이중개념</span></span>
             <span class="home-pr-text"><span class="ko">이중개념을 인정하라.</span><span class="en">Recognize Dualism.</span></span>
           </div>
-          <span class="home-pr-chev" data-icon="chevron-right"></span>
+          <span class="home-pr-chev" data-icon="arrow-right"></span>
         </a></li>
         <li class="reveal" style="--i:2"><a class="home-pr" href="declaration.html#p2">
           <span class="home-pr-medal" data-icon="layers" aria-hidden="true"></span>
@@ -139,7 +152,7 @@
             <span class="home-pr-en"><span class="ko">Dependent Structure</span><span class="en" lang="ko">종속구조</span></span>
             <span class="home-pr-text"><span class="ko">종속구조를 직시하라.</span><span class="en">Face the Dependent Structure.</span></span>
           </div>
-          <span class="home-pr-chev" data-icon="chevron-right"></span>
+          <span class="home-pr-chev" data-icon="arrow-right"></span>
         </a></li>
         <li class="reveal" style="--i:3"><a class="home-pr" href="declaration.html#p3">
           <span class="home-pr-medal" data-icon="horizontal" aria-hidden="true"></span>
@@ -149,7 +162,7 @@
             <span class="home-pr-en"><span class="ko">Horizontal</span><span class="en" lang="ko">수평논리</span></span>
             <span class="home-pr-text"><span class="ko">수평논리를 적용하라.</span><span class="en">Apply Horizontal Logic.</span></span>
           </div>
-          <span class="home-pr-chev" data-icon="chevron-right"></span>
+          <span class="home-pr-chev" data-icon="arrow-right"></span>
         </a></li>
         <li class="reveal" style="--i:4"><a class="home-pr" href="declaration.html#p4">
           <span class="home-pr-medal" data-icon="center" aria-hidden="true"></span>
@@ -159,7 +172,7 @@
             <span class="home-pr-en"><span class="ko">Centrium</span><span class="en" lang="ko">중심기축</span></span>
             <span class="home-pr-text"><span class="ko">중심기축을 확립하라.</span><span class="en">Establish the Centrium.</span></span>
           </div>
-          <span class="home-pr-chev" data-icon="chevron-right"></span>
+          <span class="home-pr-chev" data-icon="arrow-right"></span>
         </a></li>
         <li class="reveal" style="--i:5"><a class="home-pr" href="declaration.html#p5">
           <span class="home-pr-medal" data-icon="unity" aria-hidden="true"></span>
@@ -169,36 +182,39 @@
             <span class="home-pr-en">Righteousness&nbsp;· Peace&nbsp;·&nbsp;United</span>
             <span class="home-pr-text"><span class="ko">공평화합을 생활신조화하라.</span><span class="en">Make R.P.U. a Way of Life.</span></span>
           </div>
-          <span class="home-pr-chev" data-icon="chevron-right"></span>
+          <span class="home-pr-chev" data-icon="arrow-right"></span>
         </a></li>
       </ol>
     </div>
   </section>
 
-  <!-- ===== 사진 타일 바로가기 (데스크톱 전용 — 휴대폰은 같은 4곳이 하단 탭바에 있음) ===== -->
+  <!-- ===== 사진 타일 바로가기 (데스크톱·태블릿 — 휴대폰은 같은 4곳이 하단 탭바에 있음)
+       · 설명 줄: main.js 사이트 검색 색인(PAGES)의 페이지 설명 문구 그대로 ===== -->
   <nav class="home-tiles" aria-label="바로가기" data-en-aria-label="Quick links">
     <a class="home-tile reveal" style="--i:0" href="declaration.html">
       <picture><source srcset="assets/img/home/tile-declaration.webp" type="image/webp"><img src="assets/img/home/tile-declaration.jpg" alt="" width="843" height="372" loading="lazy" decoding="async"></picture>
-      <span class="home-tile-body"><b class="home-tile-title"><span class="ko">세계희망선언문</span><span class="en">The Declaration</span></b><span class="home-tile-en" aria-hidden="true"><span class="ko">The Declaration</span><span class="en tile-ko" lang="ko">세계희망선언문</span></span></span>
+      <span class="home-tile-body"><span class="home-tile-en" aria-hidden="true"><span class="ko">The Declaration</span><span class="en tile-ko" lang="ko">세계희망선언문</span></span><b class="home-tile-title"><span class="ko">세계희망선언문</span><span class="en">The Declaration</span></b><span class="home-tile-desc"><span class="ko">세계희망선언 5대 원칙과 5대 가치</span><span class="en">Five principles and five values</span></span></span>
       <span class="home-tile-arrow" data-icon="arrow-right"></span>
     </a>
     <a class="home-tile reveal" style="--i:1" href="global33.html">
       <picture><source srcset="assets/img/home/tile-global33.webp" type="image/webp"><img src="assets/img/home/tile-global33.jpg" alt="" width="795" height="372" loading="lazy" decoding="async"></picture>
-      <span class="home-tile-body"><b class="home-tile-title"><span class="ko">글로벌 33</span><span class="en">Global 33</span></b><span class="home-tile-en" aria-hidden="true"><span class="ko">Global 33</span><span class="en tile-ko" lang="ko">글로벌 33</span></span></span>
+      <span class="home-tile-body"><span class="home-tile-en" aria-hidden="true"><span class="ko">Global 33</span><span class="en tile-ko" lang="ko">글로벌 33</span></span><b class="home-tile-title"><span class="ko">글로벌 33</span><span class="en">Global 33</span></b><span class="home-tile-desc"><span class="ko">각국 글로벌 대표 <span data-stat="per_country">33</span>인 선정</span><span class="en"><span data-stat="per_country">33</span> Global Representatives per nation</span></span></span>
       <span class="home-tile-arrow" data-icon="arrow-right"></span>
     </a>
     <!-- 세계지도 타일: data/worldmap-dots.json 으로 만든 벡터 점 지도 (scripts/build-dotmap.mjs) -->
     <a class="home-tile home-tile-map reveal" style="--i:2" href="worldmap.html">
       <picture><img src="assets/img/home/tile-worldmap.svg" alt="" width="900" height="335" loading="lazy" decoding="async"></picture>
-      <span class="home-tile-body"><b class="home-tile-title"><span class="ko">세계지도</span><span class="en">World Map</span></b><span class="home-tile-en" aria-hidden="true"><span class="ko">World Map</span><span class="en tile-ko" lang="ko">세계지도</span></span></span>
+      <span class="home-tile-body"><span class="home-tile-en" aria-hidden="true"><span class="ko">World Map</span><span class="en tile-ko" lang="ko">세계지도</span></span><b class="home-tile-title"><span class="ko">세계지도</span><span class="en">World Map</span></b><span class="home-tile-desc"><span class="ko">세계희망선언 대상 국가와 국가별 대표 선정 현황</span><span class="en">Countries of the World Hope Declaration and selection status</span></span></span>
       <span class="home-tile-arrow" data-icon="arrow-right"></span>
     </a>
     <a class="home-tile reveal" style="--i:3" href="join.html">
       <picture><source srcset="assets/img/home/tile-join.webp" type="image/webp"><img src="assets/img/home/tile-join.jpg" alt="" width="786" height="372" loading="lazy" decoding="async"></picture>
-      <span class="home-tile-body"><b class="home-tile-title"><span class="ko">참여하기</span><span class="en">Join Us</span></b><span class="home-tile-en" aria-hidden="true"><span class="ko">Join Us</span><span class="en tile-ko" lang="ko">참여하기</span></span></span>
+      <span class="home-tile-body"><span class="home-tile-en" aria-hidden="true"><span class="ko">Join Us</span><span class="en tile-ko" lang="ko">참여하기</span></span><b class="home-tile-title"><span class="ko">참여하기</span><span class="en">Join Us</span></b><span class="home-tile-desc"><span class="ko">세계희망선언에 참여하고 함께 희망을 선언합니다</span><span class="en">Join the World Hope Declaration</span></span></span>
       <span class="home-tile-arrow" data-icon="arrow-right"></span>
     </a>
   </nav>
+
+  </div><!-- /.home-band -->
 
   <!-- ==========================================================================
        첫 화면(시안) 아래 이야기 8개: 선언 → 5대 원칙 풀이 → 글로벌 33 → 세계지도 → 위원장 인사말 → 소식 → 참여 → 말씀·연락처
@@ -218,7 +234,7 @@
       </header>
       <div class="hs-st-row">
         <blockquote class="hs-st-quote reveal" style="--i:0">
-          <p><span class="ko">이제 분열은 더 이상 그만!<br> 이제 이 땅에 하나의 희망을 선포합시다.</span><span class="en">Enough division!<br> Now let us proclaim one hope over this land.</span></p>
+          <p><span class="ko">이제 분열은 더 이상 그만!<br> 이제 이 땅에 하나의 <span class="nowrap">희망을 선포합시다.</span></span><span class="en">Enough division!<br> Now let us proclaim one hope over this land.</span></p>
           <cite><span class="ko">— 취지문 중</span><span class="en">— from our statement of purpose</span></cite>
         </blockquote>
         <div class="hs-st-side reveal" style="--i:1">
@@ -238,7 +254,7 @@
     <div class="container">
       <div class="hs-decl-grid">
         <div class="hs-decl-aside">
-          <p class="hs-eyebrow reveal" style="--i:0">Five Principles</p>
+          <p class="hs-eyebrow reveal" style="--i:0">The Declaration</p>
           <h2 class="hs-title reveal" style="--i:1" id="decl-h"><span class="ko">세계희망선언문</span><span class="en">The Declaration</span></h2>
           <p class="hs-lead reveal" style="--i:2"><span class="ko">선언문에는 5대 원칙과 평화·지구환경·사람·연대·실천의 5대 가치가 담겨 있습니다.</span><span class="en">The Declaration sets out five principles and five values: Peace, Planet, People, Partnership and Action.</span></p>
           <div class="hs-actions reveal" style="--i:3">
@@ -288,7 +304,7 @@
             <div class="hs-decl-body">
               <h3 class="hs-decl-title"><a class="hs-stretch" href="declaration.html#p5"><span class="ko">공평화합을 생활신조화하라.</span><span class="en">Make R.P.U. a Way of Life.</span></a></h3>
               <p class="hs-decl-meta"><span class="ko">公平和合 · <span lang="en">R.P.U.</span></span><span class="en" lang="ko">공평화합 · 公平和合</span></p>
-              <p class="hs-decl-text"><span class="ko">의(義, righteousness), 평화(peace), 연합(united)을 삶의 원리로 삼아, 개인과 공동체, 인류와 지구가 함께 살아가는 길을 실천한다.</span><span class="en">Live by righteousness, peace, and united, and put them into practice as the path for individuals, communities, humanity, and the Earth to live together.</span></p>
+              <p class="hs-decl-text"><span class="ko">의(義, righteousness), 평화(peace), 연합(united)을 삶의 원리로 삼아, 개인과 공동체, 인류와 지구가 함께 살아가는 길을 실천한다.</span><span class="en">Live by righteousness, peace, and unity, and put them into practice as the path for individuals, communities, humanity, and the Earth to live together.</span></p>
             </div>
             <span class="hs-decl-go" data-icon="arrow-right" aria-hidden="true"></span>
           </li>
@@ -431,10 +447,10 @@
             <picture><source srcset="assets/img/brand/logo-mark-160.webp" type="image/webp"><img src="assets/img/brand/logo-mark-160.png" alt="" width="44" height="44" loading="lazy" decoding="async"></picture>
             <div>
               <small><span class="ko">세계희망선언위원회 위원장</span><span class="en">Chairman, World Hope Declaration Council</span></small>
-              <strong><span class="ko">원 치 현</span><span class="en">Chi-hyun Won</span></strong>
+              <strong><span class="ko">원치현</span><span class="en">Chi-hyun Won</span></strong>
             </div>
           </div>
-          <p class="hs-links reveal" style="--i:5"><a class="hs-link" href="about.html#greeting"><span class="ko">위원장 인사말 읽기</span><span class="en">Read the Chairman’s greeting</span><span data-icon="arrow-right"></span></a></p>
+          <p class="hs-links reveal" style="--i:5"><a class="hs-link" href="about.html#greeting"><span class="ko">위원장 인사말 읽기</span><span class="en">Read the Chairman’s Greeting</span><span data-icon="arrow-right"></span></a></p>
         </div>
       </div>
     </div>
@@ -449,13 +465,13 @@
           <p class="hs-eyebrow reveal" style="--i:0">News &amp; Notices</p>
           <h2 class="hs-title reveal" style="--i:1" id="news-h"><span class="ko">소식</span><span class="en">News</span></h2>
         </div>
-        <p class="hs-links reveal" style="--i:2"><a class="hs-link" href="news.html"><span class="ko">전체 소식 보기</span><span class="en">All news</span><span data-icon="arrow-right"></span></a></p>
+        <p class="hs-links reveal" style="--i:2"><a class="hs-link" href="news.html"><span class="ko">전체 소식 보기</span><span class="en">All News</span><span data-icon="arrow-right"></span></a></p>
       </div>
       <ul class="hs-news-list hs-stagger reveal" data-hs="posts"></ul>
       <div class="hs-cheers" data-hs="cheers" hidden>
         <h3 class="hs-cheers-title"><span class="ko">희망 응원 메시지</span><span class="en">Messages of Hope</span></h3>
         <div class="hs-cheers-list hs-stagger reveal" data-hs="cheer-list"></div>
-        <p class="hs-links"><a class="hs-link" href="join.html#cheer"><span class="ko">응원 남기기</span><span class="en">Leave a message</span><span data-icon="arrow-right"></span></a></p>
+        <p class="hs-links"><a class="hs-link" href="join.html#cheer"><span class="ko">응원 남기기</span><span class="en">Leave a Message</span><span data-icon="arrow-right"></span></a></p>
       </div>
     </div>
   </section>
@@ -509,32 +525,14 @@
         <cite><span class="ko">로마서 15장 13절</span><span class="en">Romans 15:13 (KJV)</span></cite>
         <small class="ko hs-verse-copy">성경전서 개역개정판 © 대한성서공회 1998</small>
       </blockquote>
-      <ul class="hs-contact">
-        <li class="hs-contact-cell reveal" style="--i:0">
-          <span class="hs-contact-icon" data-icon="phone"></span>
-          <div>
-            <p class="hs-contact-label"><span class="ko">전국대표전화</span><span class="en">Main line (Korea)</span></p>
-            <a class="hs-contact-value" href="tel:15882716" data-hs="tel"><span data-hs="phone">1588-2716</span></a>
-            <a class="hs-link" href="contact.html"><span class="ko">문의하기</span><span class="en">Contact</span><span data-icon="arrow-right"></span></a>
-          </div>
-        </li>
-        <li class="hs-contact-cell reveal" style="--i:1">
-          <span class="hs-contact-icon" data-icon="pin"></span>
-          <div>
-            <p class="hs-contact-label"><span class="ko">주소</span><span class="en">Address</span></p>
-            <p class="hs-contact-value is-text" data-hs="address"><span class="ko">세종특별자치시 보람동 732</span><span class="en">732 Boram-dong, Sejong-si, Republic of Korea</span></p>
-            <a class="hs-link" href="about.html#location"><span class="ko">오시는 길</span><span class="en">Directions</span><span data-icon="arrow-right"></span></a>
-          </div>
-        </li>
-        <li class="hs-contact-cell reveal" style="--i:2">
-          <span class="hs-contact-icon" data-icon="mail"></span>
-          <div>
-            <p class="hs-contact-label"><span class="ko">이메일</span><span class="en">Email</span></p>
-            <a class="hs-contact-value is-mail" href="mailto:bmig777won@gmail.com" data-hs="email">bmig777won@gmail.com</a>
-            <a class="hs-link" href="faq.html"><span class="ko">자주 묻는 질문</span><span class="en">FAQ</span><span data-icon="arrow-right"></span></a>
-          </div>
-        </li>
-      </ul>
+      <!-- 연락처: 주소·이메일은 바로 아래 푸터에 있으므로 여기는 전국대표전화 한 줄 + 바로 가기만 (휴대폰은 숨김) -->
+      <div class="hs-contact reveal" style="--i:2">
+        <a class="hs-contact-tel" href="tel:15882716" data-hs="tel"><span class="hs-contact-icon" data-icon="phone"></span><span class="hs-contact-label"><span class="ko">전국대표전화</span><span class="en">Main line (Korea)</span></span><b data-hs="phone">1588-2716</b></a>
+        <span class="hs-contact-sep" aria-hidden="true"></span>
+        <a class="hs-link" href="contact.html"><span class="ko">문의하기</span><span class="en">Contact</span><span data-icon="arrow-right"></span></a>
+        <a class="hs-link" href="about.html#location"><span class="ko">오시는 길</span><span class="en">Directions</span><span data-icon="arrow-right"></span></a>
+        <a class="hs-link" href="faq.html"><span class="ko">자주 묻는 질문</span><span class="en">FAQ</span><span data-icon="arrow-right"></span></a>
+      </div>
     </div>
   </section>
 
@@ -543,7 +541,7 @@
 <div id="site-footer"></div>
 <script src="assets/js/config.js?v=20261013"></script>
 <script src="assets/js/data.js?v=20261013"></script>
-<script src="assets/js/main.js?v=20261013"></script>
-<script src="assets/js/home.js?v=20261013"></script>
+<script src="assets/js/main.js?v=20261013e"></script>
+<script src="assets/js/home.js?v=20261013e"></script>
 </body>
 </html>

@@ -27,7 +27,7 @@
   /* ---------------- 2) 화면 밖·다른 탭에서는 배경 움직임 멈춤 (지도 위 금색 표시의 물결 포함) ---------------- */
   (function () {
     if (!hasIO) return;
-    var targets = Array.prototype.slice.call(document.querySelectorAll(".home-hero, .home-principles, .home-tiles, .hs-map"));
+    var targets = Array.prototype.slice.call(document.querySelectorAll(".home-hero, .home-band, .home-tiles, .hs-map"));
     if (!targets.length) return;
     var inView = new Map();
     function apply(el) { el.classList.toggle("is-paused", document.hidden || !inView.get(el)); }
@@ -71,6 +71,42 @@
       });
     }, { root: list, threshold: 0.6 });
     cards.forEach(function (c) { io.observe(c); });
+  })();
+
+  /* ---------------- 3-1) 휴대폰 5대 가치(옆으로 넘기는 칸): 같은 점 표시 ----------------
+     한 화면에 두 칸 남짓 보이므로 '넘길 수 있는 자리' 수만큼 점을 두고, 가로 스크롤 위치로 켬 */
+  (function () {
+    var list = document.querySelector(".hs-values-list");
+    if (!list) return;
+    var dots = document.createElement("div");
+    dots.className = "home-pr-dots hs-values-dots";
+    dots.setAttribute("aria-hidden", "true");
+    list.parentNode.insertBefore(dots, list.nextSibling);
+    var cur = -1, raf = 0;
+    function step() {
+      var c = list.children;
+      var d = c.length > 1 ? c[1].offsetLeft - c[0].offsetLeft : 0;
+      return d > 0 ? d : (list.clientWidth || 1);
+    }
+    function build() {
+      var max = list.scrollWidth - list.clientWidth;
+      // 넘길 자리 수 (가로로 넘기지 않는 넓은 화면은 0 → 점 없음)
+      var n = max > 4 ? Math.min(list.children.length, Math.round(max / step()) + 1) : 0;
+      if (dots.children.length !== n) { dots.innerHTML = new Array(n + 1).join("<i></i>"); cur = -1; }
+      dots.hidden = n < 2;
+      update();
+    }
+    function update() {
+      var marks = dots.children;
+      if (!marks.length) return;
+      var i = Math.min(marks.length - 1, Math.round(list.scrollLeft / step()));
+      if (i === cur) return;
+      cur = i;
+      Array.prototype.forEach.call(marks, function (m, k) { m.classList.toggle("is-on", k === i); });
+    }
+    list.addEventListener("scroll", function () { cancelAnimationFrame(raf); raf = requestAnimationFrame(update); }, { passive: true });
+    window.addEventListener("resize", build);
+    build();
   })();
 
   /* ---------------- 4) 첫 화면 아래 이야기: 자료 채우기 ---------------- */

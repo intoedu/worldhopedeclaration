@@ -290,7 +290,7 @@
     { id: "global33", href: "global33.html", ko: "글로벌 33", en: "Global 33", cap: "Global 33", sub: [
       { href: "global33.html#fields", ko: "11개 분야", en: "11 Fields" },
       { href: "global33.html#structure", ko: "글로벌 확장 구조", en: "Global Structure" },
-      { href: "global33.html#plaque", ko: "글로벌 대표 패", en: "Representative Plaque" },
+      { href: "global33.html#plaque", ko: "글로벌 대표 선정패", en: "Representative Plaque" },
       { href: "korea33.html", ko: "대한민국 대표 33인 추천", en: "Nominate Korea’s 33" }
     ] },
     { id: "worldmap", href: "worldmap.html", ko: "세계지도", en: "World Map", cap: "World Map", sub: [
@@ -538,64 +538,21 @@
     if (!panel) return;
     var mq = window.matchMedia ? window.matchMedia("(min-width: 1081px)") : null;
     var openTimer = 0, hovering = false, dismissed = false, raf = 0;
-    var GAP = 12, PAD_TOP = 22, PAD_BOTTOM = 28;
+    var PAD_TOP = 22, PAD_BOTTOM = 30;
 
     function desktop() { return !mq || mq.matches; }
     function isOpen() { return header.classList.contains("is-menu"); }
     function keyFocus(el) {
       try { return el.matches(":focus-visible"); } catch (e) { return true; }
     }
-    /* 하위 목록 놓기: 각 목록의 글자 시작을 위 메뉴의 글자 시작에 정확히 맞춤(금빛 선이 위 메뉴 밑줄 바로 아래).
-       목록 폭은 다음 메뉴 글자 시작 - 12px 까지로 줄이고, 긴 이름은 두 줄로 나눔(어절 단위, text-wrap: balance).
-       어절 하나가 그 폭보다 길어 옆 목록과 겹칠 때만 겹치는 목록끼리 묶어 '어긋난 거리'의 제곱 합이 가장 작은 곳에 놓음.
-       마지막 목록이 검색 버튼 오른쪽 끝을 넘으면 그 목록만 왼쪽으로 당김 */
+    /* 판 높이: 자리는 CSS 가 정함(왼쪽 이름 · 오른쪽 3칸 격자). 메뉴를 옮겨 가리켜도 판 높이가 출렁이지 않도록
+       가장 긴 하위 목록(또는 이름)에 맞춘 한 가지 높이를 씀 */
     function layout() {
-      var hb = header.getBoundingClientRect();
-      var inner = header.querySelector(".header-inner");
-      var ib = inner.getBoundingClientRect(), ics = getComputedStyle(inner);
-      var brand = inner.querySelector(".brand").getBoundingClientRect();
-      var lo = brand.right - hb.left + 32;
-      var hi = ib.right - parseFloat(ics.paddingRight) - hb.left;
-      var cols = [];
-      Array.prototype.forEach.call(gnb.querySelectorAll(".gnb-sub"), function (sub) {
-        var top = sub.parentNode.querySelector(".gnb-top");
-        var tb = top.getBoundingClientRect();
-        var linkPad = parseFloat(getComputedStyle(sub.querySelector("a") || sub).paddingLeft) || 0;
-        sub.style.left = "0px";
-        sub.style.width = "max-content";
-        var nat = Math.ceil(sub.getBoundingClientRect().width);
-        sub.style.width = "min-content";
-        var min = Math.ceil(sub.getBoundingClientRect().width);
-        cols.push({ sub: sub, x: tb.left - hb.left + (parseFloat(getComputedStyle(top).paddingLeft) || 0) - linkPad, w: nat, min: min });
-      });
-      // 폭: 다음 목록 시작 - 간격까지 (마지막은 검색 버튼 끝까지). 단, 가장 긴 어절보다 좁게는 줄이지 않음
-      cols.forEach(function (c, i) {
-        var cap = (i < cols.length - 1 ? cols[i + 1].x - GAP : hi) - c.x;
-        c.w = Math.max(c.min, Math.min(c.w, cap));
-      });
-      // 겹치는 목록만 묶어 놓기 (순서 유지, 사이 간격 GAP). 겹침이 없으면 모두 제자리
-      var groups = [];
-      function pos(g) { return Math.min(Math.max(g.sum / g.n, lo), hi - g.w); }
-      cols.forEach(function (c, i) {
-        groups.push({ first: i, last: i, w: c.w, sum: c.x, n: 1 });
-        while (groups.length > 1) {
-          var b = groups[groups.length - 1], a = groups[groups.length - 2];
-          if (pos(a) + a.w + GAP <= pos(b) + 0.5) break;
-          a.sum += b.sum - (a.w + GAP) * b.n;
-          a.n += b.n; a.w += GAP + b.w; a.last = b.last;
-          groups.pop();
-        }
-      });
-      groups.forEach(function (g) {
-        var left = pos(g);
-        for (var i = g.first; i <= g.last; i++) {
-          cols[i].sub.style.left = Math.round(left) + "px";
-          cols[i].sub.style.width = Math.ceil(cols[i].w) + "px";
-          left += cols[i].w + GAP;
-        }
-      });
       var h = 0;
-      cols.forEach(function (c) { h = Math.max(h, c.sub.offsetHeight); });
+      Array.prototype.forEach.call(gnb.querySelectorAll(".gnb-sub, .gnb-intro"), function (el) {
+        var extra = el.classList.contains("gnb-intro") ? 8 : 0;
+        h = Math.max(h, el.offsetHeight + extra);
+      });
       header.style.setProperty("--mega-h", Math.ceil(h + PAD_TOP + PAD_BOTTOM) + "px");
     }
     function open() {
@@ -621,6 +578,8 @@
       if (hot) hot.classList.remove("is-hot");
       hot = li;
       if (hot) hot.classList.add("is-hot");
+      // 하위 메뉴가 없는 메뉴(홈)를 가리키는 동안은 판을 띄우지 않음
+      header.classList.toggle("mega-empty", !!hot && !hot.querySelector(".gnb-sub"));
     }
     function topLi(el) {
       var li = el && el.closest ? el.closest(".gnb > ul > li") : null;
@@ -849,7 +808,7 @@
     var tel = String(fc.phone || "").replace(/[^0-9+]/g, "");
     var mail = safeMail(fc.email);
     var contactBits = [];
-    if (fc.name) contactBits.push("<span>" + bi("대표 ", "Representative ") + bi(esc(fc.name.ko || ""), esc(fc.name.en || fc.name.ko || "")) + "</span>");
+    if (fc.name) contactBits.push("<span>" + bi("대표 ", "President ") + bi(esc(fc.name.ko || ""), esc(fc.name.en || fc.name.ko || "")) + "</span>");
     if (tel) contactBits.push('<a href="tel:' + esc(tel) + '">' + esc(fc.phone) + "</a>");
     if (mail) contactBits.push('<a href="mailto:' + esc(mail) + '">' + esc(mail) + "</a>");
     var regNo = String(C.registrationNo || "").trim();
@@ -885,7 +844,7 @@
     { href: "index.html", ko: "홈", en: "Home", dko: "세계희망선언™ — 분열을 넘어, 함께 만드는 더 나은 세상", den: "World Hope Declaration™ — From division to hope, together for a better world", k: "home main 메인 첫 화면 세계희망선언 world hope declaration" },
     { href: "declaration.html", ko: "세계희망선언문", en: "The Declaration", dko: "세계희망선언 5대 원칙과 5대 가치 — 이중개념·종속구조·수평논리·중심기축·공평화합", den: "Five principles and five values — Dualism, Dependent Structure, Horizontal Logic, Centrium, R.P.U.", k: "선언문 5대 원칙 five principles 이중개념 dualism 종속구조 dependent structure 수평논리 horizontal logic 중심기축 centrium 공평화합 rpu righteousness peace united 5대 가치 values 평화 지구환경 planet 사람 people 연대 partnership 실천 action" },
     { href: "vision.html", ko: "비전과 미션", en: "Vision & Mission", dko: "세계희망선언이 향하는 비전과 사명", den: "The vision and mission of the World Hope Declaration", k: "비전 미션 vision mission 사명 목표 goal 사역 ministry 선교행진 mission march" },
-    { href: "global33.html", ko: "글로벌 33", en: "Global 33", dko: "각국 글로벌 대표 33인 선정 — 11개 분야 × 분야별 3인", den: "33 Global Representatives per country — 11 fields × 3 persons each", k: "33인 대표 representatives 11개 분야 fields 사회영향력 국위선양 교육계 문화예술계 종교계 산업계 국방사회안전 의료계 생업종사자 시민 정치계 id card 카드 패 plaque" },
+    { href: "global33.html", ko: "글로벌 33", en: "Global 33", dko: "각국 글로벌 대표 33인 선정 — 11개 분야 × 분야별 3인", den: "33 Global Representatives per nation — 11 fields × 3 persons each", k: "33인 대표 representatives 11개 분야 fields 사회영향력 국위선양 교육계 문화예술계 종교계 산업계 국방사회안전 의료계 생업종사자 시민 정치계 id card 카드 패 plaque" },
     { href: "korea33.html", ko: "대한민국 대표 33인 추천", en: "Nominate Korea’s 33", dko: "세계희망선언문 채택 서명자 · 11개 분야 × 3인 추천 안내와 추천서", den: "Nominate Korea’s 33 representatives — guide by field and nomination form", k: "추천 nominate nomination 대한민국 korea 33인 대표 서명자 signatory 선정 기준 criteria 분야 field 추천서" },
     { href: "worldmap.html", ko: "세계지도", en: "World Map", dko: "세계희망선언 대상 국가와 국가별 대표 선정 현황", den: "Countries of the World Hope Declaration and selection status", k: "세계지도 world map 지도 국가 countries nations 현황 status 대한민국 korea" },
     { href: "news.html", ko: "소식", en: "News", dko: "공지사항 · 소식 · 언론보도", den: "Notices, news and press", k: "공지 notice 소식 news 언론보도 press 게시판 board" },
@@ -1238,7 +1197,8 @@
           '<canvas width="440" height="440" role="img" aria-label="QR코드" data-en-aria-label="QR code"></canvas>' +
           '<p class="qr-url" style="margin:12px 0 0"></p>' +
           '<div class="modal-actions"><button type="button" class="btn btn-primary btn-sm" data-qr-dl>' + WH.icon("download") + bi("PNG 저장", "Save PNG") + "</button>" +
-          '<a class="btn btn-outline btn-sm" href="' + ROOT + 'qr.html">' + bi("QR 만들기", "QR maker") + "</a></div></div>";
+          '<a class="btn btn-outline btn-sm" href="' + ROOT + 'qr.html">' + bi("QR 만들기", "QR maker") + "</a></div>" +
+          '<p class="qr-tm">' + bi("QR코드는 (주)덴소웨이브의 등록상표입니다.", "QR Code is a registered trademark of DENSO WAVE INCORPORATED.") + "</p></div>";
         document.body.appendChild(modal);
         applyAttrs(modal, WH.lang());
         modal.addEventListener("click", function (ev) { if (ev.target === modal || ev.target.closest(".modal-close")) close(); });

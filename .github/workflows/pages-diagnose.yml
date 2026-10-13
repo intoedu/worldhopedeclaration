@@ -1,0 +1,31 @@
+# 임시 점검용 — HTTPS 인증서가 안 켜지는 원인 확인 (Pages 설정·DNS·인증서 상태를 기록만 함). 확인 후 삭제합니다.
+name: Pages diagnose (temporary)
+on:
+  push:
+    branches: [claude/relaxed-tesla-b6xzts]
+    paths: ['.github/workflows/pages-diagnose.yml']
+permissions:
+  contents: read
+  pages: read
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pages settings (API)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api repos/${{ github.repository }}/pages | jq '{url,status,cname,html_url,build_type,source,https_certificate,https_enforced,protected_domain_state,pending_domain_unverified_at}' || true
+          gh api repos/${{ github.repository }}/pages/health || echo "health endpoint: not permitted for GITHUB_TOKEN"
+      - name: DNS
+        run: |
+          for t in A AAAA CAA NS; do echo "== worldhopedeclaration.com $t"; dig +noall +answer worldhopedeclaration.com $t; done
+          for t in A AAAA CNAME; do echo "== www.worldhopedeclaration.com $t"; dig +noall +answer www.worldhopedeclaration.com $t; done
+          echo "== TXT _github-pages-challenge-intoedu"; dig +noall +answer _github-pages-challenge-intoedu.worldhopedeclaration.com TXT
+          echo "== @8.8.8.8 apex A / www"; dig @8.8.8.8 +short worldhopedeclaration.com A; dig @8.8.8.8 +short www.worldhopedeclaration.com
+          echo "== @1.1.1.1 apex A / www"; dig @1.1.1.1 +short worldhopedeclaration.com A; dig @1.1.1.1 +short www.worldhopedeclaration.com
+      - name: HTTP / HTTPS
+        run: |
+          for u in http://worldhopedeclaration.com/ http://www.worldhopedeclaration.com/ https://www.worldhopedeclaration.com/ https://worldhopedeclaration.com/ https://intoedu.github.io/worldhopedeclaration/; do echo "== $u"; curl -sS -o /dev/null -m 20 -w '%{http_code} -> %{redirect_url}\n' "$u" || true; done
+          echo "== certificate on www"; echo | openssl s_client -connect www.worldhopedeclaration.com:443 -servername www.worldhopedeclaration.com 2>/dev/null | openssl x509 -noout -subject -issuer -dates -ext subjectAltName || echo "no certificate"
+          echo "== certificate on apex"; echo | openssl s_client -connect worldhopedeclaration.com:443 -servername worldhopedeclaration.com 2>/dev/null | openssl x509 -noout -subject -issuer -dates -ext subjectAltName || echo "no certificate"

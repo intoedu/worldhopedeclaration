@@ -27,7 +27,7 @@
   /* ---------------- 2) 화면 밖·다른 탭에서는 배경 움직임 멈춤 (지도 위 금색 표시의 물결 포함) ---------------- */
   (function () {
     if (!hasIO) return;
-    var targets = Array.prototype.slice.call(document.querySelectorAll(".home-hero, .home-principles, .home-tiles, .hs-map"));
+    var targets = Array.prototype.slice.call(document.querySelectorAll(".home-hero, .home-band, .home-tiles, .hs-map"));
     if (!targets.length) return;
     var inView = new Map();
     function apply(el) { el.classList.toggle("is-paused", document.hidden || !inView.get(el)); }

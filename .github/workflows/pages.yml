@@ -1,0 +1,39 @@
+# GitHub Pages 배포 (GitHub 공식 시작 워크플로 actions/starter-workflows pages/static.yml 기준)
+# - main 브랜치에 올라올 때마다 저장소 전체를 그대로 게시합니다(빌드 없음, .nojekyll 사이트).
+# - 저장소 Settings → Pages → Build and deployment → Source 가 "GitHub Actions" 일 때 이 워크플로가 배포합니다.
+# - Actions 탭에서 "Run workflow" 로 수동 배포도 할 수 있습니다.
+name: Deploy site to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 배포는 한 번에 하나씩, 진행 중인 배포는 끝까지 마칩니다.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

@@ -6,7 +6,7 @@
 
 | 무엇을 | 어떻게 |
 |---|---|
-| 호스팅 | **GitHub Pages** (main 브랜치, 무료) → https://intoedu.github.io/worldhopedeclaration/ |
+| 호스팅 | **GitHub Pages** (main 브랜치, 무료) → https://www.worldhopedeclaration.com (연결 도메인, 가비아 DNS · 기본 주소 https://intoedu.github.io/worldhopedeclaration/) |
 | 공지·소식, 갤러리, 응원 메시지 게시 | 저장소의 `data/*.json` 파일. 관리자 페이지(`/admin/`)에서 GitHub 토큰으로 로그인해 직접 수정 |
 | 문의·참여 신청, 정기 후원 신청, 희망 응원 메시지, 온라인 후원 결제 알림 | **담당자 이메일로 전송** (FormSubmit 무료 서비스, 실패하면 방문자의 메일 앱으로 대체) |
 | 온라인 결제 | PortOne V2 결제창 (결제 내역의 기준은 PortOne 관리자 콘솔) |

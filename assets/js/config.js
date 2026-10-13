@@ -2,6 +2,14 @@
    사이트 설정 — 이 파일 하나만 수정하면 사이트 전체에 반영됩니다.
    (값이 비어 있으면 해당 기능은 안전하게 꺼지거나 '준비 중'으로 표시됩니다)
    ========================================================================== */
+/* 연결 도메인에 http:// 로 들어오면 https:// 로 옮깁니다 (보안 연결).
+   인증서는 발급 완료(2026-10-13, Let's Encrypt). GitHub Pages 의 'Enforce HTTPS' 가 켜지면 서버가 먼저 처리하므로 이 코드는 그대로 두어도 무해합니다. */
+(function () {
+  if (location.protocol === "http:" && /(^|\.)worldhopedeclaration\.com$/i.test(location.hostname)) {
+    location.replace("https://" + location.host + location.pathname + location.search + location.hash);
+  }
+})();
+
 window.WH_CONFIG = {
   /* ---- 기본 정보 ---- */
   siteUrl: "https://www.worldhopedeclaration.com", // 도메인 연결 후 입력. 예: "https://www.example.org" (QR코드·공유 링크 기준 주소, 비우면 현재 접속 주소)

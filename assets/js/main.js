@@ -638,6 +638,9 @@
       if (!focusInside()) close();
     });
     gnb.addEventListener("focusin", function (e) {
+      // 메뉴 밖에서 새로 들어오면(예: 마우스로 Esc 를 누른 뒤 나중에 Tab 으로 들어옴) 다시 펼칠 수 있게
+      // (창을 다시 볼 때처럼 이전 포커스가 없는 경우는 닫힌 채로 둠)
+      if (e.relatedTarget && !gnb.contains(e.relatedTarget)) dismissed = false;
       if (!dismissed && keyFocus(e.target)) open();
     });
     gnb.addEventListener("focusout", function (e) {
@@ -827,7 +830,10 @@
   function searchPages(q) {
     var toks = tokens(q);
     if (!toks.length) return [];
+    // 갤러리가 견본 사진뿐인 동안(data.js 가 <html data-gallery-empty> 표시)에는 메뉴처럼 검색 결과에서도 뺌
+    var noGallery = document.documentElement.hasAttribute("data-gallery-empty");
     return PAGES.map(function (p) {
+      if (noGallery && p.href === "gallery.html") return null;
       var title = norm(p.ko + " " + p.en);
       var hay = norm([p.ko, p.en, p.dko, p.den, p.k].join(" "));
       for (var i = 0; i < toks.length; i++) if (hay.indexOf(toks[i]) === -1) return null;

@@ -128,6 +128,7 @@
   맨 아래 = 대표 연락처(`config.footerContact`, 의뢰인 요청) · 고유번호(`config.registrationNo` 가 있을 때만) · ©.
 - 사이트 검색: 헤더 돋보기(또는 `/` 키). 페이지 색인은 main.js 의 `PAGES` 배열 (새 페이지 제목·설명이 바뀌면
   통합 담당에게 알려 주세요). 소식 글은 `data/posts.json` 에서 함께 검색.
+  갤러리가 견본 사진뿐인 동안(`html[data-gallery-empty]`)은 메뉴와 같이 검색 결과에서도 갤러리를 뺍니다.
 
 ---
 

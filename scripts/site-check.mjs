@@ -105,8 +105,9 @@ if (isLive) {
   // 온라인 접수 서비스 연결 (시험 메일은 보내지 않음)
   try {
     const r = await fetch("https://formsubmit.co/", { method: "GET" });
+    // 점검 서버(데이터센터)에서는 FormSubmit 의 보안 확인(Cloudflare) 화면 때문에 403 이 오는 것이 정상 — 실제 방문자 브라우저는 통과
     if (r.status >= 500) fail(`온라인 접수 서비스(FormSubmit) 응답 이상: HTTP ${r.status}`);
-    else note(`온라인 접수 서비스(FormSubmit) 연결됨 (HTTP ${r.status})`);
+    else note(`온라인 접수 서비스(FormSubmit) 서버 응답 확인 (HTTP ${r.status}${r.status === 403 ? ", 점검 서버용 보안 확인 화면 — 정상" : ""}). 활성화 여부는 관리자 화면 ‘온라인 접수 점검하기’로 확인`);
   } catch (e) { fail(`온라인 접수 서비스(FormSubmit)에 연결하지 못함 — ${e.message}`); }
 }
 

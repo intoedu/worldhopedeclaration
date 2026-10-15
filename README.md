@@ -95,6 +95,12 @@ GitHub 공식 문서(Managing / Verifying a custom domain for your GitHub Pages 
 
 다시 github.io 주소로 되돌릴 때는 `node scripts/set-domain.mjs https://intoedu.github.io/worldhopedeclaration` 을 실행하면 `CNAME` 이 삭제됩니다.
 
+### 점검 장치 (재발 방지)
+
+- **관리자 화면 → 안내·현황 → ‘온라인 접수 점검하기’**: 실제 접수와 같은 경로로 시험 메일 1통을 보내 결과를 알려 줍니다. 주소(도메인)를 바꾼 뒤나 “접수가 안 된다”는 연락을 받았을 때 누르세요. ‘활성화가 필요합니다’가 나오면 받는 메일함의 *Action Required: Activate FormSubmit on …* 메일에서 **ACTIVATE FORM** 을 한 번 누르면 됩니다(주소마다 한 번, 그 주소의 모든 신청서에 적용).
+- **GitHub Actions ‘Live site check’** (`.github/workflows/site-check.yml`, `scripts/site-check.mjs`): 배포가 끝날 때마다와 매주 월요일 아침에 실제 홈페이지의 모든 페이지를 PC·휴대폰 화면으로 열어 스크립트 오류, 빠진 파일, 깨진 사진·링크, 화면 넘침, https 이동, 인증서 남은 기간, 접수 서비스 연결을 확인합니다. 문제가 있으면 Actions 탭에 빨간 표시(실패)가 나고 요약에 원인이 적힙니다. 수동 실행: Actions → Live site check → Run workflow.
+- 온라인 전송이 실패해도 방문자 화면에는 ‘메일 앱으로 보내기 · 내용 복사하기 · 전화하기’가 함께 나오고 입력 내용은 지워지지 않습니다.
+
 ### robots.txt 와 검색 노출
 
 - `robots.txt` 에는 `Disallow: /admin/` 이 들어 있지만, 검색엔진은 **도메인 최상위의 `/robots.txt` 만** 읽습니다. 즉 `intoedu.github.io/worldhopedeclaration/` 같은 하위 경로 주소에서는 이 파일이 적용되지 않고, 연결 도메인을 붙인 뒤부터 적용됩니다.

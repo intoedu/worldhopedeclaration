@@ -7,7 +7,7 @@
 <meta name="robots" content="noindex, nofollow">
 <!-- 토큰 보호: 스크립트는 이 사이트 파일만, 통신은 api.github.com 으로만 허용
      (Google Fonts 는 불러오지 않음 → 제목은 설치된 명조/세리프 글꼴, 본문은 Pretendard) -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self'; connect-src 'self' https://api.github.com; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self'; connect-src 'self' https://api.github.com https://formsubmit.co; object-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="theme-color" content="#13294b">
 <link rel="icon" href="../assets/img/brand/favicon-64.png" type="image/png" sizes="64x64">
 <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
@@ -50,6 +50,9 @@
   .adm-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px 20px; flex-wrap: wrap; margin-bottom: 20px; }
   .adm-head > div { min-width: 0; flex: 1 1 360px; }
   .adm-head h3 { margin: 0; }
+  .mailtest { margin: 18px 0 6px; padding: 16px 18px; border: 1px solid var(--line); border-radius: var(--radius); background: #fbfaf7; }
+  .mailtest-help { margin: 8px 0 0; font-size: 13.5px; }
+  .mailtest-result { margin-top: 10px; font-weight: 500; line-height: 1.7; }
 
   /* 안내·현황 카드 */
   .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 26px; }
@@ -287,6 +290,6 @@
 <script src="../assets/js/config.js?v=20261013"></script>
 <script src="../assets/js/data.js?v=20261015"></script>
 <script src="../assets/js/main.js?v=20261013e"></script>
-<script src="../assets/js/admin.js?v=20261013"></script>
+<script src="../assets/js/admin.js?v=20261015"></script>
 </body>
 </html>

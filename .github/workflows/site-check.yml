@@ -1,0 +1,39 @@
+# 실제 홈페이지 점검 — 배포가 끝날 때마다, 그리고 매주 월요일 아침에 실행합니다.
+# 모든 페이지(PC·휴대폰)의 열림·스크립트 오류·빠진 파일·깨진 사진/링크, https 이동, 인증서 남은 기간,
+# 온라인 접수 서비스 연결을 확인합니다(scripts/site-check.mjs). 문제가 있으면 빨간 표시(실패)가 됩니다.
+# ※ 온라인 접수의 '활성화' 여부는 시험 메일을 보내야 알 수 있어 여기서는 확인하지 않습니다 → 관리자 화면 ‘온라인 접수 점검하기’
+name: Live site check
+
+on:
+  workflow_run:
+    workflows: ["Deploy site to GitHub Pages"]
+    types: [completed]
+  schedule:
+    - cron: "17 0 * * 1"  # 매주 월요일 09:17 (한국 시간)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install Playwright (Chromium)
+        run: |
+          npm init -y > /dev/null
+          npm i --no-save --no-audit --no-fund playwright@1.63.0
+          npx playwright install --with-deps chromium
+      - name: Wait for the new version to reach the CDN
+        if: github.event_name == 'workflow_run'
+        run: sleep 60
+      - name: Check https://www.worldhopedeclaration.com
+        run: node scripts/site-check.mjs

@@ -111,11 +111,25 @@
     enabled: !!mailCfg.to,
     service: mailCfg.service || "formsubmit",
     /* 받는 주소가 없으면 "mailto:?subject=…" 형태 (호출 측에서 /^mailto:\?/ 로 확인) */
-    mailtoHref: function (subject, rows) {
-      var body = rows.filter(function (r) { return r[1] != null && r[1] !== ""; })
+    recipient: mailtoRecipient,
+    /* 메일 본문(일반 글) — ‘내용 복사하기’와 메일 앱 본문에 같이 씀 */
+    bodyText: function (rows) {
+      return rows.filter(function (r) { return r[1] != null && r[1] !== ""; })
         .map(function (r) { return "■ " + r[0] + "\n" + r[1]; }).join("\n\n");
-      return "mailto:" + mailtoRecipient() +
-        "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+    },
+    /* 주소가 너무 길면 일부 휴대폰·메일 앱이 아예 열리지 않으므로 본문을 줄임 (전체는 ‘내용 복사하기’로) */
+    mailtoHref: function (subject, rows) {
+      var MAX = 1800;
+      var head = "mailto:" + mailtoRecipient() + "?subject=" + encodeURIComponent(subject) + "&body=";
+      var body = WH.mail.bodyText(rows);
+      var enc = encodeURIComponent(body);
+      if (head.length + enc.length > MAX) {
+        var note = "\n\n" + WH.t("(내용이 길어 일부만 담겼습니다. 홈페이지의 ‘내용 복사하기’로 전체를 붙여 넣어 주세요.)",
+          "(Shortened because it is long. Use “Copy details” on the website to paste the full text.)");
+        while (body.length && head.length + encodeURIComponent(body + note).length > MAX) body = body.slice(0, -20);
+        enc = encodeURIComponent(body + note);
+      }
+      return head + enc;
     },
     send: function (msg) {
       if (!mailCfg.to) return Promise.reject(new Error("email-not-configured"));

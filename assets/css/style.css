@@ -2456,3 +2456,8 @@ html[data-lang="en"] .consent-list li { grid-template-columns: 6.4em minmax(0, 1
   .page-hero::before, .page-hero::after { display: none; }
   a[href^="http"]::after { content: " (" attr(href) ")"; font-size: .8em; color: #555; }
 }
+
+/* 온라인 전송이 안 될 때의 대체 접수 안내 (forms.js fallbackActions) */
+.form-status .form-fallback { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.form-status .form-fallback .btn { flex: 1 1 160px; }
+.form-status .form-fallback-note { display: block; margin-top: 10px; font-size: 13.5px; font-weight: 500; color: var(--ink-2); word-break: keep-all; overflow-wrap: anywhere; }

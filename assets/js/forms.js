@@ -6,7 +6,7 @@
    - 서버·데이터베이스 없음: 입력 내용은 WH.mail.send(FormSubmit)로 담당자 이메일에 전달됩니다.
    - 메일 본문 항목명은 화면 언어와 관계없이 항상 한국어(라벨의 .ko 텍스트)로 보냅니다.
      같은 이름의 항목이 여러 개면(예: 추천인 이름 / 피추천인 이름) 입력칸에 data-label="…" 로 구분합니다.
-   - FormSubmit 전송 실패(네트워크 차단·미활성화 등) 시 방문자의 메일 앱(mailto)으로 대체합니다.
+   - FormSubmit 전송 실패(네트워크 차단·미활성화 등) 시 대체 접수 안내(메일 앱 링크·내용 복사·전화)를 보여 줍니다.
      (예전 속성 data-fallback="none" 이 있으면 메일 앱 대신 전화 안내만 표시)
    - ‘기타(직접 입력)’: <select data-other="입력칸 id"> 에서 value="other" 를 고르면 그 입력칸(.field)을
      보이고 필수로 바꿉니다. 다른 값이면 숨기고 전송하지 않습니다(disabled).
@@ -242,35 +242,46 @@
     var href = WH.mail.mailtoHref(msg.subject, msg.rows);
     return /^mailto:\?/.test(href) ? "" : href;
   }
-  function openMailApp(msg) {
-    var href = mailAppHref(msg);
-    if (!href) return false;
-    location.href = href;
-    return true;
+  /* 설정이 service:"mailto" 인 경우(메일 앱으로 바로 접수): 열린 메일 앱에서 ‘보내기’를 누르도록 안내 */
+  function mailAppStatus(form, msg) {
+    setStatus(form, "info", WH.t("메일 앱이 열렸습니다. 작성된 내용을 확인하신 뒤 ‘보내기’를 눌러 접수를 완료해 주세요.",
+      "Your email app has been opened. Please review the prefilled message and press Send to complete."));
+    fallbackActions(form, msg);
   }
-  /* opened: 메일 앱을 자동으로 열었는지. 늦게 실패하면 브라우저가 자동 열기를 막을 수 있어
-     항상 ‘메일 앱으로 보내기’ 버튼을 함께 보여 줌 (버튼 클릭으로 열면 막히지 않음) */
-  function mailAppStatus(form, failed, msg, opened) {
-    var tail = WH.t(" 메일 앱이 열리지 않으면 아래 버튼을 누르시거나 " + phoneKo() + "로 연락해 주세요.",
-      " If no email app opened, use the button below or call " + phoneEn() + ".");
-    var text;
-    if (!opened) {
-      text = WH.t("온라인 전송이 원활하지 않습니다. 아래 ‘메일 앱으로 보내기’를 눌러 작성된 메일을 보내 주시거나 " + phoneKo() + "로 연락해 주세요.",
-        "Online delivery did not go through. Please press “Send with email app” below to send the prefilled message, or call " + phoneEn() + ".");
-    } else if (failed) {
-      text = WH.t("온라인 전송이 원활하지 않아 메일 앱을 열었습니다. 작성된 내용을 확인하신 뒤 ‘보내기’를 눌러 접수를 완료해 주세요.",
-        "Online delivery did not go through, so your email app has been opened. Please review the prefilled message and press Send to complete.") + tail;
-    } else {
-      text = WH.t("메일 앱이 열렸습니다. 작성된 내용을 확인하신 뒤 ‘보내기’를 눌러 접수를 완료해 주세요.",
-        "Your email app has been opened. Please review the prefilled message and press Send to complete.") + tail;
-    }
-    setStatus(form, "info", text);
-    var b = document.createElement("button");
-    b.type = "button";
-    b.className = "btn btn-outline btn-sm btn-block mt-1";
-    b.textContent = WH.t("메일 앱으로 보내기", "Send with email app");
-    b.addEventListener("click", function () { openMailApp(msg); });
-    form.querySelector(".form-status").appendChild(b);
+  /* 온라인 전송이 되지 않았을 때 — 메일 앱이 없는 PC·카카오톡 안 브라우저에서도 접수할 수 있도록
+     ① 메일 앱으로 보내기(실제 링크) ② 내용 복사하기(받는 주소 함께 표시) ③ 전화 를 함께 보여 줍니다.
+     입력한 내용은 지우지 않습니다. 메일 앱을 저절로 열지 않습니다(열렸는지 알 수 없어 안내가 틀릴 수 있음). */
+  function fallbackStatus(form, msg) {
+    setStatus(form, "info", WH.t("온라인 전송이 되지 않았습니다. 작성하신 내용은 그대로 남아 있으니, 아래 방법 중 하나로 보내 주세요.",
+      "Online delivery did not go through. Your entries are kept — please send them in one of the ways below."));
+    fallbackActions(form, msg);
+  }
+  function fallbackActions(form, msg) {
+    var el = form.querySelector(".form-status");
+    var to = WH.mail.recipient();
+    var plain = WH.t("받는 사람: ", "To: ") + to + "\n" + WH.t("제목: ", "Subject: ") + msg.subject + "\n\n" + WH.mail.bodyText(msg.rows);
+    var box = document.createElement("span");
+    box.className = "form-fallback";
+    var mail = document.createElement("a");
+    mail.className = "btn btn-outline btn-sm";
+    mail.href = mailAppHref(msg);
+    mail.textContent = WH.t("메일 앱으로 보내기", "Send with email app");
+    var copy = document.createElement("button");
+    copy.type = "button";
+    copy.className = "btn btn-outline btn-sm";
+    copy.textContent = WH.t("내용 복사하기", "Copy details");
+    copy.addEventListener("click", function () { WH.copy(plain); });
+    var tel = document.createElement("a");
+    tel.className = "btn btn-outline btn-sm";
+    tel.href = "tel:" + String(C.phone || "").replace(/[^0-9+]/g, "");
+    tel.textContent = WH.t("전화하기 ", "Call ") + (C.phone || "");
+    box.appendChild(mail); box.appendChild(copy); if (C.phone) box.appendChild(tel);
+    var note = document.createElement("span");
+    note.className = "form-fallback-note";
+    note.textContent = WH.t("메일 앱이 열리지 않으면 ‘내용 복사하기’를 누른 뒤 " + to + " 으로 보내 주세요.",
+      "If no email app opens, press “Copy details” and send it to " + to + ".");
+    el.appendChild(box);
+    el.appendChild(note);
   }
   function failStatus(form) {
     setStatus(form, "err", WH.t("온라인 접수를 처리하지 못했습니다. 잠시 후 다시 시도하시거나 " + phoneKo() + "로 연락해 주세요.",
@@ -339,13 +350,11 @@
       if (!validate(form)) return;
       var msg = build(form);
       var btn = form.querySelector('[type="submit"]');
-      var started = Date.now();
 
-      var fallback = function () {
+      var fallback = function (err) {
+        if (err && window.console) console.warn("[온라인 접수] 전송 실패:", err.message || err);
         if (noMailApp || !mailAppHref(msg)) { failStatus(form); return; }
-        // 클릭 직후(4초 이내)에만 메일 앱을 자동으로 엶 — 그보다 늦으면 버튼으로만 안내
-        var opened = Date.now() - started < 4000 && openMailApp(msg);
-        mailAppStatus(form, true, msg, opened); // 입력 내용은 지우지 않음 (메일 앱이 안 열렸을 때 다시 시도 가능)
+        fallbackStatus(form, msg); // 입력 내용은 지우지 않음
       };
       if (!WH.mail || !WH.mail.enabled) { fallback(); return; }
 
@@ -357,7 +366,7 @@
         if (btn) btn.disabled = false;
       };
       WH.mail.send({ subject: msg.subject, rows: msg.rows, replyTo: msg.replyTo }).then(function (res) {
-        if (res && res.via === "mailto") { mailAppStatus(form, false, msg, true); return; } // 설정이 service:"mailto" 인 경우
+        if (res && res.via === "mailto") { mailAppStatus(form, msg); return; } // 설정이 service:"mailto" 인 경우
         form.reset();
         setStatus(form, "ok", okMessage(form));
         form.dispatchEvent(new CustomEvent("wh:submitted"));

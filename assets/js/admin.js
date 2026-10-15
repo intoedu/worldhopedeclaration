@@ -565,8 +565,11 @@
         '<div class="info-grid">' +
         '<div class="info wide"><h3>온라인 접수는 이메일로 도착합니다</h3>' +
         "<p>받는 주소: " + addr + "</p>" +
-        "<ul><li>문의·참여 신청 (문의하기)</li><li>정기 후원 신청 (후원·헌금)</li><li>희망 응원 메시지 (홈)</li><li>온라인 후원 결제 알림 (후원·헌금 — 결제 설정 후)</li></ul>" +
+        "<ul><li>세계희망선언 참여 신청 · 글로벌 대표 추천 · 희망 응원 메시지 (참여하기, 대한민국 대표 33인 추천)</li><li>문의 (문의하기)</li><li>정기 후원 신청 (후원·헌금 — 계좌 확정 후)</li></ul>" +
         '<p class="muted">' + esc(how) + "</p>" +
+        '<div class="mailtest"><button type="button" class="btn btn-navy btn-sm" data-mailtest>온라인 접수 점검하기 (시험 메일 1통 보내기)</button>' +
+        '<p class="muted mailtest-help">주소를 바꾼 뒤나 접수가 안 된다는 연락을 받았을 때 눌러 보세요. 정상이면 받는 메일함에 ‘[점검]’ 메일이 옵니다.</p>' +
+        '<p class="form-status mailtest-result" role="status" hidden></p></div>' +
         "<p>이 관리자 화면에는 접수 내용이 저장되지 않습니다. 메일을 확인해 회신·처리해 주세요.</p>" +
         "<ul><li>응원 메시지는 게시할 것만 ‘응원 메시지’ 탭에 붙여 넣어 등록하면 홈 화면에 보입니다.</li>" +
         "<li>정기 후원 신청자에게는 전화로 CMS 자동이체 등록을 안내합니다. 계좌번호·주민등록번호는 온라인으로 받지 않습니다.</li>" +
@@ -578,8 +581,41 @@
         '<p>반영(배포) 상태: <a href="' + esc(repoWeb + "/actions") + '" target="_blank" rel="noopener">GitHub Actions</a></p>' +
         '<p class="muted">로그인이 갑자기 풀리면 토큰이 만료된 것입니다. 새 토큰을 만들어 다시 로그인해 주세요.</p></div>' +
         "</div>";
+      setupMailTest(p);
     });
   };
+
+  /* 온라인 접수 점검: 실제 접수와 같은 경로(FormSubmit)로 시험 메일 1통을 보내 결과를 알려 줌.
+     FormSubmit 은 새 주소에서 처음 쓸 때 받는 메일함으로 ‘Activate FormSubmit on …’ 메일을 보내며,
+     그 메일의 ACTIVATE FORM 을 누르기 전까지는 모든 접수를 거절합니다(2026-10-15 실제로 겪은 일). */
+  function setupMailTest(p) {
+    var btn = $("[data-mailtest]", p), out = $(".mailtest-result", p);
+    if (!btn || !out) return;
+    var gmail = "https://mail.google.com/mail/u/0/#search/" + encodeURIComponent("from:formsubmit.co Activate");
+    btn.addEventListener("click", function () {
+      btn.disabled = true;
+      out.hidden = false;
+      out.className = "form-status mailtest-result";
+      out.textContent = "보내는 중…";
+      var when = new Date().toLocaleString("ko-KR");
+      WH.mail.send({
+        subject: "[점검] 홈페이지 온라인 접수 시험",
+        rows: [["점검", "관리자 화면에서 보낸 시험 접수입니다. 이 메일을 받으셨다면 온라인 접수가 정상입니다."], ["보낸 시각", when]]
+      }).then(function () {
+        out.className = "form-status mailtest-result ok";
+        out.textContent = "정상입니다. 받는 메일함(스팸함 포함)에 ‘[점검] 홈페이지 온라인 접수 시험’ 메일이 도착하는지 확인해 주세요.";
+      }, function (e) {
+        var m = String((e && e.message) || e || "");
+        out.className = "form-status mailtest-result err";
+        if (/activat/i.test(m)) {
+          out.innerHTML = "<b>활성화가 필요합니다.</b> 받는 메일함에 방금 온 ‘Action Required: Activate FormSubmit on …’ 메일을 열어 파란 <b>ACTIVATE FORM</b> 버튼을 눌러 주세요. 그 뒤 다시 점검하면 ‘정상’이 나옵니다. " +
+            '<a href="' + esc(gmail) + '" target="_blank" rel="noopener">Gmail에서 그 메일 찾기</a>';
+        } else {
+          out.textContent = "접수 서비스에 연결하지 못했습니다(" + m + "). 잠시 후 다시 점검해 주세요. 계속 실패하면 방문자에게는 ‘메일 앱으로 보내기·내용 복사·전화’ 안내가 대신 나갑니다.";
+        }
+      }).then(function () { btn.disabled = false; });
+    });
+  }
 
   /* ---------------- 탭 2: 공지·소식 ---------------- */
   function postRow(x) {

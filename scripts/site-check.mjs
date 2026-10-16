@@ -6,9 +6,11 @@
 //   · 같은 사이트 안의 파일(CSS·JS·이미지·데이터)이 빠짐없이 불러와지는지, 페이지 안 링크가 살아 있는지
 //   · http:// 주소와 www 없는 주소가 https://www… 로 넘어가는지, 보안 인증서가 넉넉히 남았는지
 //   · 온라인 접수 서비스(FormSubmit)에 연결되는지 (시험 메일은 보내지 않음 — 활성화 여부는 관리자 화면의 ‘온라인 접수 점검하기’)
+//   · 도메인 만료일과 정지(hold) 여부, 공유 이미지·sitemap·robots, 없는 주소의 안내(404) 페이지
+//   · 배포 반영: 저장소 최신 파일(HTML·JS·CSS·data)과 실제 홈페이지 파일이 같은지 (배포가 조용히 멈추는 일 대비)
 // 문제가 있으면 끝에서 실패(exit 1)로 끝나 GitHub Actions 에 빨간 표시가 납니다.
 import { chromium } from "playwright";
-import { readFileSync, appendFileSync, existsSync } from "node:fs";
+import { readFileSync, appendFileSync, existsSync, writeFileSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import tls from "node:tls";
@@ -109,6 +111,65 @@ if (isLive) {
     if (r.status >= 500) fail(`온라인 접수 서비스(FormSubmit) 응답 이상: HTTP ${r.status}`);
     else note(`온라인 접수 서비스(FormSubmit) 서버 응답 확인 (HTTP ${r.status}${r.status === 403 ? ", 점검 서버용 보안 확인 화면 — 정상" : ""}). 활성화 여부는 관리자 화면 ‘온라인 접수 점검하기’로 확인`);
   } catch (e) { fail(`온라인 접수 서비스(FormSubmit)에 연결하지 못함 — ${e.message}`); }
+
+  // 작업 문서·도구가 홈페이지 주소로 공개되지 않는지 (배포 때 제외 — .github/workflows/pages.yml)
+  // (전 세계 캐시에 남은 예전 사본 때문에 잘못 판정하지 않도록 매번 새 주소로 확인)
+  const docs = ["README.md", "CLAUDE.md", "docs/CONTENT_TODO.md", "scripts/site-check.mjs"], exposed = [];
+  for (const f of docs) {
+    try { const r = await fetch(BASE + f + "?check=" + Date.now(), { cache: "no-store" }); if (r.status === 200) exposed.push(f); }
+    catch (e) { fail(`작업 문서 공개 여부를 확인하지 못함: ${f} — ${e.message}`); }
+  }
+  if (exposed.length) fail(`작업 문서가 홈페이지에 공개되어 있음: ${exposed.join(", ")}`);
+  else note(`작업 문서(${docs.join(", ")})는 홈페이지에 공개되지 않음`);
+
+  // 도메인 만료일·정지 여부 (등록 기관 공용 조회 RDAP) — 갱신을 놓치거나 소유자 이메일 인증을 안 하면 정지될 수 있음
+  try {
+    const r = await fetch("https://rdap.verisign.com/com/v1/domain/worldhopedeclaration.com", { headers: { Accept: "application/rdap+json" } });
+    const d = await r.json();
+    const exp = (d.events || []).find((e) => e.eventAction === "expiration");
+    const status = (d.status || []).join(", ");
+    if (/hold/i.test(status)) fail(`도메인이 정지(hold) 상태입니다: ${status} — 가비아에서 소유자 이메일 인증·결제 상태를 확인해야 합니다`);
+    if (exp) {
+      const left = Math.floor((new Date(exp.eventDate) - Date.now()) / 86400000);
+      if (left < 30) fail(`도메인 만료까지 ${left}일 (${exp.eventDate.slice(0, 10)}) — 가비아에서 연장해야 합니다`);
+      else note(`도메인 만료일 ${exp.eventDate.slice(0, 10)} (${left}일 남음)`);
+    } else note("도메인 만료일을 확인하지 못함");
+  } catch (e) { note(`도메인 정보 조회 실패 — ${e.message}`); }
+}
+
+// 공유 이미지·사이트맵·robots·없는 주소(404) 처리
+for (const [path, want] of [["assets/img/og-image.png", 200], ["sitemap.xml", 200], ["robots.txt", 200], ["no-such-page-site-check.html", 404]]) {
+  try {
+    const r = await fetch(BASE + path);
+    if (r.status !== want) fail(`${path}: HTTP ${r.status} (기대 ${want})`);
+    if (want === 404 && !/site-header|세계희망연대/.test(await r.text())) fail("없는 주소에서 안내(404) 페이지가 나오지 않음");
+  } catch (e) { fail(`${path}: ${e.message}`); }
+}
+
+// 배포 반영 확인: 저장소의 최신 파일과 실제 홈페이지의 파일이 같은지 (배포가 조용히 멈추는 일 대비 — 2026-10-12 실제로 겪음)
+// 배포 직후에는 전 세계 캐시가 바뀌는 데 몇 분 걸릴 수 있어 최대 5번(1분 간격) 다시 확인
+if (process.env.CHECK_DEPLOYED !== "0") {
+  const files = [
+    ...readdirSync(root).filter((f) => f.endsWith(".html")),
+    ...readdirSync(join(root, "assets/js")).filter((f) => f.endsWith(".js")).map((f) => "assets/js/" + f),
+    ...readdirSync(join(root, "assets/css")).filter((f) => f.endsWith(".css")).map((f) => "assets/css/" + f),
+    ...readdirSync(join(root, "data")).filter((f) => f.endsWith(".json")).map((f) => "data/" + f),
+  ];
+  let stale = files;
+  const rounds = Number(process.env.DEPLOY_RETRY_ROUNDS || 5), waitMs = Number(process.env.DEPLOY_RETRY_WAIT_MS || 60000);
+  for (let round = 0; round < rounds && stale.length; round++) {
+    if (round) await new Promise((r) => setTimeout(r, waitMs));
+    const next = [];
+    for (const f of stale) {
+      try {
+        const live = await (await fetch(BASE + f + (f.includes("?") ? "&" : "?") + "check=" + Date.now(), { cache: "no-store" })).text();
+        if (live.replace(/\r\n/g, "\n") !== readFileSync(join(root, f), "utf8").replace(/\r\n/g, "\n")) next.push(f);
+      } catch { next.push(f); }
+    }
+    stale = next;
+  }
+  if (stale.length) fail(`배포가 반영되지 않은 파일 ${stale.length}개 (저장소 최신본과 다름): ${stale.slice(0, 8).join(", ")}${stale.length > 8 ? " …" : ""} — GitHub Actions 의 'Deploy site to GitHub Pages' 실행 기록을 확인해야 합니다`);
+  else note(`배포 반영 확인: 파일 ${files.length}개가 저장소 최신본과 같음`);
 }
 
 const summary = [
@@ -118,5 +179,6 @@ const summary = [
   notes.length ? "### 참고\n" + notes.map((m) => "- " + m).join("\n") : "",
 ].join("\n\n");
 if (process.env.GITHUB_STEP_SUMMARY && existsSync(dirname(process.env.GITHUB_STEP_SUMMARY))) appendFileSync(process.env.GITHUB_STEP_SUMMARY, summary + "\n");
+if (process.env.REPORT_FILE) writeFileSync(process.env.REPORT_FILE, summary + "\n");
 console.log("\n" + summary);
 process.exit(problems.length ? 1 : 0);

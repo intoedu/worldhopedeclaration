@@ -469,8 +469,8 @@
 
 <div id="site-footer"></div>
 <script src="assets/js/config.js?v=20261013"></script>
-<script src="assets/js/data.js?v=20261015"></script>
-<script src="assets/js/main.js?v=20261013e"></script>
+<script src="assets/js/data.js?v=20261016"></script>
+<script src="assets/js/main.js?v=20261016"></script>
 <script>
   // 연대소개: 하위 메뉴 현재 구역 강조 + 공개 연락처(설정값) 표시
   (function () {
@@ -535,7 +535,7 @@
       var parts = [];
       var mail = String(C.publicEmail || "").trim();
       if (/^[^\s@<>"']+@[^\s@<>"']+\.[^\s@<>"']+$/.test(mail)) {
-        parts.push("<span><b>" + WH.esc(WH.t("이메일", "Email")) + "</b><a href=\"mailto:" + WH.esc(mail) + "\">" + WH.esc(mail) + "</a></span>");
+        parts.push("<span><b>" + WH.esc(WH.t("이메일", "Email")) + "</b><a " + WH.mailLinkAttrs(mail) + ">" + WH.esc(mail) + "</a></span>");
       }
       var hours = WH.pick(C.businessHours || {});
       if (hours) parts.push("<span><b>" + WH.esc(WH.t("운영시간", "Hours")) + "</b>" + WH.esc(hours) + "</span>");

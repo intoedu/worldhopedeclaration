@@ -19,7 +19,7 @@ window.WH_CONFIG = {
   representative: { ko: "원치현", en: "Chi-hyun Won" },
   address: { ko: "세종특별자치시 보람동 732", en: "732 Boram-dong, Sejong-si, Republic of Korea" },
   phone: "1588-2716", // 전국대표전화
-  publicEmail: "bmig777won@gmail.com", // 홈페이지에 공개하는 이메일 (메일 앱 대체 접수 주소로도 사용)
+  publicEmail: "bmig777won@gmail.com", // 홈페이지에 공개하는 이메일 (Gmail 대체 접수의 받는 주소로도 사용)
   // 하단(카피라이트 줄)에 표시하는 대표 연락처 — 의뢰인 요청(2026-10-12)
   footerContact: {
     name: { ko: "원치현", en: "Chi-hyun Won" },
@@ -49,7 +49,7 @@ window.WH_CONFIG = {
   // · 활성화 메일에 있는 무작위 문자열(별칭)을 to 에 넣으면 홈페이지 소스에서 이메일 주소가 숨겨집니다.
   email: {
     to: "bmig777won@gmail.com",
-    service: "formsubmit" // "formsubmit" | "mailto"(방문자의 메일 앱으로 보내기)
+    service: "formsubmit" // "formsubmit"(자동 전송, 실패하면 Gmail로 보내기 안내) | "gmail"(자동 전송 없이 방문자가 Gmail로 직접 보내기)
   },
 
   /* ---- 콘텐츠 관리 (관리자 페이지 /admin/) ---- */

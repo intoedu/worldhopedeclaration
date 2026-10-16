@@ -97,47 +97,58 @@
 
   /* ---------------- 이메일 전송 ----------------
      WH.mail.send({ subject, rows: [[항목명, 값], ...], replyTo })
-     → Promise<{ok:true, via:"formsubmit"} | {ok:true, via:"mailto"}>
-     FormSubmit 실패(네트워크 차단·미활성화·응답 지연 등) 시 reject → 호출 측에서 mailto 로 대체 가능 */
+     → Promise<{ok:true, via:"formsubmit"} | {ok:true, via:"gmail"}>
+     FormSubmit 실패(네트워크 차단·미활성화·응답 지연 등) 시 reject → 호출 측에서 Gmail 로 보내기 안내 */
   var mailCfg = C.email || {};
   var SEND_TIMEOUT = 12000; // FormSubmit 응답을 기다리는 최대 시간(ms) — 넘으면 실패로 보고 대체 경로 안내
-  /* 메일 앱(mailto) 받는 주소: email.to 가 이메일 주소면 그대로, 별칭이면 publicEmail, 둘 다 없으면 "" */
-  function mailtoRecipient() {
+  /* Gmail 작성 창 주소가 이보다 길면 Google 이 거절함 (2026-10-16 확인: 약 5,500자 정상,
+     약 7,300자부터 로그인 전 단계에서 400 오류) → 여유를 두고 5,000자 안으로 본문을 줄임 */
+  var GMAIL_MAX = 5000;
+  /* Gmail 로 보낼 받는 주소: email.to 가 이메일 주소면 그대로, 별칭이면 publicEmail, 둘 다 없으면 "" */
+  function mailRecipient() {
     if (/@/.test(mailCfg.to || "")) return mailCfg.to;
     if (/@/.test(C.publicEmail || "")) return C.publicEmail;
     return "";
   }
+  /* Gmail 작성 창(웹) 주소 — 받는 사람·제목·본문이 채워진 채 열림. 로그인 전이면 Google 로그인 뒤 같은 창으로 이어짐 */
+  function gmailHref(to, subject, body) {
+    var q = "https://mail.google.com/mail/?view=cm&fs=1&to=" + encodeURIComponent(to || "");
+    if (subject) q += "&su=" + encodeURIComponent(subject);
+    if (body) q += "&body=" + encodeURIComponent(body);
+    return q;
+  }
   WH.mail = {
     enabled: !!mailCfg.to,
-    service: mailCfg.service || "formsubmit",
-    /* 받는 주소가 없으면 "mailto:?subject=…" 형태 (호출 측에서 /^mailto:\?/ 로 확인) */
-    recipient: mailtoRecipient,
-    /* 메일 본문(일반 글) — ‘내용 복사하기’와 메일 앱 본문에 같이 씀 */
+    // "gmail"(예전 값 "mailto" 도 같음): 자동 전송 없이 방문자가 Gmail 로 직접 보내도록 안내
+    service: mailCfg.service === "mailto" ? "gmail" : (mailCfg.service || "formsubmit"),
+    recipient: mailRecipient,
+    gmailHref: gmailHref,
+    /* 메일 본문(일반 글) — ‘내용 복사하기’와 Gmail 본문에 같이 씀 */
     bodyText: function (rows) {
       return rows.filter(function (r) { return r[1] != null && r[1] !== ""; })
         .map(function (r) { return "■ " + r[0] + "\n" + r[1]; }).join("\n\n");
     },
-    /* 주소가 너무 길면 일부 휴대폰·메일 앱이 아예 열리지 않으므로 본문을 줄임 (전체는 ‘내용 복사하기’로) */
-    mailtoHref: function (subject, rows) {
-      var MAX = 1800;
-      var head = "mailto:" + mailtoRecipient() + "?subject=" + encodeURIComponent(subject) + "&body=";
+    /* 접수 내용을 채운 Gmail 작성 창 주소. 받는 주소가 없으면 "" (호출 측에서 전화 안내).
+       너무 길면 본문을 줄이고 안내 문구를 붙임 (전체는 ‘내용 복사하기’로) */
+    composeHref: function (subject, rows) {
+      var to = mailRecipient();
+      if (!to) return "";
       var body = WH.mail.bodyText(rows);
-      var enc = encodeURIComponent(body);
-      if (head.length + enc.length > MAX) {
+      if (gmailHref(to, subject, body).length > GMAIL_MAX) {
         var note = "\n\n" + WH.t("(내용이 길어 일부만 담겼습니다. 홈페이지의 ‘내용 복사하기’로 전체를 붙여 넣어 주세요.)",
           "(Shortened because it is long. Use “Copy details” on the website to paste the full text.)");
-        while (body.length && head.length + encodeURIComponent(body + note).length > MAX) body = body.slice(0, -20);
-        enc = encodeURIComponent(body + note);
+        // 잘린 자리에 짝 없는 서로게이트(이모지 반쪽)가 남으면 주소 만들기에서 오류가 나므로 함께 제거
+        while (body.length && gmailHref(to, subject, body + note).length > GMAIL_MAX) body = body.slice(0, -20).replace(/[\uD800-\uDBFF]$/, "");
+        body += note;
       }
-      return head + enc;
+      return gmailHref(to, subject, body);
     },
     send: function (msg) {
       if (!mailCfg.to) return Promise.reject(new Error("email-not-configured"));
-      if (WH.mail.service === "mailto") {
-        // 받는 주소 없이 메일 앱을 열면 접수가 사라지므로 실패로 처리 (호출 측에서 전화 안내)
-        if (!mailtoRecipient()) return Promise.reject(new Error("mailto-no-recipient"));
-        location.href = WH.mail.mailtoHref(msg.subject, msg.rows);
-        return Promise.resolve({ ok: true, via: "mailto" });
+      if (WH.mail.service === "gmail") {
+        // 받는 주소가 없으면 접수가 사라지므로 실패로 처리 (호출 측에서 전화 안내)
+        if (!mailRecipient()) return Promise.reject(new Error("gmail-no-recipient"));
+        return Promise.resolve({ ok: true, via: "gmail" });
       }
       var payload = {
         _subject: msg.subject,

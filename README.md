@@ -8,7 +8,7 @@
 |---|---|
 | 호스팅 | **GitHub Pages** (main 브랜치, 무료) → https://www.worldhopedeclaration.com (연결 도메인, 가비아 DNS · 기본 주소 https://intoedu.github.io/worldhopedeclaration/) |
 | 공지·소식, 갤러리, 응원 메시지 게시 | 저장소의 `data/*.json` 파일. 관리자 페이지(`/admin/`)에서 GitHub 토큰으로 로그인해 직접 수정 |
-| 문의·참여 신청, 정기 후원 신청, 희망 응원 메시지, 온라인 후원 결제 알림 | **담당자 이메일로 전송** (FormSubmit 무료 서비스, 실패하면 방문자의 메일 앱으로 대체) |
+| 문의·참여 신청, 정기 후원 신청, 희망 응원 메시지, 온라인 후원 결제 알림 | **담당자 이메일로 전송** (FormSubmit 무료 서비스, 실패하면 방문자가 Gmail로 직접 보내도록 안내) |
 | 온라인 결제 | PortOne V2 결제창 (결제 내역의 기준은 PortOne 관리자 콘솔) |
 | 방문 통계 (선택) | GoatCounter 그리고/또는 Google Analytics 4 |
 
@@ -53,7 +53,7 @@ npx serve .            # 또는: python3 -m http.server 8080  → http://localho
 | `bank` | 후원 계좌 (입력하면 ‘계좌번호 복사’ 버튼이 생깁니다) |
 | `publicEmail` | 홈페이지에 공개할 이메일 (비우면 표시 안 함) |
 | `email.to` | 온라인 접수 메일을 받을 주소 (또는 FormSubmit 별칭) |
-| `email.service` | `"formsubmit"`(기본, 자동 전송) 또는 `"mailto"`(항상 방문자의 메일 앱으로 보내기) |
+| `email.service` | `"formsubmit"`(기본, 자동 전송 — 실패하면 ‘Gmail로 보내기’ 안내) 또는 `"gmail"`(자동 전송 없이 방문자가 항상 Gmail로 직접 보내기. 예전 값 `"mailto"` 도 같게 동작) |
 | `github` | 관리자 페이지가 수정할 저장소 (`owner`, `repo`, `branch`) |
 | `portone` | 온라인 결제 `storeId`, `channelKey`, `payMethod` |
 | `analytics` | `goatcounter`(사이트 코드), `ga4`(측정 ID) — 둘 다 선택 |
@@ -99,7 +99,7 @@ GitHub 공식 문서(Managing / Verifying a custom domain for your GitHub Pages 
 
 - **관리자 화면 → 안내·현황 → ‘온라인 접수 점검하기’**: 실제 접수와 같은 경로로 시험 메일 1통을 보내 결과를 알려 줍니다. 주소(도메인)를 바꾼 뒤나 “접수가 안 된다”는 연락을 받았을 때 누르세요. ‘활성화가 필요합니다’가 나오면 받는 메일함의 *Action Required: Activate FormSubmit on …* 메일에서 **ACTIVATE FORM** 을 한 번 누르면 됩니다(주소마다 한 번, 그 주소의 모든 신청서에 적용).
 - **GitHub Actions ‘Live site check’** (`.github/workflows/site-check.yml`, `scripts/site-check.mjs`): 배포가 끝날 때마다와 매주 월요일 아침에 실제 홈페이지의 모든 페이지를 PC·휴대폰 화면으로 열어 스크립트 오류, 빠진 파일, 깨진 사진·링크, 화면 넘침, https 이동, 인증서 남은 기간, 접수 서비스 연결을 확인합니다. 문제가 있으면 Actions 탭에 빨간 표시(실패)가 나고 요약에 원인이 적힙니다. 수동 실행: Actions → Live site check → Run workflow.
-- 온라인 전송이 실패해도 방문자 화면에는 ‘메일 앱으로 보내기 · 내용 복사하기 · 전화하기’가 함께 나오고 입력 내용은 지워지지 않습니다.
+- 온라인 전송이 실패해도 방문자 화면에는 ‘Gmail로 보내기 · 내용 복사하기 · 전화하기’가 함께 나오고 입력 내용은 지워지지 않습니다.
 
 ### robots.txt 와 검색 노출
 
@@ -112,10 +112,10 @@ GitHub 공식 문서(Managing / Verifying a custom domain for your GitHub Pages 
 문의·참여 신청(`contact.html`), 정기 후원 신청(`donate.html`), 희망 응원 메시지(홈), 온라인 후원 결제 알림(결제 직후 자동)은 모두 `config.js` 의 **`email.to`** 주소로 메일이 갑니다. 서버 대신 [FormSubmit](https://formsubmit.co) 무료 메일 전송 서비스를 씁니다.
 
 1. **처음 한 번 활성화** — 사이트를 게시한 뒤 문의 폼에서 시험 접수를 한 번 보내면, `email.to` 수신함으로 FormSubmit 의 **활성화(Activate Form) 확인 메일**이 옵니다. 수신함 주인이 메일 속 **Activate** 버튼을 눌러야 그다음 접수부터 메일이 도착합니다. (스팸함도 확인)
-   - 활성화 전에는 자동 전송이 실패하므로, 방문자에게는 메일 앱으로 보내는 대체 화면이 뜹니다. **정식 오픈 전에 꼭 활성화**하세요.
+   - 활성화 전에는 자동 전송이 실패하므로, 방문자에게는 Gmail로 보내는 대체 화면이 뜹니다. **정식 오픈 전에 꼭 활성화**하세요.
    - 활성화는 **접속 주소(도메인)별로 다시 필요할 수 있습니다.** 연결 도메인을 붙인 뒤, 또는 로컬 미리보기에서 시험한 경우에도 시험 접수를 다시 보내 확인하세요.
-2. **주소 숨기기(권장)** — 활성화 메일에 있는 무작위 문자열(별칭)을 `email.to` 에 이메일 주소 대신 넣으면 홈페이지 소스에서 실제 주소가 보이지 않습니다. 이때 메일 앱 경로(대체 경로와 `email.service: "mailto"`)는 `publicEmail` 주소를 받는 주소로 쓰므로 `publicEmail` 도 입력해 두세요. 둘 다 이메일 주소가 아니면 메일 앱 경로를 쓸 수 없어 방문자에게 전화 안내만 표시됩니다.
-3. **대체 경로(mailto)** — 네트워크 차단·미활성화·서비스 장애 등으로 자동 전송이 실패하면, 내용이 채워진 메일을 방문자의 메일 앱에서 보내도록 안내합니다(FormSubmit 응답이 12초 안에 오지 않을 때도 같음. 메일 앱이 자동으로 열리지 않으면 ‘메일 앱으로 보내기’ 버튼이 표시됩니다). `email.service: "mailto"` 로 바꾸면 항상 이 방식을 씁니다.
+2. **주소 숨기기(권장)** — 활성화 메일에 있는 무작위 문자열(별칭)을 `email.to` 에 이메일 주소 대신 넣으면 홈페이지 소스에서 실제 주소가 보이지 않습니다. 이때 Gmail 경로(대체 경로와 `email.service: "gmail"`)는 `publicEmail` 주소를 받는 주소로 쓰므로 `publicEmail` 도 입력해 두세요. 둘 다 이메일 주소가 아니면 Gmail 경로를 쓸 수 없어 방문자에게 전화 안내만 표시됩니다.
+3. **대체 경로(Gmail)** — 네트워크 차단·미활성화·서비스 장애 등으로 자동 전송이 실패하면(FormSubmit 응답이 12초 안에 오지 않을 때도 같음) 입력 내용은 그대로 두고 ‘Gmail로 보내기’·‘내용 복사하기’·‘전화하기’ 버튼을 보여 줍니다. ‘Gmail로 보내기’는 받는 사람·제목·내용이 채워진 Gmail 작성 창(`https://mail.google.com/mail/?view=cm…`)을 새 탭으로 엽니다(로그인 전이면 Google 로그인 뒤 같은 창으로 이어짐). 이 주소는 약 5,500자를 넘으면 Google 이 거절하므로(2026-10-16 확인) 5,000자를 넘는 긴 내용은 줄여서 담고, 전체는 ‘내용 복사하기’로 보내도록 안내합니다. Gmail 을 쓰지 않는 분은 ‘내용 복사하기’로 아무 메일에서나 보낼 수 있습니다. `email.service: "gmail"` 로 바꾸면 자동 전송 없이 항상 이 방식을 씁니다. 홈페이지의 이메일 주소 링크(하단·소개·홈)도 모두 Gmail 작성 창으로 열립니다.
 4. 메일은 표 형식으로 오며, 신청자가 이메일을 적었다면 **답장하기**로 바로 회신할 수 있습니다.
 
 운영 원칙

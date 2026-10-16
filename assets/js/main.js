@@ -763,6 +763,14 @@
   function safeMail(m) {
     return /^[^\s@<>"]+@[^\s@<>"]+\.[^\s@<>"]+$/.test(m || "") ? m : "";
   }
+  /* 이메일 주소 링크의 속성 — 누르면 받는 사람이 채워진 Gmail 작성 창이 새 탭으로 열림
+     (메일 앱이 없는 PC·카카오톡 안 브라우저에서 mailto 링크는 눌러도 반응이 없어서) */
+  WH.mailLinkAttrs = function (addr) {
+    var href = WH.mail && WH.mail.gmailHref ? WH.mail.gmailHref(addr) : "mailto:" + addr;
+    var ko = "Gmail로 메일 쓰기 (새 창)", en = "Write in Gmail (opens a new tab)";
+    // 언어를 바꾼 뒤에 그려도 맞는 말이 나오도록 지금 언어로 쓰고, 두 언어를 모두 적어 둠 (applyAttrs 가 전환)
+    return 'href="' + WH.esc(href) + '" target="_blank" rel="noopener" title="' + WH.t(ko, en) + '" data-ko-title="' + ko + '" data-en-title="' + en + '"';
+  };
 
   function renderFooter() {
     var mount = document.getElementById("site-footer");
@@ -794,7 +802,7 @@
     // 위 단 ③ 연락처
     var pub = safeMail(C.publicEmail);
     var reachList = (addr.ko ? "<li>" + WH.icon("pin") + "<span>" + bi(esc(addr.ko), esc(addr.en || addr.ko)) + "</span></li>" : "") +
-      (pub ? "<li>" + WH.icon("mail") + '<a href="mailto:' + esc(pub) + '">' + esc(pub) + "</a></li>" : "");
+      (pub ? "<li>" + WH.icon("mail") + "<a " + WH.mailLinkAttrs(pub) + ">" + esc(pub) + "</a></li>" : "");
     var reachHtml = '<div class="footer-reach">' +
       (C.phone ? '<p class="footer-tel-label">' + bi("전국대표전화", "Main line") + "</p>" +
         '<a class="footer-tel" href="' + telHref() + '">' + esc(C.phone) + "</a>" +
@@ -810,7 +818,7 @@
     var contactBits = [];
     if (fc.name) contactBits.push("<span>" + bi("대표 ", "President ") + bi(esc(fc.name.ko || ""), esc(fc.name.en || fc.name.ko || "")) + "</span>");
     if (tel) contactBits.push('<a href="tel:' + esc(tel) + '">' + esc(fc.phone) + "</a>");
-    if (mail) contactBits.push('<a href="mailto:' + esc(mail) + '">' + esc(mail) + "</a>");
+    if (mail) contactBits.push("<a " + WH.mailLinkAttrs(mail) + ">" + esc(mail) + "</a>");
     var regNo = String(C.registrationNo || "").trim();
     if (regNo) contactBits.push("<span>" + bi("고유번호 ", "Registration No. ") + esc(regNo) + "</span>");
     var copyHtml = '<div class="footer-copy"><div class="footer-copy-inner">' +

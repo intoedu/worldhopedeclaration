@@ -1,6 +1,7 @@
 # 실제 홈페이지 점검 — 배포가 끝날 때마다, 그리고 매주 월요일 아침에 실행합니다.
 # 모든 페이지(PC·휴대폰)의 열림·스크립트 오류·빠진 파일·깨진 사진/링크, https 이동, 인증서 남은 기간,
-# 온라인 접수 서비스 연결을 확인합니다(scripts/site-check.mjs). 문제가 있으면 빨간 표시(실패)가 됩니다.
+# 온라인 접수 서비스 연결, 도메인 만료·정지, 배포 반영 여부를 확인합니다(scripts/site-check.mjs).
+# 문제가 있으면 빨간 표시(실패)가 되고, 저장소에 알림 이슈를 열어 저장소 주인 메일로 알립니다. 정상이 되면 이슈를 닫습니다.
 # ※ 온라인 접수의 '활성화' 여부는 시험 메일을 보내야 알 수 있어 여기서는 확인하지 않습니다 → 관리자 화면 ‘온라인 접수 점검하기’
 name: Live site check
 
@@ -14,6 +15,7 @@ on:
 
 permissions:
   contents: read
+  issues: write
 
 jobs:
   check:
@@ -36,4 +38,29 @@ jobs:
         if: github.event_name == 'workflow_run'
         run: sleep 60
       - name: Check https://www.worldhopedeclaration.com
+        id: check
+        env:
+          REPORT_FILE: site-check-report.md
         run: node scripts/site-check.mjs
+      # 문제가 생기면 저장소에 '이슈'를 열어 저장소 주인 메일로 알림이 가게 함 (이미 열려 있으면 댓글로 덧붙임)
+      - name: Alert by issue on failure
+        if: failure() && steps.check.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="홈페이지 자동 점검에서 문제가 발견되었습니다"
+          BODY="$(cat site-check-report.md 2>/dev/null || echo '보고서를 만들지 못했습니다.')
+
+          실행 기록: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          NUM=$(gh issue list --state open --search "in:title \"$TITLE\"" --json number --jq '.[0].number')
+          if [ -n "$NUM" ]; then gh issue comment "$NUM" --body "$BODY"; else gh issue create --title "$TITLE" --body "$BODY"; fi
+      # 정상으로 돌아오면 열려 있던 알림 이슈를 닫음
+      - name: Close alert issue when healthy
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="홈페이지 자동 점검에서 문제가 발견되었습니다"
+          for NUM in $(gh issue list --state open --search "in:title \"$TITLE\"" --json number --jq '.[].number'); do
+            gh issue close "$NUM" --comment "자동 점검이 다시 정상입니다. ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          done

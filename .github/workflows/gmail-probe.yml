@@ -1,0 +1,32 @@
+# 임시: Gmail 작성 창 주소(view=cm)가 PC·휴대폰 브라우저에서 어떻게 처리되는지, 주소 길이 한도 확인 (확인 후 삭제)
+name: Gmail compose probe (temporary)
+on:
+  push:
+    branches: [claude/relaxed-tesla-b6xzts]
+    paths: ['.github/workflows/gmail-probe.yml']
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe
+        run: |
+          DESK='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36'
+          AND='Mozilla/5.0 (Linux; Android 14; SM-S918N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Mobile Safari/537.36'
+          IOS='Mozilla/5.0 (iPhone; CPU iPhone OS 17_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.6 Mobile/15E148 Safari/604.1'
+          KAKAO='Mozilla/5.0 (Linux; Android 14; SM-S918N Build/UP1A; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/129.0 Mobile Safari/537.36;KAKAOTALK 2410530'
+          base='https://mail.google.com/mail/?view=cm&fs=1&to=bmig777won%40gmail.com&su=%ED%85%8C%EC%8A%A4%ED%8A%B8&body='
+          for ua in DESK AND IOS KAKAO; do
+            echo "=== $ua: redirect chain (short body)"
+            curl -sS -o /dev/null -A "${!ua}" -L --max-redirs 8 -w '%{http_code} hops=%{num_redirects}\n' "${base}%EB%82%B4%EC%9A%A9%0A2%EC%A4%84" || true
+            curl -sS -D - -o /dev/null -A "${!ua}" "${base}%EB%82%B4%EC%9A%A9%0A2%EC%A4%84" | grep -i '^location' | cut -c1-400 || true
+          done
+          echo "=== URL length limit (desktop UA): total URL chars -> final status"
+          for n in 200 400 600 800 1000 1400 1800 2500; do
+            body=$(python3 -c "import urllib.parse,sys;print(urllib.parse.quote('가'*$n))")
+            u="${base}${body}"
+            r1=$(curl -sS -o /dev/null -A "$DESK" -w '%{http_code}' "$u" || echo ERR)
+            rN=$(curl -sS -o /dev/null -A "$DESK" -L --max-redirs 8 -w '%{http_code} hops=%{num_redirects} final_len=%{size_download}' "$u" || echo ERR)
+            echo "korean_chars=$n url_len=${#u} first=$r1 final=$rN"
+          done

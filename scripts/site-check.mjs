@@ -112,6 +112,16 @@ if (isLive) {
     else note(`온라인 접수 서비스(FormSubmit) 서버 응답 확인 (HTTP ${r.status}${r.status === 403 ? ", 점검 서버용 보안 확인 화면 — 정상" : ""}). 활성화 여부는 관리자 화면 ‘온라인 접수 점검하기’로 확인`);
   } catch (e) { fail(`온라인 접수 서비스(FormSubmit)에 연결하지 못함 — ${e.message}`); }
 
+  // 작업 문서·도구가 홈페이지 주소로 공개되지 않는지 (배포 때 제외 — .github/workflows/pages.yml)
+  // (전 세계 캐시에 남은 예전 사본 때문에 잘못 판정하지 않도록 매번 새 주소로 확인)
+  const docs = ["README.md", "CLAUDE.md", "docs/CONTENT_TODO.md", "scripts/site-check.mjs"], exposed = [];
+  for (const f of docs) {
+    try { const r = await fetch(BASE + f + "?check=" + Date.now(), { cache: "no-store" }); if (r.status === 200) exposed.push(f); }
+    catch (e) { fail(`작업 문서 공개 여부를 확인하지 못함: ${f} — ${e.message}`); }
+  }
+  if (exposed.length) fail(`작업 문서가 홈페이지에 공개되어 있음: ${exposed.join(", ")}`);
+  else note(`작업 문서(${docs.join(", ")})는 홈페이지에 공개되지 않음`);
+
   // 도메인 만료일·정지 여부 (등록 기관 공용 조회 RDAP) — 갱신을 놓치거나 소유자 이메일 인증을 안 하면 정지될 수 있음
   try {
     const r = await fetch("https://rdap.verisign.com/com/v1/domain/worldhopedeclaration.com", { headers: { Accept: "application/rdap+json" } });
@@ -146,8 +156,9 @@ if (process.env.CHECK_DEPLOYED !== "0") {
     ...readdirSync(join(root, "data")).filter((f) => f.endsWith(".json")).map((f) => "data/" + f),
   ];
   let stale = files;
-  for (let round = 0; round < 5 && stale.length; round++) {
-    if (round) await new Promise((r) => setTimeout(r, 60000));
+  const rounds = Number(process.env.DEPLOY_RETRY_ROUNDS || 5), waitMs = Number(process.env.DEPLOY_RETRY_WAIT_MS || 60000);
+  for (let round = 0; round < rounds && stale.length; round++) {
+    if (round) await new Promise((r) => setTimeout(r, waitMs));
     const next = [];
     for (const f of stale) {
       try {

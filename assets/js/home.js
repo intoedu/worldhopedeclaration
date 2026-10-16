@@ -285,7 +285,16 @@
       else hideOwner(el);
     });
     $$('[data-hs="email"]').forEach(function (a) {
-      if (/@/.test(C.publicEmail || "")) { a.setAttribute("href", "mailto:" + C.publicEmail); a.textContent = C.publicEmail; }
+      if (/@/.test(C.publicEmail || "")) {
+        // 누르면 Gmail 작성 창(새 탭) — main.js 의 WH.mailLinkAttrs 와 같은 동작
+        a.setAttribute("href", WH.mail && WH.mail.gmailHref ? WH.mail.gmailHref(C.publicEmail) : "mailto:" + C.publicEmail);
+        a.setAttribute("target", "_blank");
+        a.setAttribute("rel", "noopener");
+        a.setAttribute("data-ko-title", "Gmail로 메일 쓰기 (새 창)");
+        a.setAttribute("data-en-title", "Write in Gmail (opens a new tab)");
+        a.setAttribute("title", WH.t("Gmail로 메일 쓰기 (새 창)", "Write in Gmail (opens a new tab)"));
+        a.textContent = C.publicEmail;
+      }
       else hideOwner(a);
     });
   })();

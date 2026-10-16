@@ -536,8 +536,8 @@
       if (!to) addr = '<span class="addr">설정되지 않음</span> — <code>config.js</code> 의 <code>email.to</code> 를 입력해야 접수됩니다.';
       else if (to.indexOf("@") < 0) addr = '<span class="addr">별칭 사용 중</span> (FormSubmit 별칭으로 실제 주소를 숨겨 두었습니다)';
       else addr = '<span class="addr">' + esc(maskEmail(to)) + "</span>";
-      var how = mail.service === "mailto"
-        ? "현재 방식: 방문자의 메일 앱으로 보내기(mailto)"
+      var how = mail.service === "gmail" || mail.service === "mailto"
+        ? "현재 방식: 자동 전송 없이 방문자가 Gmail로 직접 보내기"
         : "현재 방식: FormSubmit 자동 메일 전송 · 처음 접수될 때 이 주소로 오는 ‘Activate(활성화)’ 메일의 버튼을 한 번 눌러야 이후 메일이 도착합니다.";
       var stat = function (label, list, sub) {
         return '<div class="stat"><small>' + label + "</small><b>" + list.filter(isPub).length + "</b><span>" + (sub || "전체 " + list.length + "개 중 게시") + "</span></div>";
@@ -611,7 +611,7 @@
           out.innerHTML = "<b>활성화가 필요합니다.</b> 받는 메일함에 방금 온 ‘Action Required: Activate FormSubmit on …’ 메일을 열어 파란 <b>ACTIVATE FORM</b> 버튼을 눌러 주세요. 그 뒤 다시 점검하면 ‘정상’이 나옵니다. " +
             '<a href="' + esc(gmail) + '" target="_blank" rel="noopener">Gmail에서 그 메일 찾기</a>';
         } else {
-          out.textContent = "접수 서비스에 연결하지 못했습니다(" + m + "). 잠시 후 다시 점검해 주세요. 계속 실패하면 방문자에게는 ‘메일 앱으로 보내기·내용 복사·전화’ 안내가 대신 나갑니다.";
+          out.textContent = "접수 서비스에 연결하지 못했습니다(" + m + "). 잠시 후 다시 점검해 주세요. 계속 실패하면 방문자에게는 ‘Gmail로 보내기·내용 복사·전화’ 안내가 대신 나갑니다.";
         }
       }).then(function () { btn.disabled = false; });
     });

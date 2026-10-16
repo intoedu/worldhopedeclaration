@@ -6,8 +6,8 @@
    - 서버·데이터베이스 없음: 입력 내용은 WH.mail.send(FormSubmit)로 담당자 이메일에 전달됩니다.
    - 메일 본문 항목명은 화면 언어와 관계없이 항상 한국어(라벨의 .ko 텍스트)로 보냅니다.
      같은 이름의 항목이 여러 개면(예: 추천인 이름 / 피추천인 이름) 입력칸에 data-label="…" 로 구분합니다.
-   - FormSubmit 전송 실패(네트워크 차단·미활성화 등) 시 대체 접수 안내(메일 앱 링크·내용 복사·전화)를 보여 줍니다.
-     (예전 속성 data-fallback="none" 이 있으면 메일 앱 대신 전화 안내만 표시)
+   - FormSubmit 전송 실패(네트워크 차단·미활성화 등) 시 대체 접수 안내(Gmail로 보내기·내용 복사·전화)를 보여 줍니다.
+     (예전 속성 data-fallback="none" 이 있으면 Gmail 대신 전화 안내만 표시)
    - ‘기타(직접 입력)’: <select data-other="입력칸 id"> 에서 value="other" 를 고르면 그 입력칸(.field)을
      보이고 필수로 바꿉니다. 다른 값이면 숨기고 전송하지 않습니다(disabled).
    - 항목별 오류 문구: 입력칸에 data-msg-ko="…" data-msg-en="…" (없으면 기본 문구)
@@ -51,7 +51,7 @@
   function phoneKo() { return "전국대표전화(" + (C.phone || "") + ")"; }
   function phoneEn() { return C.phone || ""; }
 
-  /* type: "ok" | "err" | "info"(중립: 전송 중·메일 앱 안내) */
+  /* type: "ok" | "err" | "info"(중립: 전송 중·Gmail 안내) */
   function setStatus(form, type, msg) {
     var el = form.querySelector(".form-status");
     if (!el) {
@@ -236,21 +236,20 @@
     return true;
   }
 
-  /* 메일 앱(mailto)으로 대체 접수. 받는 주소(email.to 또는 publicEmail)는 WH.mail.mailtoHref 가 고르며,
-     받는 주소가 없으면(별칭만 있고 publicEmail 도 없음) false */
-  function mailAppHref(msg) {
-    var href = WH.mail.mailtoHref(msg.subject, msg.rows);
-    return /^mailto:\?/.test(href) ? "" : href;
+  /* Gmail 로 대체 접수. 받는 주소(email.to 또는 publicEmail)는 WH.mail.composeHref 가 고르며,
+     받는 주소가 없으면(별칭만 있고 publicEmail 도 없음) "" */
+  function gmailComposeHref(msg) {
+    return WH.mail.composeHref(msg.subject, msg.rows);
   }
-  /* 설정이 service:"mailto" 인 경우(메일 앱으로 바로 접수): 열린 메일 앱에서 ‘보내기’를 누르도록 안내 */
-  function mailAppStatus(form, msg) {
-    setStatus(form, "info", WH.t("메일 앱이 열렸습니다. 작성된 내용을 확인하신 뒤 ‘보내기’를 눌러 접수를 완료해 주세요.",
-      "Your email app has been opened. Please review the prefilled message and press Send to complete."));
+  /* 설정이 service:"gmail" 인 경우(자동 전송 없이 Gmail 로 접수): 아래 버튼으로 Gmail 을 열어 ‘보내기’를 누르도록 안내 */
+  function gmailStatus(form, msg) {
+    setStatus(form, "info", WH.t("아래 ‘Gmail로 보내기’를 누르면 작성하신 내용이 채워진 Gmail 창이 열립니다. 그 창에서 ‘보내기’를 눌러야 접수가 완료됩니다.",
+      "Press “Send with Gmail” below to open Gmail with your details filled in, then press Send there to complete."));
     fallbackActions(form, msg);
   }
-  /* 온라인 전송이 되지 않았을 때 — 메일 앱이 없는 PC·카카오톡 안 브라우저에서도 접수할 수 있도록
-     ① 메일 앱으로 보내기(실제 링크) ② 내용 복사하기(받는 주소 함께 표시) ③ 전화 를 함께 보여 줍니다.
-     입력한 내용은 지우지 않습니다. 메일 앱을 저절로 열지 않습니다(열렸는지 알 수 없어 안내가 틀릴 수 있음). */
+  /* 온라인 전송이 되지 않았을 때 — ① Gmail로 보내기(받는 사람·제목·내용이 채워진 Gmail 작성 창을 새 탭으로)
+     ② 내용 복사하기(받는 주소 함께 표시, Gmail 을 쓰지 않는 분) ③ 전화 를 함께 보여 줍니다.
+     입력한 내용은 지우지 않습니다. Gmail 을 저절로 열지 않습니다(팝업 차단·열렸는지 알 수 없음). */
   function fallbackStatus(form, msg) {
     setStatus(form, "info", WH.t("온라인 전송이 되지 않았습니다. 작성하신 내용은 그대로 남아 있으니, 아래 방법 중 하나로 보내 주세요.",
       "Online delivery did not go through. Your entries are kept — please send them in one of the ways below."));
@@ -264,8 +263,10 @@
     box.className = "form-fallback";
     var mail = document.createElement("a");
     mail.className = "btn btn-outline btn-sm";
-    mail.href = mailAppHref(msg);
-    mail.textContent = WH.t("메일 앱으로 보내기", "Send with email app");
+    mail.href = gmailComposeHref(msg);
+    mail.target = "_blank"; // 새 탭 — 이 페이지와 입력한 내용은 그대로 남음
+    mail.rel = "noopener";
+    mail.textContent = WH.t("Gmail로 보내기", "Send with Gmail");
     var copy = document.createElement("button");
     copy.type = "button";
     copy.className = "btn btn-outline btn-sm";
@@ -278,8 +279,8 @@
     box.appendChild(mail); box.appendChild(copy); if (C.phone) box.appendChild(tel);
     var note = document.createElement("span");
     note.className = "form-fallback-note";
-    note.textContent = WH.t("메일 앱이 열리지 않으면 ‘내용 복사하기’를 누른 뒤 " + to + " 으로 보내 주세요.",
-      "If no email app opens, press “Copy details” and send it to " + to + ".");
+    note.textContent = WH.t("Gmail 창에서 ‘보내기’를 눌러야 접수가 완료됩니다. Gmail을 쓰지 않으시면 ‘내용 복사하기’를 누른 뒤 사용하시는 메일로 " + to + " 에 보내 주세요. (Gmail은 Google LLC의 상표입니다.)",
+      "Press Send in the Gmail window to complete. If you don’t use Gmail, press “Copy details” and email it to " + to + " from any mail service. (Gmail is a trademark of Google LLC.)");
     el.appendChild(box);
     el.appendChild(note);
   }
@@ -353,7 +354,7 @@
 
       var fallback = function (err) {
         if (err && window.console) console.warn("[온라인 접수] 전송 실패:", err.message || err);
-        if (noMailApp || !mailAppHref(msg)) { failStatus(form); return; }
+        if (noMailApp || !gmailComposeHref(msg)) { failStatus(form); return; }
         fallbackStatus(form, msg); // 입력 내용은 지우지 않음
       };
       if (!WH.mail || !WH.mail.enabled) { fallback(); return; }
@@ -366,7 +367,7 @@
         if (btn) btn.disabled = false;
       };
       WH.mail.send({ subject: msg.subject, rows: msg.rows, replyTo: msg.replyTo }).then(function (res) {
-        if (res && res.via === "mailto") { mailAppStatus(form, msg); return; } // 설정이 service:"mailto" 인 경우
+        if (res && res.via === "gmail") { gmailStatus(form, msg); return; } // 설정이 service:"gmail" 인 경우
         form.reset();
         setStatus(form, "ok", okMessage(form));
         form.dispatchEvent(new CustomEvent("wh:submitted"));

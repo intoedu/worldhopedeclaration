@@ -82,7 +82,7 @@
   }
 
   /* 담당자에게 결제 알림 메일. 실패해도 무시(결제 자체는 PortOne에 기록됨).
-     service:"mailto" 설정이면 후원자 메일 앱이 열리게 되므로 보내지 않습니다. */
+     service:"gmail" 설정(자동 전송 없음)이면 보내지 않습니다. */
   function notifyStaff(info) {
     if (!info || !WH.mail || !WH.mail.enabled || WH.mail.service !== "formsubmit") return Promise.resolve(null);
     var method = info.payMethod || "CARD";

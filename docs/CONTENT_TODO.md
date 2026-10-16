@@ -50,7 +50,7 @@
 
 - [ ] GitHub Pages 켜기 — 저장소 Settings → Pages → Deploy from a branch / `main` / `(root)` → https://intoedu.github.io/worldhopedeclaration/ 접속 확인
 - [ ] **이메일 접수 활성화(FormSubmit)** — 게시 후 문의 폼에서 시험 접수 1건 → `config.js` 의 `email.to` 수신함에 온 확인 메일에서 **Activate** 클릭 → 다시 시험 접수해 메일 도착 확인 (스팸함 확인). 문의·정기 후원 신청·응원 메시지 폼을 각각 한 번씩 시험
-- [ ] (권장) 활성화 메일의 별칭 문자열을 `email.to` 에 넣어 주소 숨기기 + `publicEmail` 입력(메일 앱 대체 경로용)
+- [ ] (권장) 활성화 메일의 별칭 문자열을 `email.to` 에 넣어 주소 숨기기 + `publicEmail` 입력(Gmail 대체 경로용)
 - [ ] **관리자용 GitHub 토큰** — 관리자마다 Fine-grained token 발급(이 저장소만, Contents: Read and write, 만료일 지정) → `/admin/` 로그인·글 1건 등록 시험
 - [ ] PG 가맹(PortOne) → `config.js` 의 `portone.storeId`, `portone.channelKey` 입력 → 소액 시험 결제 → PortOne 콘솔 내역과 알림 메일 대조
 - [ ] (선택) GoatCounter 계정·사이트 코드 → `analytics.goatcounter` (하단 누적 방문자: GoatCounter 설정의 ‘Allow adding visitor counts’ 켜기)

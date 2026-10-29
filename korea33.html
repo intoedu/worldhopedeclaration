@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Serif:ital,wght@0,500;0,700;1,500&display=swap">
 <link rel="stylesheet" href="assets/vendor/pretendard/pretendardvariable-dynamic-subset.css">
-<link rel="stylesheet" href="assets/css/style.css?v=20261029c">
+<link rel="stylesheet" href="assets/css/style.css?v=20261029d">
 <script>(function(){try{var l=new URLSearchParams(location.search).get("lang")||localStorage.getItem("wh-lang");if(l==="en"){var h=document.documentElement;h.setAttribute("data-lang","en");h.lang="en";}}catch(e){}})();</script>
 <style>
   /* ===== 대한민국 대표 33인 추천 페이지 전용 (공통 style.css 토큰 사용) ===== */
@@ -68,7 +68,7 @@
   /* 분야별 안내: 분야마다 접고 펼치는 묶음 (첫 분야만 펼침). 세부 분야 한 줄 전체가 '이 분야로 추천' 버튼 */
   .k33-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 24px; align-items: start; }
   .k33-col { display: grid; gap: 16px; min-width: 0; align-content: start; }
-  .k33-group { border: 1px solid var(--line); border-radius: var(--radius); background: #fff; overflow: hidden; scroll-margin-top: calc(var(--header-h) + 72px); transition: border-color var(--dur-2), box-shadow var(--dur-2); }
+  .k33-group { border: 1px solid var(--line); border-radius: var(--radius); background: #fff; overflow: hidden; scroll-margin-top: calc(var(--header-h) + 92px); transition: border-color var(--dur-2), box-shadow var(--dur-2); }
   .k33-group[open] { border-color: var(--line-2); box-shadow: var(--shadow); }
   .k33-group-head { display: grid; grid-template-columns: 40px minmax(0, 1fr) auto 20px; align-items: center; gap: 0 12px; min-height: 64px; padding: 10px 18px 10px 20px; list-style: none; cursor: pointer; }
   .k33-group-head::-webkit-details-marker { display: none; }
@@ -350,7 +350,7 @@
             </div>
             <div class="field">
               <label for="k-country"><span class="ko">국가</span><span class="en">Country</span></label>
-              <input type="text" id="k-country" name="nominee_country" value="대한민국" readonly data-label="피추천인 국가">
+              <input type="text" id="k-country" name="nominee_country" value="대한민국" data-ko-value="대한민국" data-en-value="Republic of Korea (대한민국)" readonly data-label="피추천인 국가">
             </div>
             <div class="field">
               <label for="k-field"><span class="ko">추천 분야</span><span class="en">Field</span><span class="req">*</span></label>
@@ -440,7 +440,7 @@
 <div id="site-footer"></div>
 <script src="assets/js/config.js?v=20261013"></script>
 <script src="assets/js/data.js?v=20261029"></script>
-<script src="assets/js/main.js?v=20261029c"></script>
+<script src="assets/js/main.js?v=20261029d"></script>
 <script src="assets/js/forms.js?v=20261029b"></script>
 <script>
   /* 분야별 안내 렌더링 + 추천서 분야·세부 분야 연동 (data/selection-criteria.json) */

@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Serif:ital,wght@0,500;0,700;1,500&display=swap">
 <link rel="stylesheet" href="assets/vendor/pretendard/pretendardvariable-dynamic-subset.css">
-<link rel="stylesheet" href="assets/css/style.css?v=20261029c">
+<link rel="stylesheet" href="assets/css/style.css?v=20261029d">
 <script>(function(){try{var l=new URLSearchParams(location.search).get("lang")||localStorage.getItem("wh-lang");if(l==="en"){var h=document.documentElement;h.setAttribute("data-lang","en");h.lang="en";}}catch(e){}})();</script>
 <style>
   /* ===== 연대소개 페이지 전용 (공통 style.css 의 토큰만 사용) ===== */
@@ -99,10 +99,13 @@
   html[data-lang="en"] .about-org-box h3 { font-family: var(--f-serif-en); letter-spacing: -0.01em; }
   .about-org-en { margin: 6px 0 0; font-family: var(--f-display); font-size: 12.5px; font-weight: 400; letter-spacing: .14em; text-transform: uppercase; color: var(--blue-700); line-height: 1.5; }
   .about-org-en [lang="ko"] { font-family: var(--f-serif); font-size: 13.5px; font-weight: 700; letter-spacing: .04em; }
-  .about-org-keys { list-style: none; display: flex; flex-wrap: wrap; gap: 6px 0; margin: 20px 0 22px; padding: 14px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  /* 구분선은 모든 항목 앞에 두고, 목록을 구분선 폭(29px)만큼 왼쪽으로 내어 그 띠를 잘라 냄(clip-path)
+     → 줄이 바뀌어 줄 맨 앞에 온 구분선은 보이지 않고, 글자 시작은 위아래 줄과 같은 자리 */
+  .about-org-keys { list-style: none; display: flex; flex-wrap: wrap; gap: 6px 0; margin: 20px 0 22px -29px; padding: 14px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); clip-path: inset(0 0 0 29px); }
+  .about-org-keys li::before { content: ""; display: inline-block; width: 1px; height: 13px; margin: 0 14px; background: var(--line-2); vertical-align: -1px; }
   .about-org-keys li { font-family: var(--f-serif); font-size: 16px; font-weight: 700; color: var(--navy-900); line-height: 1.5; }
   html[data-lang="en"] .about-org-keys li { font-family: var(--f-serif-en); font-size: 15px; }
-  .about-org-keys li + li::before { content: ""; display: inline-block; width: 1px; height: 13px; margin: 0 14px; background: var(--line-2); vertical-align: -1px; }
+
   .about-org-box .dot-list { gap: 8px; font-size: 15.5px; line-height: 1.7; }
   .about-org-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px; margin-top: auto; padding-top: 26px; }
   .about-org-lead { display: flex; align-items: baseline; gap: 10px; margin: 0; }
@@ -207,7 +210,8 @@
     html[data-lang="en"] .about-purpose-text p { font-size: 16px; line-height: 1.9; }
     .about-org-box { padding: 28px 22px 24px; }
     .about-org-keys li { font-size: 15px; }
-    .about-org-keys li + li::before { margin: 0 10px; }
+    .about-org-keys li::before { margin: 0 10px; }
+    .about-org-keys { margin-left: -21px; clip-path: inset(0 0 0 21px); }
     .about-org-foot { flex-direction: column; align-items: flex-start; }
     .about-contact { grid-template-columns: 1fr; gap: 16px; }
     .about-contact-card { padding: 28px 24px 26px; }
@@ -477,7 +481,7 @@
 <div id="site-footer"></div>
 <script src="assets/js/config.js?v=20261013"></script>
 <script src="assets/js/data.js?v=20261029"></script>
-<script src="assets/js/main.js?v=20261029c"></script>
+<script src="assets/js/main.js?v=20261029d"></script>
 <script>
   // 연대소개: 하위 메뉴 현재 구역 강조 + 공개 연락처(설정값) 표시
   (function () {

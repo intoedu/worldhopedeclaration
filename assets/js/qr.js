@@ -128,9 +128,33 @@
     });
   });
   $("#qr-print").addEventListener("click", function () {
+    // 인쇄 전용 한 장: 미리보기 카드를 복제해(캔버스는 그림으로 바꿔) 그것만 인쇄 — 나머지는 display:none 이라 항상 한 장
+    var old = document.querySelector(".qr-print-sheet");
+    if (old) old.remove();
+    var card = document.querySelector(".qr-card");
+    var sheet = document.createElement("div");
+    sheet.className = "qr-print-sheet";
+    var clone = card.cloneNode(true);
+    var src = card.querySelector("canvas"), dst = clone.querySelector("canvas");
+    if (src && dst) {
+      var img = document.createElement("img");
+      img.src = src.toDataURL("image/png");
+      img.alt = "";
+      dst.parentNode.replaceChild(img, dst);
+    }
+    clone.removeAttribute("id");
+    Array.prototype.forEach.call(clone.querySelectorAll("[id]"), function (n) { n.removeAttribute("id"); });
+    sheet.appendChild(clone);
+    document.body.appendChild(sheet);
     document.body.classList.add("print-qr");
+    var done = function () {
+      document.body.classList.remove("print-qr");
+      window.removeEventListener("afterprint", done);
+    };
+    window.addEventListener("afterprint", done);
     window.print();
-    setTimeout(function () { document.body.classList.remove("print-qr"); }, 500);
+    // afterprint 를 지원하지 않는 브라우저 대비 (인쇄 창이 닫힌 뒤 화면은 그대로 — 인쇄용 상자는 화면에 보이지 않음)
+    setTimeout(done, 60000);
   });
   $("#qr-copy").addEventListener("click", function () { if (currentUrl()) WH.copy(currentUrl()); });
 

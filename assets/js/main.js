@@ -53,6 +53,10 @@
     html.lang = lang;
     try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
     applyAttrs(document, lang);
+    // 읽기 전용 입력칸의 값(예: 33인 추천의 국가 ‘대한민국’) 번역 — data-ko-value / data-en-value
+    document.querySelectorAll("input[readonly][data-en-value]").forEach(function (el) {
+      el.value = el.getAttribute(lang === "en" ? "data-en-value" : "data-ko-value") || el.value;
+    });
     // <option data-en="..."> 번역
     document.querySelectorAll("option[data-en]").forEach(function (o) {
       if (!o.hasAttribute("data-ko")) o.setAttribute("data-ko", o.textContent);

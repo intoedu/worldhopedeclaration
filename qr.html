@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Serif:ital,wght@0,500;0,700;1,500&display=swap">
 <link rel="stylesheet" href="assets/vendor/pretendard/pretendardvariable-dynamic-subset.css">
-<link rel="stylesheet" href="assets/css/style.css?v=20261029c">
+<link rel="stylesheet" href="assets/css/style.css?v=20261029d">
 <script>(function(){try{var l=new URLSearchParams(location.search).get("lang")||localStorage.getItem("wh-lang");if(l==="en"){var h=document.documentElement;h.setAttribute("data-lang","en");h.lang="en";}}catch(e){}})();</script>
 <style>
   .color-dots { display: flex; gap: 10px; }
@@ -41,13 +41,15 @@
   .form-card .form-title { font-size: 22px; margin-bottom: 6px; }
   .qr-preview-title { margin: 0 0 18px; font-family: var(--f-display); font-size: 13px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--blue-700); }
   @media print {
-    body.print-qr * { visibility: hidden !important; }
-    body.print-qr .qr-card, body.print-qr .qr-card * { visibility: visible !important; }
-    body.print-qr .qr-card { position: fixed; left: 50%; top: 18mm; transform: translateX(-50%); border: 0; }
-    body.print-qr .qr-card canvas { width: 110mm !important; height: 110mm !important; }
-    body.print-qr .qr-card .qr-caption { font-size: 20pt; }
-    body.print-qr .qr-card .qr-caption small { max-width: none; font-size: 11pt; }
+    /* 인쇄 전용 한 장(qr.js 가 만든 .qr-print-sheet)만 보이고 나머지는 자리도 차지하지 않음 → 항상 A4 한 장 */
+    body.print-qr > *:not(.qr-print-sheet) { display: none !important; }
+    body.print-qr .qr-print-sheet { display: block !important; padding-top: 18mm; text-align: center; }
+    body.print-qr .qr-print-sheet .qr-card { display: inline-block; border: 0; box-shadow: none; page-break-inside: avoid; break-inside: avoid; }
+    body.print-qr .qr-print-sheet img { display: block; width: 110mm; height: 110mm; margin: 0 auto; }
+    body.print-qr .qr-print-sheet .qr-caption { font-size: 20pt; }
+    body.print-qr .qr-print-sheet .qr-caption small { max-width: none; font-size: 11pt; }
   }
+  .qr-print-sheet { display: none; }
 </style>
 </head>
 <body data-page="qr" data-title-en="QR Code Maker | World Hope Declaration Network">
@@ -68,7 +70,7 @@
       <div class="qr-layout">
         <div class="form-card">
           <h2 class="form-title"><span class="ko">QR코드 설정</span><span class="en">Settings</span></h2>
-          <p><span class="ko">연결할 페이지를 고르면 오른쪽 미리보기에 바로 반영됩니다.</span><span class="en">Choose a page and the preview updates instantly.</span></p>
+          <p><span class="ko">연결할 페이지를 고르면 미리보기에 바로 반영됩니다.</span><span class="en">Choose a page and the preview updates instantly.</span></p>
           <div class="form-grid">
             <div class="field full">
               <label for="qr-target"><span class="ko">연결할 페이지</span><span class="en">Link to</span></label>
@@ -160,7 +162,7 @@
 <div id="site-footer"></div>
 <script src="assets/js/config.js?v=20261013"></script>
 <script src="assets/js/data.js?v=20261029"></script>
-<script src="assets/js/main.js?v=20261029c"></script>
-<script src="assets/js/qr.js?v=20261013"></script>
+<script src="assets/js/main.js?v=20261029d"></script>
+<script src="assets/js/qr.js?v=20261029d"></script>
 </body>
 </html>

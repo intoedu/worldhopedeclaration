@@ -1,4 +1,4 @@
-# 세계희망연대 홈페이지 (World Hope Alliance)
+# 세계희망연대 홈페이지 (World Hope Declaration Network)
 
 > 분열과 전쟁의 세상을 종식시키는 희망의 서막이 열린다.
 

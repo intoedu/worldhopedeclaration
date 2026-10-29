@@ -14,7 +14,7 @@
 
 ## 2. 확정이 필요한 정보
 
-- [ ] 영문 단체명 — 현재 임시: **World Hope Alliance**(세계희망연대) / **World Hope Declaration Committee**(세계희망선언위원회)
+- [ ] 영문 단체명 — 현재 홈페이지 표기: **World Hope Declaration Network**(세계희망연대) / **World Hope Declaration Council**(세계희망선언위원회) (`assets/js/config.js` 의 `name`·`committee` 값만 바꾸면 전체 반영)
 - [ ] 대표자 영문 표기 — 현재 임시: **Chi-hyun Won**
 - [ ] 홈페이지에 공개할 이메일 (의뢰서 이메일을 공개할지, 별도 주소를 쓸지)
 - [ ] 운영시간

@@ -860,7 +860,7 @@
     { href: "news.html", ko: "소식", en: "News", dko: "공지사항 · 소식 · 언론보도", den: "Notices, news and press", k: "공지 notice 소식 news 언론보도 press 게시판 board" },
     { href: "join.html", ko: "참여하기", en: "Join", dko: "세계희망선언에 참여하고 함께 희망을 선언합니다", den: "Join the World Hope Declaration", k: "참여 join 신청 apply 참가 동역 partner 응원 cheer" },
     { href: "about.html", ko: "연대소개", en: "About", dko: "취지문 · 위원장 인사말 · 조직 구성 · 오시는 길", den: "Purpose, chairman's greeting, organization and location", k: "소개 about 취지 purpose 인사말 greeting 위원장 chairman 원치현 조직 organization 위원회 council 오시는 길 location 주소 address 세종" },
-    { href: "ministry.html", ko: "사역 안내", en: "Ministries", dko: "연구·채택 → 33인 선언 → 실천 → 보호·인도 → 선교행진", den: "Research & adoption, declaration by 33, practice, protection & guidance, mission march", k: "사역 ministry ministries 선교행진 mission march 연구 채택 실천 보호 인도" },
+    { href: "vision.html#research", ko: "사역 안내", en: "Ministries", dko: "연구·채택 → 33인 선언 → 실천 → 보호·인도 → 선교행진", den: "Research & adoption, declaration by 33, practice, protection & guidance, mission march", k: "사역 ministry ministries 선교행진 mission march 연구 채택 실천 보호 인도" },
     { href: "gallery.html", ko: "갤러리", en: "Gallery", dko: "행사와 사역 현장 사진", den: "Photos of events and ministry", k: "갤러리 gallery 사진 photo 앨범 album" },
     // 후원: 계좌·결제가 준비되기 전에는 donate.html 의 '준비 중' 안내 문구 그대로 (없는 방법·영수증을 검색 결과에 내세우지 않음)
     GIVING_READY ?

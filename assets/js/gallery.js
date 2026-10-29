@@ -19,11 +19,12 @@
     lb.setAttribute("aria-modal", "true");
     lb.innerHTML =
       '<span class="lb-count"></span>' +
-      '<button type="button" class="lb-btn lb-close" aria-label="닫기">×</button>' +
-      '<button type="button" class="lb-btn lb-prev" aria-label="이전 사진">‹</button>' +
+      '<button type="button" class="lb-btn lb-close" aria-label="닫기" data-en-aria-label="Close">×</button>' +
+      '<button type="button" class="lb-btn lb-prev" aria-label="이전 사진" data-en-aria-label="Previous photo">‹</button>' +
       '<figure><img alt=""><figcaption></figcaption></figure>' +
-      '<button type="button" class="lb-btn lb-next" aria-label="다음 사진">›</button>';
+      '<button type="button" class="lb-btn lb-next" aria-label="다음 사진" data-en-aria-label="Next photo">›</button>';
     document.body.appendChild(lb);
+    if (WH.applyAttrs) WH.applyAttrs(lb); // 지금 언어에 맞는 버튼 이름
     lb.querySelector(".lb-close").addEventListener("click", close);
     lb.querySelector(".lb-prev").addEventListener("click", function () { show(idx - 1); });
     lb.querySelector(".lb-next").addEventListener("click", function () { show(idx + 1); });

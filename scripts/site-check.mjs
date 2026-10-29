@@ -138,7 +138,7 @@ if (isLive) {
 }
 
 // 공유 이미지·사이트맵·robots·없는 주소(404) 처리
-for (const [path, want] of [["assets/img/og-image.png", 200], ["sitemap.xml", 200], ["robots.txt", 200], ["no-such-page-site-check.html", 404]]) {
+for (const [path, want] of [["assets/img/og-image.jpg", 200], ["sitemap.xml", 200], ["robots.txt", 200], ["no-such-page-site-check.html", 404]]) {
   try {
     const r = await fetch(BASE + path);
     if (r.status !== want) fail(`${path}: HTTP ${r.status} (기대 ${want})`);

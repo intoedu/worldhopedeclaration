@@ -113,24 +113,59 @@
     });
   }
 
+  // 저장할 수 없을 때 이유를 알림 (주소가 비었거나, QR코드에 담기에는 너무 긴 주소)
+  function needUrl() {
+    if (currentUrl()) return true;
+    WH.toast(WH.t("연결할 주소를 먼저 입력해 주세요.", "Please enter the address first."));
+    return false;
+  }
+  function exportFailed(err) {
+    var tooLong = /overflow|length/i.test(String((err && err.message) || err || ""));
+    WH.toast(tooLong ? WH.t("주소가 너무 길어 QR코드를 만들 수 없습니다. 더 짧은 주소를 넣어 주세요.", "The address is too long for a QR code. Please use a shorter one.")
+      : WH.t("QR코드를 만들지 못했습니다. 잠시 후 다시 시도해 주세요.", "Could not create the QR code. Please try again."));
+  }
   $("#qr-png").addEventListener("click", function () {
-    if (!currentUrl()) return;
-    exportCanvas().then(function (c) { WH.downloadCanvas(c, fileBase() + ".png"); });
+    if (!needUrl()) return;
+    exportCanvas().then(function (c) { WH.downloadCanvas(c, fileBase() + ".png"); }).catch(exportFailed);
   });
   $("#qr-svg").addEventListener("click", function () {
-    if (!currentUrl()) return;
+    if (!needUrl()) return;
     svgString().then(function (svg) {
       var a = document.createElement("a");
       a.href = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" }));
       a.download = fileBase() + ".svg";
       document.body.appendChild(a); a.click(); a.remove();
       setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
-    });
+    }).catch(exportFailed);
   });
   $("#qr-print").addEventListener("click", function () {
+    // 인쇄 전용 한 장: 미리보기 카드를 복제해(캔버스는 그림으로 바꿔) 그것만 인쇄 — 나머지는 display:none 이라 항상 한 장
+    var old = document.querySelector(".qr-print-sheet");
+    if (old) old.remove();
+    var card = document.querySelector(".qr-card");
+    var sheet = document.createElement("div");
+    sheet.className = "qr-print-sheet";
+    var clone = card.cloneNode(true);
+    var src = card.querySelector("canvas"), dst = clone.querySelector("canvas");
+    if (src && dst) {
+      var img = document.createElement("img");
+      img.src = src.toDataURL("image/png");
+      img.alt = "";
+      dst.parentNode.replaceChild(img, dst);
+    }
+    clone.removeAttribute("id");
+    Array.prototype.forEach.call(clone.querySelectorAll("[id]"), function (n) { n.removeAttribute("id"); });
+    sheet.appendChild(clone);
+    document.body.appendChild(sheet);
     document.body.classList.add("print-qr");
+    var done = function () {
+      document.body.classList.remove("print-qr");
+      window.removeEventListener("afterprint", done);
+    };
+    window.addEventListener("afterprint", done);
     window.print();
-    setTimeout(function () { document.body.classList.remove("print-qr"); }, 500);
+    // afterprint 를 지원하지 않는 브라우저 대비 (인쇄 창이 닫힌 뒤 화면은 그대로 — 인쇄용 상자는 화면에 보이지 않음)
+    setTimeout(done, 60000);
   });
   $("#qr-copy").addEventListener("click", function () { if (currentUrl()) WH.copy(currentUrl()); });
 

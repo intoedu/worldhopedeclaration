@@ -11,7 +11,8 @@
 <meta name="theme-color" content="#13294b">
 <link rel="icon" href="../assets/img/brand/favicon-64.png" type="image/png" sizes="64x64">
 <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
-<link rel="stylesheet" href="../assets/css/style.css?v=20261029">
+<link rel="stylesheet" href="../assets/vendor/pretendard/pretendardvariable-dynamic-subset.css">
+<link rel="stylesheet" href="../assets/css/style.css?v=20261029e">
 <style>
   /* ---------- 관리자 화면 전용 (공개 사이트와 같은 라이트 디자인 · 토큰은 style.css) ---------- */
   body { background: var(--bg-alt); }
@@ -204,7 +205,7 @@
     .adm-brand { gap: 8px; }
     .adm-brand img { width: 40px; height: 40px; }
     .adm-brand-text strong { font-size: 18px; }
-    .adm-brand-text small { font-size: 5.9px; margin-top: 5px; }
+    .adm-brand-text small { display: none; } /* 너무 작아 읽을 수 없으므로 휴대폰에서는 한글 이름만 */
     .adm-role { padding-left: 12px; }
     .adm-role b { font-size: 13px; }
     .adm-role span { font-size: 9px; letter-spacing: .16em; }
@@ -224,7 +225,7 @@
     <div class="adm-id">
       <a class="adm-brand" href="../index.html" title="홈페이지로 가기">
         <img src="../assets/img/brand/logo-mark-160.png" alt="" width="52" height="52">
-        <span class="adm-brand-text"><strong>세계희망연대</strong><small>World Hope Declaration Network<sup>™</sup></small></span>
+        <span class="adm-brand-text"><strong>세계희망연대</strong><small>World Hope Declaration Network</small></span>
       </a>
       <span class="adm-role"><b>관리자</b><span>Admin</span></span>
     </div>
@@ -288,8 +289,8 @@
 <footer class="adm-foot"><b>세계희망연대</b> · <span>World Hope Declaration Network</span> — 관리자 화면</footer>
 
 <script src="../assets/js/config.js?v=20261013"></script>
-<script src="../assets/js/data.js?v=20261029"></script>
-<script src="../assets/js/main.js?v=20261029"></script>
+<script src="../assets/js/data.js?v=20261029e"></script>
+<script src="../assets/js/main.js?v=20261029e"></script>
 <script src="../assets/js/admin.js?v=20261029"></script>
 </body>
 </html>

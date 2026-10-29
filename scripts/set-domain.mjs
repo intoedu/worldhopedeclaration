@@ -55,7 +55,7 @@ for (const p of pages) {
   let html = readFileSync(file, "utf8");
   const url = p === "index.html" ? `${base}/` : `${base}/${p}`;
   html = html.replace(/\n<link rel="canonical"[^>]*>/g, "").replace(/\n<meta property="og:url"[^>]*>/g, "");
-  html = html.replace(/<meta property="og:image" content="[^"]*">/, `<meta property="og:image" content="${base}/assets/img/og-image.png">`);
+  html = html.replace(/<meta property="og:image" content="[^"]*">/, `<meta property="og:image" content="${base}/assets/img/og-image.jpg?v=20261029">`);
   if (p !== "post.html" && !isNoindex(p)) {
     // og:image 묶음(og:image:width/height/alt 포함)의 마지막 줄 뒤에 넣음
     const ogImgs = [...html.matchAll(/<meta property="og:image[^"]*"[^>]*>/g)];

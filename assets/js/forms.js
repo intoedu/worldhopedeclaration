@@ -64,6 +64,21 @@
     el.className = "form-status " + type;
     el.textContent = msg;
   }
+  /* 상태 줄 표시 + 언어를 바꾸면 같은 내용을 새 언어로 다시 그리도록 그리는 함수를 기억 (kind: "validation" = 입력 확인 안내) */
+  function showStatus(form, draw, kind) {
+    form.__whDraw = draw;
+    form.__whStatusKind = kind || "";
+    draw();
+  }
+  function clearStatus(form) {
+    var el = form.querySelector(".form-status");
+    if (el) { el.className = "form-status"; el.textContent = ""; }
+    form.__whDraw = null;
+    form.__whStatusKind = "";
+  }
+  document.addEventListener("wh:lang", function () {
+    document.querySelectorAll("form[data-wh-form]").forEach(function (f) { if (f.__whDraw) f.__whDraw(); });
+  });
   function okMessage(form) {
     var def = (DEFAULTS[form.getAttribute("data-wh-form")] || {}).ok ||
       ["정상적으로 전달되었습니다. 감사합니다.", "Sent successfully. Thank you."];
@@ -230,7 +245,7 @@
       var sum = firstPair[0] === "필수 항목입니다" || firstPair[0] === "형식을 확인해 주세요" ?
         ["필수 항목을 확인해 주세요.", "Please check the required fields."] : firstPair;
       showSummary(form, sum);
-      setStatus(form, "err", WH.t(sum[0], sum[1]));
+      showStatus(form, function () { setStatus(form, "err", WH.t(sum[0], sum[1])); }, "validation");
       return false;
     }
     return true;
@@ -303,8 +318,8 @@
     if (activation) {
       // FormSubmit 이 ‘활성화 필요’라고 답함 → 담당자가 메일함에서 한 번만 누르면 이후로는 ‘보내기’ 한 번에 접수됨
       el.appendChild(mk("span", "form-fallback-admin", WH.t(
-        "운영자 안내: 온라인 접수가 아직 활성화되지 않았습니다. 담당자 메일함(" + to + ")에 온 ‘Action Required: Activate FormSubmit on https://www.worldhopedeclaration.com/’ 메일을 열어 파란 ‘ACTIVATE FORM’ 버튼을 한 번 누르면, 그다음부터는 ‘보내기’ 한 번으로 바로 접수됩니다.",
-        "Operator note: online submission is not activated yet. Open the “Action Required: Activate FormSubmit on https://www.worldhopedeclaration.com/” email in the staff mailbox (" + to + ") and press the blue “ACTIVATE FORM” button once; after that, submissions go through with a single click.")));
+        "운영자 안내: 온라인 접수가 아직 활성화되지 않았습니다. 담당자 메일함(" + to + ")에서 제목이 ‘Action Required: Activate FormSubmit on’으로 시작하는 가장 최근 메일을 열어 파란 ‘ACTIVATE FORM’ 버튼을 한 번 누르면, 그다음부터는 ‘보내기’ 한 번으로 바로 접수됩니다.",
+        "Operator note: online submission is not activated yet. In the staff mailbox (" + to + "), open the most recent email whose subject starts with “Action Required: Activate FormSubmit on” and press the blue “ACTIVATE FORM” button once; after that, submissions go through with a single click.")));
     }
   }
   function failStatus(form) {
@@ -325,7 +340,7 @@
         wrap.hidden = !on;
         input.disabled = !on;
         input.required = on;
-        if (!on) wrap.classList.remove("has-error");
+        if (!on) clearHost(errHost(input)); // 숨긴 칸에 남은 오류 표시·설명도 함께 지움
       });
     };
     selects.forEach(function (sel) {
@@ -356,6 +371,8 @@
       if (!form.querySelector("[aria-invalid]")) {
         var box = form.querySelector(".form-alert");
         if (box) box.parentNode.removeChild(box);
+        // 모두 고쳤으면 아래 ‘필수 항목을 확인해 주세요’ 줄도 지움 (전송 실패 안내 등은 그대로)
+        if (form.__whStatusKind === "validation") clearStatus(form);
       }
     };
     form.addEventListener("input", fix);
@@ -368,7 +385,7 @@
       var hp = form.querySelector(".hp-field input");
       if (hp && hp.value) { // 스팸 봇: 보내지 않고 성공한 것처럼 표시
         form.reset();
-        setStatus(form, "ok", okMessage(form));
+        showStatus(form, function () { setStatus(form, "ok", okMessage(form)); });
         return;
       }
       if (!validate(form)) return;
@@ -377,22 +394,22 @@
 
       var fallback = function (err) {
         if (err && window.console) console.warn("[온라인 접수] 전송 실패:", err.message || err);
-        if (noMailApp || !composeHref(msg)) { failStatus(form); return; }
-        fallbackStatus(form, msg, err); // 입력 내용은 지우지 않음
+        if (noMailApp || !composeHref(msg)) { showStatus(form, function () { failStatus(form); }); return; }
+        showStatus(form, function () { fallbackStatus(form, msg, err); }); // 입력 내용은 지우지 않음
       };
       if (!WH.mail || !WH.mail.enabled) { fallback(); return; }
 
       sending = true;
       if (btn) btn.disabled = true;
-      setStatus(form, "info", WH.t("전송 중입니다…", "Sending…"));
+      showStatus(form, function () { setStatus(form, "info", WH.t("전송 중입니다…", "Sending…")); });
       var done = function () {
         sending = false;
         if (btn) btn.disabled = false;
       };
       WH.mail.send({ subject: msg.subject, rows: msg.rows, replyTo: msg.replyTo }).then(function (res) {
-        if (res && res.via === "gmail") { gmailStatus(form, msg); return; } // 설정이 service:"gmail" 인 경우
+        if (res && res.via === "gmail") { showStatus(form, function () { gmailStatus(form, msg); }); return; } // 설정이 service:"gmail" 인 경우
         form.reset();
-        setStatus(form, "ok", okMessage(form));
+        showStatus(form, function () { setStatus(form, "ok", okMessage(form)); });
         form.dispatchEvent(new CustomEvent("wh:submitted"));
       }, fallback).then(done, done);
     });

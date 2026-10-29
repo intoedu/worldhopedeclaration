@@ -9,16 +9,23 @@
 <meta property="og:site_name" content="세계희망연대">
 <meta property="og:title" content="참여하기 | 세계희망연대">
 <meta property="og:description" content="인류와 지구의 더 나은 미래를 위해, 지금, 세계가 함께 희망을 선언합니다. 선언 참여 신청 · 글로벌 대표 추천 · 희망 응원 메시지">
-<meta property="og:image" content="https://www.worldhopedeclaration.com/assets/img/og-image.png">
+<meta property="og:image" content="https://www.worldhopedeclaration.com/assets/img/og-image.jpg?v=20261029">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="세계희망선언™ WORLD HOPE DECLARATION — 세계희망연대">
 <meta property="og:url" content="https://www.worldhopedeclaration.com/join.html">
 <link rel="canonical" href="https://www.worldhopedeclaration.com/join.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#13294b">
 <link rel="icon" href="assets/img/brand/favicon-64.png" type="image/png" sizes="64x64">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Serif:ital,wght@0,500;0,700;1,500&display=swap">
-<link rel="stylesheet" href="assets/css/style.css?v=20261029">
+<link rel="stylesheet" href="assets/vendor/pretendard/pretendardvariable-dynamic-subset.css">
+<link rel="stylesheet" href="assets/css/style.css?v=20261029e">
 <script>(function(){try{var l=new URLSearchParams(location.search).get("lang")||localStorage.getItem("wh-lang");if(l==="en"){var h=document.documentElement;h.setAttribute("data-lang","en");h.lang="en";}}catch(e){}})();</script>
 <style>
   /* ===== 참여하기 페이지 전용 (공통 style.css 의 토큰만 사용) ===== */
@@ -181,7 +188,7 @@
     .join-now-desc { font-size: 12.5px; }
     .join-steps { margin-top: 24px; }
     .join-cheer-banner { padding: 30px 18px 72px; }
-    .join-cheer-banner figcaption { font-size: 10.5px; letter-spacing: .16em; }
+    .join-cheer-banner figcaption { font-size: 11.5px; letter-spacing: .14em; }
   }
   @media (max-width: 560px) {
     .join-hero .page-hero-en { font-size: 12px; letter-spacing: .14em; }
@@ -376,7 +383,7 @@
               <i aria-hidden="true">=</i>
               <span class="is-result"><b data-stat="per_country">33</b><small><span class="ko">인 / 각국</span><span class="en"> per nation</span></small></span>
             </p>
-            <p class="join-formula-sub"><span class="ko">세계 각국 <b data-stat="per_country">33</b>인 × <b data-stat="countries">195</b>개국 = <b data-stat="target">6,435</b>인</span><span class="en"><b data-stat="per_country">33</b> per nation × <b data-stat="countries">195</b> nations = <b data-stat="target">6,435</b></span></p>
+            <p class="join-formula-sub"><span class="ko">세계 각국 <b data-stat="per_country">33</b>인 × <b data-stat="countries">195</b>개국 = <b data-stat="target">6,435</b>인 (목표치)</span><span class="en"><b data-stat="per_country">33</b> per nation × <b data-stat="countries">195</b> nations = <b data-stat="target">6,435</b> (target)</span></p>
           </div>
           <div class="notice-box"><span class="ko">추천하시기 전에 꼭 <b>피추천인 본인</b>에게 추천 사실을 알리고, 이름·연락처 등 정보를 보내는 것에 대한 동의를 받아 주세요.</span><span class="en">Before you nominate someone, please tell <b>the nominee</b> and obtain their permission to share their name, contact details and other information with us.</span></div>
           <p class="join-note"><span class="ko">보내 주신 추천은 담당자가 확인합니다. 추천이 곧 선정을 뜻하지는 않습니다.</span><span class="en">Our staff will review every nomination. A nomination does not guarantee selection.</span></p>
@@ -519,7 +526,7 @@
           <!-- 응원 메시지 머리: 세계희망선언 표어 (안개 낀 산 배경은 style.css .mountains) -->
           <figure class="join-cheer-banner">
             <div class="mountains" aria-hidden="true"></div>
-            <img src="assets/img/brand/logo-mark-160.png" alt="" width="56" height="56" loading="lazy" decoding="async">
+            <picture class="pic-contents"><source srcset="assets/img/brand/logo-mark-160.webp" type="image/webp"><img src="assets/img/brand/logo-mark-160.png" alt="" width="56" height="56" loading="lazy" decoding="async"></picture>
             <blockquote>
               <p><span class="ko">분열을 넘어 화해로,<br>절망을 넘어 희망으로</span><span class="en">From Division to Reconciliation,<br>From Despair to Hope</span></p>
               <p class="join-cheer-banner-en ko" lang="en">From Division to Reconciliation, From Despair to Hope</p>
@@ -547,17 +554,17 @@
             <div class="hp-field" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
             <div class="field full">
               <ul class="consent-list ko">
-                <li><b>수집 항목<span class="sr-only">: </span></b><span>이름(닉네임), 지역, 메시지</span></li>
+                <li><b>수집 항목<span class="sr-only">: </span></b><span>(필수) 이름 또는 닉네임, 메시지 / (선택) 지역</span></li>
                 <li><b>수집 목적<span class="sr-only">: </span></b><span>응원 메시지 확인 및 홈페이지 게시</span></li>
-                <li><b>전달 방법<span class="sr-only">: </span></b><span>입력하신 내용은 외부 이메일 전송 서비스 FormSubmit(formsubmit.co, 서버가 국외에 있을 수 있음)을 거쳐 담당자 이메일로 전달되며, 담당자가 확인한 메시지만 홈페이지에 게시됩니다.</span></li>
+                <li><b>전달 방법<span class="sr-only">: </span></b><span>입력하신 내용은 외부 이메일 전송 서비스 FormSubmit(formsubmit.co, 서버가 국외에 있을 수 있음)을 거쳐 담당자 이메일로 전달되며, 담당자가 확인한 메시지만 홈페이지에 게시됩니다. 전송이 원활하지 않으면 이용자가 Gmail 등 본인의 이메일로 직접 보내실 수 있습니다.</span></li>
                 <li><b>게시 방법<span class="sr-only">: </span></b><span>게시된 메시지(이름(닉네임)·지역·메시지)는 홈페이지 파일을 보관하는 공개 저장소(GitHub, Inc., 미국)에 저장되며, 이 저장소의 파일과 변경 이력은 누구나 볼 수 있습니다.</span></li>
                 <li><b>보유 기간<span class="sr-only">: </span></b><span>접수 메일은 게시 여부 결정 후 1년 이내에 삭제, 게시된 메시지는 게시 철회 요청 시까지 (요청 시 홈페이지와 게시 파일에서 지체 없이 삭제하고, 변경 이력에 남은 이전 기록도 삭제 조치)</span></li>
                 <li class="is-note">동의를 거부하실 수 있으며, 이 경우 응원 메시지를 남기실 수 없습니다.</li>
               </ul>
               <ul class="consent-list en">
-                <li><b>Items<span class="sr-only">: </span></b><span>name (nickname), region, message</span></li>
+                <li><b>Items<span class="sr-only">: </span></b><span>required: name or nickname, message / optional: region</span></li>
                 <li><b>Purpose<span class="sr-only">: </span></b><span>to review your message and post it on this website</span></li>
-                <li><b>Delivery<span class="sr-only">: </span></b><span>your message is sent to our staff by email through a third-party email relay service, FormSubmit (formsubmit.co), whose servers may be located outside Korea. Only messages approved by our staff are posted.</span></li>
+                <li><b>Delivery<span class="sr-only">: </span></b><span>your message is sent to our staff by email through a third-party email relay service, FormSubmit (formsubmit.co), whose servers may be located outside Korea. Only messages approved by our staff are posted. If online delivery fails, you can send it yourself by email (for example, from Gmail) instead.</span></li>
                 <li><b>Publication<span class="sr-only">: </span></b><span>posted messages (name/nickname, region, message) are stored in the public repository that holds this website's files (GitHub, Inc., USA); those files and their change history can be viewed by anyone.</span></li>
                 <li><b>Retention<span class="sr-only">: </span></b><span>the email we receive is deleted within 1 year after we decide whether to post it; a posted message is kept until you ask us to remove it (we then remove it promptly from the website and the data file, and also purge earlier copies from the change history)</span></li>
                 <li class="is-note">You may decline; you will then be unable to leave a message.</li>
@@ -583,7 +590,8 @@
           <div class="card-icon" data-icon="heart"></div>
           <h3><span class="ko">후원·헌금</span><span class="en">Give</span></h3>
           <span class="card-en ko" lang="en">Give</span>
-          <p><span class="ko">보내 주시는 귀한 정성은 희망의 선교행진을 위해 소중히 쓰입니다.</span><span class="en">Your gift will be used faithfully for the mission march of hope.</span></p>
+          <p data-giving-ready hidden><span class="ko">보내 주시는 귀한 정성은 희망의 선교행진을 위해 소중히 쓰입니다.</span><span class="en">Your gift will be used faithfully for the mission march of hope.</span></p>
+          <p data-giving-pending><span class="ko">후원 계좌와 온라인 후원 방법은 확정되는 대로 안내해 드립니다.</span><span class="en">Giving details will be posted once they are confirmed.</span></p>
           <span class="link-arrow"><span class="ko">후원 안내 보기</span><span class="en">How to give</span></span>
         </a>
         <a class="card card-link" href="contact.html">
@@ -607,9 +615,9 @@
 
 <div id="site-footer"></div>
 <script src="assets/js/config.js?v=20261013"></script>
-<script src="assets/js/data.js?v=20261029"></script>
-<script src="assets/js/main.js?v=20261029"></script>
-<script src="assets/js/forms.js?v=20261029"></script>
+<script src="assets/js/data.js?v=20261029e"></script>
+<script src="assets/js/main.js?v=20261029e"></script>
+<script src="assets/js/forms.js?v=20261029e"></script>
 <script>
   // 참여하기 페이지: 하위 메뉴 현재 위치 강조 · 바로가기 위치 보정 · ?field= 로 분야 미리 선택
   (function () {

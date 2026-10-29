@@ -53,6 +53,10 @@
     html.lang = lang;
     try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
     applyAttrs(document, lang);
+    // 읽기 전용 입력칸의 값(예: 33인 추천의 국가 ‘대한민국’) 번역 — data-ko-value / data-en-value
+    document.querySelectorAll("input[readonly][data-en-value]").forEach(function (el) {
+      el.value = el.getAttribute(lang === "en" ? "data-en-value" : "data-ko-value") || el.value;
+    });
     // <option data-en="..."> 번역
     document.querySelectorAll("option[data-en]").forEach(function (o) {
       if (!o.hasAttribute("data-ko")) o.setAttribute("data-ko", o.textContent);
@@ -374,13 +378,15 @@
   }
   function brandHtml() {
     var name = C.name || {};
-    return '<a class="brand" href="' + ROOT + 'index.html" aria-label="' + WH.esc((name.ko || "") + " 홈") + '" data-en-aria-label="' + WH.esc((name.en || "") + " — Home") + '">' +
+    // 보조기술 이름에 화면에 보이는 글(한글 이름 + 영문 이름)을 그대로 포함 (WCAG 2.5.3)
+    return '<a class="brand" href="' + ROOT + '" aria-label="' + WH.esc((name.ko || "") + " " + (name.en || "") + " 홈") + '" data-en-aria-label="' + WH.esc((name.ko || "") + " " + (name.en || "") + " — Home") + '">' +
       logoImg(72) +
-      '<span class="brand-text" aria-hidden="true"><strong>' + WH.esc(name.ko || "") + "</strong><small>" + WH.esc(name.en || "") + "</small></span></a>";
+      '<span class="brand-text" aria-hidden="true"><strong>' + WH.esc(name.ko || "") + "</strong> <small>" + WH.esc(name.en || "") + "</small></span></a>";
   }
   function langButtons() {
-    return '<button type="button" data-set-lang="ko" aria-pressed="false" lang="ko" aria-label="한국어">KOR</button>' +
-      '<button type="button" data-set-lang="en" aria-pressed="false" lang="en" aria-label="English">ENG</button>';
+    // 보조기술 이름이 보이는 글(KOR/ENG)로 시작하도록 (WCAG 2.5.3)
+    return '<button type="button" data-set-lang="ko" aria-pressed="false" lang="ko" aria-label="KOR 한국어">KOR</button>' +
+      '<button type="button" data-set-lang="en" aria-pressed="false" lang="en" aria-label="ENG English">ENG</button>';
   }
 
   /* ---------------- 헤더 · 모바일 메뉴 · 탭바 ---------------- */
@@ -418,7 +424,7 @@
       '<button type="button" class="icon-btn" data-search-open aria-label="사이트 검색" data-en-aria-label="Search the site" title="검색" data-en-title="Search">' + WH.icon("search") + "</button>" +
       "</div>" +
       '<div class="lang-drop">' +
-      '<button type="button" class="lang-drop-btn" aria-expanded="false" aria-controls="lang-drop-menu" aria-label="언어 선택 (현재 한국어)" data-en-aria-label="Language (current: English)">' + bi("KOR", "ENG") + WH.icon("chevron-down") + "</button>" +
+      '<button type="button" class="lang-drop-btn" aria-expanded="false" aria-controls="lang-drop-menu" aria-label="KOR — 언어 선택 (현재 한국어)" data-en-aria-label="ENG — Language (current: English)">' + bi("KOR", "ENG") + WH.icon("chevron-down") + "</button>" +
       '<div class="lang-drop-menu" id="lang-drop-menu" hidden>' +
       '<button type="button" data-set-lang="ko" aria-pressed="false" lang="ko">한국어 <small>KOR</small></button>' +
       '<button type="button" data-set-lang="en" aria-pressed="false" lang="en">English <small>ENG</small></button>' +
@@ -788,7 +794,7 @@
 
     // 위 단 ① 단체 소개
     var aboutHtml = '<div class="footer-about">' +
-      '<a class="footer-logo" href="' + ROOT + 'index.html">' + logoImg(48) +
+      '<a class="footer-logo" href="' + ROOT + '">' + logoImg(48) +
       "<b>" + esc(name.ko || "") + '</b><span lang="en">' + esc(name.en || "") + "</span></a>" +
       (com.ko ? '<p class="footer-committee">' + bi(esc(com.ko), esc(com.en || com.ko)) + "</p>" : "") +
       '<p class="footer-quote" lang="en">From Division to Hope,<br>Together for a Better World.</p>' +
@@ -833,7 +839,7 @@
       '<div class="footer-main"><div class="footer-main-inner">' + aboutHtml + mapHtml + reachHtml + "</div></div>" +
       '<div class="footer-bar"><div class="footer-inner">' +
       '<div class="footer-brands">' +
-      '<a class="footer-brand" href="' + ROOT + 'index.html"><b>' + esc(name.ko || "") + '</b><span lang="en">' + esc(name.en || "") + "</span></a>" +
+      '<a class="footer-brand" href="' + ROOT + '"><b>' + esc(name.ko || "") + '</b><span lang="en">' + esc(name.en || "") + "</span></a>" +
       '<span class="footer-sep" aria-hidden="true"></span>' +
       '<a class="footer-brand" href="' + ROOT + 'declaration.html"><b>' + esc(decl.ko || "") + '</b><span lang="en">' + esc(decl.en || "") + "</span></a>" +
       "</div>" +
@@ -860,7 +866,7 @@
     { href: "news.html", ko: "소식", en: "News", dko: "공지사항 · 소식 · 언론보도", den: "Notices, news and press", k: "공지 notice 소식 news 언론보도 press 게시판 board" },
     { href: "join.html", ko: "참여하기", en: "Join", dko: "세계희망선언에 참여하고 함께 희망을 선언합니다", den: "Join the World Hope Declaration", k: "참여 join 신청 apply 참가 동역 partner 응원 cheer" },
     { href: "about.html", ko: "연대소개", en: "About", dko: "취지문 · 위원장 인사말 · 조직 구성 · 오시는 길", den: "Purpose, chairman's greeting, organization and location", k: "소개 about 취지 purpose 인사말 greeting 위원장 chairman 원치현 조직 organization 위원회 council 오시는 길 location 주소 address 세종" },
-    { href: "ministry.html", ko: "사역 안내", en: "Ministries", dko: "연구·채택 → 33인 선언 → 실천 → 보호·인도 → 선교행진", den: "Research & adoption, declaration by 33, practice, protection & guidance, mission march", k: "사역 ministry ministries 선교행진 mission march 연구 채택 실천 보호 인도" },
+    { href: "vision.html#research", ko: "사역 안내", en: "Ministries", dko: "연구·채택 → 33인 선언 → 실천 → 보호·인도 → 선교행진", den: "Research & adoption, declaration by 33, practice, protection & guidance, mission march", k: "사역 ministry ministries 선교행진 mission march 연구 채택 실천 보호 인도" },
     { href: "gallery.html", ko: "갤러리", en: "Gallery", dko: "행사와 사역 현장 사진", den: "Photos of events and ministry", k: "갤러리 gallery 사진 photo 앨범 album" },
     // 후원: 계좌·결제가 준비되기 전에는 donate.html 의 '준비 중' 안내 문구 그대로 (없는 방법·영수증을 검색 결과에 내세우지 않음)
     GIVING_READY ?
@@ -1123,7 +1129,11 @@
     return WH.loadScript(ROOT + "assets/vendor/qrcode/qrcode.js");
   };
   /* QR → canvas. opts: {size, color, bg, margin, logo(bool), level} */
+  // 주소가 너무 길면 qrcode 가 바로(동기) 오류를 던지므로, 언제나 Promise 의 실패로 돌려줌 (호출 측 .catch 로 안내)
   WH.drawQR = function (canvas, text, opts) {
+    try { return drawQR(canvas, text, opts); } catch (e) { return Promise.reject(e); }
+  };
+  function drawQR(canvas, text, opts) {
     opts = opts || {};
     var level = opts.level || (opts.logo ? "H" : "M");
     qrcode.stringToBytes = qrcode.stringToBytesFuncs["UTF-8"];
@@ -1316,6 +1326,19 @@
   }
 
   /* ---------------- 초기화 ---------------- */
+  /* 한국어 화면에도 그대로 보이는 영문 장식 글(눈썹글·영문 부제·영문 이름 등)에 lang="en" 표시 —
+     화면 낭독기가 한국어 발음으로 읽지 않도록 (WCAG 3.1.2). 한글이 섞인 글이나 이미 lang 이 있는 글은 건드리지 않음 */
+  var LATIN_LABELS = ".eyebrow, .section-sub, .hs-eyebrow, .home-stat-label, .card-en, .ko, " +
+    "[class$='-en'], [class*='-en ']";
+  function markLatinLabels(root) {
+    (root || document).querySelectorAll(LATIN_LABELS).forEach(function (el) {
+      if (el.hasAttribute("lang") || el.classList.contains("en")) return;
+      var t = el.textContent || "";
+      if (/[A-Za-z]{2}/.test(t) && !/[\u1100-\u11FF\u3130-\u318F\uAC00-\uD7AF]/.test(t)) el.setAttribute("lang", "en");
+    });
+  }
+  WH.markLatinLabels = markLatinLabels;
+
   function init() {
     document.documentElement.classList.remove("no-js");
     if (!C.draft) document.querySelectorAll("[data-draft-only]").forEach(function (el) { el.remove(); });
@@ -1324,6 +1347,7 @@
     applyGiving();
     fillIcons();
     applyLang(storedLang());
+    markLatinLabels();
     document.addEventListener("click", function (e) {
       var b = e.target.closest("[data-set-lang]");
       if (b) applyLang(b.getAttribute("data-set-lang"));

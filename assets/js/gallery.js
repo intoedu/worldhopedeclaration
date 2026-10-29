@@ -17,13 +17,16 @@
     lb.className = "lightbox";
     lb.setAttribute("role", "dialog");
     lb.setAttribute("aria-modal", "true");
+    lb.setAttribute("aria-label", "사진 크게 보기");
+    lb.setAttribute("data-en-aria-label", "Photo viewer");
     lb.innerHTML =
       '<span class="lb-count"></span>' +
-      '<button type="button" class="lb-btn lb-close" aria-label="닫기">×</button>' +
-      '<button type="button" class="lb-btn lb-prev" aria-label="이전 사진">‹</button>' +
+      '<button type="button" class="lb-btn lb-close" aria-label="닫기" data-en-aria-label="Close">×</button>' +
+      '<button type="button" class="lb-btn lb-prev" aria-label="이전 사진" data-en-aria-label="Previous photo">‹</button>' +
       '<figure><img alt=""><figcaption></figcaption></figure>' +
-      '<button type="button" class="lb-btn lb-next" aria-label="다음 사진">›</button>';
+      '<button type="button" class="lb-btn lb-next" aria-label="다음 사진" data-en-aria-label="Next photo">›</button>';
     document.body.appendChild(lb);
+    if (WH.applyAttrs) WH.applyAttrs(lb); // 지금 언어에 맞는 버튼 이름
     lb.querySelector(".lb-close").addEventListener("click", close);
     lb.querySelector(".lb-prev").addEventListener("click", function () { show(idx - 1); });
     lb.querySelector(".lb-next").addEventListener("click", function () { show(idx + 1); });
@@ -33,6 +36,14 @@
       if (e.key === "Escape") close();
       if (e.key === "ArrowLeft") show(idx - 1);
       if (e.key === "ArrowRight") show(idx + 1);
+      // Tab 은 보기 창 안의 버튼(닫기·이전·다음) 사이에서만 돎
+      if (e.key === "Tab") {
+        var btns = Array.prototype.filter.call(lb.querySelectorAll(".lb-btn"), function (b) { return b.offsetParent !== null; });
+        if (!btns.length) return;
+        var i = btns.indexOf(document.activeElement);
+        e.preventDefault();
+        btns[(i + (e.shiftKey ? -1 : 1) + btns.length) % btns.length].focus();
+      }
     });
     var x0 = null;
     lb.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; }, { passive: true });

@@ -42,7 +42,7 @@
 <meta property="og:site_name" content="세계희망연대">
 <meta property="og:title" content="세계희망선언문 | 세계희망연대">
 <meta property="og:description" content="(짧은 설명)">
-<meta property="og:image" content="assets/img/og-image.png">
+<meta property="og:image" content="assets/img/og-image.jpg">
 <meta name="theme-color" content="#13294b">
 <link rel="icon" href="assets/img/brand/favicon-64.png" type="image/png" sizes="64x64">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">

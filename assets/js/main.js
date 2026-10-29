@@ -374,13 +374,15 @@
   }
   function brandHtml() {
     var name = C.name || {};
-    return '<a class="brand" href="' + ROOT + 'index.html" aria-label="' + WH.esc((name.ko || "") + " 홈") + '" data-en-aria-label="' + WH.esc((name.en || "") + " — Home") + '">' +
+    // 보조기술 이름에 화면에 보이는 글(한글 이름 + 영문 이름)을 그대로 포함 (WCAG 2.5.3)
+    return '<a class="brand" href="' + ROOT + '" aria-label="' + WH.esc((name.ko || "") + " " + (name.en || "") + " 홈") + '" data-en-aria-label="' + WH.esc((name.ko || "") + " " + (name.en || "") + " — Home") + '">' +
       logoImg(72) +
-      '<span class="brand-text" aria-hidden="true"><strong>' + WH.esc(name.ko || "") + "</strong><small>" + WH.esc(name.en || "") + "</small></span></a>";
+      '<span class="brand-text" aria-hidden="true"><strong>' + WH.esc(name.ko || "") + "</strong> <small>" + WH.esc(name.en || "") + "</small></span></a>";
   }
   function langButtons() {
-    return '<button type="button" data-set-lang="ko" aria-pressed="false" lang="ko" aria-label="한국어">KOR</button>' +
-      '<button type="button" data-set-lang="en" aria-pressed="false" lang="en" aria-label="English">ENG</button>';
+    // 보조기술 이름이 보이는 글(KOR/ENG)로 시작하도록 (WCAG 2.5.3)
+    return '<button type="button" data-set-lang="ko" aria-pressed="false" lang="ko" aria-label="KOR 한국어">KOR</button>' +
+      '<button type="button" data-set-lang="en" aria-pressed="false" lang="en" aria-label="ENG English">ENG</button>';
   }
 
   /* ---------------- 헤더 · 모바일 메뉴 · 탭바 ---------------- */
@@ -418,7 +420,7 @@
       '<button type="button" class="icon-btn" data-search-open aria-label="사이트 검색" data-en-aria-label="Search the site" title="검색" data-en-title="Search">' + WH.icon("search") + "</button>" +
       "</div>" +
       '<div class="lang-drop">' +
-      '<button type="button" class="lang-drop-btn" aria-expanded="false" aria-controls="lang-drop-menu" aria-label="언어 선택 (현재 한국어)" data-en-aria-label="Language (current: English)">' + bi("KOR", "ENG") + WH.icon("chevron-down") + "</button>" +
+      '<button type="button" class="lang-drop-btn" aria-expanded="false" aria-controls="lang-drop-menu" aria-label="KOR — 언어 선택 (현재 한국어)" data-en-aria-label="ENG — Language (current: English)">' + bi("KOR", "ENG") + WH.icon("chevron-down") + "</button>" +
       '<div class="lang-drop-menu" id="lang-drop-menu" hidden>' +
       '<button type="button" data-set-lang="ko" aria-pressed="false" lang="ko">한국어 <small>KOR</small></button>' +
       '<button type="button" data-set-lang="en" aria-pressed="false" lang="en">English <small>ENG</small></button>' +
@@ -788,7 +790,7 @@
 
     // 위 단 ① 단체 소개
     var aboutHtml = '<div class="footer-about">' +
-      '<a class="footer-logo" href="' + ROOT + 'index.html">' + logoImg(48) +
+      '<a class="footer-logo" href="' + ROOT + '">' + logoImg(48) +
       "<b>" + esc(name.ko || "") + '</b><span lang="en">' + esc(name.en || "") + "</span></a>" +
       (com.ko ? '<p class="footer-committee">' + bi(esc(com.ko), esc(com.en || com.ko)) + "</p>" : "") +
       '<p class="footer-quote" lang="en">From Division to Hope,<br>Together for a Better World.</p>' +
@@ -833,7 +835,7 @@
       '<div class="footer-main"><div class="footer-main-inner">' + aboutHtml + mapHtml + reachHtml + "</div></div>" +
       '<div class="footer-bar"><div class="footer-inner">' +
       '<div class="footer-brands">' +
-      '<a class="footer-brand" href="' + ROOT + 'index.html"><b>' + esc(name.ko || "") + '</b><span lang="en">' + esc(name.en || "") + "</span></a>" +
+      '<a class="footer-brand" href="' + ROOT + '"><b>' + esc(name.ko || "") + '</b><span lang="en">' + esc(name.en || "") + "</span></a>" +
       '<span class="footer-sep" aria-hidden="true"></span>' +
       '<a class="footer-brand" href="' + ROOT + 'declaration.html"><b>' + esc(decl.ko || "") + '</b><span lang="en">' + esc(decl.en || "") + "</span></a>" +
       "</div>" +
@@ -1316,6 +1318,19 @@
   }
 
   /* ---------------- 초기화 ---------------- */
+  /* 한국어 화면에도 그대로 보이는 영문 장식 글(눈썹글·영문 부제·영문 이름 등)에 lang="en" 표시 —
+     화면 낭독기가 한국어 발음으로 읽지 않도록 (WCAG 3.1.2). 한글이 섞인 글이나 이미 lang 이 있는 글은 건드리지 않음 */
+  var LATIN_LABELS = ".eyebrow, .section-sub, .hs-eyebrow, .home-stat-label, .card-en, .ko, " +
+    "[class$='-en'], [class*='-en ']";
+  function markLatinLabels(root) {
+    (root || document).querySelectorAll(LATIN_LABELS).forEach(function (el) {
+      if (el.hasAttribute("lang") || el.classList.contains("en")) return;
+      var t = el.textContent || "";
+      if (/[A-Za-z]{2}/.test(t) && !/[\u1100-\u11FF\u3130-\u318F\uAC00-\uD7AF]/.test(t)) el.setAttribute("lang", "en");
+    });
+  }
+  WH.markLatinLabels = markLatinLabels;
+
   function init() {
     document.documentElement.classList.remove("no-js");
     if (!C.draft) document.querySelectorAll("[data-draft-only]").forEach(function (el) { el.remove(); });
@@ -1324,6 +1339,7 @@
     applyGiving();
     fillIcons();
     applyLang(storedLang());
+    markLatinLabels();
     document.addEventListener("click", function (e) {
       var b = e.target.closest("[data-set-lang]");
       if (b) applyLang(b.getAttribute("data-set-lang"));

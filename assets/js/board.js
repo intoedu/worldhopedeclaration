@@ -109,6 +109,12 @@
       if (!current) return;
       var p = current.post;
       if (!p) {
+        // 없는 글 주소는 검색에 올리지 않음 (빈 페이지가 검색 결과에 남지 않도록)
+        if (!document.querySelector('meta[name="robots"]')) {
+          var robots = document.createElement("meta");
+          robots.name = "robots"; robots.content = "noindex";
+          document.head.appendChild(robots);
+        }
         // 글이 없을 때: 다른 빈 화면(갤러리·후원 준비 중)과 같은 상자 모양 (아이콘 · 제목 · 설명 · 버튼)
         view.innerHTML = '<div class="empty-panel"><span class="empty-panel-icon" aria-hidden="true">' + WH.icon("doc") + "</span>" +
           '<h1 class="empty-panel-title">' + WH.t("게시글을 찾을 수 없습니다", "Post not found") + "</h1>" +
@@ -118,6 +124,10 @@
       }
       var title = WH.pick(p, "title");
       document.title = title + " | " + WH.pick(WH.config.name);
+      // 글마다 대표 주소(canonical) — 같은 글이 ?lang= 등 다른 주소로 따로 잡히지 않게
+      var canon = document.querySelector('link[rel="canonical"]');
+      if (!canon) { canon = document.createElement("link"); canon.rel = "canonical"; document.head.appendChild(canon); }
+      canon.href = WH.baseUrl() + "post.html?id=" + encodeURIComponent(p.id);
       var navRow = function (label, item) {
         if (!item) return "";
         return '<a href="' + postUrl(item.id) + '"><small>' + label + "</small><span>" + WH.esc(WH.pick(item, "title")) + "</span></a>";

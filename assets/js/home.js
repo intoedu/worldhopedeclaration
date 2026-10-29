@@ -94,6 +94,16 @@
       var n = max > 4 ? Math.min(list.children.length, Math.round(max / step()) + 1) : 0;
       if (dots.children.length !== n) { dots.innerHTML = new Array(n + 1).join("<i></i>"); cur = -1; }
       dots.hidden = n < 2;
+      // 옆으로 넘기는 동안에는 키보드로도 넘길 수 있게 (Tab 으로 들어와 ←→) — 넓은 화면에서는 탭 순서에서 뺌
+      if (n > 0) {
+        list.setAttribute("tabindex", "0");
+        list.setAttribute("data-ko-aria-label", "세계희망선언 5대 가치 (옆으로 넘겨 보기)");
+        list.setAttribute("data-en-aria-label", "The Five Values (scroll sideways)");
+        list.setAttribute("aria-label", WH.t("세계희망선언 5대 가치 (옆으로 넘겨 보기)", "The Five Values (scroll sideways)"));
+      } else {
+        list.removeAttribute("tabindex");
+        ["aria-label", "data-ko-aria-label", "data-en-aria-label"].forEach(function (k) { list.removeAttribute(k); });
+      }
       update();
     }
     function update() {

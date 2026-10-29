@@ -188,7 +188,7 @@ GitHub 공식 문서(Managing / Verifying a custom domain for your GitHub Pages 
 
 ## 콘텐츠 교체
 
-- **로고**: `assets/img/logo.svg` 를 정식 로고로 덮어쓰기 (헤더·푸터·QR 가운데·파비콘에 반영). 공유 이미지 `assets/img/og-image.png`, `apple-touch-icon.png` 도 함께 교체
+- **로고**: `assets/img/logo.svg` 를 정식 로고로 덮어쓰기 (헤더·푸터·QR 가운데·파비콘에 반영). 공유 이미지 `assets/img/og-image.jpg`, `apple-touch-icon.png` 도 함께 교체
 - **대표자 사진**: `assets/img/portrait-placeholder.svg` 대신 사진 파일을 넣고 `about.html` 의 경로 수정
 - **사진·글**: 관리자 페이지에서 올리기 (또는 `data/*.json` 직접 수정)
 - **문구**: 각 HTML 의 `<span class="ko">…</span><span class="en">…</span>` 쌍을 수정

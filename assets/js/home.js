@@ -286,13 +286,15 @@
     });
     $$('[data-hs="email"]').forEach(function (a) {
       if (/@/.test(C.publicEmail || "")) {
-        // 누르면 Gmail 작성 창(새 탭) — main.js 의 WH.mailLinkAttrs 와 같은 동작
-        a.setAttribute("href", WH.mail && WH.mail.gmailHref ? WH.mail.gmailHref(C.publicEmail) : "mailto:" + C.publicEmail);
-        a.setAttribute("target", "_blank");
-        a.setAttribute("rel", "noopener");
-        a.setAttribute("data-ko-title", "Gmail로 메일 쓰기 (새 창)");
-        a.setAttribute("data-en-title", "Write in Gmail (opens a new tab)");
-        a.setAttribute("title", WH.t("Gmail로 메일 쓰기 (새 창)", "Write in Gmail (opens a new tab)"));
+        // PC: Gmail 작성 창(새 탭), 휴대폰: 메일 앱 — main.js 의 WH.mailLinkAttrs 와 같은 동작
+        var L = WH.mail && WH.mail.addressLink ? WH.mail.addressLink(C.publicEmail)
+          : { href: "mailto:" + C.publicEmail, newTab: false, title: ["메일 쓰기", "Write an email"] };
+        a.setAttribute("href", L.href);
+        if (L.newTab) { a.setAttribute("target", "_blank"); a.setAttribute("rel", "noopener"); }
+        else { a.removeAttribute("target"); a.removeAttribute("rel"); }
+        a.setAttribute("data-ko-title", L.title[0]);
+        a.setAttribute("data-en-title", L.title[1]);
+        a.setAttribute("title", WH.t(L.title[0], L.title[1]));
         a.textContent = C.publicEmail;
       }
       else hideOwner(a);

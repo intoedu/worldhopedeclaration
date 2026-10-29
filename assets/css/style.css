@@ -2461,3 +2461,9 @@ html[data-lang="en"] .consent-list li { grid-template-columns: 6.4em minmax(0, 1
 .form-status .form-fallback { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
 .form-status .form-fallback .btn { flex: 1 1 160px; }
 .form-status .form-fallback-note { display: block; margin-top: 10px; font-size: 13.5px; font-weight: 500; color: var(--ink-2); word-break: keep-all; overflow-wrap: anywhere; }
+/* 받는 주소 + ‘주소 복사’ (메일에 직접 붙여 넣는 분을 위해 크게) */
+.form-status .form-fallback-to { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin-top: 12px; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--radius); background: #f7f9fc; font-weight: 500; color: var(--ink-2); }
+.form-status .form-fallback-to b { color: var(--navy-900); font-size: 15.5px; overflow-wrap: anywhere; }
+.form-status .form-fallback-to .form-fallback-to-copy { margin-left: auto; min-height: 40px; }
+/* FormSubmit ‘활성화 필요’ 응답일 때만: 운영자가 할 일 */
+.form-status .form-fallback-admin { display: block; margin-top: 12px; padding: 10px 12px; border-left: 3px solid var(--gold-500); background: var(--gold-100); color: #5a420c; font-size: 13.5px; font-weight: 500; line-height: 1.65; word-break: keep-all; overflow-wrap: anywhere; }

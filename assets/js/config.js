@@ -49,7 +49,7 @@ window.WH_CONFIG = {
   // · 활성화 메일에 있는 무작위 문자열(별칭)을 to 에 넣으면 홈페이지 소스에서 이메일 주소가 숨겨집니다.
   email: {
     to: "bmig777won@gmail.com",
-    service: "formsubmit" // "formsubmit"(자동 전송, 실패하면 Gmail로 보내기 안내) | "gmail"(자동 전송 없이 방문자가 Gmail로 직접 보내기)
+    service: "formsubmit" // "formsubmit"(자동 전송, 실패하면 메일로 보내기 안내) | "gmail"(자동 전송 없이 방문자가 메일로 직접 보내기 — 컴퓨터: Gmail, 휴대폰: 메일 앱)
   },
 
   /* ---- 콘텐츠 관리 (관리자 페이지 /admin/) ---- */

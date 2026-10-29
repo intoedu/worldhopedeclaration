@@ -763,13 +763,15 @@
   function safeMail(m) {
     return /^[^\s@<>"]+@[^\s@<>"]+\.[^\s@<>"]+$/.test(m || "") ? m : "";
   }
-  /* 이메일 주소 링크의 속성 — 누르면 받는 사람이 채워진 Gmail 작성 창이 새 탭으로 열림
-     (메일 앱이 없는 PC·카카오톡 안 브라우저에서 mailto 링크는 눌러도 반응이 없어서) */
+  /* 이메일 주소 링크의 속성 — PC: 받는 사람이 채워진 Gmail 작성 창(새 탭) (메일 앱이 없는 PC 대비),
+     휴대폰: 메일 앱(mailto) (휴대폰 브라우저의 Gmail 웹 작성 창은 받는 사람을 채우지 못함) — 방식은 data.js WH.mail.addressLink */
   WH.mailLinkAttrs = function (addr) {
-    var href = WH.mail && WH.mail.gmailHref ? WH.mail.gmailHref(addr) : "mailto:" + addr;
-    var ko = "Gmail로 메일 쓰기 (새 창)", en = "Write in Gmail (opens a new tab)";
+    var L = WH.mail && WH.mail.addressLink ? WH.mail.addressLink(addr)
+      : { href: "mailto:" + addr, newTab: false, title: ["메일 쓰기", "Write an email"] };
+    var ko = L.title[0], en = L.title[1];
     // 언어를 바꾼 뒤에 그려도 맞는 말이 나오도록 지금 언어로 쓰고, 두 언어를 모두 적어 둠 (applyAttrs 가 전환)
-    return 'href="' + WH.esc(href) + '" target="_blank" rel="noopener" title="' + WH.t(ko, en) + '" data-ko-title="' + ko + '" data-en-title="' + en + '"';
+    return 'href="' + WH.esc(L.href) + '"' + (L.newTab ? ' target="_blank" rel="noopener"' : "") +
+      ' title="' + WH.esc(WH.t(ko, en)) + '" data-ko-title="' + WH.esc(ko) + '" data-en-title="' + WH.esc(en) + '"';
   };
 
   function renderFooter() {

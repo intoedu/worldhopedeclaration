@@ -6,8 +6,8 @@
    - 서버·데이터베이스 없음: 입력 내용은 WH.mail.send(FormSubmit)로 담당자 이메일에 전달됩니다.
    - 메일 본문 항목명은 화면 언어와 관계없이 항상 한국어(라벨의 .ko 텍스트)로 보냅니다.
      같은 이름의 항목이 여러 개면(예: 추천인 이름 / 피추천인 이름) 입력칸에 data-label="…" 로 구분합니다.
-   - FormSubmit 전송 실패(네트워크 차단·미활성화 등) 시 대체 접수 안내(Gmail로 보내기·내용 복사·전화)를 보여 줍니다.
-     (예전 속성 data-fallback="none" 이 있으면 Gmail 대신 전화 안내만 표시)
+   - FormSubmit 전송 실패(네트워크 차단·미활성화 등) 시 대체 접수 안내(메일로 보내기·내용 복사·주소 복사·전화)를 보여 줍니다.
+     (예전 속성 data-fallback="none" 이 있으면 메일 대신 전화 안내만 표시)
    - ‘기타(직접 입력)’: <select data-other="입력칸 id"> 에서 value="other" 를 고르면 그 입력칸(.field)을
      보이고 필수로 바꿉니다. 다른 값이면 숨기고 전송하지 않습니다(disabled).
    - 항목별 오류 문구: 입력칸에 data-msg-ko="…" data-msg-en="…" (없으면 기본 문구)
@@ -51,7 +51,7 @@
   function phoneKo() { return "전국대표전화(" + (C.phone || "") + ")"; }
   function phoneEn() { return C.phone || ""; }
 
-  /* type: "ok" | "err" | "info"(중립: 전송 중·Gmail 안내) */
+  /* type: "ok" | "err" | "info"(중립: 전송 중·메일로 보내기 안내) */
   function setStatus(form, type, msg) {
     var el = form.querySelector(".form-status");
     if (!el) {
@@ -236,53 +236,76 @@
     return true;
   }
 
-  /* Gmail 로 대체 접수. 받는 주소(email.to 또는 publicEmail)는 WH.mail.composeHref 가 고르며,
+  /* 메일로 대체 접수 (PC: Gmail 작성 창, 휴대폰: 메일 앱). 받는 주소(email.to 또는 publicEmail)는 WH.mail.composeHref 가 고르며,
      받는 주소가 없으면(별칭만 있고 publicEmail 도 없음) "" */
-  function gmailComposeHref(msg) {
+  function composeHref(msg) {
     return WH.mail.composeHref(msg.subject, msg.rows);
   }
-  /* 설정이 service:"gmail" 인 경우(자동 전송 없이 Gmail 로 접수): 아래 버튼으로 Gmail 을 열어 ‘보내기’를 누르도록 안내 */
+  /* 설정이 service:"gmail" 인 경우(자동 전송 없이 메일로 접수): 아래 버튼으로 메일을 열어 ‘보내기’를 누르도록 안내 */
   function gmailStatus(form, msg) {
-    setStatus(form, "info", WH.t("아래 ‘Gmail로 보내기’를 누르면 작성하신 내용이 채워진 Gmail 창이 열립니다. 그 창에서 ‘보내기’를 눌러야 접수가 완료됩니다.",
-      "Press “Send with Gmail” below to open Gmail with your details filled in, then press Send there to complete."));
+    var label = WH.mail.composeLabel();
+    setStatus(form, "info", WH.t("아래 ‘" + label + "’를 누르면 작성하신 내용이 채워진 메일 창이 열립니다. 그 창에서 ‘보내기’를 눌러야 접수가 완료됩니다.",
+      "Press “" + label + "” below to open an email with your details filled in, then press Send there to complete."));
     fallbackActions(form, msg);
   }
-  /* 온라인 전송이 되지 않았을 때 — ① Gmail로 보내기(받는 사람·제목·내용이 채워진 Gmail 작성 창을 새 탭으로)
-     ② 내용 복사하기(받는 주소 함께 표시, Gmail 을 쓰지 않는 분) ③ 전화 를 함께 보여 줍니다.
-     입력한 내용은 지우지 않습니다. Gmail 을 저절로 열지 않습니다(팝업 차단·열렸는지 알 수 없음). */
-  function fallbackStatus(form, msg) {
+  /* 온라인 전송이 되지 않았을 때 — ① 메일로 보내기(받는 사람·제목·내용이 채워진 메일 — PC 는 Gmail 작성 창을 새 탭으로,
+     휴대폰은 메일 앱) ② 내용 복사하기 ③ 전화, 그리고 받는 주소와 ‘주소 복사’를 함께 보여 줍니다.
+     입력한 내용은 지우지 않습니다. 메일을 저절로 열지 않습니다(팝업 차단·열렸는지 알 수 없음).
+     FormSubmit 이 ‘활성화 필요’라고 답한 경우에는 운영자가 할 일(담당자 메일함에서 한 번 활성화)을 함께 표시합니다. */
+  function fallbackStatus(form, msg, err) {
     setStatus(form, "info", WH.t("온라인 전송이 되지 않았습니다. 작성하신 내용은 그대로 남아 있으니, 아래 방법 중 하나로 보내 주세요.",
       "Online delivery did not go through. Your entries are kept — please send them in one of the ways below."));
-    fallbackActions(form, msg);
+    fallbackActions(form, msg, err && err.activation);
   }
-  function fallbackActions(form, msg) {
+  function fallbackActions(form, msg, activation) {
     var el = form.querySelector(".form-status");
     var to = WH.mail.recipient();
+    var mobile = WH.mail.isMobile();
+    var kakao = /KAKAOTALK/i.test(navigator.userAgent || "");
     var plain = WH.t("받는 사람: ", "To: ") + to + "\n" + WH.t("제목: ", "Subject: ") + msg.subject + "\n\n" + WH.mail.bodyText(msg.rows);
-    var box = document.createElement("span");
-    box.className = "form-fallback";
-    var mail = document.createElement("a");
-    mail.className = "btn btn-outline btn-sm";
-    mail.href = gmailComposeHref(msg);
-    mail.target = "_blank"; // 새 탭 — 이 페이지와 입력한 내용은 그대로 남음
-    mail.rel = "noopener";
-    mail.textContent = WH.t("Gmail로 보내기", "Send with Gmail");
-    var copy = document.createElement("button");
+    var mk = function (tag, cls, text) {
+      var n = document.createElement(tag);
+      if (cls) n.className = cls;
+      if (text) n.textContent = text;
+      return n;
+    };
+    var box = mk("span", "form-fallback");
+    var mail = mk("a", "btn btn-outline btn-sm", WH.mail.composeLabel());
+    mail.href = composeHref(msg);
+    if (!mobile) { mail.target = "_blank"; mail.rel = "noopener"; } // PC: Gmail 새 탭 — 이 페이지와 입력한 내용은 그대로 남음
+    var copy = mk("button", "btn btn-outline btn-sm", WH.t("내용 복사하기", "Copy details"));
     copy.type = "button";
-    copy.className = "btn btn-outline btn-sm";
-    copy.textContent = WH.t("내용 복사하기", "Copy details");
     copy.addEventListener("click", function () { WH.copy(plain); });
-    var tel = document.createElement("a");
-    tel.className = "btn btn-outline btn-sm";
-    tel.href = "tel:" + String(C.phone || "").replace(/[^0-9+]/g, "");
-    tel.textContent = WH.t("전화하기 ", "Call ") + (C.phone || "");
-    box.appendChild(mail); box.appendChild(copy); if (C.phone) box.appendChild(tel);
-    var note = document.createElement("span");
-    note.className = "form-fallback-note";
-    note.textContent = WH.t("Gmail 창에서 ‘보내기’를 눌러야 접수가 완료됩니다. Gmail을 쓰지 않으시면 ‘내용 복사하기’를 누른 뒤 사용하시는 메일로 " + to + " 에 보내 주세요. (Gmail은 Google LLC의 상표입니다.)",
-      "Press Send in the Gmail window to complete. If you don’t use Gmail, press “Copy details” and email it to " + to + " from any mail service. (Gmail is a trademark of Google LLC.)");
+    box.appendChild(mail); box.appendChild(copy);
+    if (C.phone) {
+      var tel = mk("a", "btn btn-outline btn-sm", WH.t("전화하기 ", "Call ") + C.phone);
+      tel.href = "tel:" + String(C.phone).replace(/[^0-9+]/g, "");
+      box.appendChild(tel);
+    }
+    // 받는 주소를 크게 보여 주고 바로 복사할 수 있게 (메일에 직접 붙여 넣는 분을 위해)
+    var addr = mk("span", "form-fallback-to");
+    addr.appendChild(mk("span", "form-fallback-to-label", WH.t("받는 사람", "To")));
+    addr.appendChild(mk("b", "", to));
+    var copyTo = mk("button", "btn btn-outline btn-sm form-fallback-to-copy", WH.t("주소 복사", "Copy address"));
+    copyTo.type = "button";
+    copyTo.addEventListener("click", function () { WH.copy(to); });
+    addr.appendChild(copyTo);
+    var note = mk("span", "form-fallback-note", WH.t(
+      "메일 창에서 ‘보내기’를 눌러야 접수가 완료됩니다. 메일 창이 열리지 않으면 ‘내용 복사하기’를 누른 뒤, 쓰시는 메일·문자에 붙여 넣어 위 주소로 보내 주세요." +
+        (kakao ? " 카카오톡 안에서 보고 계셔서 메일 앱이 열리지 않으면, 화면의 메뉴(⋮ 또는 ⋯)에서 ‘다른 브라우저로 열기’를 눌러 주세요." : "") +
+        (mobile ? "" : " (Gmail은 Google LLC의 상표입니다.)"),
+      "Press Send in the email window to complete. If no email window opens, press “Copy details”, paste it into any email and send it to the address above." +
+        (kakao ? " If you are viewing this inside KakaoTalk and no email app opens, use “Open in another browser” from the menu (⋮ or ⋯)." : "") +
+        (mobile ? "" : " (Gmail is a trademark of Google LLC.)")));
     el.appendChild(box);
+    el.appendChild(addr);
     el.appendChild(note);
+    if (activation) {
+      // FormSubmit 이 ‘활성화 필요’라고 답함 → 담당자가 메일함에서 한 번만 누르면 이후로는 ‘보내기’ 한 번에 접수됨
+      el.appendChild(mk("span", "form-fallback-admin", WH.t(
+        "운영자 안내: 온라인 접수가 아직 활성화되지 않았습니다. 담당자 메일함(" + to + ")에 온 ‘Action Required: Activate FormSubmit on https://www.worldhopedeclaration.com/’ 메일을 열어 파란 ‘ACTIVATE FORM’ 버튼을 한 번 누르면, 그다음부터는 ‘보내기’ 한 번으로 바로 접수됩니다.",
+        "Operator note: online submission is not activated yet. Open the “Action Required: Activate FormSubmit on https://www.worldhopedeclaration.com/” email in the staff mailbox (" + to + ") and press the blue “ACTIVATE FORM” button once; after that, submissions go through with a single click.")));
+    }
   }
   function failStatus(form) {
     setStatus(form, "err", WH.t("온라인 접수를 처리하지 못했습니다. 잠시 후 다시 시도하시거나 " + phoneKo() + "로 연락해 주세요.",
@@ -354,8 +377,8 @@
 
       var fallback = function (err) {
         if (err && window.console) console.warn("[온라인 접수] 전송 실패:", err.message || err);
-        if (noMailApp || !gmailComposeHref(msg)) { failStatus(form); return; }
-        fallbackStatus(form, msg); // 입력 내용은 지우지 않음
+        if (noMailApp || !composeHref(msg)) { failStatus(form); return; }
+        fallbackStatus(form, msg, err); // 입력 내용은 지우지 않음
       };
       if (!WH.mail || !WH.mail.enabled) { fallback(); return; }
 

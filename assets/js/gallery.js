@@ -17,6 +17,8 @@
     lb.className = "lightbox";
     lb.setAttribute("role", "dialog");
     lb.setAttribute("aria-modal", "true");
+    lb.setAttribute("aria-label", "사진 크게 보기");
+    lb.setAttribute("data-en-aria-label", "Photo viewer");
     lb.innerHTML =
       '<span class="lb-count"></span>' +
       '<button type="button" class="lb-btn lb-close" aria-label="닫기" data-en-aria-label="Close">×</button>' +
@@ -34,6 +36,14 @@
       if (e.key === "Escape") close();
       if (e.key === "ArrowLeft") show(idx - 1);
       if (e.key === "ArrowRight") show(idx + 1);
+      // Tab 은 보기 창 안의 버튼(닫기·이전·다음) 사이에서만 돎
+      if (e.key === "Tab") {
+        var btns = Array.prototype.filter.call(lb.querySelectorAll(".lb-btn"), function (b) { return b.offsetParent !== null; });
+        if (!btns.length) return;
+        var i = btns.indexOf(document.activeElement);
+        e.preventDefault();
+        btns[(i + (e.shiftKey ? -1 : 1) + btns.length) % btns.length].focus();
+      }
     });
     var x0 = null;
     lb.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; }, { passive: true });

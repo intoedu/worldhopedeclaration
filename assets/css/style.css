@@ -2208,11 +2208,21 @@ html[data-lang="en"] .consent-list li { grid-template-columns: 6.4em minmax(0, 1
 .qr-url { margin-top: 14px; font-size: 13px; color: var(--muted); word-break: break-all; }
 @media (max-width: 960px) { .qr-layout { grid-template-columns: 1fr; } .qr-preview { position: static; } }
 @media (max-width: 400px) { .qr-card canvas { width: 240px; height: 240px; } .qr-preview { padding: 22px 14px; } }
+@media (max-width: 340px) { .qr-card { padding: 18px 14px 16px; } .qr-card canvas { width: 210px; height: 210px; } }
 
 /* QR 모달 */
 .modal { position: fixed; inset: 0; z-index: 500; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(12, 28, 54, .6); }
 .modal.is-open { display: flex; }
-.modal-panel { position: relative; background: #fff; border-radius: var(--radius-lg); padding: 32px 28px 26px; width: min(380px, 100%); text-align: center; box-shadow: var(--shadow-lg); }
+.modal-panel { position: relative; background: #fff; border-radius: var(--radius-lg); padding: 32px 28px 26px; width: min(380px, 100%); max-height: 100%; overflow-y: auto; overscroll-behavior: contain; text-align: center; box-shadow: var(--shadow-lg); }
+/* 가로로 눕힌 휴대폰 등 낮은 화면: 여백·QR 크기를 줄여 한 화면에 (넘치면 상자 안에서 스크롤) */
+@media (max-height: 560px) {
+  .modal { padding: 10px; }
+  .modal-panel { padding: 20px 20px 16px; }
+  .modal-panel h2 { font-size: 18px; }
+  .modal-panel p { margin-bottom: 10px; }
+  .modal-panel canvas { width: 150px; height: 150px; }
+  .modal-actions { margin-top: 10px; }
+}
 .modal-panel h2 { font-size: 20px; margin-bottom: 4px; }
 .modal-panel p { color: var(--muted); font-size: 14px; margin-bottom: 18px; }
 .modal-panel canvas { width: 220px; height: 220px; margin: 0 auto; }

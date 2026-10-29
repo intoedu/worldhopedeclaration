@@ -49,6 +49,9 @@
       list.innerHTML = '<li class="board-empty"><span class="skeleton" style="display:block;height:18px;max-width:420px;margin:0 auto"></span></li>';
       WH.db.listPosts(state).then(function (res) {
         var total = res.total;
+        // 글 수보다 큰 쪽 번호(예: 글 3개인데 ?page=2)는 마지막 쪽으로 다시 불러옴
+        var last = Math.max(1, Math.ceil(total / state.size));
+        if (state.page > last) { state.page = last; load(); return; }
         if (countEl) countEl.innerHTML = WH.t("전체 <b>" + total + "</b>건", "<b>" + total + "</b> posts");
         if (!res.items.length) {
           list.innerHTML = '<li class="board-empty">' + WH.t(state.q ? "검색 결과가 없습니다." : "등록된 게시글이 없습니다.", state.q ? "No results found." : "No posts yet.") + "</li>";
@@ -108,6 +111,14 @@
     var render = function () {
       if (!current) return;
       var p = current.post;
+      if (!p && current.loadError) {
+        // 자료 파일을 못 불러온 경우(일시적 문제) — ‘없는 글’과 구분하고 검색 제외 표시도 하지 않음
+        view.innerHTML = '<div class="empty-panel"><span class="empty-panel-icon" aria-hidden="true">' + WH.icon("doc") + "</span>" +
+          '<h1 class="empty-panel-title">' + WH.t("게시글을 불러오지 못했습니다", "Could not load the post") + "</h1>" +
+          '<p class="empty-panel-text">' + WH.t("잠시 후 새로 고침해 주세요.", "Please refresh the page in a moment.") + "</p>" +
+          '<div class="empty-panel-actions"><a class="btn btn-primary" href="' + WH.ROOT + 'news.html">' + WH.t("공지·소식 보기", "See News & Notices") + WH.icon("arrow-right") + "</a></div></div>";
+        return;
+      }
       if (!p) {
         // 없는 글 주소는 검색에 올리지 않음 (빈 페이지가 검색 결과에 남지 않도록)
         if (!document.querySelector('meta[name="robots"]')) {
@@ -147,7 +158,7 @@
         navRow(WH.t("다음 글", "Next"), current.next) + navRow(WH.t("이전 글", "Previous"), current.prev) + "</nav>";
     };
     if (!id) { current = { post: null }; render(); }
-    else WH.db.getPost(id).then(function (r) { current = r; render(); }).catch(function () { current = { post: null }; render(); });
+    else WH.db.getPost(id).then(function (r) { current = r; render(); }).catch(function () { current = { post: null, loadError: true }; render(); });
     document.addEventListener("wh:lang", render);
   }
 

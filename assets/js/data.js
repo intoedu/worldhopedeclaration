@@ -16,7 +16,8 @@
     if (!jsonCache[name]) {
       jsonCache[name] = fetch(ROOT + "data/" + name + ".json", { cache: "no-cache" })
         .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-        .catch(function () { return []; });
+        // 못 불러와도 화면이 깨지지 않게 빈 목록을 주되, ‘불러오지 못함’ 표시(loadError)를 달아 ‘글이 없음’과 구분
+        .catch(function () { var empty = []; empty.loadError = true; return empty; });
     }
     return jsonCache[name];
   }
@@ -39,6 +40,7 @@
       opt = opt || {};
       var page = Math.max(1, opt.page || 1), size = opt.size || 10;
       return json("posts").then(function (rows) {
+        if (rows.loadError) throw new Error("posts-load");
         var list = published(rows);
         if (opt.category) list = list.filter(function (p) { return p.category === opt.category; });
         if (opt.q) {
@@ -55,6 +57,7 @@
     /* 게시글 1건 + 이전/다음 글 (작성일 기준) */
     getPost: function (id) {
       return json("posts").then(function (rows) {
+        if (rows.loadError) throw new Error("posts-load");
         var list = published(rows).sort(function (a, b) { return new Date(b.created_at) - new Date(a.created_at); });
         var i = list.findIndex(function (p) { return String(p.id) === String(id); });
         if (i === -1) return { post: null };

@@ -1129,7 +1129,11 @@
     return WH.loadScript(ROOT + "assets/vendor/qrcode/qrcode.js");
   };
   /* QR → canvas. opts: {size, color, bg, margin, logo(bool), level} */
+  // 주소가 너무 길면 qrcode 가 바로(동기) 오류를 던지므로, 언제나 Promise 의 실패로 돌려줌 (호출 측 .catch 로 안내)
   WH.drawQR = function (canvas, text, opts) {
+    try { return drawQR(canvas, text, opts); } catch (e) { return Promise.reject(e); }
+  };
+  function drawQR(canvas, text, opts) {
     opts = opts || {};
     var level = opts.level || (opts.logo ? "H" : "M");
     qrcode.stringToBytes = qrcode.stringToBytesFuncs["UTF-8"];

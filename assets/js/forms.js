@@ -303,8 +303,8 @@
     if (activation) {
       // FormSubmit 이 ‘활성화 필요’라고 답함 → 담당자가 메일함에서 한 번만 누르면 이후로는 ‘보내기’ 한 번에 접수됨
       el.appendChild(mk("span", "form-fallback-admin", WH.t(
-        "운영자 안내: 온라인 접수가 아직 활성화되지 않았습니다. 담당자 메일함(" + to + ")에 온 ‘Action Required: Activate FormSubmit on https://www.worldhopedeclaration.com/’ 메일을 열어 파란 ‘ACTIVATE FORM’ 버튼을 한 번 누르면, 그다음부터는 ‘보내기’ 한 번으로 바로 접수됩니다.",
-        "Operator note: online submission is not activated yet. Open the “Action Required: Activate FormSubmit on https://www.worldhopedeclaration.com/” email in the staff mailbox (" + to + ") and press the blue “ACTIVATE FORM” button once; after that, submissions go through with a single click.")));
+        "운영자 안내: 온라인 접수가 아직 활성화되지 않았습니다. 담당자 메일함(" + to + ")에서 제목이 ‘Action Required: Activate FormSubmit on’으로 시작하는 가장 최근 메일을 열어 파란 ‘ACTIVATE FORM’ 버튼을 한 번 누르면, 그다음부터는 ‘보내기’ 한 번으로 바로 접수됩니다.",
+        "Operator note: online submission is not activated yet. In the staff mailbox (" + to + "), open the most recent email whose subject starts with “Action Required: Activate FormSubmit on” and press the blue “ACTIVATE FORM” button once; after that, submissions go through with a single click.")));
     }
   }
   function failStatus(form) {

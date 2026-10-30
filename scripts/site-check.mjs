@@ -82,43 +82,61 @@ if (MAIL_SERVICE === "gmail") {
     ["PC", { viewport: { width: 1280, height: 900 } }],
     ["휴대폰", { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2, userAgent: "Mozilla/5.0 (Linux; Android 14; SM-M366K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Mobile Safari/537.36" }],
   ]) {
-    const ctx = await browser.newContext(opts);
-    const page = await ctx.newPage();
-    const errs = [];
-    page.on("pageerror", (e) => errs.push(e.message));
-    try {
-      await page.goto(BASE + "join.html#declare", { waitUntil: "load", timeout: 45000 });
-      await page.waitForTimeout(1500);
-      // 메일 창 열기를 가로채 주소만 기록 (실제로 열지 않음)
-      await page.evaluate(() => {
-        window.__opened = [];
-        window.open = (u) => { window.__opened.push(String(u)); return null; };
-        document.addEventListener("click", (e) => { const a = e.target.closest && e.target.closest('a[href^="mailto:"]'); if (a) { window.__opened.push(a.href); e.preventDefault(); } }, true);
-      });
-      const F = "#declare form[data-wh-form]";
-      await page.evaluate((F) => {
-        const f = document.querySelector(F);
-        f.querySelectorAll("input,select,textarea").forEach((el) => {
-          if (el.disabled || el.type === "hidden" || el.closest("[hidden]") || el.closest(".hp-field")) return;
-          if (el.type === "checkbox") { if (el.required) el.checked = true; return; }
-          if (el.tagName === "SELECT") { const o = [...el.options].find((o) => o.value && o.value !== "other"); if (o) el.value = o.value; el.dispatchEvent(new Event("change", { bubbles: true })); return; }
-          if (!el.value) el.value = el.type === "email" ? "site-check@example.com" : el.type === "tel" ? "010-0000-0000" : "자동 점검";
+    // 배포 직후에는 전 세계 캐시가 바뀌는 중이라 한 번 못 불러오는 일이 있어(2026-10-30 실제로 겪음) 한 번 다시 해 봄 — 두 번 다 실패해야 문제로 보고
+    let first = null;
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      const P = [], N = [];
+      const ctx = await browser.newContext(opts);
+      const page = await ctx.newPage();
+      const errs = [], netBad = [];
+      page.on("pageerror", (e) => errs.push(e.message));
+      page.on("requestfailed", (r) => netBad.push(`${r.url().replace(BASE, "")} (${r.failure()?.errorText})`));
+      page.on("response", (r) => { if (r.status() >= 400) netBad.push(`${r.url().replace(BASE, "")} (HTTP ${r.status()})`); });
+      try {
+        await page.goto(BASE + "join.html#declare", { waitUntil: "load", timeout: 45000 });
+        await page.waitForTimeout(1500);
+        // 공통 스크립트(main.js)가 실제로 실행됐는지 — 안 됐다면 원인(못 불러온 파일)을 함께 보고
+        const ready = await page.evaluate(() => typeof (window.WH && window.WH.spyIndex) === "function" && typeof (window.WH && window.WH.mail && window.WH.mail.composeHref) === "function");
+        if (!ready) P.push(`[${label}] 참여 신청 보내기: 공통 스크립트가 실행되지 않음 — ${[...new Set(netBad)].slice(0, 6).join(", ") || "못 불러온 파일 없음"} / 스크립트: ${await page.evaluate(() => [...document.scripts].map((x) => (x.src || "").replace(location.origin, "")).filter(Boolean).join(" "))}`);
+        // 메일 창 열기를 가로채 주소만 기록 (실제로 열지 않음)
+        await page.evaluate(() => {
+          window.__opened = [];
+          window.open = (u) => { window.__opened.push(String(u)); return null; };
+          document.addEventListener("click", (e) => { const a = e.target.closest && e.target.closest('a[href^="mailto:"]'); if (a) { window.__opened.push(a.href); e.preventDefault(); } }, true);
         });
-      }, F);
-      await page.click(F + ' [type="submit"]');
-      await page.waitForTimeout(800);
-      const r = await page.evaluate((F) => ({
-        opened: window.__opened || [],
-        btn: (document.querySelector(F + " .form-status .form-fallback a.btn") || {}).href || "",
-        status: (document.querySelector(F + " .form-status") || {}).textContent || "",
-      }), F);
-      const url = r.opened[0] || r.btn;
-      const toOk = url && (url.startsWith("mailto:" + want) || url.includes("to=" + encodeURIComponent(want)));
-      if (!toOk) fail(`[${label}] 참여 신청 보내기: 받는 사람(${want})이 채워진 메일 창이 열리지 않음 — ${(url || r.status).slice(0, 120)}`);
-      else note(`[${label}] 참여 신청 보내기 → ${url.startsWith("mailto:") ? "메일 앱" : "Gmail"} 작성 창(받는 사람 ${want}) 열림 확인`);
-      for (const e of errs) fail(`[${label}] 참여 신청 보내기: 스크립트 오류 — ${e}`);
-    } catch (e) { fail(`[${label}] 참여 신청 보내기 점검 실패 — ${e.message.split("\n")[0]}`); }
-    await ctx.close();
+        const F = "#declare form[data-wh-form]";
+        await page.evaluate((F) => {
+          const f = document.querySelector(F);
+          f.querySelectorAll("input,select,textarea").forEach((el) => {
+            if (el.disabled || el.type === "hidden" || el.closest("[hidden]") || el.closest(".hp-field")) return;
+            if (el.type === "checkbox") { if (el.required) el.checked = true; return; }
+            if (el.tagName === "SELECT") { const o = [...el.options].find((o) => o.value && o.value !== "other"); if (o) el.value = o.value; el.dispatchEvent(new Event("change", { bubbles: true })); return; }
+            if (!el.value) el.value = el.type === "email" ? "site-check@example.com" : el.type === "tel" ? "010-0000-0000" : "자동 점검";
+          });
+        }, F);
+        await page.click(F + ' [type="submit"]');
+        await page.waitForTimeout(800);
+        const r = await page.evaluate((F) => ({
+          opened: window.__opened || [],
+          btn: (document.querySelector(F + " .form-status .form-fallback a.btn") || {}).href || "",
+          status: (document.querySelector(F + " .form-status") || {}).textContent || "",
+        }), F);
+        const url = r.opened[0] || r.btn;
+        const toOk = url && (url.startsWith("mailto:" + want) || url.includes("to=" + encodeURIComponent(want)));
+        if (!toOk) P.push(`[${label}] 참여 신청 보내기: 받는 사람(${want})이 채워진 메일 창이 열리지 않음 — ${(url || r.status).slice(0, 120)}`);
+        else N.push(`[${label}] 참여 신청 보내기 → ${url.startsWith("mailto:") ? "메일 앱" : "Gmail"} 작성 창(받는 사람 ${want}) 열림 확인`);
+        for (const e of [...new Set(errs)]) P.push(`[${label}] 참여 신청 보내기: 스크립트 오류 — ${e}`);
+        if (netBad.length) N.push(`[${label}] 참여 신청 보내기 중 불러오지 못한 파일: ${[...new Set(netBad)].slice(0, 8).join(", ")}`);
+      } catch (e) { P.push(`[${label}] 참여 신청 보내기 점검 실패 — ${e.message.split("\n")[0]}`); }
+      await ctx.close();
+      if (!P.length) {
+        N.forEach((m) => note(m));
+        if (first) note(`[${label}] 참여 신청 보내기: 첫 시도는 실패했으나 다시 해 보니 정상 (일시적 — ${first[0].slice(0, 80)})`);
+        break;
+      }
+      if (attempt === 1) { first = P; await new Promise((r) => setTimeout(r, 20000)); continue; }
+      P.forEach((m) => fail(m)); N.forEach((m) => note(m));
+    }
   }
 }
 await browser.close();

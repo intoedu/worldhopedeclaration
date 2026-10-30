@@ -2134,6 +2134,8 @@ html[data-lang="en"] .consent-list li { grid-template-columns: 6.4em minmax(0, 1
 .tel-chip:hover { border-color: var(--navy-900); background: var(--blue-50); }
 .hp-field { position: absolute !important; left: -9999px !important; width: 1px; height: 1px; overflow: hidden; }
 .form-status { margin-top: 14px; font-size: 14.5px; font-weight: 600; }
+/* 메일로 접수(service:"gmail")일 때 보내기 버튼 아래 다음 단계 안내 (forms.js sendHint) */
+.form-send-hint { margin: 10px 0 0; font-size: 13.5px; line-height: 1.6; color: var(--ink-2); word-break: keep-all; }
 .form-status.ok { color: var(--success); }
 .form-status.err { color: var(--danger); }
 .radio-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; }

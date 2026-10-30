@@ -257,11 +257,44 @@
     return WH.mail.composeHref(msg.subject, msg.rows);
   }
   /* 설정이 service:"gmail" 인 경우(자동 전송 없이 메일로 접수): 아래 버튼으로 메일을 열어 ‘보내기’를 누르도록 안내 */
-  function gmailStatus(form, msg) {
+  function gmailStatus(form, msg, opened) {
     var label = WH.mail.composeLabel();
-    setStatus(form, "info", WH.t("아래 ‘" + label + "’를 누르면 작성하신 내용이 채워진 메일 창이 열립니다. 그 창에서 ‘보내기’를 눌러야 접수가 완료됩니다.",
-      "Press “" + label + "” below to open an email with your details filled in, then press Send there to complete."));
+    setStatus(form, "info", opened
+      ? WH.t("작성하신 내용이 담긴 메일 창을 열었습니다. 그 창에서 ‘보내기’를 눌러야 접수가 완료됩니다. 메일 창이 보이지 않으면 아래 ‘" + label + "’를 눌러 주세요.",
+        "An email with your details has been opened. Press Send there to complete. If you don’t see it, press “" + label + "” below.")
+      : WH.t("아래 ‘" + label + "’를 누르면 작성하신 내용이 채워진 메일 창이 열립니다. 그 창에서 ‘보내기’를 눌러야 접수가 완료됩니다.",
+        "Press “" + label + "” below to open an email with your details filled in, then press Send there to complete."));
     fallbackActions(form, msg);
+  }
+  /* service:"gmail"(메일로 접수): ‘보내기’를 누른 그 순간(사용자 동작 안)에 메일 창을 바로 엶 — 휴대폰은 메일 앱(mailto), 컴퓨터는 Gmail 새 탭.
+     카카오톡·네이버 등 앱 안 브라우저는 메일 앱 열기를 막거나 오류 화면으로 바뀔 수 있어 자동으로 열지 않고 버튼·안내만 보여 줌.
+     열었으면 true */
+  /* 카카오톡·네이버·라인·페이스북·인스타그램·다음 등 앱 안 브라우저 */
+  function isInApp() {
+    return /KAKAOTALK|NAVER\(inapp|; ?Line\/|FBAN|FBAV|Instagram|DaumApps|everytimeApp/i.test(navigator.userAgent || "");
+  }
+  function openCompose(href) {
+    if (!href || isInApp()) return false;
+    if (/^mailto:/i.test(href)) {
+      var a = document.createElement("a");
+      a.href = href;
+      document.body.appendChild(a); a.click(); a.remove();
+      return true;
+    }
+    var w = window.open(href, "_blank");
+    if (w) { try { w.opener = null; } catch (e) {} }
+    return !!w;
+  }
+  /* service:"gmail" 일 때 보내기 버튼 아래에 다음 단계를 미리 알림 */
+  function sendHint(form) {
+    if (!WH.mail || WH.mail.service !== "gmail" || form.querySelector(".form-send-hint")) return;
+    var btn = form.querySelector('[type="submit"]');
+    if (!btn) return;
+    var p = document.createElement("p");
+    p.className = "form-send-hint";
+    p.innerHTML = '<span class="ko">‘보내기’를 누르면 작성하신 내용이 담긴 메일 창(휴대폰은 메일 앱, 컴퓨터는 Gmail)이 열립니다. 그 창에서 한 번 더 ‘보내기’를 눌러 주세요.</span>' +
+      '<span class="en">Pressing the button opens an email with your details (your email app on a phone, Gmail on a computer). Press Send there once more to complete.</span>';
+    btn.insertAdjacentElement("afterend", p);
   }
   /* 온라인 전송이 되지 않았을 때 — ① 메일로 보내기(받는 사람·제목·내용이 채워진 메일 — PC 는 Gmail 작성 창을 새 탭으로,
      휴대폰은 메일 앱) ② 내용 복사하기 ③ 전화, 그리고 받는 주소와 ‘주소 복사’를 함께 보여 줍니다.
@@ -276,7 +309,7 @@
     var el = form.querySelector(".form-status");
     var to = WH.mail.recipient();
     var mobile = WH.mail.isMobile();
-    var kakao = /KAKAOTALK/i.test(navigator.userAgent || "");
+    var kakao = isInApp(); // 앱 안 브라우저(카카오톡·네이버 등) — ‘다른 브라우저로 열기’ 안내
     var plain = WH.t("받는 사람: ", "To: ") + to + "\n" + WH.t("제목: ", "Subject: ") + msg.subject + "\n\n" + WH.mail.bodyText(msg.rows);
     var mk = function (tag, cls, text) {
       var n = document.createElement(tag);
@@ -307,10 +340,10 @@
     addr.appendChild(copyTo);
     var note = mk("span", "form-fallback-note", WH.t(
       "메일 창에서 ‘보내기’를 눌러야 접수가 완료됩니다. 메일 창이 열리지 않으면 ‘내용 복사하기’를 누른 뒤, 쓰시는 메일·문자에 붙여 넣어 위 주소로 보내 주세요." +
-        (kakao ? " 카카오톡 안에서 보고 계셔서 메일 앱이 열리지 않으면, 화면의 메뉴(⋮ 또는 ⋯)에서 ‘다른 브라우저로 열기’를 눌러 주세요." : "") +
+        (kakao ? " 카카오톡·네이버 등 앱 안에서 보고 계셔서 메일 앱이 열리지 않으면, 화면의 메뉴(⋮ 또는 ⋯)에서 ‘다른 브라우저로 열기’를 눌러 주세요." : "") +
         (mobile ? "" : " (Gmail은 Google LLC의 상표입니다.)"),
       "Press Send in the email window to complete. If no email window opens, press “Copy details”, paste it into any email and send it to the address above." +
-        (kakao ? " If you are viewing this inside KakaoTalk and no email app opens, use “Open in another browser” from the menu (⋮ or ⋯)." : "") +
+        (kakao ? " If you are viewing this inside an app such as KakaoTalk or Naver and no email app opens, use “Open in another browser” from the menu (⋮ or ⋯)." : "") +
         (mobile ? "" : " (Gmail is a trademark of Google LLC.)")));
     el.appendChild(box);
     el.appendChild(addr);
@@ -361,6 +394,7 @@
     var sending = false;
     form.setAttribute("novalidate", "");
     setupOther(form);
+    sendHint(form);
 
     // 입력을 고치면 그 항목의 오류 표시 해제 (모두 고치면 위 요약도)
     var fix = function (e) {
@@ -398,6 +432,15 @@
         showStatus(form, function () { fallbackStatus(form, msg, err); }); // 입력 내용은 지우지 않음
       };
       if (!WH.mail || !WH.mail.enabled) { fallback(); return; }
+
+      // 메일로 접수(service:"gmail"): 누른 순간 바로 메일 창을 열고(사용자 동작 안이라 팝업 차단 없음), 아래에 다음 단계·대체 버튼
+      if (WH.mail.service === "gmail") {
+        var href = composeHref(msg);
+        if (!href) { showStatus(form, function () { failStatus(form); }); return; }
+        var opened = openCompose(href);
+        showStatus(form, function () { gmailStatus(form, msg, opened); });
+        return;
+      }
 
       sending = true;
       if (btn) btn.disabled = true;

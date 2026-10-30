@@ -591,6 +591,16 @@
   function setupMailTest(p) {
     var btn = $("[data-mailtest]", p), out = $(".mailtest-result", p);
     if (!btn || !out) return;
+    // 메일로 접수(service:"gmail") 방식: 홈페이지가 메일을 대신 보내지 않으므로 점검할 자동 전송이 없음
+    if (WH.mail && WH.mail.service === "gmail") {
+      btn.hidden = true;
+      var help = $(".mailtest-help", p);
+      if (help) help.hidden = true;
+      out.hidden = false;
+      out.className = "form-status mailtest-result";
+      out.textContent = "지금은 ‘메일로 접수’ 방식입니다. 신청서의 ‘보내기’를 누르면 신청자의 메일 앱(컴퓨터는 Gmail)에 내용이 채워진 메일이 열리고, 신청자가 직접 보내면 " + (WH.mail.recipient() || "담당자 메일") + " 으로 옵니다. 자동 전송 서비스를 쓰지 않으므로 따로 점검할 것이 없습니다. 시험하려면 홈페이지 신청서에서 직접 한 번 보내 보세요.";
+      return;
+    }
     var gmail = "https://mail.google.com/mail/u/0/#search/" + encodeURIComponent("from:formsubmit.co Activate");
     btn.addEventListener("click", function () {
       btn.disabled = true;

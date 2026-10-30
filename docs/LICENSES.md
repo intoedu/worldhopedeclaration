@@ -45,7 +45,7 @@
 | 서비스 | 용도 | 비고 |
 |---|---|---|
 | GitHub Pages (GitHub, Inc., 미국) | 호스팅 | 개인정보처리방침 제5조에 기재 |
-| FormSubmit (formsubmit.co) | 접수 내용 이메일 전송 | 개인정보처리방침·동의서에 기재 |
+| FormSubmit (formsubmit.co) | 접수 내용 이메일 자동 전송 — **2026-10-30부터 사용 안 함**(‘메일로 접수’ 방식). 다시 쓰면 개인정보처리방침·동의서에 위탁으로 기재 | 현재 해당 없음 |
 | Google Maps 임베드, Google Fonts | 지도, 글꼴 | 방문자 접속 정보(IP 등)가 Google로 전달됨 — 처리방침 반영 검토 |
 | PortOne·PG사 | 온라인 결제(가맹 후) | — |
 | GoatCounter / Google Analytics | 방문 통계(설정 시) | — |

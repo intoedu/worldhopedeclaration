@@ -107,7 +107,16 @@ GitHub 공식 문서(Managing / Verifying a custom domain for your GitHub Pages 
 - 그래서 관리자 페이지에는 `<meta name="robots" content="noindex, nofollow">` 가 따로 들어 있습니다(주소와 관계없이 검색 제외).
 - `sitemap.xml` 은 Google Search Console·네이버 서치어드바이저에 직접 제출하면 됩니다.
 
-## 온라인 접수 → 이메일 (FormSubmit)
+## 온라인 접수 → 이메일
+
+**지금 방식(2026-10-30 의뢰인 결정): ‘메일로 접수’ — `config.js` 의 `email.service: "gmail"`**
+- 신청서의 ‘보내기’를 누르면 그 자리에서 내용이 채워진 메일 창이 열립니다. 휴대폰은 메일 앱(`mailto:`, 안드로이드는 보통 Gmail 앱), 컴퓨터는 Gmail 작성 창(새 탭)입니다. 신청자가 그 창에서 ‘보내기’를 누르면 `email.to` 로 옵니다.
+- 외부 전송 서비스·활성화가 없습니다. 대신 신청자가 한 번 더 ‘보내기’를 눌러야 하고, 메일 계정이 있어야 합니다(없으면 ‘내용 복사하기’·‘전화하기’).
+- 카카오톡·네이버 등 앱 안 브라우저는 메일 앱 열기를 막을 수 있어 자동으로 열지 않고 버튼과 ‘다른 브라우저로 열기’ 안내를 보여 줍니다.
+- 홈페이지 자동 점검(Live site check)이 매번 참여 신청서를 채워 보내기를 눌러, 받는 사람이 채워진 메일 창이 열리는지 확인합니다(메일은 보내지 않음).
+- 아래 FormSubmit 설명은 **자동 전송 방식(`email.service: "formsubmit"`)으로 되돌릴 때** 참고하세요. 되돌리면 ACTIVATE FORM 활성화가 필요하고, 개인정보처리방침·각 양식 동의 문구의 ‘전달 방법’과 위탁 표(FormSubmit 행)도 다시 고쳐야 합니다.
+
+### (참고) 자동 전송 방식 — FormSubmit
 
 문의·참여 신청(`contact.html`), 정기 후원 신청(`donate.html`), 희망 응원 메시지(홈), 온라인 후원 결제 알림(결제 직후 자동)은 모두 `config.js` 의 **`email.to`** 주소로 메일이 갑니다. 서버 대신 [FormSubmit](https://formsubmit.co) 무료 메일 전송 서비스를 씁니다.
 

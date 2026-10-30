@@ -84,11 +84,16 @@ if (MAIL_SERVICE === "gmail") {
   ]) {
     const ctx = await browser.newContext(opts);
     const page = await ctx.newPage();
-    const errs = [];
+    const errs = [], netBad = [];
     page.on("pageerror", (e) => errs.push(e.message));
+    page.on("requestfailed", (r) => netBad.push(`${r.url().replace(BASE, "")} (${r.failure()?.errorText})`));
+    page.on("response", (r) => { if (r.status() >= 400) netBad.push(`${r.url().replace(BASE, "")} (HTTP ${r.status()})`); });
     try {
       await page.goto(BASE + "join.html#declare", { waitUntil: "load", timeout: 45000 });
       await page.waitForTimeout(1500);
+      // 공통 스크립트(main.js)가 실제로 실행됐는지 — 안 됐다면 원인(못 불러온 파일)을 함께 보고
+      const ready = await page.evaluate(() => typeof (window.WH && window.WH.spyIndex) === "function" && typeof (window.WH && window.WH.mail && window.WH.mail.composeHref) === "function");
+      if (!ready) fail(`[${label}] 참여 신청 보내기: 공통 스크립트가 실행되지 않음 — ${[...new Set(netBad)].slice(0, 6).join(", ") || "못 불러온 파일 없음"} / 스크립트: ${await page.evaluate(() => [...document.scripts].map((x) => (x.src || "").replace(location.origin, "")).filter(Boolean).join(" "))}`);
       // 메일 창 열기를 가로채 주소만 기록 (실제로 열지 않음)
       await page.evaluate(() => {
         window.__opened = [];
@@ -116,7 +121,8 @@ if (MAIL_SERVICE === "gmail") {
       const toOk = url && (url.startsWith("mailto:" + want) || url.includes("to=" + encodeURIComponent(want)));
       if (!toOk) fail(`[${label}] 참여 신청 보내기: 받는 사람(${want})이 채워진 메일 창이 열리지 않음 — ${(url || r.status).slice(0, 120)}`);
       else note(`[${label}] 참여 신청 보내기 → ${url.startsWith("mailto:") ? "메일 앱" : "Gmail"} 작성 창(받는 사람 ${want}) 열림 확인`);
-      for (const e of errs) fail(`[${label}] 참여 신청 보내기: 스크립트 오류 — ${e}`);
+      for (const e of [...new Set(errs)]) fail(`[${label}] 참여 신청 보내기: 스크립트 오류 — ${e}`);
+      if (netBad.length) note(`[${label}] 참여 신청 보내기 중 불러오지 못한 파일: ${[...new Set(netBad)].slice(0, 8).join(", ")}`);
     } catch (e) { fail(`[${label}] 참여 신청 보내기 점검 실패 — ${e.message.split("\n")[0]}`); }
     await ctx.close();
   }
